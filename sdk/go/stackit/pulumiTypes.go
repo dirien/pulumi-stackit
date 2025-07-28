@@ -16,6 +16,10 @@ var _ = internal.GetEnvOrDefault
 type CdnDistributionConfig struct {
 	// The configured backend for the distribution
 	Backend CdnDistributionConfigBackend `pulumi:"backend"`
+	// The configured countries where distribution of content is blocked
+	BlockedCountries []string `pulumi:"blockedCountries"`
+	// Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+	Optimizer *CdnDistributionConfigOptimizer `pulumi:"optimizer"`
 	// The configured regions where content will be hosted
 	Regions []string `pulumi:"regions"`
 }
@@ -34,6 +38,10 @@ type CdnDistributionConfigInput interface {
 type CdnDistributionConfigArgs struct {
 	// The configured backend for the distribution
 	Backend CdnDistributionConfigBackendInput `pulumi:"backend"`
+	// The configured countries where distribution of content is blocked
+	BlockedCountries pulumi.StringArrayInput `pulumi:"blockedCountries"`
+	// Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+	Optimizer CdnDistributionConfigOptimizerPtrInput `pulumi:"optimizer"`
 	// The configured regions where content will be hosted
 	Regions pulumi.StringArrayInput `pulumi:"regions"`
 }
@@ -120,6 +128,16 @@ func (o CdnDistributionConfigOutput) Backend() CdnDistributionConfigBackendOutpu
 	return o.ApplyT(func(v CdnDistributionConfig) CdnDistributionConfigBackend { return v.Backend }).(CdnDistributionConfigBackendOutput)
 }
 
+// The configured countries where distribution of content is blocked
+func (o CdnDistributionConfigOutput) BlockedCountries() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v CdnDistributionConfig) []string { return v.BlockedCountries }).(pulumi.StringArrayOutput)
+}
+
+// Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+func (o CdnDistributionConfigOutput) Optimizer() CdnDistributionConfigOptimizerPtrOutput {
+	return o.ApplyT(func(v CdnDistributionConfig) *CdnDistributionConfigOptimizer { return v.Optimizer }).(CdnDistributionConfigOptimizerPtrOutput)
+}
+
 // The configured regions where content will be hosted
 func (o CdnDistributionConfigOutput) Regions() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v CdnDistributionConfig) []string { return v.Regions }).(pulumi.StringArrayOutput)
@@ -157,6 +175,26 @@ func (o CdnDistributionConfigPtrOutput) Backend() CdnDistributionConfigBackendPt
 		}
 		return &v.Backend
 	}).(CdnDistributionConfigBackendPtrOutput)
+}
+
+// The configured countries where distribution of content is blocked
+func (o CdnDistributionConfigPtrOutput) BlockedCountries() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *CdnDistributionConfig) []string {
+		if v == nil {
+			return nil
+		}
+		return v.BlockedCountries
+	}).(pulumi.StringArrayOutput)
+}
+
+// Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+func (o CdnDistributionConfigPtrOutput) Optimizer() CdnDistributionConfigOptimizerPtrOutput {
+	return o.ApplyT(func(v *CdnDistributionConfig) *CdnDistributionConfigOptimizer {
+		if v == nil {
+			return nil
+		}
+		return v.Optimizer
+	}).(CdnDistributionConfigOptimizerPtrOutput)
 }
 
 // The configured regions where content will be hosted
@@ -342,6 +380,139 @@ func (o CdnDistributionConfigBackendPtrOutput) Type() pulumi.StringPtrOutput {
 		}
 		return &v.Type
 	}).(pulumi.StringPtrOutput)
+}
+
+type CdnDistributionConfigOptimizer struct {
+	Enabled *bool `pulumi:"enabled"`
+}
+
+// CdnDistributionConfigOptimizerInput is an input type that accepts CdnDistributionConfigOptimizerArgs and CdnDistributionConfigOptimizerOutput values.
+// You can construct a concrete instance of `CdnDistributionConfigOptimizerInput` via:
+//
+//	CdnDistributionConfigOptimizerArgs{...}
+type CdnDistributionConfigOptimizerInput interface {
+	pulumi.Input
+
+	ToCdnDistributionConfigOptimizerOutput() CdnDistributionConfigOptimizerOutput
+	ToCdnDistributionConfigOptimizerOutputWithContext(context.Context) CdnDistributionConfigOptimizerOutput
+}
+
+type CdnDistributionConfigOptimizerArgs struct {
+	Enabled pulumi.BoolPtrInput `pulumi:"enabled"`
+}
+
+func (CdnDistributionConfigOptimizerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CdnDistributionConfigOptimizer)(nil)).Elem()
+}
+
+func (i CdnDistributionConfigOptimizerArgs) ToCdnDistributionConfigOptimizerOutput() CdnDistributionConfigOptimizerOutput {
+	return i.ToCdnDistributionConfigOptimizerOutputWithContext(context.Background())
+}
+
+func (i CdnDistributionConfigOptimizerArgs) ToCdnDistributionConfigOptimizerOutputWithContext(ctx context.Context) CdnDistributionConfigOptimizerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CdnDistributionConfigOptimizerOutput)
+}
+
+func (i CdnDistributionConfigOptimizerArgs) ToCdnDistributionConfigOptimizerPtrOutput() CdnDistributionConfigOptimizerPtrOutput {
+	return i.ToCdnDistributionConfigOptimizerPtrOutputWithContext(context.Background())
+}
+
+func (i CdnDistributionConfigOptimizerArgs) ToCdnDistributionConfigOptimizerPtrOutputWithContext(ctx context.Context) CdnDistributionConfigOptimizerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CdnDistributionConfigOptimizerOutput).ToCdnDistributionConfigOptimizerPtrOutputWithContext(ctx)
+}
+
+// CdnDistributionConfigOptimizerPtrInput is an input type that accepts CdnDistributionConfigOptimizerArgs, CdnDistributionConfigOptimizerPtr and CdnDistributionConfigOptimizerPtrOutput values.
+// You can construct a concrete instance of `CdnDistributionConfigOptimizerPtrInput` via:
+//
+//	        CdnDistributionConfigOptimizerArgs{...}
+//
+//	or:
+//
+//	        nil
+type CdnDistributionConfigOptimizerPtrInput interface {
+	pulumi.Input
+
+	ToCdnDistributionConfigOptimizerPtrOutput() CdnDistributionConfigOptimizerPtrOutput
+	ToCdnDistributionConfigOptimizerPtrOutputWithContext(context.Context) CdnDistributionConfigOptimizerPtrOutput
+}
+
+type cdnDistributionConfigOptimizerPtrType CdnDistributionConfigOptimizerArgs
+
+func CdnDistributionConfigOptimizerPtr(v *CdnDistributionConfigOptimizerArgs) CdnDistributionConfigOptimizerPtrInput {
+	return (*cdnDistributionConfigOptimizerPtrType)(v)
+}
+
+func (*cdnDistributionConfigOptimizerPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CdnDistributionConfigOptimizer)(nil)).Elem()
+}
+
+func (i *cdnDistributionConfigOptimizerPtrType) ToCdnDistributionConfigOptimizerPtrOutput() CdnDistributionConfigOptimizerPtrOutput {
+	return i.ToCdnDistributionConfigOptimizerPtrOutputWithContext(context.Background())
+}
+
+func (i *cdnDistributionConfigOptimizerPtrType) ToCdnDistributionConfigOptimizerPtrOutputWithContext(ctx context.Context) CdnDistributionConfigOptimizerPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CdnDistributionConfigOptimizerPtrOutput)
+}
+
+type CdnDistributionConfigOptimizerOutput struct{ *pulumi.OutputState }
+
+func (CdnDistributionConfigOptimizerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CdnDistributionConfigOptimizer)(nil)).Elem()
+}
+
+func (o CdnDistributionConfigOptimizerOutput) ToCdnDistributionConfigOptimizerOutput() CdnDistributionConfigOptimizerOutput {
+	return o
+}
+
+func (o CdnDistributionConfigOptimizerOutput) ToCdnDistributionConfigOptimizerOutputWithContext(ctx context.Context) CdnDistributionConfigOptimizerOutput {
+	return o
+}
+
+func (o CdnDistributionConfigOptimizerOutput) ToCdnDistributionConfigOptimizerPtrOutput() CdnDistributionConfigOptimizerPtrOutput {
+	return o.ToCdnDistributionConfigOptimizerPtrOutputWithContext(context.Background())
+}
+
+func (o CdnDistributionConfigOptimizerOutput) ToCdnDistributionConfigOptimizerPtrOutputWithContext(ctx context.Context) CdnDistributionConfigOptimizerPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CdnDistributionConfigOptimizer) *CdnDistributionConfigOptimizer {
+		return &v
+	}).(CdnDistributionConfigOptimizerPtrOutput)
+}
+
+func (o CdnDistributionConfigOptimizerOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v CdnDistributionConfigOptimizer) *bool { return v.Enabled }).(pulumi.BoolPtrOutput)
+}
+
+type CdnDistributionConfigOptimizerPtrOutput struct{ *pulumi.OutputState }
+
+func (CdnDistributionConfigOptimizerPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CdnDistributionConfigOptimizer)(nil)).Elem()
+}
+
+func (o CdnDistributionConfigOptimizerPtrOutput) ToCdnDistributionConfigOptimizerPtrOutput() CdnDistributionConfigOptimizerPtrOutput {
+	return o
+}
+
+func (o CdnDistributionConfigOptimizerPtrOutput) ToCdnDistributionConfigOptimizerPtrOutputWithContext(ctx context.Context) CdnDistributionConfigOptimizerPtrOutput {
+	return o
+}
+
+func (o CdnDistributionConfigOptimizerPtrOutput) Elem() CdnDistributionConfigOptimizerOutput {
+	return o.ApplyT(func(v *CdnDistributionConfigOptimizer) CdnDistributionConfigOptimizer {
+		if v != nil {
+			return *v
+		}
+		var ret CdnDistributionConfigOptimizer
+		return ret
+	}).(CdnDistributionConfigOptimizerOutput)
+}
+
+func (o CdnDistributionConfigOptimizerPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *CdnDistributionConfigOptimizer) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Enabled
+	}).(pulumi.BoolPtrOutput)
 }
 
 type CdnDistributionDomain struct {
@@ -6034,7 +6205,7 @@ type OpensearchInstanceParameters struct {
 	// List of TLS ciphers to use.
 	TlsCiphers []string `pulumi:"tlsCiphers"`
 	// The TLS protocol to use.
-	TlsProtocols *string `pulumi:"tlsProtocols"`
+	TlsProtocols []string `pulumi:"tlsProtocols"`
 }
 
 // OpensearchInstanceParametersInput is an input type that accepts OpensearchInstanceParametersArgs and OpensearchInstanceParametersOutput values.
@@ -6076,7 +6247,7 @@ type OpensearchInstanceParametersArgs struct {
 	// List of TLS ciphers to use.
 	TlsCiphers pulumi.StringArrayInput `pulumi:"tlsCiphers"`
 	// The TLS protocol to use.
-	TlsProtocols pulumi.StringPtrInput `pulumi:"tlsProtocols"`
+	TlsProtocols pulumi.StringArrayInput `pulumi:"tlsProtocols"`
 }
 
 func (OpensearchInstanceParametersArgs) ElementType() reflect.Type {
@@ -6222,8 +6393,8 @@ func (o OpensearchInstanceParametersOutput) TlsCiphers() pulumi.StringArrayOutpu
 }
 
 // The TLS protocol to use.
-func (o OpensearchInstanceParametersOutput) TlsProtocols() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v OpensearchInstanceParameters) *string { return v.TlsProtocols }).(pulumi.StringPtrOutput)
+func (o OpensearchInstanceParametersOutput) TlsProtocols() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v OpensearchInstanceParameters) []string { return v.TlsProtocols }).(pulumi.StringArrayOutput)
 }
 
 type OpensearchInstanceParametersPtrOutput struct{ *pulumi.OutputState }
@@ -6381,13 +6552,13 @@ func (o OpensearchInstanceParametersPtrOutput) TlsCiphers() pulumi.StringArrayOu
 }
 
 // The TLS protocol to use.
-func (o OpensearchInstanceParametersPtrOutput) TlsProtocols() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *OpensearchInstanceParameters) *string {
+func (o OpensearchInstanceParametersPtrOutput) TlsProtocols() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *OpensearchInstanceParameters) []string {
 		if v == nil {
 			return nil
 		}
 		return v.TlsProtocols
-	}).(pulumi.StringPtrOutput)
+	}).(pulumi.StringArrayOutput)
 }
 
 type PostgresflexInstanceFlavor struct {
@@ -7617,6 +7788,318 @@ func (o RedisInstanceParametersPtrOutput) TlsProtocols() pulumi.StringPtrOutput 
 	}).(pulumi.StringPtrOutput)
 }
 
+type RoutingTableRouteDestination struct {
+	// CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+	Type string `pulumi:"type"`
+	// An CIDR string.
+	Value string `pulumi:"value"`
+}
+
+// RoutingTableRouteDestinationInput is an input type that accepts RoutingTableRouteDestinationArgs and RoutingTableRouteDestinationOutput values.
+// You can construct a concrete instance of `RoutingTableRouteDestinationInput` via:
+//
+//	RoutingTableRouteDestinationArgs{...}
+type RoutingTableRouteDestinationInput interface {
+	pulumi.Input
+
+	ToRoutingTableRouteDestinationOutput() RoutingTableRouteDestinationOutput
+	ToRoutingTableRouteDestinationOutputWithContext(context.Context) RoutingTableRouteDestinationOutput
+}
+
+type RoutingTableRouteDestinationArgs struct {
+	// CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+	Type pulumi.StringInput `pulumi:"type"`
+	// An CIDR string.
+	Value pulumi.StringInput `pulumi:"value"`
+}
+
+func (RoutingTableRouteDestinationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*RoutingTableRouteDestination)(nil)).Elem()
+}
+
+func (i RoutingTableRouteDestinationArgs) ToRoutingTableRouteDestinationOutput() RoutingTableRouteDestinationOutput {
+	return i.ToRoutingTableRouteDestinationOutputWithContext(context.Background())
+}
+
+func (i RoutingTableRouteDestinationArgs) ToRoutingTableRouteDestinationOutputWithContext(ctx context.Context) RoutingTableRouteDestinationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RoutingTableRouteDestinationOutput)
+}
+
+func (i RoutingTableRouteDestinationArgs) ToRoutingTableRouteDestinationPtrOutput() RoutingTableRouteDestinationPtrOutput {
+	return i.ToRoutingTableRouteDestinationPtrOutputWithContext(context.Background())
+}
+
+func (i RoutingTableRouteDestinationArgs) ToRoutingTableRouteDestinationPtrOutputWithContext(ctx context.Context) RoutingTableRouteDestinationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RoutingTableRouteDestinationOutput).ToRoutingTableRouteDestinationPtrOutputWithContext(ctx)
+}
+
+// RoutingTableRouteDestinationPtrInput is an input type that accepts RoutingTableRouteDestinationArgs, RoutingTableRouteDestinationPtr and RoutingTableRouteDestinationPtrOutput values.
+// You can construct a concrete instance of `RoutingTableRouteDestinationPtrInput` via:
+//
+//	        RoutingTableRouteDestinationArgs{...}
+//
+//	or:
+//
+//	        nil
+type RoutingTableRouteDestinationPtrInput interface {
+	pulumi.Input
+
+	ToRoutingTableRouteDestinationPtrOutput() RoutingTableRouteDestinationPtrOutput
+	ToRoutingTableRouteDestinationPtrOutputWithContext(context.Context) RoutingTableRouteDestinationPtrOutput
+}
+
+type routingTableRouteDestinationPtrType RoutingTableRouteDestinationArgs
+
+func RoutingTableRouteDestinationPtr(v *RoutingTableRouteDestinationArgs) RoutingTableRouteDestinationPtrInput {
+	return (*routingTableRouteDestinationPtrType)(v)
+}
+
+func (*routingTableRouteDestinationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**RoutingTableRouteDestination)(nil)).Elem()
+}
+
+func (i *routingTableRouteDestinationPtrType) ToRoutingTableRouteDestinationPtrOutput() RoutingTableRouteDestinationPtrOutput {
+	return i.ToRoutingTableRouteDestinationPtrOutputWithContext(context.Background())
+}
+
+func (i *routingTableRouteDestinationPtrType) ToRoutingTableRouteDestinationPtrOutputWithContext(ctx context.Context) RoutingTableRouteDestinationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RoutingTableRouteDestinationPtrOutput)
+}
+
+type RoutingTableRouteDestinationOutput struct{ *pulumi.OutputState }
+
+func (RoutingTableRouteDestinationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*RoutingTableRouteDestination)(nil)).Elem()
+}
+
+func (o RoutingTableRouteDestinationOutput) ToRoutingTableRouteDestinationOutput() RoutingTableRouteDestinationOutput {
+	return o
+}
+
+func (o RoutingTableRouteDestinationOutput) ToRoutingTableRouteDestinationOutputWithContext(ctx context.Context) RoutingTableRouteDestinationOutput {
+	return o
+}
+
+func (o RoutingTableRouteDestinationOutput) ToRoutingTableRouteDestinationPtrOutput() RoutingTableRouteDestinationPtrOutput {
+	return o.ToRoutingTableRouteDestinationPtrOutputWithContext(context.Background())
+}
+
+func (o RoutingTableRouteDestinationOutput) ToRoutingTableRouteDestinationPtrOutputWithContext(ctx context.Context) RoutingTableRouteDestinationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v RoutingTableRouteDestination) *RoutingTableRouteDestination {
+		return &v
+	}).(RoutingTableRouteDestinationPtrOutput)
+}
+
+// CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+func (o RoutingTableRouteDestinationOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v RoutingTableRouteDestination) string { return v.Type }).(pulumi.StringOutput)
+}
+
+// An CIDR string.
+func (o RoutingTableRouteDestinationOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v RoutingTableRouteDestination) string { return v.Value }).(pulumi.StringOutput)
+}
+
+type RoutingTableRouteDestinationPtrOutput struct{ *pulumi.OutputState }
+
+func (RoutingTableRouteDestinationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**RoutingTableRouteDestination)(nil)).Elem()
+}
+
+func (o RoutingTableRouteDestinationPtrOutput) ToRoutingTableRouteDestinationPtrOutput() RoutingTableRouteDestinationPtrOutput {
+	return o
+}
+
+func (o RoutingTableRouteDestinationPtrOutput) ToRoutingTableRouteDestinationPtrOutputWithContext(ctx context.Context) RoutingTableRouteDestinationPtrOutput {
+	return o
+}
+
+func (o RoutingTableRouteDestinationPtrOutput) Elem() RoutingTableRouteDestinationOutput {
+	return o.ApplyT(func(v *RoutingTableRouteDestination) RoutingTableRouteDestination {
+		if v != nil {
+			return *v
+		}
+		var ret RoutingTableRouteDestination
+		return ret
+	}).(RoutingTableRouteDestinationOutput)
+}
+
+// CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+func (o RoutingTableRouteDestinationPtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RoutingTableRouteDestination) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
+// An CIDR string.
+func (o RoutingTableRouteDestinationPtrOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RoutingTableRouteDestination) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Value
+	}).(pulumi.StringPtrOutput)
+}
+
+type RoutingTableRouteNextHop struct {
+	// Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+	Type string `pulumi:"type"`
+	// Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+	Value *string `pulumi:"value"`
+}
+
+// RoutingTableRouteNextHopInput is an input type that accepts RoutingTableRouteNextHopArgs and RoutingTableRouteNextHopOutput values.
+// You can construct a concrete instance of `RoutingTableRouteNextHopInput` via:
+//
+//	RoutingTableRouteNextHopArgs{...}
+type RoutingTableRouteNextHopInput interface {
+	pulumi.Input
+
+	ToRoutingTableRouteNextHopOutput() RoutingTableRouteNextHopOutput
+	ToRoutingTableRouteNextHopOutputWithContext(context.Context) RoutingTableRouteNextHopOutput
+}
+
+type RoutingTableRouteNextHopArgs struct {
+	// Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+	Type pulumi.StringInput `pulumi:"type"`
+	// Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+	Value pulumi.StringPtrInput `pulumi:"value"`
+}
+
+func (RoutingTableRouteNextHopArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*RoutingTableRouteNextHop)(nil)).Elem()
+}
+
+func (i RoutingTableRouteNextHopArgs) ToRoutingTableRouteNextHopOutput() RoutingTableRouteNextHopOutput {
+	return i.ToRoutingTableRouteNextHopOutputWithContext(context.Background())
+}
+
+func (i RoutingTableRouteNextHopArgs) ToRoutingTableRouteNextHopOutputWithContext(ctx context.Context) RoutingTableRouteNextHopOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RoutingTableRouteNextHopOutput)
+}
+
+func (i RoutingTableRouteNextHopArgs) ToRoutingTableRouteNextHopPtrOutput() RoutingTableRouteNextHopPtrOutput {
+	return i.ToRoutingTableRouteNextHopPtrOutputWithContext(context.Background())
+}
+
+func (i RoutingTableRouteNextHopArgs) ToRoutingTableRouteNextHopPtrOutputWithContext(ctx context.Context) RoutingTableRouteNextHopPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RoutingTableRouteNextHopOutput).ToRoutingTableRouteNextHopPtrOutputWithContext(ctx)
+}
+
+// RoutingTableRouteNextHopPtrInput is an input type that accepts RoutingTableRouteNextHopArgs, RoutingTableRouteNextHopPtr and RoutingTableRouteNextHopPtrOutput values.
+// You can construct a concrete instance of `RoutingTableRouteNextHopPtrInput` via:
+//
+//	        RoutingTableRouteNextHopArgs{...}
+//
+//	or:
+//
+//	        nil
+type RoutingTableRouteNextHopPtrInput interface {
+	pulumi.Input
+
+	ToRoutingTableRouteNextHopPtrOutput() RoutingTableRouteNextHopPtrOutput
+	ToRoutingTableRouteNextHopPtrOutputWithContext(context.Context) RoutingTableRouteNextHopPtrOutput
+}
+
+type routingTableRouteNextHopPtrType RoutingTableRouteNextHopArgs
+
+func RoutingTableRouteNextHopPtr(v *RoutingTableRouteNextHopArgs) RoutingTableRouteNextHopPtrInput {
+	return (*routingTableRouteNextHopPtrType)(v)
+}
+
+func (*routingTableRouteNextHopPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**RoutingTableRouteNextHop)(nil)).Elem()
+}
+
+func (i *routingTableRouteNextHopPtrType) ToRoutingTableRouteNextHopPtrOutput() RoutingTableRouteNextHopPtrOutput {
+	return i.ToRoutingTableRouteNextHopPtrOutputWithContext(context.Background())
+}
+
+func (i *routingTableRouteNextHopPtrType) ToRoutingTableRouteNextHopPtrOutputWithContext(ctx context.Context) RoutingTableRouteNextHopPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RoutingTableRouteNextHopPtrOutput)
+}
+
+type RoutingTableRouteNextHopOutput struct{ *pulumi.OutputState }
+
+func (RoutingTableRouteNextHopOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*RoutingTableRouteNextHop)(nil)).Elem()
+}
+
+func (o RoutingTableRouteNextHopOutput) ToRoutingTableRouteNextHopOutput() RoutingTableRouteNextHopOutput {
+	return o
+}
+
+func (o RoutingTableRouteNextHopOutput) ToRoutingTableRouteNextHopOutputWithContext(ctx context.Context) RoutingTableRouteNextHopOutput {
+	return o
+}
+
+func (o RoutingTableRouteNextHopOutput) ToRoutingTableRouteNextHopPtrOutput() RoutingTableRouteNextHopPtrOutput {
+	return o.ToRoutingTableRouteNextHopPtrOutputWithContext(context.Background())
+}
+
+func (o RoutingTableRouteNextHopOutput) ToRoutingTableRouteNextHopPtrOutputWithContext(ctx context.Context) RoutingTableRouteNextHopPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v RoutingTableRouteNextHop) *RoutingTableRouteNextHop {
+		return &v
+	}).(RoutingTableRouteNextHopPtrOutput)
+}
+
+// Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+func (o RoutingTableRouteNextHopOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v RoutingTableRouteNextHop) string { return v.Type }).(pulumi.StringOutput)
+}
+
+// Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+func (o RoutingTableRouteNextHopOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v RoutingTableRouteNextHop) *string { return v.Value }).(pulumi.StringPtrOutput)
+}
+
+type RoutingTableRouteNextHopPtrOutput struct{ *pulumi.OutputState }
+
+func (RoutingTableRouteNextHopPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**RoutingTableRouteNextHop)(nil)).Elem()
+}
+
+func (o RoutingTableRouteNextHopPtrOutput) ToRoutingTableRouteNextHopPtrOutput() RoutingTableRouteNextHopPtrOutput {
+	return o
+}
+
+func (o RoutingTableRouteNextHopPtrOutput) ToRoutingTableRouteNextHopPtrOutputWithContext(ctx context.Context) RoutingTableRouteNextHopPtrOutput {
+	return o
+}
+
+func (o RoutingTableRouteNextHopPtrOutput) Elem() RoutingTableRouteNextHopOutput {
+	return o.ApplyT(func(v *RoutingTableRouteNextHop) RoutingTableRouteNextHop {
+		if v != nil {
+			return *v
+		}
+		var ret RoutingTableRouteNextHop
+		return ret
+	}).(RoutingTableRouteNextHopOutput)
+}
+
+// Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+func (o RoutingTableRouteNextHopPtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RoutingTableRouteNextHop) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
+// Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+func (o RoutingTableRouteNextHopPtrOutput) Value() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *RoutingTableRouteNextHop) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Value
+	}).(pulumi.StringPtrOutput)
+}
+
 type SecurityGroupRuleIcmpParameters struct {
 	// ICMP code. Can be set if the protocol is ICMP.
 	Code int `pulumi:"code"`
@@ -8483,10 +8966,14 @@ func (o ServerBootVolumePtrOutput) SourceType() pulumi.StringPtrOutput {
 type SkeClusterExtensions struct {
 	// Cluster access control configuration.
 	Acl *SkeClusterExtensionsAcl `pulumi:"acl"`
-	// A single argus block as defined below.
+	// A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
+	//
+	// Deprecated: Use observability instead.
 	Argus *SkeClusterExtensionsArgus `pulumi:"argus"`
 	// DNS extension configuration
 	Dns *SkeClusterExtensionsDns `pulumi:"dns"`
+	// A single observability block as defined below.
+	Observability *SkeClusterExtensionsObservability `pulumi:"observability"`
 }
 
 // SkeClusterExtensionsInput is an input type that accepts SkeClusterExtensionsArgs and SkeClusterExtensionsOutput values.
@@ -8503,10 +8990,14 @@ type SkeClusterExtensionsInput interface {
 type SkeClusterExtensionsArgs struct {
 	// Cluster access control configuration.
 	Acl SkeClusterExtensionsAclPtrInput `pulumi:"acl"`
-	// A single argus block as defined below.
+	// A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
+	//
+	// Deprecated: Use observability instead.
 	Argus SkeClusterExtensionsArgusPtrInput `pulumi:"argus"`
 	// DNS extension configuration
 	Dns SkeClusterExtensionsDnsPtrInput `pulumi:"dns"`
+	// A single observability block as defined below.
+	Observability SkeClusterExtensionsObservabilityPtrInput `pulumi:"observability"`
 }
 
 func (SkeClusterExtensionsArgs) ElementType() reflect.Type {
@@ -8591,7 +9082,9 @@ func (o SkeClusterExtensionsOutput) Acl() SkeClusterExtensionsAclPtrOutput {
 	return o.ApplyT(func(v SkeClusterExtensions) *SkeClusterExtensionsAcl { return v.Acl }).(SkeClusterExtensionsAclPtrOutput)
 }
 
-// A single argus block as defined below.
+// A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
+//
+// Deprecated: Use observability instead.
 func (o SkeClusterExtensionsOutput) Argus() SkeClusterExtensionsArgusPtrOutput {
 	return o.ApplyT(func(v SkeClusterExtensions) *SkeClusterExtensionsArgus { return v.Argus }).(SkeClusterExtensionsArgusPtrOutput)
 }
@@ -8599,6 +9092,11 @@ func (o SkeClusterExtensionsOutput) Argus() SkeClusterExtensionsArgusPtrOutput {
 // DNS extension configuration
 func (o SkeClusterExtensionsOutput) Dns() SkeClusterExtensionsDnsPtrOutput {
 	return o.ApplyT(func(v SkeClusterExtensions) *SkeClusterExtensionsDns { return v.Dns }).(SkeClusterExtensionsDnsPtrOutput)
+}
+
+// A single observability block as defined below.
+func (o SkeClusterExtensionsOutput) Observability() SkeClusterExtensionsObservabilityPtrOutput {
+	return o.ApplyT(func(v SkeClusterExtensions) *SkeClusterExtensionsObservability { return v.Observability }).(SkeClusterExtensionsObservabilityPtrOutput)
 }
 
 type SkeClusterExtensionsPtrOutput struct{ *pulumi.OutputState }
@@ -8635,7 +9133,9 @@ func (o SkeClusterExtensionsPtrOutput) Acl() SkeClusterExtensionsAclPtrOutput {
 	}).(SkeClusterExtensionsAclPtrOutput)
 }
 
-// A single argus block as defined below.
+// A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
+//
+// Deprecated: Use observability instead.
 func (o SkeClusterExtensionsPtrOutput) Argus() SkeClusterExtensionsArgusPtrOutput {
 	return o.ApplyT(func(v *SkeClusterExtensions) *SkeClusterExtensionsArgus {
 		if v == nil {
@@ -8653,6 +9153,16 @@ func (o SkeClusterExtensionsPtrOutput) Dns() SkeClusterExtensionsDnsPtrOutput {
 		}
 		return v.Dns
 	}).(SkeClusterExtensionsDnsPtrOutput)
+}
+
+// A single observability block as defined below.
+func (o SkeClusterExtensionsPtrOutput) Observability() SkeClusterExtensionsObservabilityPtrOutput {
+	return o.ApplyT(func(v *SkeClusterExtensions) *SkeClusterExtensionsObservability {
+		if v == nil {
+			return nil
+		}
+		return v.Observability
+	}).(SkeClusterExtensionsObservabilityPtrOutput)
 }
 
 type SkeClusterExtensionsAcl struct {
@@ -9121,6 +9631,162 @@ func (o SkeClusterExtensionsDnsPtrOutput) Zones() pulumi.StringArrayOutput {
 		}
 		return v.Zones
 	}).(pulumi.StringArrayOutput)
+}
+
+type SkeClusterExtensionsObservability struct {
+	// Flag to enable/disable Observability extensions.
+	Enabled bool `pulumi:"enabled"`
+	// Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+	InstanceId *string `pulumi:"instanceId"`
+}
+
+// SkeClusterExtensionsObservabilityInput is an input type that accepts SkeClusterExtensionsObservabilityArgs and SkeClusterExtensionsObservabilityOutput values.
+// You can construct a concrete instance of `SkeClusterExtensionsObservabilityInput` via:
+//
+//	SkeClusterExtensionsObservabilityArgs{...}
+type SkeClusterExtensionsObservabilityInput interface {
+	pulumi.Input
+
+	ToSkeClusterExtensionsObservabilityOutput() SkeClusterExtensionsObservabilityOutput
+	ToSkeClusterExtensionsObservabilityOutputWithContext(context.Context) SkeClusterExtensionsObservabilityOutput
+}
+
+type SkeClusterExtensionsObservabilityArgs struct {
+	// Flag to enable/disable Observability extensions.
+	Enabled pulumi.BoolInput `pulumi:"enabled"`
+	// Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+	InstanceId pulumi.StringPtrInput `pulumi:"instanceId"`
+}
+
+func (SkeClusterExtensionsObservabilityArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*SkeClusterExtensionsObservability)(nil)).Elem()
+}
+
+func (i SkeClusterExtensionsObservabilityArgs) ToSkeClusterExtensionsObservabilityOutput() SkeClusterExtensionsObservabilityOutput {
+	return i.ToSkeClusterExtensionsObservabilityOutputWithContext(context.Background())
+}
+
+func (i SkeClusterExtensionsObservabilityArgs) ToSkeClusterExtensionsObservabilityOutputWithContext(ctx context.Context) SkeClusterExtensionsObservabilityOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SkeClusterExtensionsObservabilityOutput)
+}
+
+func (i SkeClusterExtensionsObservabilityArgs) ToSkeClusterExtensionsObservabilityPtrOutput() SkeClusterExtensionsObservabilityPtrOutput {
+	return i.ToSkeClusterExtensionsObservabilityPtrOutputWithContext(context.Background())
+}
+
+func (i SkeClusterExtensionsObservabilityArgs) ToSkeClusterExtensionsObservabilityPtrOutputWithContext(ctx context.Context) SkeClusterExtensionsObservabilityPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SkeClusterExtensionsObservabilityOutput).ToSkeClusterExtensionsObservabilityPtrOutputWithContext(ctx)
+}
+
+// SkeClusterExtensionsObservabilityPtrInput is an input type that accepts SkeClusterExtensionsObservabilityArgs, SkeClusterExtensionsObservabilityPtr and SkeClusterExtensionsObservabilityPtrOutput values.
+// You can construct a concrete instance of `SkeClusterExtensionsObservabilityPtrInput` via:
+//
+//	        SkeClusterExtensionsObservabilityArgs{...}
+//
+//	or:
+//
+//	        nil
+type SkeClusterExtensionsObservabilityPtrInput interface {
+	pulumi.Input
+
+	ToSkeClusterExtensionsObservabilityPtrOutput() SkeClusterExtensionsObservabilityPtrOutput
+	ToSkeClusterExtensionsObservabilityPtrOutputWithContext(context.Context) SkeClusterExtensionsObservabilityPtrOutput
+}
+
+type skeClusterExtensionsObservabilityPtrType SkeClusterExtensionsObservabilityArgs
+
+func SkeClusterExtensionsObservabilityPtr(v *SkeClusterExtensionsObservabilityArgs) SkeClusterExtensionsObservabilityPtrInput {
+	return (*skeClusterExtensionsObservabilityPtrType)(v)
+}
+
+func (*skeClusterExtensionsObservabilityPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**SkeClusterExtensionsObservability)(nil)).Elem()
+}
+
+func (i *skeClusterExtensionsObservabilityPtrType) ToSkeClusterExtensionsObservabilityPtrOutput() SkeClusterExtensionsObservabilityPtrOutput {
+	return i.ToSkeClusterExtensionsObservabilityPtrOutputWithContext(context.Background())
+}
+
+func (i *skeClusterExtensionsObservabilityPtrType) ToSkeClusterExtensionsObservabilityPtrOutputWithContext(ctx context.Context) SkeClusterExtensionsObservabilityPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(SkeClusterExtensionsObservabilityPtrOutput)
+}
+
+type SkeClusterExtensionsObservabilityOutput struct{ *pulumi.OutputState }
+
+func (SkeClusterExtensionsObservabilityOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*SkeClusterExtensionsObservability)(nil)).Elem()
+}
+
+func (o SkeClusterExtensionsObservabilityOutput) ToSkeClusterExtensionsObservabilityOutput() SkeClusterExtensionsObservabilityOutput {
+	return o
+}
+
+func (o SkeClusterExtensionsObservabilityOutput) ToSkeClusterExtensionsObservabilityOutputWithContext(ctx context.Context) SkeClusterExtensionsObservabilityOutput {
+	return o
+}
+
+func (o SkeClusterExtensionsObservabilityOutput) ToSkeClusterExtensionsObservabilityPtrOutput() SkeClusterExtensionsObservabilityPtrOutput {
+	return o.ToSkeClusterExtensionsObservabilityPtrOutputWithContext(context.Background())
+}
+
+func (o SkeClusterExtensionsObservabilityOutput) ToSkeClusterExtensionsObservabilityPtrOutputWithContext(ctx context.Context) SkeClusterExtensionsObservabilityPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v SkeClusterExtensionsObservability) *SkeClusterExtensionsObservability {
+		return &v
+	}).(SkeClusterExtensionsObservabilityPtrOutput)
+}
+
+// Flag to enable/disable Observability extensions.
+func (o SkeClusterExtensionsObservabilityOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v SkeClusterExtensionsObservability) bool { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+// Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+func (o SkeClusterExtensionsObservabilityOutput) InstanceId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v SkeClusterExtensionsObservability) *string { return v.InstanceId }).(pulumi.StringPtrOutput)
+}
+
+type SkeClusterExtensionsObservabilityPtrOutput struct{ *pulumi.OutputState }
+
+func (SkeClusterExtensionsObservabilityPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**SkeClusterExtensionsObservability)(nil)).Elem()
+}
+
+func (o SkeClusterExtensionsObservabilityPtrOutput) ToSkeClusterExtensionsObservabilityPtrOutput() SkeClusterExtensionsObservabilityPtrOutput {
+	return o
+}
+
+func (o SkeClusterExtensionsObservabilityPtrOutput) ToSkeClusterExtensionsObservabilityPtrOutputWithContext(ctx context.Context) SkeClusterExtensionsObservabilityPtrOutput {
+	return o
+}
+
+func (o SkeClusterExtensionsObservabilityPtrOutput) Elem() SkeClusterExtensionsObservabilityOutput {
+	return o.ApplyT(func(v *SkeClusterExtensionsObservability) SkeClusterExtensionsObservability {
+		if v != nil {
+			return *v
+		}
+		var ret SkeClusterExtensionsObservability
+		return ret
+	}).(SkeClusterExtensionsObservabilityOutput)
+}
+
+// Flag to enable/disable Observability extensions.
+func (o SkeClusterExtensionsObservabilityPtrOutput) Enabled() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *SkeClusterExtensionsObservability) *bool {
+		if v == nil {
+			return nil
+		}
+		return &v.Enabled
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+func (o SkeClusterExtensionsObservabilityPtrOutput) InstanceId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *SkeClusterExtensionsObservability) *string {
+		if v == nil {
+			return nil
+		}
+		return v.InstanceId
+	}).(pulumi.StringPtrOutput)
 }
 
 type SkeClusterHibernation struct {
@@ -10564,6 +11230,10 @@ func (o VolumeSourcePtrOutput) Type() pulumi.StringPtrOutput {
 type GetCdnDistributionConfig struct {
 	// The configured backend for the distribution
 	Backend GetCdnDistributionConfigBackend `pulumi:"backend"`
+	// The configured countries where distribution of content is blocked
+	BlockedCountries []string `pulumi:"blockedCountries"`
+	// Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+	Optimizer GetCdnDistributionConfigOptimizer `pulumi:"optimizer"`
 	// The configured regions where content will be hosted
 	Regions []string `pulumi:"regions"`
 }
@@ -10582,6 +11252,10 @@ type GetCdnDistributionConfigInput interface {
 type GetCdnDistributionConfigArgs struct {
 	// The configured backend for the distribution
 	Backend GetCdnDistributionConfigBackendInput `pulumi:"backend"`
+	// The configured countries where distribution of content is blocked
+	BlockedCountries pulumi.StringArrayInput `pulumi:"blockedCountries"`
+	// Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+	Optimizer GetCdnDistributionConfigOptimizerInput `pulumi:"optimizer"`
 	// The configured regions where content will be hosted
 	Regions pulumi.StringArrayInput `pulumi:"regions"`
 }
@@ -10615,6 +11289,16 @@ func (o GetCdnDistributionConfigOutput) ToGetCdnDistributionConfigOutputWithCont
 // The configured backend for the distribution
 func (o GetCdnDistributionConfigOutput) Backend() GetCdnDistributionConfigBackendOutput {
 	return o.ApplyT(func(v GetCdnDistributionConfig) GetCdnDistributionConfigBackend { return v.Backend }).(GetCdnDistributionConfigBackendOutput)
+}
+
+// The configured countries where distribution of content is blocked
+func (o GetCdnDistributionConfigOutput) BlockedCountries() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetCdnDistributionConfig) []string { return v.BlockedCountries }).(pulumi.StringArrayOutput)
+}
+
+// Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+func (o GetCdnDistributionConfigOutput) Optimizer() GetCdnDistributionConfigOptimizerOutput {
+	return o.ApplyT(func(v GetCdnDistributionConfig) GetCdnDistributionConfigOptimizer { return v.Optimizer }).(GetCdnDistributionConfigOptimizerOutput)
 }
 
 // The configured regions where content will be hosted
@@ -10690,6 +11374,55 @@ func (o GetCdnDistributionConfigBackendOutput) OriginUrl() pulumi.StringOutput {
 // The configured backend type. Supported values are: `http`.
 func (o GetCdnDistributionConfigBackendOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v GetCdnDistributionConfigBackend) string { return v.Type }).(pulumi.StringOutput)
+}
+
+type GetCdnDistributionConfigOptimizer struct {
+	Enabled bool `pulumi:"enabled"`
+}
+
+// GetCdnDistributionConfigOptimizerInput is an input type that accepts GetCdnDistributionConfigOptimizerArgs and GetCdnDistributionConfigOptimizerOutput values.
+// You can construct a concrete instance of `GetCdnDistributionConfigOptimizerInput` via:
+//
+//	GetCdnDistributionConfigOptimizerArgs{...}
+type GetCdnDistributionConfigOptimizerInput interface {
+	pulumi.Input
+
+	ToGetCdnDistributionConfigOptimizerOutput() GetCdnDistributionConfigOptimizerOutput
+	ToGetCdnDistributionConfigOptimizerOutputWithContext(context.Context) GetCdnDistributionConfigOptimizerOutput
+}
+
+type GetCdnDistributionConfigOptimizerArgs struct {
+	Enabled pulumi.BoolInput `pulumi:"enabled"`
+}
+
+func (GetCdnDistributionConfigOptimizerArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetCdnDistributionConfigOptimizer)(nil)).Elem()
+}
+
+func (i GetCdnDistributionConfigOptimizerArgs) ToGetCdnDistributionConfigOptimizerOutput() GetCdnDistributionConfigOptimizerOutput {
+	return i.ToGetCdnDistributionConfigOptimizerOutputWithContext(context.Background())
+}
+
+func (i GetCdnDistributionConfigOptimizerArgs) ToGetCdnDistributionConfigOptimizerOutputWithContext(ctx context.Context) GetCdnDistributionConfigOptimizerOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetCdnDistributionConfigOptimizerOutput)
+}
+
+type GetCdnDistributionConfigOptimizerOutput struct{ *pulumi.OutputState }
+
+func (GetCdnDistributionConfigOptimizerOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetCdnDistributionConfigOptimizer)(nil)).Elem()
+}
+
+func (o GetCdnDistributionConfigOptimizerOutput) ToGetCdnDistributionConfigOptimizerOutput() GetCdnDistributionConfigOptimizerOutput {
+	return o
+}
+
+func (o GetCdnDistributionConfigOptimizerOutput) ToGetCdnDistributionConfigOptimizerOutputWithContext(ctx context.Context) GetCdnDistributionConfigOptimizerOutput {
+	return o
+}
+
+func (o GetCdnDistributionConfigOptimizerOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetCdnDistributionConfigOptimizer) bool { return v.Enabled }).(pulumi.BoolOutput)
 }
 
 type GetCdnDistributionDomain struct {
@@ -14956,6 +15689,552 @@ func (o GetRedisInstanceParametersOutput) TlsProtocols() pulumi.StringOutput {
 	return o.ApplyT(func(v GetRedisInstanceParameters) string { return v.TlsProtocols }).(pulumi.StringOutput)
 }
 
+type GetRoutingTableRouteDestination struct {
+	// CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+	Type string `pulumi:"type"`
+	// An CIDR string.
+	Value string `pulumi:"value"`
+}
+
+// GetRoutingTableRouteDestinationInput is an input type that accepts GetRoutingTableRouteDestinationArgs and GetRoutingTableRouteDestinationOutput values.
+// You can construct a concrete instance of `GetRoutingTableRouteDestinationInput` via:
+//
+//	GetRoutingTableRouteDestinationArgs{...}
+type GetRoutingTableRouteDestinationInput interface {
+	pulumi.Input
+
+	ToGetRoutingTableRouteDestinationOutput() GetRoutingTableRouteDestinationOutput
+	ToGetRoutingTableRouteDestinationOutputWithContext(context.Context) GetRoutingTableRouteDestinationOutput
+}
+
+type GetRoutingTableRouteDestinationArgs struct {
+	// CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+	Type pulumi.StringInput `pulumi:"type"`
+	// An CIDR string.
+	Value pulumi.StringInput `pulumi:"value"`
+}
+
+func (GetRoutingTableRouteDestinationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRoutingTableRouteDestination)(nil)).Elem()
+}
+
+func (i GetRoutingTableRouteDestinationArgs) ToGetRoutingTableRouteDestinationOutput() GetRoutingTableRouteDestinationOutput {
+	return i.ToGetRoutingTableRouteDestinationOutputWithContext(context.Background())
+}
+
+func (i GetRoutingTableRouteDestinationArgs) ToGetRoutingTableRouteDestinationOutputWithContext(ctx context.Context) GetRoutingTableRouteDestinationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRoutingTableRouteDestinationOutput)
+}
+
+type GetRoutingTableRouteDestinationOutput struct{ *pulumi.OutputState }
+
+func (GetRoutingTableRouteDestinationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRoutingTableRouteDestination)(nil)).Elem()
+}
+
+func (o GetRoutingTableRouteDestinationOutput) ToGetRoutingTableRouteDestinationOutput() GetRoutingTableRouteDestinationOutput {
+	return o
+}
+
+func (o GetRoutingTableRouteDestinationOutput) ToGetRoutingTableRouteDestinationOutputWithContext(ctx context.Context) GetRoutingTableRouteDestinationOutput {
+	return o
+}
+
+// CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+func (o GetRoutingTableRouteDestinationOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTableRouteDestination) string { return v.Type }).(pulumi.StringOutput)
+}
+
+// An CIDR string.
+func (o GetRoutingTableRouteDestinationOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTableRouteDestination) string { return v.Value }).(pulumi.StringOutput)
+}
+
+type GetRoutingTableRouteNextHop struct {
+	// Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+	Type string `pulumi:"type"`
+	// Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+	Value string `pulumi:"value"`
+}
+
+// GetRoutingTableRouteNextHopInput is an input type that accepts GetRoutingTableRouteNextHopArgs and GetRoutingTableRouteNextHopOutput values.
+// You can construct a concrete instance of `GetRoutingTableRouteNextHopInput` via:
+//
+//	GetRoutingTableRouteNextHopArgs{...}
+type GetRoutingTableRouteNextHopInput interface {
+	pulumi.Input
+
+	ToGetRoutingTableRouteNextHopOutput() GetRoutingTableRouteNextHopOutput
+	ToGetRoutingTableRouteNextHopOutputWithContext(context.Context) GetRoutingTableRouteNextHopOutput
+}
+
+type GetRoutingTableRouteNextHopArgs struct {
+	// Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+	Type pulumi.StringInput `pulumi:"type"`
+	// Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+	Value pulumi.StringInput `pulumi:"value"`
+}
+
+func (GetRoutingTableRouteNextHopArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRoutingTableRouteNextHop)(nil)).Elem()
+}
+
+func (i GetRoutingTableRouteNextHopArgs) ToGetRoutingTableRouteNextHopOutput() GetRoutingTableRouteNextHopOutput {
+	return i.ToGetRoutingTableRouteNextHopOutputWithContext(context.Background())
+}
+
+func (i GetRoutingTableRouteNextHopArgs) ToGetRoutingTableRouteNextHopOutputWithContext(ctx context.Context) GetRoutingTableRouteNextHopOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRoutingTableRouteNextHopOutput)
+}
+
+type GetRoutingTableRouteNextHopOutput struct{ *pulumi.OutputState }
+
+func (GetRoutingTableRouteNextHopOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRoutingTableRouteNextHop)(nil)).Elem()
+}
+
+func (o GetRoutingTableRouteNextHopOutput) ToGetRoutingTableRouteNextHopOutput() GetRoutingTableRouteNextHopOutput {
+	return o
+}
+
+func (o GetRoutingTableRouteNextHopOutput) ToGetRoutingTableRouteNextHopOutputWithContext(ctx context.Context) GetRoutingTableRouteNextHopOutput {
+	return o
+}
+
+// Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+func (o GetRoutingTableRouteNextHopOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTableRouteNextHop) string { return v.Type }).(pulumi.StringOutput)
+}
+
+// Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+func (o GetRoutingTableRouteNextHopOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTableRouteNextHop) string { return v.Value }).(pulumi.StringOutput)
+}
+
+type GetRoutingTableRoutesRoute struct {
+	// Date-time when the route was created
+	CreatedAt string `pulumi:"createdAt"`
+	// Destination of the route.
+	Destination GetRoutingTableRoutesRouteDestination `pulumi:"destination"`
+	// Labels are key-value string pairs which can be attached to a resource container
+	Labels map[string]string `pulumi:"labels"`
+	// Next hop destination.
+	NextHop GetRoutingTableRoutesRouteNextHop `pulumi:"nextHop"`
+	// Route ID.
+	RouteId string `pulumi:"routeId"`
+	// Date-time when the route was updated
+	UpdatedAt string `pulumi:"updatedAt"`
+}
+
+// GetRoutingTableRoutesRouteInput is an input type that accepts GetRoutingTableRoutesRouteArgs and GetRoutingTableRoutesRouteOutput values.
+// You can construct a concrete instance of `GetRoutingTableRoutesRouteInput` via:
+//
+//	GetRoutingTableRoutesRouteArgs{...}
+type GetRoutingTableRoutesRouteInput interface {
+	pulumi.Input
+
+	ToGetRoutingTableRoutesRouteOutput() GetRoutingTableRoutesRouteOutput
+	ToGetRoutingTableRoutesRouteOutputWithContext(context.Context) GetRoutingTableRoutesRouteOutput
+}
+
+type GetRoutingTableRoutesRouteArgs struct {
+	// Date-time when the route was created
+	CreatedAt pulumi.StringInput `pulumi:"createdAt"`
+	// Destination of the route.
+	Destination GetRoutingTableRoutesRouteDestinationInput `pulumi:"destination"`
+	// Labels are key-value string pairs which can be attached to a resource container
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// Next hop destination.
+	NextHop GetRoutingTableRoutesRouteNextHopInput `pulumi:"nextHop"`
+	// Route ID.
+	RouteId pulumi.StringInput `pulumi:"routeId"`
+	// Date-time when the route was updated
+	UpdatedAt pulumi.StringInput `pulumi:"updatedAt"`
+}
+
+func (GetRoutingTableRoutesRouteArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRoutingTableRoutesRoute)(nil)).Elem()
+}
+
+func (i GetRoutingTableRoutesRouteArgs) ToGetRoutingTableRoutesRouteOutput() GetRoutingTableRoutesRouteOutput {
+	return i.ToGetRoutingTableRoutesRouteOutputWithContext(context.Background())
+}
+
+func (i GetRoutingTableRoutesRouteArgs) ToGetRoutingTableRoutesRouteOutputWithContext(ctx context.Context) GetRoutingTableRoutesRouteOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRoutingTableRoutesRouteOutput)
+}
+
+// GetRoutingTableRoutesRouteArrayInput is an input type that accepts GetRoutingTableRoutesRouteArray and GetRoutingTableRoutesRouteArrayOutput values.
+// You can construct a concrete instance of `GetRoutingTableRoutesRouteArrayInput` via:
+//
+//	GetRoutingTableRoutesRouteArray{ GetRoutingTableRoutesRouteArgs{...} }
+type GetRoutingTableRoutesRouteArrayInput interface {
+	pulumi.Input
+
+	ToGetRoutingTableRoutesRouteArrayOutput() GetRoutingTableRoutesRouteArrayOutput
+	ToGetRoutingTableRoutesRouteArrayOutputWithContext(context.Context) GetRoutingTableRoutesRouteArrayOutput
+}
+
+type GetRoutingTableRoutesRouteArray []GetRoutingTableRoutesRouteInput
+
+func (GetRoutingTableRoutesRouteArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetRoutingTableRoutesRoute)(nil)).Elem()
+}
+
+func (i GetRoutingTableRoutesRouteArray) ToGetRoutingTableRoutesRouteArrayOutput() GetRoutingTableRoutesRouteArrayOutput {
+	return i.ToGetRoutingTableRoutesRouteArrayOutputWithContext(context.Background())
+}
+
+func (i GetRoutingTableRoutesRouteArray) ToGetRoutingTableRoutesRouteArrayOutputWithContext(ctx context.Context) GetRoutingTableRoutesRouteArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRoutingTableRoutesRouteArrayOutput)
+}
+
+type GetRoutingTableRoutesRouteOutput struct{ *pulumi.OutputState }
+
+func (GetRoutingTableRoutesRouteOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRoutingTableRoutesRoute)(nil)).Elem()
+}
+
+func (o GetRoutingTableRoutesRouteOutput) ToGetRoutingTableRoutesRouteOutput() GetRoutingTableRoutesRouteOutput {
+	return o
+}
+
+func (o GetRoutingTableRoutesRouteOutput) ToGetRoutingTableRoutesRouteOutputWithContext(ctx context.Context) GetRoutingTableRoutesRouteOutput {
+	return o
+}
+
+// Date-time when the route was created
+func (o GetRoutingTableRoutesRouteOutput) CreatedAt() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTableRoutesRoute) string { return v.CreatedAt }).(pulumi.StringOutput)
+}
+
+// Destination of the route.
+func (o GetRoutingTableRoutesRouteOutput) Destination() GetRoutingTableRoutesRouteDestinationOutput {
+	return o.ApplyT(func(v GetRoutingTableRoutesRoute) GetRoutingTableRoutesRouteDestination { return v.Destination }).(GetRoutingTableRoutesRouteDestinationOutput)
+}
+
+// Labels are key-value string pairs which can be attached to a resource container
+func (o GetRoutingTableRoutesRouteOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetRoutingTableRoutesRoute) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// Next hop destination.
+func (o GetRoutingTableRoutesRouteOutput) NextHop() GetRoutingTableRoutesRouteNextHopOutput {
+	return o.ApplyT(func(v GetRoutingTableRoutesRoute) GetRoutingTableRoutesRouteNextHop { return v.NextHop }).(GetRoutingTableRoutesRouteNextHopOutput)
+}
+
+// Route ID.
+func (o GetRoutingTableRoutesRouteOutput) RouteId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTableRoutesRoute) string { return v.RouteId }).(pulumi.StringOutput)
+}
+
+// Date-time when the route was updated
+func (o GetRoutingTableRoutesRouteOutput) UpdatedAt() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTableRoutesRoute) string { return v.UpdatedAt }).(pulumi.StringOutput)
+}
+
+type GetRoutingTableRoutesRouteArrayOutput struct{ *pulumi.OutputState }
+
+func (GetRoutingTableRoutesRouteArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetRoutingTableRoutesRoute)(nil)).Elem()
+}
+
+func (o GetRoutingTableRoutesRouteArrayOutput) ToGetRoutingTableRoutesRouteArrayOutput() GetRoutingTableRoutesRouteArrayOutput {
+	return o
+}
+
+func (o GetRoutingTableRoutesRouteArrayOutput) ToGetRoutingTableRoutesRouteArrayOutputWithContext(ctx context.Context) GetRoutingTableRoutesRouteArrayOutput {
+	return o
+}
+
+func (o GetRoutingTableRoutesRouteArrayOutput) Index(i pulumi.IntInput) GetRoutingTableRoutesRouteOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetRoutingTableRoutesRoute {
+		return vs[0].([]GetRoutingTableRoutesRoute)[vs[1].(int)]
+	}).(GetRoutingTableRoutesRouteOutput)
+}
+
+type GetRoutingTableRoutesRouteDestination struct {
+	// CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+	Type string `pulumi:"type"`
+	// An CIDR string.
+	Value string `pulumi:"value"`
+}
+
+// GetRoutingTableRoutesRouteDestinationInput is an input type that accepts GetRoutingTableRoutesRouteDestinationArgs and GetRoutingTableRoutesRouteDestinationOutput values.
+// You can construct a concrete instance of `GetRoutingTableRoutesRouteDestinationInput` via:
+//
+//	GetRoutingTableRoutesRouteDestinationArgs{...}
+type GetRoutingTableRoutesRouteDestinationInput interface {
+	pulumi.Input
+
+	ToGetRoutingTableRoutesRouteDestinationOutput() GetRoutingTableRoutesRouteDestinationOutput
+	ToGetRoutingTableRoutesRouteDestinationOutputWithContext(context.Context) GetRoutingTableRoutesRouteDestinationOutput
+}
+
+type GetRoutingTableRoutesRouteDestinationArgs struct {
+	// CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+	Type pulumi.StringInput `pulumi:"type"`
+	// An CIDR string.
+	Value pulumi.StringInput `pulumi:"value"`
+}
+
+func (GetRoutingTableRoutesRouteDestinationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRoutingTableRoutesRouteDestination)(nil)).Elem()
+}
+
+func (i GetRoutingTableRoutesRouteDestinationArgs) ToGetRoutingTableRoutesRouteDestinationOutput() GetRoutingTableRoutesRouteDestinationOutput {
+	return i.ToGetRoutingTableRoutesRouteDestinationOutputWithContext(context.Background())
+}
+
+func (i GetRoutingTableRoutesRouteDestinationArgs) ToGetRoutingTableRoutesRouteDestinationOutputWithContext(ctx context.Context) GetRoutingTableRoutesRouteDestinationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRoutingTableRoutesRouteDestinationOutput)
+}
+
+type GetRoutingTableRoutesRouteDestinationOutput struct{ *pulumi.OutputState }
+
+func (GetRoutingTableRoutesRouteDestinationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRoutingTableRoutesRouteDestination)(nil)).Elem()
+}
+
+func (o GetRoutingTableRoutesRouteDestinationOutput) ToGetRoutingTableRoutesRouteDestinationOutput() GetRoutingTableRoutesRouteDestinationOutput {
+	return o
+}
+
+func (o GetRoutingTableRoutesRouteDestinationOutput) ToGetRoutingTableRoutesRouteDestinationOutputWithContext(ctx context.Context) GetRoutingTableRoutesRouteDestinationOutput {
+	return o
+}
+
+// CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+func (o GetRoutingTableRoutesRouteDestinationOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTableRoutesRouteDestination) string { return v.Type }).(pulumi.StringOutput)
+}
+
+// An CIDR string.
+func (o GetRoutingTableRoutesRouteDestinationOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTableRoutesRouteDestination) string { return v.Value }).(pulumi.StringOutput)
+}
+
+type GetRoutingTableRoutesRouteNextHop struct {
+	// Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+	Type string `pulumi:"type"`
+	// Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+	Value string `pulumi:"value"`
+}
+
+// GetRoutingTableRoutesRouteNextHopInput is an input type that accepts GetRoutingTableRoutesRouteNextHopArgs and GetRoutingTableRoutesRouteNextHopOutput values.
+// You can construct a concrete instance of `GetRoutingTableRoutesRouteNextHopInput` via:
+//
+//	GetRoutingTableRoutesRouteNextHopArgs{...}
+type GetRoutingTableRoutesRouteNextHopInput interface {
+	pulumi.Input
+
+	ToGetRoutingTableRoutesRouteNextHopOutput() GetRoutingTableRoutesRouteNextHopOutput
+	ToGetRoutingTableRoutesRouteNextHopOutputWithContext(context.Context) GetRoutingTableRoutesRouteNextHopOutput
+}
+
+type GetRoutingTableRoutesRouteNextHopArgs struct {
+	// Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+	Type pulumi.StringInput `pulumi:"type"`
+	// Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+	Value pulumi.StringInput `pulumi:"value"`
+}
+
+func (GetRoutingTableRoutesRouteNextHopArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRoutingTableRoutesRouteNextHop)(nil)).Elem()
+}
+
+func (i GetRoutingTableRoutesRouteNextHopArgs) ToGetRoutingTableRoutesRouteNextHopOutput() GetRoutingTableRoutesRouteNextHopOutput {
+	return i.ToGetRoutingTableRoutesRouteNextHopOutputWithContext(context.Background())
+}
+
+func (i GetRoutingTableRoutesRouteNextHopArgs) ToGetRoutingTableRoutesRouteNextHopOutputWithContext(ctx context.Context) GetRoutingTableRoutesRouteNextHopOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRoutingTableRoutesRouteNextHopOutput)
+}
+
+type GetRoutingTableRoutesRouteNextHopOutput struct{ *pulumi.OutputState }
+
+func (GetRoutingTableRoutesRouteNextHopOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRoutingTableRoutesRouteNextHop)(nil)).Elem()
+}
+
+func (o GetRoutingTableRoutesRouteNextHopOutput) ToGetRoutingTableRoutesRouteNextHopOutput() GetRoutingTableRoutesRouteNextHopOutput {
+	return o
+}
+
+func (o GetRoutingTableRoutesRouteNextHopOutput) ToGetRoutingTableRoutesRouteNextHopOutputWithContext(ctx context.Context) GetRoutingTableRoutesRouteNextHopOutput {
+	return o
+}
+
+// Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+func (o GetRoutingTableRoutesRouteNextHopOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTableRoutesRouteNextHop) string { return v.Type }).(pulumi.StringOutput)
+}
+
+// Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+func (o GetRoutingTableRoutesRouteNextHopOutput) Value() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTableRoutesRouteNextHop) string { return v.Value }).(pulumi.StringOutput)
+}
+
+type GetRoutingTablesItem struct {
+	// Date-time when the routing table was created
+	CreatedAt string `pulumi:"createdAt"`
+	// When true this is the default routing table for this network area. It can't be deleted and is used if the user does not specify it otherwise.
+	Default bool `pulumi:"default"`
+	// Description of the routing table.
+	Description string `pulumi:"description"`
+	// Labels are key-value string pairs which can be attached to a resource container
+	Labels map[string]string `pulumi:"labels"`
+	// The name of the routing table.
+	Name string `pulumi:"name"`
+	// The routing tables ID.
+	RoutingTableId string `pulumi:"routingTableId"`
+	// This controls whether the routes for project-to-project communication are created automatically or not.
+	SystemRoutes bool `pulumi:"systemRoutes"`
+	// Date-time when the routing table was updated
+	UpdatedAt string `pulumi:"updatedAt"`
+}
+
+// GetRoutingTablesItemInput is an input type that accepts GetRoutingTablesItemArgs and GetRoutingTablesItemOutput values.
+// You can construct a concrete instance of `GetRoutingTablesItemInput` via:
+//
+//	GetRoutingTablesItemArgs{...}
+type GetRoutingTablesItemInput interface {
+	pulumi.Input
+
+	ToGetRoutingTablesItemOutput() GetRoutingTablesItemOutput
+	ToGetRoutingTablesItemOutputWithContext(context.Context) GetRoutingTablesItemOutput
+}
+
+type GetRoutingTablesItemArgs struct {
+	// Date-time when the routing table was created
+	CreatedAt pulumi.StringInput `pulumi:"createdAt"`
+	// When true this is the default routing table for this network area. It can't be deleted and is used if the user does not specify it otherwise.
+	Default pulumi.BoolInput `pulumi:"default"`
+	// Description of the routing table.
+	Description pulumi.StringInput `pulumi:"description"`
+	// Labels are key-value string pairs which can be attached to a resource container
+	Labels pulumi.StringMapInput `pulumi:"labels"`
+	// The name of the routing table.
+	Name pulumi.StringInput `pulumi:"name"`
+	// The routing tables ID.
+	RoutingTableId pulumi.StringInput `pulumi:"routingTableId"`
+	// This controls whether the routes for project-to-project communication are created automatically or not.
+	SystemRoutes pulumi.BoolInput `pulumi:"systemRoutes"`
+	// Date-time when the routing table was updated
+	UpdatedAt pulumi.StringInput `pulumi:"updatedAt"`
+}
+
+func (GetRoutingTablesItemArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRoutingTablesItem)(nil)).Elem()
+}
+
+func (i GetRoutingTablesItemArgs) ToGetRoutingTablesItemOutput() GetRoutingTablesItemOutput {
+	return i.ToGetRoutingTablesItemOutputWithContext(context.Background())
+}
+
+func (i GetRoutingTablesItemArgs) ToGetRoutingTablesItemOutputWithContext(ctx context.Context) GetRoutingTablesItemOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRoutingTablesItemOutput)
+}
+
+// GetRoutingTablesItemArrayInput is an input type that accepts GetRoutingTablesItemArray and GetRoutingTablesItemArrayOutput values.
+// You can construct a concrete instance of `GetRoutingTablesItemArrayInput` via:
+//
+//	GetRoutingTablesItemArray{ GetRoutingTablesItemArgs{...} }
+type GetRoutingTablesItemArrayInput interface {
+	pulumi.Input
+
+	ToGetRoutingTablesItemArrayOutput() GetRoutingTablesItemArrayOutput
+	ToGetRoutingTablesItemArrayOutputWithContext(context.Context) GetRoutingTablesItemArrayOutput
+}
+
+type GetRoutingTablesItemArray []GetRoutingTablesItemInput
+
+func (GetRoutingTablesItemArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetRoutingTablesItem)(nil)).Elem()
+}
+
+func (i GetRoutingTablesItemArray) ToGetRoutingTablesItemArrayOutput() GetRoutingTablesItemArrayOutput {
+	return i.ToGetRoutingTablesItemArrayOutputWithContext(context.Background())
+}
+
+func (i GetRoutingTablesItemArray) ToGetRoutingTablesItemArrayOutputWithContext(ctx context.Context) GetRoutingTablesItemArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetRoutingTablesItemArrayOutput)
+}
+
+type GetRoutingTablesItemOutput struct{ *pulumi.OutputState }
+
+func (GetRoutingTablesItemOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetRoutingTablesItem)(nil)).Elem()
+}
+
+func (o GetRoutingTablesItemOutput) ToGetRoutingTablesItemOutput() GetRoutingTablesItemOutput {
+	return o
+}
+
+func (o GetRoutingTablesItemOutput) ToGetRoutingTablesItemOutputWithContext(ctx context.Context) GetRoutingTablesItemOutput {
+	return o
+}
+
+// Date-time when the routing table was created
+func (o GetRoutingTablesItemOutput) CreatedAt() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTablesItem) string { return v.CreatedAt }).(pulumi.StringOutput)
+}
+
+// When true this is the default routing table for this network area. It can't be deleted and is used if the user does not specify it otherwise.
+func (o GetRoutingTablesItemOutput) Default() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetRoutingTablesItem) bool { return v.Default }).(pulumi.BoolOutput)
+}
+
+// Description of the routing table.
+func (o GetRoutingTablesItemOutput) Description() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTablesItem) string { return v.Description }).(pulumi.StringOutput)
+}
+
+// Labels are key-value string pairs which can be attached to a resource container
+func (o GetRoutingTablesItemOutput) Labels() pulumi.StringMapOutput {
+	return o.ApplyT(func(v GetRoutingTablesItem) map[string]string { return v.Labels }).(pulumi.StringMapOutput)
+}
+
+// The name of the routing table.
+func (o GetRoutingTablesItemOutput) Name() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTablesItem) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// The routing tables ID.
+func (o GetRoutingTablesItemOutput) RoutingTableId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTablesItem) string { return v.RoutingTableId }).(pulumi.StringOutput)
+}
+
+// This controls whether the routes for project-to-project communication are created automatically or not.
+func (o GetRoutingTablesItemOutput) SystemRoutes() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetRoutingTablesItem) bool { return v.SystemRoutes }).(pulumi.BoolOutput)
+}
+
+// Date-time when the routing table was updated
+func (o GetRoutingTablesItemOutput) UpdatedAt() pulumi.StringOutput {
+	return o.ApplyT(func(v GetRoutingTablesItem) string { return v.UpdatedAt }).(pulumi.StringOutput)
+}
+
+type GetRoutingTablesItemArrayOutput struct{ *pulumi.OutputState }
+
+func (GetRoutingTablesItemArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]GetRoutingTablesItem)(nil)).Elem()
+}
+
+func (o GetRoutingTablesItemArrayOutput) ToGetRoutingTablesItemArrayOutput() GetRoutingTablesItemArrayOutput {
+	return o
+}
+
+func (o GetRoutingTablesItemArrayOutput) ToGetRoutingTablesItemArrayOutputWithContext(ctx context.Context) GetRoutingTablesItemArrayOutput {
+	return o
+}
+
+func (o GetRoutingTablesItemArrayOutput) Index(i pulumi.IntInput) GetRoutingTablesItemOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) GetRoutingTablesItem {
+		return vs[0].([]GetRoutingTablesItem)[vs[1].(int)]
+	}).(GetRoutingTablesItemOutput)
+}
+
 type GetSecurityGroupRuleIcmpParameters struct {
 	// ICMP code. Can be set if the protocol is ICMP.
 	Code int `pulumi:"code"`
@@ -15587,10 +16866,14 @@ func (o GetServerUpdateSchedulesItemArrayOutput) Index(i pulumi.IntInput) GetSer
 type GetSkeClusterExtensions struct {
 	// Cluster access control configuration
 	Acl GetSkeClusterExtensionsAcl `pulumi:"acl"`
-	// A single argus block as defined below
+	// A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
+	//
+	// Deprecated: Use observability instead.
 	Argus GetSkeClusterExtensionsArgus `pulumi:"argus"`
 	// DNS extension configuration
 	Dns GetSkeClusterExtensionsDns `pulumi:"dns"`
+	// A single observability block as defined below.
+	Observability GetSkeClusterExtensionsObservability `pulumi:"observability"`
 }
 
 // GetSkeClusterExtensionsInput is an input type that accepts GetSkeClusterExtensionsArgs and GetSkeClusterExtensionsOutput values.
@@ -15607,10 +16890,14 @@ type GetSkeClusterExtensionsInput interface {
 type GetSkeClusterExtensionsArgs struct {
 	// Cluster access control configuration
 	Acl GetSkeClusterExtensionsAclInput `pulumi:"acl"`
-	// A single argus block as defined below
+	// A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
+	//
+	// Deprecated: Use observability instead.
 	Argus GetSkeClusterExtensionsArgusInput `pulumi:"argus"`
 	// DNS extension configuration
 	Dns GetSkeClusterExtensionsDnsInput `pulumi:"dns"`
+	// A single observability block as defined below.
+	Observability GetSkeClusterExtensionsObservabilityInput `pulumi:"observability"`
 }
 
 func (GetSkeClusterExtensionsArgs) ElementType() reflect.Type {
@@ -15644,7 +16931,9 @@ func (o GetSkeClusterExtensionsOutput) Acl() GetSkeClusterExtensionsAclOutput {
 	return o.ApplyT(func(v GetSkeClusterExtensions) GetSkeClusterExtensionsAcl { return v.Acl }).(GetSkeClusterExtensionsAclOutput)
 }
 
-// A single argus block as defined below
+// A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
+//
+// Deprecated: Use observability instead.
 func (o GetSkeClusterExtensionsOutput) Argus() GetSkeClusterExtensionsArgusOutput {
 	return o.ApplyT(func(v GetSkeClusterExtensions) GetSkeClusterExtensionsArgus { return v.Argus }).(GetSkeClusterExtensionsArgusOutput)
 }
@@ -15652,6 +16941,11 @@ func (o GetSkeClusterExtensionsOutput) Argus() GetSkeClusterExtensionsArgusOutpu
 // DNS extension configuration
 func (o GetSkeClusterExtensionsOutput) Dns() GetSkeClusterExtensionsDnsOutput {
 	return o.ApplyT(func(v GetSkeClusterExtensions) GetSkeClusterExtensionsDns { return v.Dns }).(GetSkeClusterExtensionsDnsOutput)
+}
+
+// A single observability block as defined below.
+func (o GetSkeClusterExtensionsOutput) Observability() GetSkeClusterExtensionsObservabilityOutput {
+	return o.ApplyT(func(v GetSkeClusterExtensions) GetSkeClusterExtensionsObservability { return v.Observability }).(GetSkeClusterExtensionsObservabilityOutput)
 }
 
 type GetSkeClusterExtensionsAcl struct {
@@ -15835,6 +17129,67 @@ func (o GetSkeClusterExtensionsDnsOutput) Enabled() pulumi.BoolOutput {
 // Specify a list of domain filters for externalDNS (e.g., `foo.runs.onstackit.cloud`)
 func (o GetSkeClusterExtensionsDnsOutput) Zones() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v GetSkeClusterExtensionsDns) []string { return v.Zones }).(pulumi.StringArrayOutput)
+}
+
+type GetSkeClusterExtensionsObservability struct {
+	// Flag to enable/disable Observability extensions.
+	Enabled bool `pulumi:"enabled"`
+	// Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+	InstanceId string `pulumi:"instanceId"`
+}
+
+// GetSkeClusterExtensionsObservabilityInput is an input type that accepts GetSkeClusterExtensionsObservabilityArgs and GetSkeClusterExtensionsObservabilityOutput values.
+// You can construct a concrete instance of `GetSkeClusterExtensionsObservabilityInput` via:
+//
+//	GetSkeClusterExtensionsObservabilityArgs{...}
+type GetSkeClusterExtensionsObservabilityInput interface {
+	pulumi.Input
+
+	ToGetSkeClusterExtensionsObservabilityOutput() GetSkeClusterExtensionsObservabilityOutput
+	ToGetSkeClusterExtensionsObservabilityOutputWithContext(context.Context) GetSkeClusterExtensionsObservabilityOutput
+}
+
+type GetSkeClusterExtensionsObservabilityArgs struct {
+	// Flag to enable/disable Observability extensions.
+	Enabled pulumi.BoolInput `pulumi:"enabled"`
+	// Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+	InstanceId pulumi.StringInput `pulumi:"instanceId"`
+}
+
+func (GetSkeClusterExtensionsObservabilityArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSkeClusterExtensionsObservability)(nil)).Elem()
+}
+
+func (i GetSkeClusterExtensionsObservabilityArgs) ToGetSkeClusterExtensionsObservabilityOutput() GetSkeClusterExtensionsObservabilityOutput {
+	return i.ToGetSkeClusterExtensionsObservabilityOutputWithContext(context.Background())
+}
+
+func (i GetSkeClusterExtensionsObservabilityArgs) ToGetSkeClusterExtensionsObservabilityOutputWithContext(ctx context.Context) GetSkeClusterExtensionsObservabilityOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetSkeClusterExtensionsObservabilityOutput)
+}
+
+type GetSkeClusterExtensionsObservabilityOutput struct{ *pulumi.OutputState }
+
+func (GetSkeClusterExtensionsObservabilityOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetSkeClusterExtensionsObservability)(nil)).Elem()
+}
+
+func (o GetSkeClusterExtensionsObservabilityOutput) ToGetSkeClusterExtensionsObservabilityOutput() GetSkeClusterExtensionsObservabilityOutput {
+	return o
+}
+
+func (o GetSkeClusterExtensionsObservabilityOutput) ToGetSkeClusterExtensionsObservabilityOutputWithContext(ctx context.Context) GetSkeClusterExtensionsObservabilityOutput {
+	return o
+}
+
+// Flag to enable/disable Observability extensions.
+func (o GetSkeClusterExtensionsObservabilityOutput) Enabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetSkeClusterExtensionsObservability) bool { return v.Enabled }).(pulumi.BoolOutput)
+}
+
+// Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+func (o GetSkeClusterExtensionsObservabilityOutput) InstanceId() pulumi.StringOutput {
+	return o.ApplyT(func(v GetSkeClusterExtensionsObservability) string { return v.InstanceId }).(pulumi.StringOutput)
 }
 
 type GetSkeClusterHibernation struct {
@@ -16682,6 +18037,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*CdnDistributionConfigPtrInput)(nil)).Elem(), CdnDistributionConfigArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CdnDistributionConfigBackendInput)(nil)).Elem(), CdnDistributionConfigBackendArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CdnDistributionConfigBackendPtrInput)(nil)).Elem(), CdnDistributionConfigBackendArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CdnDistributionConfigOptimizerInput)(nil)).Elem(), CdnDistributionConfigOptimizerArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CdnDistributionConfigOptimizerPtrInput)(nil)).Elem(), CdnDistributionConfigOptimizerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CdnDistributionDomainInput)(nil)).Elem(), CdnDistributionDomainArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CdnDistributionDomainArrayInput)(nil)).Elem(), CdnDistributionDomainArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*ImageChecksumInput)(nil)).Elem(), ImageChecksumArgs{})
@@ -16758,6 +18115,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*RabbitmqInstanceParametersPtrInput)(nil)).Elem(), RabbitmqInstanceParametersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RedisInstanceParametersInput)(nil)).Elem(), RedisInstanceParametersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RedisInstanceParametersPtrInput)(nil)).Elem(), RedisInstanceParametersArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*RoutingTableRouteDestinationInput)(nil)).Elem(), RoutingTableRouteDestinationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*RoutingTableRouteDestinationPtrInput)(nil)).Elem(), RoutingTableRouteDestinationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*RoutingTableRouteNextHopInput)(nil)).Elem(), RoutingTableRouteNextHopArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*RoutingTableRouteNextHopPtrInput)(nil)).Elem(), RoutingTableRouteNextHopArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SecurityGroupRuleIcmpParametersInput)(nil)).Elem(), SecurityGroupRuleIcmpParametersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SecurityGroupRuleIcmpParametersPtrInput)(nil)).Elem(), SecurityGroupRuleIcmpParametersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SecurityGroupRulePortRangeInput)(nil)).Elem(), SecurityGroupRulePortRangeArgs{})
@@ -16776,6 +18137,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SkeClusterExtensionsArgusPtrInput)(nil)).Elem(), SkeClusterExtensionsArgusArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SkeClusterExtensionsDnsInput)(nil)).Elem(), SkeClusterExtensionsDnsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SkeClusterExtensionsDnsPtrInput)(nil)).Elem(), SkeClusterExtensionsDnsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*SkeClusterExtensionsObservabilityInput)(nil)).Elem(), SkeClusterExtensionsObservabilityArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*SkeClusterExtensionsObservabilityPtrInput)(nil)).Elem(), SkeClusterExtensionsObservabilityArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SkeClusterHibernationInput)(nil)).Elem(), SkeClusterHibernationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SkeClusterHibernationArrayInput)(nil)).Elem(), SkeClusterHibernationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*SkeClusterMaintenanceInput)(nil)).Elem(), SkeClusterMaintenanceArgs{})
@@ -16796,6 +18159,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSourcePtrInput)(nil)).Elem(), VolumeSourceArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetCdnDistributionConfigInput)(nil)).Elem(), GetCdnDistributionConfigArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetCdnDistributionConfigBackendInput)(nil)).Elem(), GetCdnDistributionConfigBackendArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetCdnDistributionConfigOptimizerInput)(nil)).Elem(), GetCdnDistributionConfigOptimizerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetCdnDistributionDomainInput)(nil)).Elem(), GetCdnDistributionDomainArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetCdnDistributionDomainArrayInput)(nil)).Elem(), GetCdnDistributionDomainArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetImageChecksumInput)(nil)).Elem(), GetImageChecksumArgs{})
@@ -16852,6 +18216,14 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetPublicIpRangesPublicIpRangeArrayInput)(nil)).Elem(), GetPublicIpRangesPublicIpRangeArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetRabbitmqInstanceParametersInput)(nil)).Elem(), GetRabbitmqInstanceParametersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetRedisInstanceParametersInput)(nil)).Elem(), GetRedisInstanceParametersArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetRoutingTableRouteDestinationInput)(nil)).Elem(), GetRoutingTableRouteDestinationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetRoutingTableRouteNextHopInput)(nil)).Elem(), GetRoutingTableRouteNextHopArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetRoutingTableRoutesRouteInput)(nil)).Elem(), GetRoutingTableRoutesRouteArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetRoutingTableRoutesRouteArrayInput)(nil)).Elem(), GetRoutingTableRoutesRouteArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetRoutingTableRoutesRouteDestinationInput)(nil)).Elem(), GetRoutingTableRoutesRouteDestinationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetRoutingTableRoutesRouteNextHopInput)(nil)).Elem(), GetRoutingTableRoutesRouteNextHopArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetRoutingTablesItemInput)(nil)).Elem(), GetRoutingTablesItemArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetRoutingTablesItemArrayInput)(nil)).Elem(), GetRoutingTablesItemArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSecurityGroupRuleIcmpParametersInput)(nil)).Elem(), GetSecurityGroupRuleIcmpParametersArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSecurityGroupRulePortRangeInput)(nil)).Elem(), GetSecurityGroupRulePortRangeArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSecurityGroupRuleProtocolInput)(nil)).Elem(), GetSecurityGroupRuleProtocolArgs{})
@@ -16866,6 +18238,7 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSkeClusterExtensionsAclInput)(nil)).Elem(), GetSkeClusterExtensionsAclArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSkeClusterExtensionsArgusInput)(nil)).Elem(), GetSkeClusterExtensionsArgusArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSkeClusterExtensionsDnsInput)(nil)).Elem(), GetSkeClusterExtensionsDnsArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetSkeClusterExtensionsObservabilityInput)(nil)).Elem(), GetSkeClusterExtensionsObservabilityArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSkeClusterHibernationInput)(nil)).Elem(), GetSkeClusterHibernationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSkeClusterHibernationArrayInput)(nil)).Elem(), GetSkeClusterHibernationArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSkeClusterMaintenanceInput)(nil)).Elem(), GetSkeClusterMaintenanceArgs{})
@@ -16882,6 +18255,8 @@ func init() {
 	pulumi.RegisterOutputType(CdnDistributionConfigPtrOutput{})
 	pulumi.RegisterOutputType(CdnDistributionConfigBackendOutput{})
 	pulumi.RegisterOutputType(CdnDistributionConfigBackendPtrOutput{})
+	pulumi.RegisterOutputType(CdnDistributionConfigOptimizerOutput{})
+	pulumi.RegisterOutputType(CdnDistributionConfigOptimizerPtrOutput{})
 	pulumi.RegisterOutputType(CdnDistributionDomainOutput{})
 	pulumi.RegisterOutputType(CdnDistributionDomainArrayOutput{})
 	pulumi.RegisterOutputType(ImageChecksumOutput{})
@@ -16958,6 +18333,10 @@ func init() {
 	pulumi.RegisterOutputType(RabbitmqInstanceParametersPtrOutput{})
 	pulumi.RegisterOutputType(RedisInstanceParametersOutput{})
 	pulumi.RegisterOutputType(RedisInstanceParametersPtrOutput{})
+	pulumi.RegisterOutputType(RoutingTableRouteDestinationOutput{})
+	pulumi.RegisterOutputType(RoutingTableRouteDestinationPtrOutput{})
+	pulumi.RegisterOutputType(RoutingTableRouteNextHopOutput{})
+	pulumi.RegisterOutputType(RoutingTableRouteNextHopPtrOutput{})
 	pulumi.RegisterOutputType(SecurityGroupRuleIcmpParametersOutput{})
 	pulumi.RegisterOutputType(SecurityGroupRuleIcmpParametersPtrOutput{})
 	pulumi.RegisterOutputType(SecurityGroupRulePortRangeOutput{})
@@ -16976,6 +18355,8 @@ func init() {
 	pulumi.RegisterOutputType(SkeClusterExtensionsArgusPtrOutput{})
 	pulumi.RegisterOutputType(SkeClusterExtensionsDnsOutput{})
 	pulumi.RegisterOutputType(SkeClusterExtensionsDnsPtrOutput{})
+	pulumi.RegisterOutputType(SkeClusterExtensionsObservabilityOutput{})
+	pulumi.RegisterOutputType(SkeClusterExtensionsObservabilityPtrOutput{})
 	pulumi.RegisterOutputType(SkeClusterHibernationOutput{})
 	pulumi.RegisterOutputType(SkeClusterHibernationArrayOutput{})
 	pulumi.RegisterOutputType(SkeClusterMaintenanceOutput{})
@@ -16996,6 +18377,7 @@ func init() {
 	pulumi.RegisterOutputType(VolumeSourcePtrOutput{})
 	pulumi.RegisterOutputType(GetCdnDistributionConfigOutput{})
 	pulumi.RegisterOutputType(GetCdnDistributionConfigBackendOutput{})
+	pulumi.RegisterOutputType(GetCdnDistributionConfigOptimizerOutput{})
 	pulumi.RegisterOutputType(GetCdnDistributionDomainOutput{})
 	pulumi.RegisterOutputType(GetCdnDistributionDomainArrayOutput{})
 	pulumi.RegisterOutputType(GetImageChecksumOutput{})
@@ -17052,6 +18434,14 @@ func init() {
 	pulumi.RegisterOutputType(GetPublicIpRangesPublicIpRangeArrayOutput{})
 	pulumi.RegisterOutputType(GetRabbitmqInstanceParametersOutput{})
 	pulumi.RegisterOutputType(GetRedisInstanceParametersOutput{})
+	pulumi.RegisterOutputType(GetRoutingTableRouteDestinationOutput{})
+	pulumi.RegisterOutputType(GetRoutingTableRouteNextHopOutput{})
+	pulumi.RegisterOutputType(GetRoutingTableRoutesRouteOutput{})
+	pulumi.RegisterOutputType(GetRoutingTableRoutesRouteArrayOutput{})
+	pulumi.RegisterOutputType(GetRoutingTableRoutesRouteDestinationOutput{})
+	pulumi.RegisterOutputType(GetRoutingTableRoutesRouteNextHopOutput{})
+	pulumi.RegisterOutputType(GetRoutingTablesItemOutput{})
+	pulumi.RegisterOutputType(GetRoutingTablesItemArrayOutput{})
 	pulumi.RegisterOutputType(GetSecurityGroupRuleIcmpParametersOutput{})
 	pulumi.RegisterOutputType(GetSecurityGroupRulePortRangeOutput{})
 	pulumi.RegisterOutputType(GetSecurityGroupRuleProtocolOutput{})
@@ -17066,6 +18456,7 @@ func init() {
 	pulumi.RegisterOutputType(GetSkeClusterExtensionsAclOutput{})
 	pulumi.RegisterOutputType(GetSkeClusterExtensionsArgusOutput{})
 	pulumi.RegisterOutputType(GetSkeClusterExtensionsDnsOutput{})
+	pulumi.RegisterOutputType(GetSkeClusterExtensionsObservabilityOutput{})
 	pulumi.RegisterOutputType(GetSkeClusterHibernationOutput{})
 	pulumi.RegisterOutputType(GetSkeClusterHibernationArrayOutput{})
 	pulumi.RegisterOutputType(GetSkeClusterMaintenanceOutput{})

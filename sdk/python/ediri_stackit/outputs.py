@@ -19,6 +19,7 @@ from . import outputs
 __all__ = [
     'CdnDistributionConfig',
     'CdnDistributionConfigBackend',
+    'CdnDistributionConfigOptimizer',
     'CdnDistributionDomain',
     'ImageChecksum',
     'ImageConfig',
@@ -57,6 +58,8 @@ __all__ = [
     'PostgresflexInstanceStorage',
     'RabbitmqInstanceParameters',
     'RedisInstanceParameters',
+    'RoutingTableRouteDestination',
+    'RoutingTableRouteNextHop',
     'SecurityGroupRuleIcmpParameters',
     'SecurityGroupRulePortRange',
     'SecurityGroupRuleProtocol',
@@ -66,6 +69,7 @@ __all__ = [
     'SkeClusterExtensionsAcl',
     'SkeClusterExtensionsArgus',
     'SkeClusterExtensionsDns',
+    'SkeClusterExtensionsObservability',
     'SkeClusterHibernation',
     'SkeClusterMaintenance',
     'SkeClusterNetwork',
@@ -77,6 +81,7 @@ __all__ = [
     'VolumeSource',
     'GetCdnDistributionConfigResult',
     'GetCdnDistributionConfigBackendResult',
+    'GetCdnDistributionConfigOptimizerResult',
     'GetCdnDistributionDomainResult',
     'GetImageChecksumResult',
     'GetImageConfigResult',
@@ -116,6 +121,12 @@ __all__ = [
     'GetPublicIpRangesPublicIpRangeResult',
     'GetRabbitmqInstanceParametersResult',
     'GetRedisInstanceParametersResult',
+    'GetRoutingTableRouteDestinationResult',
+    'GetRoutingTableRouteNextHopResult',
+    'GetRoutingTableRoutesRouteResult',
+    'GetRoutingTableRoutesRouteDestinationResult',
+    'GetRoutingTableRoutesRouteNextHopResult',
+    'GetRoutingTablesItemResult',
     'GetSecurityGroupRuleIcmpParametersResult',
     'GetSecurityGroupRulePortRangeResult',
     'GetSecurityGroupRuleProtocolResult',
@@ -128,6 +139,7 @@ __all__ = [
     'GetSkeClusterExtensionsAclResult',
     'GetSkeClusterExtensionsArgusResult',
     'GetSkeClusterExtensionsDnsResult',
+    'GetSkeClusterExtensionsObservabilityResult',
     'GetSkeClusterHibernationResult',
     'GetSkeClusterMaintenanceResult',
     'GetSkeClusterNetworkResult',
@@ -141,15 +153,40 @@ __all__ = [
 
 @pulumi.output_type
 class CdnDistributionConfig(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "blockedCountries":
+            suggest = "blocked_countries"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CdnDistributionConfig. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CdnDistributionConfig.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CdnDistributionConfig.__key_warning(key)
+        return super().get(key, default)
+
     def __init__(__self__, *,
                  backend: 'outputs.CdnDistributionConfigBackend',
-                 regions: Sequence[builtins.str]):
+                 regions: Sequence[builtins.str],
+                 blocked_countries: Optional[Sequence[builtins.str]] = None,
+                 optimizer: Optional['outputs.CdnDistributionConfigOptimizer'] = None):
         """
         :param 'CdnDistributionConfigBackendArgs' backend: The configured backend for the distribution
         :param Sequence[builtins.str] regions: The configured regions where content will be hosted
+        :param Sequence[builtins.str] blocked_countries: The configured countries where distribution of content is blocked
+        :param 'CdnDistributionConfigOptimizerArgs' optimizer: Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
         """
         pulumi.set(__self__, "backend", backend)
         pulumi.set(__self__, "regions", regions)
+        if blocked_countries is not None:
+            pulumi.set(__self__, "blocked_countries", blocked_countries)
+        if optimizer is not None:
+            pulumi.set(__self__, "optimizer", optimizer)
 
     @property
     @pulumi.getter
@@ -166,6 +203,22 @@ class CdnDistributionConfig(dict):
         The configured regions where content will be hosted
         """
         return pulumi.get(self, "regions")
+
+    @property
+    @pulumi.getter(name="blockedCountries")
+    def blocked_countries(self) -> Optional[Sequence[builtins.str]]:
+        """
+        The configured countries where distribution of content is blocked
+        """
+        return pulumi.get(self, "blocked_countries")
+
+    @property
+    @pulumi.getter
+    def optimizer(self) -> Optional['outputs.CdnDistributionConfigOptimizer']:
+        """
+        Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+        """
+        return pulumi.get(self, "optimizer")
 
 
 @pulumi.output_type
@@ -226,6 +279,19 @@ class CdnDistributionConfigBackend(dict):
         The configured origin request headers for the backend
         """
         return pulumi.get(self, "origin_request_headers")
+
+
+@pulumi.output_type
+class CdnDistributionConfigOptimizer(dict):
+    def __init__(__self__, *,
+                 enabled: Optional[builtins.bool] = None):
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[builtins.bool]:
+        return pulumi.get(self, "enabled")
 
 
 @pulumi.output_type
@@ -2771,7 +2837,7 @@ class OpensearchInstanceParameters(dict):
                  sgw_acl: Optional[builtins.str] = None,
                  syslogs: Optional[Sequence[builtins.str]] = None,
                  tls_ciphers: Optional[Sequence[builtins.str]] = None,
-                 tls_protocols: Optional[builtins.str] = None):
+                 tls_protocols: Optional[Sequence[builtins.str]] = None):
         """
         :param builtins.bool enable_monitoring: Enable monitoring.
         :param builtins.str graphite: If set, monitoring with Graphite will be enabled. Expects the host and port where the Graphite metrics should be sent to (host:port).
@@ -2786,7 +2852,7 @@ class OpensearchInstanceParameters(dict):
         :param builtins.str sgw_acl: Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
         :param Sequence[builtins.str] syslogs: List of syslog servers to send logs to.
         :param Sequence[builtins.str] tls_ciphers: List of TLS ciphers to use.
-        :param builtins.str tls_protocols: The TLS protocol to use.
+        :param Sequence[builtins.str] tls_protocols: The TLS protocol to use.
         """
         if enable_monitoring is not None:
             pulumi.set(__self__, "enable_monitoring", enable_monitoring)
@@ -2923,7 +2989,7 @@ class OpensearchInstanceParameters(dict):
 
     @property
     @pulumi.getter(name="tlsProtocols")
-    def tls_protocols(self) -> Optional[builtins.str]:
+    def tls_protocols(self) -> Optional[Sequence[builtins.str]]:
         """
         The TLS protocol to use.
         """
@@ -3520,6 +3586,65 @@ class RedisInstanceParameters(dict):
 
 
 @pulumi.output_type
+class RoutingTableRouteDestination(dict):
+    def __init__(__self__, *,
+                 type: builtins.str,
+                 value: builtins.str):
+        """
+        :param builtins.str type: CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+        :param builtins.str value: An CIDR string.
+        """
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> builtins.str:
+        """
+        CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+        """
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def value(self) -> builtins.str:
+        """
+        An CIDR string.
+        """
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class RoutingTableRouteNextHop(dict):
+    def __init__(__self__, *,
+                 type: builtins.str,
+                 value: Optional[builtins.str] = None):
+        """
+        :param builtins.str type: Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        :param builtins.str value: Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+        """
+        pulumi.set(__self__, "type", type)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> builtins.str:
+        """
+        Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        """
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[builtins.str]:
+        """
+        Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+        """
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
 class SecurityGroupRuleIcmpParameters(dict):
     def __init__(__self__, *,
                  code: builtins.int,
@@ -3759,11 +3884,13 @@ class SkeClusterExtensions(dict):
     def __init__(__self__, *,
                  acl: Optional['outputs.SkeClusterExtensionsAcl'] = None,
                  argus: Optional['outputs.SkeClusterExtensionsArgus'] = None,
-                 dns: Optional['outputs.SkeClusterExtensionsDns'] = None):
+                 dns: Optional['outputs.SkeClusterExtensionsDns'] = None,
+                 observability: Optional['outputs.SkeClusterExtensionsObservability'] = None):
         """
         :param 'SkeClusterExtensionsAclArgs' acl: Cluster access control configuration.
-        :param 'SkeClusterExtensionsArgusArgs' argus: A single argus block as defined below.
+        :param 'SkeClusterExtensionsArgusArgs' argus: A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
         :param 'SkeClusterExtensionsDnsArgs' dns: DNS extension configuration
+        :param 'SkeClusterExtensionsObservabilityArgs' observability: A single observability block as defined below.
         """
         if acl is not None:
             pulumi.set(__self__, "acl", acl)
@@ -3771,6 +3898,8 @@ class SkeClusterExtensions(dict):
             pulumi.set(__self__, "argus", argus)
         if dns is not None:
             pulumi.set(__self__, "dns", dns)
+        if observability is not None:
+            pulumi.set(__self__, "observability", observability)
 
     @property
     @pulumi.getter
@@ -3782,9 +3911,10 @@ class SkeClusterExtensions(dict):
 
     @property
     @pulumi.getter
+    @_utilities.deprecated("""Use observability instead.""")
     def argus(self) -> Optional['outputs.SkeClusterExtensionsArgus']:
         """
-        A single argus block as defined below.
+        A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
         """
         return pulumi.get(self, "argus")
 
@@ -3795,6 +3925,14 @@ class SkeClusterExtensions(dict):
         DNS extension configuration
         """
         return pulumi.get(self, "dns")
+
+    @property
+    @pulumi.getter
+    def observability(self) -> Optional['outputs.SkeClusterExtensionsObservability']:
+        """
+        A single observability block as defined below.
+        """
+        return pulumi.get(self, "observability")
 
 
 @pulumi.output_type
@@ -3918,6 +4056,53 @@ class SkeClusterExtensionsDns(dict):
         Specify a list of domain filters for externalDNS (e.g., `foo.runs.onstackit.cloud`)
         """
         return pulumi.get(self, "zones")
+
+
+@pulumi.output_type
+class SkeClusterExtensionsObservability(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "instanceId":
+            suggest = "instance_id"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in SkeClusterExtensionsObservability. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        SkeClusterExtensionsObservability.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        SkeClusterExtensionsObservability.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 enabled: builtins.bool,
+                 instance_id: Optional[builtins.str] = None):
+        """
+        :param builtins.bool enabled: Flag to enable/disable Observability extensions.
+        :param builtins.str instance_id: Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+        """
+        pulumi.set(__self__, "enabled", enabled)
+        if instance_id is not None:
+            pulumi.set(__self__, "instance_id", instance_id)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> builtins.bool:
+        """
+        Flag to enable/disable Observability extensions.
+        """
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter(name="instanceId")
+    def instance_id(self) -> Optional[builtins.str]:
+        """
+        Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+        """
+        return pulumi.get(self, "instance_id")
 
 
 @pulumi.output_type
@@ -4481,13 +4666,20 @@ class VolumeSource(dict):
 class GetCdnDistributionConfigResult(dict):
     def __init__(__self__, *,
                  backend: 'outputs.GetCdnDistributionConfigBackendResult',
-                 regions: Sequence[builtins.str]):
+                 optimizer: 'outputs.GetCdnDistributionConfigOptimizerResult',
+                 regions: Sequence[builtins.str],
+                 blocked_countries: Optional[Sequence[builtins.str]] = None):
         """
         :param 'GetCdnDistributionConfigBackendArgs' backend: The configured backend for the distribution
+        :param 'GetCdnDistributionConfigOptimizerArgs' optimizer: Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
         :param Sequence[builtins.str] regions: The configured regions where content will be hosted
+        :param Sequence[builtins.str] blocked_countries: The configured countries where distribution of content is blocked
         """
         pulumi.set(__self__, "backend", backend)
+        pulumi.set(__self__, "optimizer", optimizer)
         pulumi.set(__self__, "regions", regions)
+        if blocked_countries is not None:
+            pulumi.set(__self__, "blocked_countries", blocked_countries)
 
     @property
     @pulumi.getter
@@ -4499,11 +4691,27 @@ class GetCdnDistributionConfigResult(dict):
 
     @property
     @pulumi.getter
+    def optimizer(self) -> 'outputs.GetCdnDistributionConfigOptimizerResult':
+        """
+        Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+        """
+        return pulumi.get(self, "optimizer")
+
+    @property
+    @pulumi.getter
     def regions(self) -> Sequence[builtins.str]:
         """
         The configured regions where content will be hosted
         """
         return pulumi.get(self, "regions")
+
+    @property
+    @pulumi.getter(name="blockedCountries")
+    def blocked_countries(self) -> Optional[Sequence[builtins.str]]:
+        """
+        The configured countries where distribution of content is blocked
+        """
+        return pulumi.get(self, "blocked_countries")
 
 
 @pulumi.output_type
@@ -4544,6 +4752,18 @@ class GetCdnDistributionConfigBackendResult(dict):
         The configured backend type. Supported values are: `http`.
         """
         return pulumi.get(self, "type")
+
+
+@pulumi.output_type
+class GetCdnDistributionConfigOptimizerResult(dict):
+    def __init__(__self__, *,
+                 enabled: builtins.bool):
+        pulumi.set(__self__, "enabled", enabled)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> builtins.bool:
+        return pulumi.get(self, "enabled")
 
 
 @pulumi.output_type
@@ -6961,6 +7181,290 @@ class GetRedisInstanceParametersResult(dict):
 
 
 @pulumi.output_type
+class GetRoutingTableRouteDestinationResult(dict):
+    def __init__(__self__, *,
+                 type: builtins.str,
+                 value: builtins.str):
+        """
+        :param builtins.str type: CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+        :param builtins.str value: An CIDR string.
+        """
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> builtins.str:
+        """
+        CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+        """
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def value(self) -> builtins.str:
+        """
+        An CIDR string.
+        """
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class GetRoutingTableRouteNextHopResult(dict):
+    def __init__(__self__, *,
+                 type: builtins.str,
+                 value: builtins.str):
+        """
+        :param builtins.str type: Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        :param builtins.str value: Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+        """
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> builtins.str:
+        """
+        Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        """
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def value(self) -> builtins.str:
+        """
+        Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+        """
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class GetRoutingTableRoutesRouteResult(dict):
+    def __init__(__self__, *,
+                 created_at: builtins.str,
+                 destination: 'outputs.GetRoutingTableRoutesRouteDestinationResult',
+                 labels: Mapping[str, builtins.str],
+                 next_hop: 'outputs.GetRoutingTableRoutesRouteNextHopResult',
+                 route_id: builtins.str,
+                 updated_at: builtins.str):
+        """
+        :param builtins.str created_at: Date-time when the route was created
+        :param 'GetRoutingTableRoutesRouteDestinationArgs' destination: Destination of the route.
+        :param Mapping[str, builtins.str] labels: Labels are key-value string pairs which can be attached to a resource container
+        :param 'GetRoutingTableRoutesRouteNextHopArgs' next_hop: Next hop destination.
+        :param builtins.str route_id: Route ID.
+        :param builtins.str updated_at: Date-time when the route was updated
+        """
+        pulumi.set(__self__, "created_at", created_at)
+        pulumi.set(__self__, "destination", destination)
+        pulumi.set(__self__, "labels", labels)
+        pulumi.set(__self__, "next_hop", next_hop)
+        pulumi.set(__self__, "route_id", route_id)
+        pulumi.set(__self__, "updated_at", updated_at)
+
+    @property
+    @pulumi.getter(name="createdAt")
+    def created_at(self) -> builtins.str:
+        """
+        Date-time when the route was created
+        """
+        return pulumi.get(self, "created_at")
+
+    @property
+    @pulumi.getter
+    def destination(self) -> 'outputs.GetRoutingTableRoutesRouteDestinationResult':
+        """
+        Destination of the route.
+        """
+        return pulumi.get(self, "destination")
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Mapping[str, builtins.str]:
+        """
+        Labels are key-value string pairs which can be attached to a resource container
+        """
+        return pulumi.get(self, "labels")
+
+    @property
+    @pulumi.getter(name="nextHop")
+    def next_hop(self) -> 'outputs.GetRoutingTableRoutesRouteNextHopResult':
+        """
+        Next hop destination.
+        """
+        return pulumi.get(self, "next_hop")
+
+    @property
+    @pulumi.getter(name="routeId")
+    def route_id(self) -> builtins.str:
+        """
+        Route ID.
+        """
+        return pulumi.get(self, "route_id")
+
+    @property
+    @pulumi.getter(name="updatedAt")
+    def updated_at(self) -> builtins.str:
+        """
+        Date-time when the route was updated
+        """
+        return pulumi.get(self, "updated_at")
+
+
+@pulumi.output_type
+class GetRoutingTableRoutesRouteDestinationResult(dict):
+    def __init__(__self__, *,
+                 type: builtins.str,
+                 value: builtins.str):
+        """
+        :param builtins.str type: CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+        :param builtins.str value: An CIDR string.
+        """
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> builtins.str:
+        """
+        CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+        """
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def value(self) -> builtins.str:
+        """
+        An CIDR string.
+        """
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class GetRoutingTableRoutesRouteNextHopResult(dict):
+    def __init__(__self__, *,
+                 type: builtins.str,
+                 value: builtins.str):
+        """
+        :param builtins.str type: Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        :param builtins.str value: Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+        """
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> builtins.str:
+        """
+        Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        """
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def value(self) -> builtins.str:
+        """
+        Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+        """
+        return pulumi.get(self, "value")
+
+
+@pulumi.output_type
+class GetRoutingTablesItemResult(dict):
+    def __init__(__self__, *,
+                 created_at: builtins.str,
+                 default: builtins.bool,
+                 description: builtins.str,
+                 labels: Mapping[str, builtins.str],
+                 name: builtins.str,
+                 routing_table_id: builtins.str,
+                 system_routes: builtins.bool,
+                 updated_at: builtins.str):
+        """
+        :param builtins.str created_at: Date-time when the routing table was created
+        :param builtins.bool default: When true this is the default routing table for this network area. It can't be deleted and is used if the user does not specify it otherwise.
+        :param builtins.str description: Description of the routing table.
+        :param Mapping[str, builtins.str] labels: Labels are key-value string pairs which can be attached to a resource container
+        :param builtins.str name: The name of the routing table.
+        :param builtins.str routing_table_id: The routing tables ID.
+        :param builtins.bool system_routes: This controls whether the routes for project-to-project communication are created automatically or not.
+        :param builtins.str updated_at: Date-time when the routing table was updated
+        """
+        pulumi.set(__self__, "created_at", created_at)
+        pulumi.set(__self__, "default", default)
+        pulumi.set(__self__, "description", description)
+        pulumi.set(__self__, "labels", labels)
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "routing_table_id", routing_table_id)
+        pulumi.set(__self__, "system_routes", system_routes)
+        pulumi.set(__self__, "updated_at", updated_at)
+
+    @property
+    @pulumi.getter(name="createdAt")
+    def created_at(self) -> builtins.str:
+        """
+        Date-time when the routing table was created
+        """
+        return pulumi.get(self, "created_at")
+
+    @property
+    @pulumi.getter
+    def default(self) -> builtins.bool:
+        """
+        When true this is the default routing table for this network area. It can't be deleted and is used if the user does not specify it otherwise.
+        """
+        return pulumi.get(self, "default")
+
+    @property
+    @pulumi.getter
+    def description(self) -> builtins.str:
+        """
+        Description of the routing table.
+        """
+        return pulumi.get(self, "description")
+
+    @property
+    @pulumi.getter
+    def labels(self) -> Mapping[str, builtins.str]:
+        """
+        Labels are key-value string pairs which can be attached to a resource container
+        """
+        return pulumi.get(self, "labels")
+
+    @property
+    @pulumi.getter
+    def name(self) -> builtins.str:
+        """
+        The name of the routing table.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter(name="routingTableId")
+    def routing_table_id(self) -> builtins.str:
+        """
+        The routing tables ID.
+        """
+        return pulumi.get(self, "routing_table_id")
+
+    @property
+    @pulumi.getter(name="systemRoutes")
+    def system_routes(self) -> builtins.bool:
+        """
+        This controls whether the routes for project-to-project communication are created automatically or not.
+        """
+        return pulumi.get(self, "system_routes")
+
+    @property
+    @pulumi.getter(name="updatedAt")
+    def updated_at(self) -> builtins.str:
+        """
+        Date-time when the routing table was updated
+        """
+        return pulumi.get(self, "updated_at")
+
+
+@pulumi.output_type
 class GetSecurityGroupRuleIcmpParametersResult(dict):
     def __init__(__self__, *,
                  code: builtins.int,
@@ -7249,15 +7753,18 @@ class GetSkeClusterExtensionsResult(dict):
     def __init__(__self__, *,
                  acl: 'outputs.GetSkeClusterExtensionsAclResult',
                  argus: 'outputs.GetSkeClusterExtensionsArgusResult',
-                 dns: 'outputs.GetSkeClusterExtensionsDnsResult'):
+                 dns: 'outputs.GetSkeClusterExtensionsDnsResult',
+                 observability: 'outputs.GetSkeClusterExtensionsObservabilityResult'):
         """
         :param 'GetSkeClusterExtensionsAclArgs' acl: Cluster access control configuration
-        :param 'GetSkeClusterExtensionsArgusArgs' argus: A single argus block as defined below
+        :param 'GetSkeClusterExtensionsArgusArgs' argus: A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
         :param 'GetSkeClusterExtensionsDnsArgs' dns: DNS extension configuration
+        :param 'GetSkeClusterExtensionsObservabilityArgs' observability: A single observability block as defined below.
         """
         pulumi.set(__self__, "acl", acl)
         pulumi.set(__self__, "argus", argus)
         pulumi.set(__self__, "dns", dns)
+        pulumi.set(__self__, "observability", observability)
 
     @property
     @pulumi.getter
@@ -7269,9 +7776,10 @@ class GetSkeClusterExtensionsResult(dict):
 
     @property
     @pulumi.getter
+    @_utilities.deprecated("""Use observability instead.""")
     def argus(self) -> 'outputs.GetSkeClusterExtensionsArgusResult':
         """
-        A single argus block as defined below
+        A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
         """
         return pulumi.get(self, "argus")
 
@@ -7282,6 +7790,14 @@ class GetSkeClusterExtensionsResult(dict):
         DNS extension configuration
         """
         return pulumi.get(self, "dns")
+
+    @property
+    @pulumi.getter
+    def observability(self) -> 'outputs.GetSkeClusterExtensionsObservabilityResult':
+        """
+        A single observability block as defined below.
+        """
+        return pulumi.get(self, "observability")
 
 
 @pulumi.output_type
@@ -7369,6 +7885,35 @@ class GetSkeClusterExtensionsDnsResult(dict):
         Specify a list of domain filters for externalDNS (e.g., `foo.runs.onstackit.cloud`)
         """
         return pulumi.get(self, "zones")
+
+
+@pulumi.output_type
+class GetSkeClusterExtensionsObservabilityResult(dict):
+    def __init__(__self__, *,
+                 enabled: builtins.bool,
+                 instance_id: builtins.str):
+        """
+        :param builtins.bool enabled: Flag to enable/disable Observability extensions.
+        :param builtins.str instance_id: Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+        """
+        pulumi.set(__self__, "enabled", enabled)
+        pulumi.set(__self__, "instance_id", instance_id)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> builtins.bool:
+        """
+        Flag to enable/disable Observability extensions.
+        """
+        return pulumi.get(self, "enabled")
+
+    @property
+    @pulumi.getter(name="instanceId")
+    def instance_id(self) -> builtins.str:
+        """
+        Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+        """
+        return pulumi.get(self, "instance_id")
 
 
 @pulumi.output_type

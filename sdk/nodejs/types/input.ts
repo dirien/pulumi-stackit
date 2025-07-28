@@ -11,6 +11,14 @@ export interface CdnDistributionConfig {
      */
     backend: pulumi.Input<inputs.CdnDistributionConfigBackend>;
     /**
+     * The configured countries where distribution of content is blocked
+     */
+    blockedCountries?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+     */
+    optimizer?: pulumi.Input<inputs.CdnDistributionConfigOptimizer>;
+    /**
      * The configured regions where content will be hosted
      */
     regions: pulumi.Input<pulumi.Input<string>[]>;
@@ -29,6 +37,10 @@ export interface CdnDistributionConfigBackend {
      * The configured backend type. Supported values are: `http`.
      */
     type: pulumi.Input<string>;
+}
+
+export interface CdnDistributionConfigOptimizer {
+    enabled?: pulumi.Input<boolean>;
 }
 
 export interface CdnDistributionDomain {
@@ -725,7 +737,7 @@ export interface OpensearchInstanceParameters {
     /**
      * The TLS protocol to use.
      */
-    tlsProtocols?: pulumi.Input<string>;
+    tlsProtocols?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface PostgresflexInstanceFlavor {
@@ -886,6 +898,28 @@ export interface RedisInstanceParameters {
     tlsProtocols?: pulumi.Input<string>;
 }
 
+export interface RoutingTableRouteDestination {
+    /**
+     * CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+     */
+    type: pulumi.Input<string>;
+    /**
+     * An CIDR string.
+     */
+    value: pulumi.Input<string>;
+}
+
+export interface RoutingTableRouteNextHop {
+    /**
+     * Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+     */
+    type: pulumi.Input<string>;
+    /**
+     * Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+     */
+    value?: pulumi.Input<string>;
+}
+
 export interface SecurityGroupRuleIcmpParameters {
     /**
      * ICMP code. Can be set if the protocol is ICMP.
@@ -958,13 +992,19 @@ export interface SkeClusterExtensions {
      */
     acl?: pulumi.Input<inputs.SkeClusterExtensionsAcl>;
     /**
-     * A single argus block as defined below.
+     * A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
+     *
+     * @deprecated Use observability instead.
      */
     argus?: pulumi.Input<inputs.SkeClusterExtensionsArgus>;
     /**
      * DNS extension configuration
      */
     dns?: pulumi.Input<inputs.SkeClusterExtensionsDns>;
+    /**
+     * A single observability block as defined below.
+     */
+    observability?: pulumi.Input<inputs.SkeClusterExtensionsObservability>;
 }
 
 export interface SkeClusterExtensionsAcl {
@@ -998,6 +1038,17 @@ export interface SkeClusterExtensionsDns {
      * Specify a list of domain filters for externalDNS (e.g., `foo.runs.onstackit.cloud`)
      */
     zones?: pulumi.Input<pulumi.Input<string>[]>;
+}
+
+export interface SkeClusterExtensionsObservability {
+    /**
+     * Flag to enable/disable Observability extensions.
+     */
+    enabled: pulumi.Input<boolean>;
+    /**
+     * Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+     */
+    instanceId?: pulumi.Input<string>;
 }
 
 export interface SkeClusterHibernation {

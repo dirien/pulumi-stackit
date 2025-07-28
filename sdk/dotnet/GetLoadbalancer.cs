@@ -137,6 +137,10 @@ namespace ediri.Stackit
         /// </summary>
         public readonly Outputs.GetLoadbalancerOptionsResult Options;
         /// <summary>
+        /// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+        /// </summary>
+        public readonly string PlanId;
+        /// <summary>
         /// Transient private Load Balancer IP address. It can change any time.
         /// </summary>
         public readonly string PrivateAddress;
@@ -167,6 +171,8 @@ namespace ediri.Stackit
 
             Outputs.GetLoadbalancerOptionsResult options,
 
+            string planId,
+
             string privateAddress,
 
             string projectId,
@@ -181,6 +187,7 @@ namespace ediri.Stackit
             Name = name;
             Networks = networks;
             Options = options;
+            PlanId = planId;
             PrivateAddress = privateAddress;
             ProjectId = projectId;
             Region = region;

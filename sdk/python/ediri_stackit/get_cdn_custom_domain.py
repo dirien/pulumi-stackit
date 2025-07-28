@@ -111,7 +111,7 @@ def get_cdn_custom_domain(distribution_id: Optional[builtins.str] = None,
     """
     CDN distribution data source schema.
 
-    > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+    > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
 
     ## Example Usage
 
@@ -140,7 +140,7 @@ def get_cdn_custom_domain_output(distribution_id: Optional[pulumi.Input[builtins
     """
     CDN distribution data source schema.
 
-    > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+    > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
 
     ## Example Usage
 

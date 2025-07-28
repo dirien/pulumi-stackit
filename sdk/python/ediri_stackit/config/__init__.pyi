@@ -15,11 +15,6 @@ else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from .. import _utilities
 
-argusCustomEndpoint: Optional[str]
-"""
-Custom endpoint for the Argus service
-"""
-
 authorizationCustomEndpoint: Optional[str]
 """
 Custom endpoint for the Membership service
@@ -54,7 +49,7 @@ Enable beta resources. Default is false.
 experiments: Optional[str]
 """
 Enables experiments. These are unstable features without official support. More information can be found in the README.
-Available Experiments: [iam]
+Available Experiments: iam, routing-tables, network
 """
 
 gitCustomEndpoint: Optional[str]

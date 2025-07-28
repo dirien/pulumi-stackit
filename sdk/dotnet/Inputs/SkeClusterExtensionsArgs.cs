@@ -20,7 +20,7 @@ namespace ediri.Stackit.Inputs
         public Input<Inputs.SkeClusterExtensionsAclArgs>? Acl { get; set; }
 
         /// <summary>
-        /// A single argus block as defined below.
+        /// A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
         /// </summary>
         [Input("argus")]
         public Input<Inputs.SkeClusterExtensionsArgusArgs>? Argus { get; set; }
@@ -30,6 +30,12 @@ namespace ediri.Stackit.Inputs
         /// </summary>
         [Input("dns")]
         public Input<Inputs.SkeClusterExtensionsDnsArgs>? Dns { get; set; }
+
+        /// <summary>
+        /// A single observability block as defined below.
+        /// </summary>
+        [Input("observability")]
+        public Input<Inputs.SkeClusterExtensionsObservabilityArgs>? Observability { get; set; }
 
         public SkeClusterExtensionsArgs()
         {

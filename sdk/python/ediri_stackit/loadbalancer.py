@@ -29,6 +29,7 @@ class LoadbalancerArgs:
                  external_address: Optional[pulumi.Input[builtins.str]] = None,
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  options: Optional[pulumi.Input['LoadbalancerOptionsArgs']] = None,
+                 plan_id: Optional[pulumi.Input[builtins.str]] = None,
                  region: Optional[pulumi.Input[builtins.str]] = None):
         """
         The set of arguments for constructing a Loadbalancer resource.
@@ -39,6 +40,7 @@ class LoadbalancerArgs:
         :param pulumi.Input[builtins.str] external_address: External Load Balancer IP address where this Load Balancer is exposed.
         :param pulumi.Input[builtins.str] name: Load balancer name.
         :param pulumi.Input['LoadbalancerOptionsArgs'] options: Defines any optional functionality you want to have enabled on your load balancer.
+        :param pulumi.Input[builtins.str] plan_id: The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
         :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         """
         pulumi.set(__self__, "listeners", listeners)
@@ -51,6 +53,8 @@ class LoadbalancerArgs:
             pulumi.set(__self__, "name", name)
         if options is not None:
             pulumi.set(__self__, "options", options)
+        if plan_id is not None:
+            pulumi.set(__self__, "plan_id", plan_id)
         if region is not None:
             pulumi.set(__self__, "region", region)
 
@@ -139,6 +143,18 @@ class LoadbalancerArgs:
         pulumi.set(self, "options", value)
 
     @property
+    @pulumi.getter(name="planId")
+    def plan_id(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+        """
+        return pulumi.get(self, "plan_id")
+
+    @plan_id.setter
+    def plan_id(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "plan_id", value)
+
+    @property
     @pulumi.getter
     def region(self) -> Optional[pulumi.Input[builtins.str]]:
         """
@@ -159,6 +175,7 @@ class _LoadbalancerState:
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  networks: Optional[pulumi.Input[Sequence[pulumi.Input['LoadbalancerNetworkArgs']]]] = None,
                  options: Optional[pulumi.Input['LoadbalancerOptionsArgs']] = None,
+                 plan_id: Optional[pulumi.Input[builtins.str]] = None,
                  private_address: Optional[pulumi.Input[builtins.str]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
                  region: Optional[pulumi.Input[builtins.str]] = None,
@@ -170,6 +187,7 @@ class _LoadbalancerState:
         :param pulumi.Input[builtins.str] name: Load balancer name.
         :param pulumi.Input[Sequence[pulumi.Input['LoadbalancerNetworkArgs']]] networks: List of networks that listeners and targets reside in.
         :param pulumi.Input['LoadbalancerOptionsArgs'] options: Defines any optional functionality you want to have enabled on your load balancer.
+        :param pulumi.Input[builtins.str] plan_id: The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
         :param pulumi.Input[builtins.str] private_address: Transient private Load Balancer IP address. It can change any time.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the Load Balancer is associated.
         :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
@@ -185,6 +203,8 @@ class _LoadbalancerState:
             pulumi.set(__self__, "networks", networks)
         if options is not None:
             pulumi.set(__self__, "options", options)
+        if plan_id is not None:
+            pulumi.set(__self__, "plan_id", plan_id)
         if private_address is not None:
             pulumi.set(__self__, "private_address", private_address)
         if project_id is not None:
@@ -255,6 +275,18 @@ class _LoadbalancerState:
         pulumi.set(self, "options", value)
 
     @property
+    @pulumi.getter(name="planId")
+    def plan_id(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+        """
+        return pulumi.get(self, "plan_id")
+
+    @plan_id.setter
+    def plan_id(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "plan_id", value)
+
+    @property
     @pulumi.getter(name="privateAddress")
     def private_address(self) -> Optional[pulumi.Input[builtins.str]]:
         """
@@ -314,6 +346,7 @@ class Loadbalancer(pulumi.CustomResource):
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  networks: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadbalancerNetworkArgs', 'LoadbalancerNetworkArgsDict']]]]] = None,
                  options: Optional[pulumi.Input[Union['LoadbalancerOptionsArgs', 'LoadbalancerOptionsArgsDict']]] = None,
+                 plan_id: Optional[pulumi.Input[builtins.str]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
                  region: Optional[pulumi.Input[builtins.str]] = None,
                  target_pools: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadbalancerTargetPoolArgs', 'LoadbalancerTargetPoolArgsDict']]]]] = None,
@@ -328,6 +361,7 @@ class Loadbalancer(pulumi.CustomResource):
         :param pulumi.Input[builtins.str] name: Load balancer name.
         :param pulumi.Input[Sequence[pulumi.Input[Union['LoadbalancerNetworkArgs', 'LoadbalancerNetworkArgsDict']]]] networks: List of networks that listeners and targets reside in.
         :param pulumi.Input[Union['LoadbalancerOptionsArgs', 'LoadbalancerOptionsArgsDict']] options: Defines any optional functionality you want to have enabled on your load balancer.
+        :param pulumi.Input[builtins.str] plan_id: The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the Load Balancer is associated.
         :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[Sequence[pulumi.Input[Union['LoadbalancerTargetPoolArgs', 'LoadbalancerTargetPoolArgsDict']]]] target_pools: List of all target pools which will be used in the Load Balancer. Limited to 20.
@@ -361,6 +395,7 @@ class Loadbalancer(pulumi.CustomResource):
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  networks: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadbalancerNetworkArgs', 'LoadbalancerNetworkArgsDict']]]]] = None,
                  options: Optional[pulumi.Input[Union['LoadbalancerOptionsArgs', 'LoadbalancerOptionsArgsDict']]] = None,
+                 plan_id: Optional[pulumi.Input[builtins.str]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
                  region: Optional[pulumi.Input[builtins.str]] = None,
                  target_pools: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadbalancerTargetPoolArgs', 'LoadbalancerTargetPoolArgsDict']]]]] = None,
@@ -382,6 +417,7 @@ class Loadbalancer(pulumi.CustomResource):
                 raise TypeError("Missing required property 'networks'")
             __props__.__dict__["networks"] = networks
             __props__.__dict__["options"] = options
+            __props__.__dict__["plan_id"] = plan_id
             if project_id is None and not opts.urn:
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
@@ -405,6 +441,7 @@ class Loadbalancer(pulumi.CustomResource):
             name: Optional[pulumi.Input[builtins.str]] = None,
             networks: Optional[pulumi.Input[Sequence[pulumi.Input[Union['LoadbalancerNetworkArgs', 'LoadbalancerNetworkArgsDict']]]]] = None,
             options: Optional[pulumi.Input[Union['LoadbalancerOptionsArgs', 'LoadbalancerOptionsArgsDict']]] = None,
+            plan_id: Optional[pulumi.Input[builtins.str]] = None,
             private_address: Optional[pulumi.Input[builtins.str]] = None,
             project_id: Optional[pulumi.Input[builtins.str]] = None,
             region: Optional[pulumi.Input[builtins.str]] = None,
@@ -421,6 +458,7 @@ class Loadbalancer(pulumi.CustomResource):
         :param pulumi.Input[builtins.str] name: Load balancer name.
         :param pulumi.Input[Sequence[pulumi.Input[Union['LoadbalancerNetworkArgs', 'LoadbalancerNetworkArgsDict']]]] networks: List of networks that listeners and targets reside in.
         :param pulumi.Input[Union['LoadbalancerOptionsArgs', 'LoadbalancerOptionsArgsDict']] options: Defines any optional functionality you want to have enabled on your load balancer.
+        :param pulumi.Input[builtins.str] plan_id: The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
         :param pulumi.Input[builtins.str] private_address: Transient private Load Balancer IP address. It can change any time.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the Load Balancer is associated.
         :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
@@ -435,6 +473,7 @@ class Loadbalancer(pulumi.CustomResource):
         __props__.__dict__["name"] = name
         __props__.__dict__["networks"] = networks
         __props__.__dict__["options"] = options
+        __props__.__dict__["plan_id"] = plan_id
         __props__.__dict__["private_address"] = private_address
         __props__.__dict__["project_id"] = project_id
         __props__.__dict__["region"] = region
@@ -480,6 +519,14 @@ class Loadbalancer(pulumi.CustomResource):
         Defines any optional functionality you want to have enabled on your load balancer.
         """
         return pulumi.get(self, "options")
+
+    @property
+    @pulumi.getter(name="planId")
+    def plan_id(self) -> pulumi.Output[builtins.str]:
+        """
+        The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+        """
+        return pulumi.get(self, "plan_id")
 
     @property
     @pulumi.getter(name="privateAddress")

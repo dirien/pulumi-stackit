@@ -28,7 +28,7 @@ class GetMongodbflexInstanceResult:
     """
     A collection of values returned by getMongodbflexInstance.
     """
-    def __init__(__self__, acls=None, backup_schedule=None, flavor=None, id=None, instance_id=None, name=None, options=None, project_id=None, replicas=None, storage=None, version=None):
+    def __init__(__self__, acls=None, backup_schedule=None, flavor=None, id=None, instance_id=None, name=None, options=None, project_id=None, region=None, replicas=None, storage=None, version=None):
         if acls and not isinstance(acls, list):
             raise TypeError("Expected argument 'acls' to be a list")
         pulumi.set(__self__, "acls", acls)
@@ -53,6 +53,9 @@ class GetMongodbflexInstanceResult:
         if project_id and not isinstance(project_id, str):
             raise TypeError("Expected argument 'project_id' to be a str")
         pulumi.set(__self__, "project_id", project_id)
+        if region and not isinstance(region, str):
+            raise TypeError("Expected argument 'region' to be a str")
+        pulumi.set(__self__, "region", region)
         if replicas and not isinstance(replicas, int):
             raise TypeError("Expected argument 'replicas' to be a int")
         pulumi.set(__self__, "replicas", replicas)
@@ -123,6 +126,14 @@ class GetMongodbflexInstanceResult:
 
     @property
     @pulumi.getter
+    def region(self) -> builtins.str:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @property
+    @pulumi.getter
     def replicas(self) -> builtins.int:
         return pulumi.get(self, "replicas")
 
@@ -151,6 +162,7 @@ class AwaitableGetMongodbflexInstanceResult(GetMongodbflexInstanceResult):
             name=self.name,
             options=self.options,
             project_id=self.project_id,
+            region=self.region,
             replicas=self.replicas,
             storage=self.storage,
             version=self.version)
@@ -158,6 +170,7 @@ class AwaitableGetMongodbflexInstanceResult(GetMongodbflexInstanceResult):
 
 def get_mongodbflex_instance(instance_id: Optional[builtins.str] = None,
                              project_id: Optional[builtins.str] = None,
+                             region: Optional[builtins.str] = None,
                              opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetMongodbflexInstanceResult:
     """
     MongoDB Flex instance data source schema. Must have a `region` specified in the provider configuration.
@@ -167,10 +180,12 @@ def get_mongodbflex_instance(instance_id: Optional[builtins.str] = None,
 
     :param builtins.str instance_id: ID of the MongoDB Flex instance.
     :param builtins.str project_id: STACKIT project ID to which the instance is associated.
+    :param builtins.str region: The resource region. If not defined, the provider region is used.
     """
     __args__ = dict()
     __args__['instanceId'] = instance_id
     __args__['projectId'] = project_id
+    __args__['region'] = region
     opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke('stackit:index/getMongodbflexInstance:getMongodbflexInstance', __args__, opts=opts, typ=GetMongodbflexInstanceResult).value
 
@@ -183,11 +198,13 @@ def get_mongodbflex_instance(instance_id: Optional[builtins.str] = None,
         name=pulumi.get(__ret__, 'name'),
         options=pulumi.get(__ret__, 'options'),
         project_id=pulumi.get(__ret__, 'project_id'),
+        region=pulumi.get(__ret__, 'region'),
         replicas=pulumi.get(__ret__, 'replicas'),
         storage=pulumi.get(__ret__, 'storage'),
         version=pulumi.get(__ret__, 'version'))
 def get_mongodbflex_instance_output(instance_id: Optional[pulumi.Input[builtins.str]] = None,
                                     project_id: Optional[pulumi.Input[builtins.str]] = None,
+                                    region: Optional[pulumi.Input[Optional[builtins.str]]] = None,
                                     opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetMongodbflexInstanceResult]:
     """
     MongoDB Flex instance data source schema. Must have a `region` specified in the provider configuration.
@@ -197,10 +214,12 @@ def get_mongodbflex_instance_output(instance_id: Optional[pulumi.Input[builtins.
 
     :param builtins.str instance_id: ID of the MongoDB Flex instance.
     :param builtins.str project_id: STACKIT project ID to which the instance is associated.
+    :param builtins.str region: The resource region. If not defined, the provider region is used.
     """
     __args__ = dict()
     __args__['instanceId'] = instance_id
     __args__['projectId'] = project_id
+    __args__['region'] = region
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke_output('stackit:index/getMongodbflexInstance:getMongodbflexInstance', __args__, opts=opts, typ=GetMongodbflexInstanceResult)
     return __ret__.apply(lambda __response__: GetMongodbflexInstanceResult(
@@ -212,6 +231,7 @@ def get_mongodbflex_instance_output(instance_id: Optional[pulumi.Input[builtins.
         name=pulumi.get(__response__, 'name'),
         options=pulumi.get(__response__, 'options'),
         project_id=pulumi.get(__response__, 'project_id'),
+        region=pulumi.get(__response__, 'region'),
         replicas=pulumi.get(__response__, 'replicas'),
         storage=pulumi.get(__response__, 'storage'),
         version=pulumi.get(__response__, 'version')))

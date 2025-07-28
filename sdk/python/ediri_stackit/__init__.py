@@ -51,6 +51,10 @@ from .get_rabbitmq_instance import *
 from .get_redis_credential import *
 from .get_redis_instance import *
 from .get_resourcemanager_project import *
+from .get_routing_table import *
+from .get_routing_table_route import *
+from .get_routing_table_routes import *
+from .get_routing_tables import *
 from .get_secretsmanager_instance import *
 from .get_secretsmanager_user import *
 from .get_security_group import *
@@ -102,6 +106,8 @@ from .rabbitmq_instance import *
 from .redis_credential import *
 from .redis_instance import *
 from .resourcemanager_project import *
+from .routing_table import *
+from .routing_table_route import *
 from .secretsmanager_instance import *
 from .secretsmanager_user import *
 from .security_group import *
@@ -475,6 +481,22 @@ _utilities.register(
   "fqn": "ediri_stackit",
   "classes": {
    "stackit:index/resourcemanagerProject:ResourcemanagerProject": "ResourcemanagerProject"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/routingTable",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/routingTable:RoutingTable": "RoutingTable"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/routingTableRoute",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/routingTableRoute:RoutingTableRoute": "RoutingTableRoute"
   }
  },
  {

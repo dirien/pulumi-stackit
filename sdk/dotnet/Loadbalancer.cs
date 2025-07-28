@@ -47,6 +47,12 @@ namespace ediri.Stackit
         public Output<Outputs.LoadbalancerOptions> Options { get; private set; } = null!;
 
         /// <summary>
+        /// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+        /// </summary>
+        [Output("planId")]
+        public Output<string> PlanId { get; private set; } = null!;
+
+        /// <summary>
         /// Transient private Load Balancer IP address. It can change any time.
         /// </summary>
         [Output("privateAddress")]
@@ -160,6 +166,12 @@ namespace ediri.Stackit
         public Input<Inputs.LoadbalancerOptionsArgs>? Options { get; set; }
 
         /// <summary>
+        /// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+        /// </summary>
+        [Input("planId")]
+        public Input<string>? PlanId { get; set; }
+
+        /// <summary>
         /// STACKIT project ID to which the Load Balancer is associated.
         /// </summary>
         [Input("projectId", required: true)]
@@ -232,6 +244,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("options")]
         public Input<Inputs.LoadbalancerOptionsGetArgs>? Options { get; set; }
+
+        /// <summary>
+        /// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+        /// </summary>
+        [Input("planId")]
+        public Input<string>? PlanId { get; set; }
 
         /// <summary>
         /// Transient private Load Balancer IP address. It can change any time.

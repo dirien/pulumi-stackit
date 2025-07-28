@@ -20,6 +20,8 @@ __all__ = [
     'CdnDistributionConfigArgsDict',
     'CdnDistributionConfigBackendArgs',
     'CdnDistributionConfigBackendArgsDict',
+    'CdnDistributionConfigOptimizerArgs',
+    'CdnDistributionConfigOptimizerArgsDict',
     'CdnDistributionDomainArgs',
     'CdnDistributionDomainArgsDict',
     'ImageChecksumArgs',
@@ -96,6 +98,10 @@ __all__ = [
     'RabbitmqInstanceParametersArgsDict',
     'RedisInstanceParametersArgs',
     'RedisInstanceParametersArgsDict',
+    'RoutingTableRouteDestinationArgs',
+    'RoutingTableRouteDestinationArgsDict',
+    'RoutingTableRouteNextHopArgs',
+    'RoutingTableRouteNextHopArgsDict',
     'SecurityGroupRuleIcmpParametersArgs',
     'SecurityGroupRuleIcmpParametersArgsDict',
     'SecurityGroupRulePortRangeArgs',
@@ -114,6 +120,8 @@ __all__ = [
     'SkeClusterExtensionsArgusArgsDict',
     'SkeClusterExtensionsDnsArgs',
     'SkeClusterExtensionsDnsArgsDict',
+    'SkeClusterExtensionsObservabilityArgs',
+    'SkeClusterExtensionsObservabilityArgsDict',
     'SkeClusterHibernationArgs',
     'SkeClusterHibernationArgsDict',
     'SkeClusterMaintenanceArgs',
@@ -146,6 +154,14 @@ if not MYPY:
         """
         The configured regions where content will be hosted
         """
+        blocked_countries: NotRequired[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]
+        """
+        The configured countries where distribution of content is blocked
+        """
+        optimizer: NotRequired[pulumi.Input['CdnDistributionConfigOptimizerArgsDict']]
+        """
+        Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+        """
 elif False:
     CdnDistributionConfigArgsDict: TypeAlias = Mapping[str, Any]
 
@@ -153,13 +169,21 @@ elif False:
 class CdnDistributionConfigArgs:
     def __init__(__self__, *,
                  backend: pulumi.Input['CdnDistributionConfigBackendArgs'],
-                 regions: pulumi.Input[Sequence[pulumi.Input[builtins.str]]]):
+                 regions: pulumi.Input[Sequence[pulumi.Input[builtins.str]]],
+                 blocked_countries: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
+                 optimizer: Optional[pulumi.Input['CdnDistributionConfigOptimizerArgs']] = None):
         """
         :param pulumi.Input['CdnDistributionConfigBackendArgs'] backend: The configured backend for the distribution
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] regions: The configured regions where content will be hosted
+        :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] blocked_countries: The configured countries where distribution of content is blocked
+        :param pulumi.Input['CdnDistributionConfigOptimizerArgs'] optimizer: Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
         """
         pulumi.set(__self__, "backend", backend)
         pulumi.set(__self__, "regions", regions)
+        if blocked_countries is not None:
+            pulumi.set(__self__, "blocked_countries", blocked_countries)
+        if optimizer is not None:
+            pulumi.set(__self__, "optimizer", optimizer)
 
     @property
     @pulumi.getter
@@ -184,6 +208,30 @@ class CdnDistributionConfigArgs:
     @regions.setter
     def regions(self, value: pulumi.Input[Sequence[pulumi.Input[builtins.str]]]):
         pulumi.set(self, "regions", value)
+
+    @property
+    @pulumi.getter(name="blockedCountries")
+    def blocked_countries(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]:
+        """
+        The configured countries where distribution of content is blocked
+        """
+        return pulumi.get(self, "blocked_countries")
+
+    @blocked_countries.setter
+    def blocked_countries(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]):
+        pulumi.set(self, "blocked_countries", value)
+
+    @property
+    @pulumi.getter
+    def optimizer(self) -> Optional[pulumi.Input['CdnDistributionConfigOptimizerArgs']]:
+        """
+        Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+        """
+        return pulumi.get(self, "optimizer")
+
+    @optimizer.setter
+    def optimizer(self, value: Optional[pulumi.Input['CdnDistributionConfigOptimizerArgs']]):
+        pulumi.set(self, "optimizer", value)
 
 
 if not MYPY:
@@ -254,6 +302,29 @@ class CdnDistributionConfigBackendArgs:
     @origin_request_headers.setter
     def origin_request_headers(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[builtins.str]]]]):
         pulumi.set(self, "origin_request_headers", value)
+
+
+if not MYPY:
+    class CdnDistributionConfigOptimizerArgsDict(TypedDict):
+        enabled: NotRequired[pulumi.Input[builtins.bool]]
+elif False:
+    CdnDistributionConfigOptimizerArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class CdnDistributionConfigOptimizerArgs:
+    def __init__(__self__, *,
+                 enabled: Optional[pulumi.Input[builtins.bool]] = None):
+        if enabled is not None:
+            pulumi.set(__self__, "enabled", enabled)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> Optional[pulumi.Input[builtins.bool]]:
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: Optional[pulumi.Input[builtins.bool]]):
+        pulumi.set(self, "enabled", value)
 
 
 if not MYPY:
@@ -3520,7 +3591,7 @@ if not MYPY:
         """
         List of TLS ciphers to use.
         """
-        tls_protocols: NotRequired[pulumi.Input[builtins.str]]
+        tls_protocols: NotRequired[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]
         """
         The TLS protocol to use.
         """
@@ -3543,7 +3614,7 @@ class OpensearchInstanceParametersArgs:
                  sgw_acl: Optional[pulumi.Input[builtins.str]] = None,
                  syslogs: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
                  tls_ciphers: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
-                 tls_protocols: Optional[pulumi.Input[builtins.str]] = None):
+                 tls_protocols: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None):
         """
         :param pulumi.Input[builtins.bool] enable_monitoring: Enable monitoring.
         :param pulumi.Input[builtins.str] graphite: If set, monitoring with Graphite will be enabled. Expects the host and port where the Graphite metrics should be sent to (host:port).
@@ -3558,7 +3629,7 @@ class OpensearchInstanceParametersArgs:
         :param pulumi.Input[builtins.str] sgw_acl: Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] syslogs: List of syslog servers to send logs to.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] tls_ciphers: List of TLS ciphers to use.
-        :param pulumi.Input[builtins.str] tls_protocols: The TLS protocol to use.
+        :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] tls_protocols: The TLS protocol to use.
         """
         if enable_monitoring is not None:
             pulumi.set(__self__, "enable_monitoring", enable_monitoring)
@@ -3747,14 +3818,14 @@ class OpensearchInstanceParametersArgs:
 
     @property
     @pulumi.getter(name="tlsProtocols")
-    def tls_protocols(self) -> Optional[pulumi.Input[builtins.str]]:
+    def tls_protocols(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]:
         """
         The TLS protocol to use.
         """
         return pulumi.get(self, "tls_protocols")
 
     @tls_protocols.setter
-    def tls_protocols(self, value: Optional[pulumi.Input[builtins.str]]):
+    def tls_protocols(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]):
         pulumi.set(self, "tls_protocols", value)
 
 
@@ -4577,6 +4648,107 @@ class RedisInstanceParametersArgs:
 
 
 if not MYPY:
+    class RoutingTableRouteDestinationArgsDict(TypedDict):
+        type: pulumi.Input[builtins.str]
+        """
+        CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+        """
+        value: pulumi.Input[builtins.str]
+        """
+        An CIDR string.
+        """
+elif False:
+    RoutingTableRouteDestinationArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class RoutingTableRouteDestinationArgs:
+    def __init__(__self__, *,
+                 type: pulumi.Input[builtins.str],
+                 value: pulumi.Input[builtins.str]):
+        """
+        :param pulumi.Input[builtins.str] type: CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+        :param pulumi.Input[builtins.str] value: An CIDR string.
+        """
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[builtins.str]:
+        """
+        CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[builtins.str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[builtins.str]:
+        """
+        An CIDR string.
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[builtins.str]):
+        pulumi.set(self, "value", value)
+
+
+if not MYPY:
+    class RoutingTableRouteNextHopArgsDict(TypedDict):
+        type: pulumi.Input[builtins.str]
+        """
+        Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        """
+        value: NotRequired[pulumi.Input[builtins.str]]
+        """
+        Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+        """
+elif False:
+    RoutingTableRouteNextHopArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class RoutingTableRouteNextHopArgs:
+    def __init__(__self__, *,
+                 type: pulumi.Input[builtins.str],
+                 value: Optional[pulumi.Input[builtins.str]] = None):
+        """
+        :param pulumi.Input[builtins.str] type: Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        :param pulumi.Input[builtins.str] value: Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+        """
+        pulumi.set(__self__, "type", type)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[builtins.str]:
+        """
+        Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[builtins.str]):
+        pulumi.set(self, "type", value)
+
+    @property
+    @pulumi.getter
+    def value(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "value", value)
+
+
+if not MYPY:
     class SecurityGroupRuleIcmpParametersArgsDict(TypedDict):
         code: pulumi.Input[builtins.int]
         """
@@ -4913,11 +5085,15 @@ if not MYPY:
         """
         argus: NotRequired[pulumi.Input['SkeClusterExtensionsArgusArgsDict']]
         """
-        A single argus block as defined below.
+        A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
         """
         dns: NotRequired[pulumi.Input['SkeClusterExtensionsDnsArgsDict']]
         """
         DNS extension configuration
+        """
+        observability: NotRequired[pulumi.Input['SkeClusterExtensionsObservabilityArgsDict']]
+        """
+        A single observability block as defined below.
         """
 elif False:
     SkeClusterExtensionsArgsDict: TypeAlias = Mapping[str, Any]
@@ -4927,18 +5103,25 @@ class SkeClusterExtensionsArgs:
     def __init__(__self__, *,
                  acl: Optional[pulumi.Input['SkeClusterExtensionsAclArgs']] = None,
                  argus: Optional[pulumi.Input['SkeClusterExtensionsArgusArgs']] = None,
-                 dns: Optional[pulumi.Input['SkeClusterExtensionsDnsArgs']] = None):
+                 dns: Optional[pulumi.Input['SkeClusterExtensionsDnsArgs']] = None,
+                 observability: Optional[pulumi.Input['SkeClusterExtensionsObservabilityArgs']] = None):
         """
         :param pulumi.Input['SkeClusterExtensionsAclArgs'] acl: Cluster access control configuration.
-        :param pulumi.Input['SkeClusterExtensionsArgusArgs'] argus: A single argus block as defined below.
+        :param pulumi.Input['SkeClusterExtensionsArgusArgs'] argus: A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
         :param pulumi.Input['SkeClusterExtensionsDnsArgs'] dns: DNS extension configuration
+        :param pulumi.Input['SkeClusterExtensionsObservabilityArgs'] observability: A single observability block as defined below.
         """
         if acl is not None:
             pulumi.set(__self__, "acl", acl)
         if argus is not None:
+            warnings.warn("""Use observability instead.""", DeprecationWarning)
+            pulumi.log.warn("""argus is deprecated: Use observability instead.""")
+        if argus is not None:
             pulumi.set(__self__, "argus", argus)
         if dns is not None:
             pulumi.set(__self__, "dns", dns)
+        if observability is not None:
+            pulumi.set(__self__, "observability", observability)
 
     @property
     @pulumi.getter
@@ -4954,9 +5137,10 @@ class SkeClusterExtensionsArgs:
 
     @property
     @pulumi.getter
+    @_utilities.deprecated("""Use observability instead.""")
     def argus(self) -> Optional[pulumi.Input['SkeClusterExtensionsArgusArgs']]:
         """
-        A single argus block as defined below.
+        A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
         """
         return pulumi.get(self, "argus")
 
@@ -4975,6 +5159,18 @@ class SkeClusterExtensionsArgs:
     @dns.setter
     def dns(self, value: Optional[pulumi.Input['SkeClusterExtensionsDnsArgs']]):
         pulumi.set(self, "dns", value)
+
+    @property
+    @pulumi.getter
+    def observability(self) -> Optional[pulumi.Input['SkeClusterExtensionsObservabilityArgs']]:
+        """
+        A single observability block as defined below.
+        """
+        return pulumi.get(self, "observability")
+
+    @observability.setter
+    def observability(self, value: Optional[pulumi.Input['SkeClusterExtensionsObservabilityArgs']]):
+        pulumi.set(self, "observability", value)
 
 
 if not MYPY:
@@ -5127,6 +5323,57 @@ class SkeClusterExtensionsDnsArgs:
     @zones.setter
     def zones(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]):
         pulumi.set(self, "zones", value)
+
+
+if not MYPY:
+    class SkeClusterExtensionsObservabilityArgsDict(TypedDict):
+        enabled: pulumi.Input[builtins.bool]
+        """
+        Flag to enable/disable Observability extensions.
+        """
+        instance_id: NotRequired[pulumi.Input[builtins.str]]
+        """
+        Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+        """
+elif False:
+    SkeClusterExtensionsObservabilityArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class SkeClusterExtensionsObservabilityArgs:
+    def __init__(__self__, *,
+                 enabled: pulumi.Input[builtins.bool],
+                 instance_id: Optional[pulumi.Input[builtins.str]] = None):
+        """
+        :param pulumi.Input[builtins.bool] enabled: Flag to enable/disable Observability extensions.
+        :param pulumi.Input[builtins.str] instance_id: Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+        """
+        pulumi.set(__self__, "enabled", enabled)
+        if instance_id is not None:
+            pulumi.set(__self__, "instance_id", instance_id)
+
+    @property
+    @pulumi.getter
+    def enabled(self) -> pulumi.Input[builtins.bool]:
+        """
+        Flag to enable/disable Observability extensions.
+        """
+        return pulumi.get(self, "enabled")
+
+    @enabled.setter
+    def enabled(self, value: pulumi.Input[builtins.bool]):
+        pulumi.set(self, "enabled", value)
+
+    @property
+    @pulumi.getter(name="instanceId")
+    def instance_id(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+        """
+        return pulumi.get(self, "instance_id")
+
+    @instance_id.setter
+    def instance_id(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "instance_id", value)
 
 
 if not MYPY:

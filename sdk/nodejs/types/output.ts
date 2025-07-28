@@ -11,6 +11,14 @@ export interface CdnDistributionConfig {
      */
     backend: outputs.CdnDistributionConfigBackend;
     /**
+     * The configured countries where distribution of content is blocked
+     */
+    blockedCountries?: string[];
+    /**
+     * Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+     */
+    optimizer: outputs.CdnDistributionConfigOptimizer;
+    /**
      * The configured regions where content will be hosted
      */
     regions: string[];
@@ -29,6 +37,10 @@ export interface CdnDistributionConfigBackend {
      * The configured backend type. Supported values are: `http`.
      */
     type: string;
+}
+
+export interface CdnDistributionConfigOptimizer {
+    enabled: boolean;
 }
 
 export interface CdnDistributionDomain {
@@ -56,6 +68,14 @@ export interface GetCdnDistributionConfig {
      */
     backend: outputs.GetCdnDistributionConfigBackend;
     /**
+     * The configured countries where distribution of content is blocked
+     */
+    blockedCountries?: string[];
+    /**
+     * Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+     */
+    optimizer: outputs.GetCdnDistributionConfigOptimizer;
+    /**
      * The configured regions where content will be hosted
      */
     regions: string[];
@@ -74,6 +94,10 @@ export interface GetCdnDistributionConfigBackend {
      * The configured backend type. Supported values are: `http`.
      */
     type: string;
+}
+
+export interface GetCdnDistributionConfigOptimizer {
+    enabled: boolean;
 }
 
 export interface GetCdnDistributionDomain {
@@ -932,6 +956,112 @@ export interface GetRedisInstanceParameters {
     tlsProtocols: string;
 }
 
+export interface GetRoutingTableRouteDestination {
+    /**
+     * CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+     */
+    type: string;
+    /**
+     * An CIDR string.
+     */
+    value: string;
+}
+
+export interface GetRoutingTableRouteNextHop {
+    /**
+     * Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+     */
+    type: string;
+    /**
+     * Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+     */
+    value: string;
+}
+
+export interface GetRoutingTableRoutesRoute {
+    /**
+     * Date-time when the route was created
+     */
+    createdAt: string;
+    /**
+     * Destination of the route.
+     */
+    destination: outputs.GetRoutingTableRoutesRouteDestination;
+    /**
+     * Labels are key-value string pairs which can be attached to a resource container
+     */
+    labels: {[key: string]: string};
+    /**
+     * Next hop destination.
+     */
+    nextHop: outputs.GetRoutingTableRoutesRouteNextHop;
+    /**
+     * Route ID.
+     */
+    routeId: string;
+    /**
+     * Date-time when the route was updated
+     */
+    updatedAt: string;
+}
+
+export interface GetRoutingTableRoutesRouteDestination {
+    /**
+     * CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+     */
+    type: string;
+    /**
+     * An CIDR string.
+     */
+    value: string;
+}
+
+export interface GetRoutingTableRoutesRouteNextHop {
+    /**
+     * Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+     */
+    type: string;
+    /**
+     * Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+     */
+    value: string;
+}
+
+export interface GetRoutingTablesItem {
+    /**
+     * Date-time when the routing table was created
+     */
+    createdAt: string;
+    /**
+     * When true this is the default routing table for this network area. It can't be deleted and is used if the user does not specify it otherwise.
+     */
+    default: boolean;
+    /**
+     * Description of the routing table.
+     */
+    description: string;
+    /**
+     * Labels are key-value string pairs which can be attached to a resource container
+     */
+    labels: {[key: string]: string};
+    /**
+     * The name of the routing table.
+     */
+    name: string;
+    /**
+     * The routing tables ID.
+     */
+    routingTableId: string;
+    /**
+     * This controls whether the routes for project-to-project communication are created automatically or not.
+     */
+    systemRoutes: boolean;
+    /**
+     * Date-time when the routing table was updated
+     */
+    updatedAt: string;
+}
+
 export interface GetSecurityGroupRuleIcmpParameters {
     /**
      * ICMP code. Can be set if the protocol is ICMP.
@@ -1034,13 +1164,19 @@ export interface GetSkeClusterExtensions {
      */
     acl: outputs.GetSkeClusterExtensionsAcl;
     /**
-     * A single argus block as defined below
+     * A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
+     *
+     * @deprecated Use observability instead.
      */
     argus: outputs.GetSkeClusterExtensionsArgus;
     /**
      * DNS extension configuration
      */
     dns: outputs.GetSkeClusterExtensionsDns;
+    /**
+     * A single observability block as defined below.
+     */
+    observability: outputs.GetSkeClusterExtensionsObservability;
 }
 
 export interface GetSkeClusterExtensionsAcl {
@@ -1074,6 +1210,17 @@ export interface GetSkeClusterExtensionsDns {
      * Specify a list of domain filters for externalDNS (e.g., `foo.runs.onstackit.cloud`)
      */
     zones: string[];
+}
+
+export interface GetSkeClusterExtensionsObservability {
+    /**
+     * Flag to enable/disable Observability extensions.
+     */
+    enabled: boolean;
+    /**
+     * Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+     */
+    instanceId: string;
 }
 
 export interface GetSkeClusterHibernation {
@@ -1906,7 +2053,7 @@ export interface OpensearchInstanceParameters {
     /**
      * The TLS protocol to use.
      */
-    tlsProtocols: string;
+    tlsProtocols: string[];
 }
 
 export interface PostgresflexInstanceFlavor {
@@ -2067,6 +2214,28 @@ export interface RedisInstanceParameters {
     tlsProtocols: string;
 }
 
+export interface RoutingTableRouteDestination {
+    /**
+     * CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+     */
+    type: string;
+    /**
+     * An CIDR string.
+     */
+    value: string;
+}
+
+export interface RoutingTableRouteNextHop {
+    /**
+     * Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+     */
+    type: string;
+    /**
+     * Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+     */
+    value?: string;
+}
+
 export interface SecurityGroupRuleIcmpParameters {
     /**
      * ICMP code. Can be set if the protocol is ICMP.
@@ -2139,13 +2308,19 @@ export interface SkeClusterExtensions {
      */
     acl?: outputs.SkeClusterExtensionsAcl;
     /**
-     * A single argus block as defined below.
+     * A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
+     *
+     * @deprecated Use observability instead.
      */
     argus?: outputs.SkeClusterExtensionsArgus;
     /**
      * DNS extension configuration
      */
     dns?: outputs.SkeClusterExtensionsDns;
+    /**
+     * A single observability block as defined below.
+     */
+    observability?: outputs.SkeClusterExtensionsObservability;
 }
 
 export interface SkeClusterExtensionsAcl {
@@ -2179,6 +2354,17 @@ export interface SkeClusterExtensionsDns {
      * Specify a list of domain filters for externalDNS (e.g., `foo.runs.onstackit.cloud`)
      */
     zones: string[];
+}
+
+export interface SkeClusterExtensionsObservability {
+    /**
+     * Flag to enable/disable Observability extensions.
+     */
+    enabled: boolean;
+    /**
+     * Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+     */
+    instanceId?: string;
 }
 
 export interface SkeClusterHibernation {

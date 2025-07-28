@@ -61,6 +61,10 @@ export class MongodbflexInstance extends pulumi.CustomResource {
      * STACKIT project ID to which the instance is associated.
      */
     public readonly projectId!: pulumi.Output<string>;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    public readonly region!: pulumi.Output<string>;
     public readonly replicas!: pulumi.Output<number>;
     public readonly storage!: pulumi.Output<outputs.MongodbflexInstanceStorage>;
     public readonly version!: pulumi.Output<string>;
@@ -85,6 +89,7 @@ export class MongodbflexInstance extends pulumi.CustomResource {
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["options"] = state ? state.options : undefined;
             resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["region"] = state ? state.region : undefined;
             resourceInputs["replicas"] = state ? state.replicas : undefined;
             resourceInputs["storage"] = state ? state.storage : undefined;
             resourceInputs["version"] = state ? state.version : undefined;
@@ -120,6 +125,7 @@ export class MongodbflexInstance extends pulumi.CustomResource {
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["options"] = args ? args.options : undefined;
             resourceInputs["projectId"] = args ? args.projectId : undefined;
+            resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["replicas"] = args ? args.replicas : undefined;
             resourceInputs["storage"] = args ? args.storage : undefined;
             resourceInputs["version"] = args ? args.version : undefined;
@@ -156,6 +162,10 @@ export interface MongodbflexInstanceState {
      * STACKIT project ID to which the instance is associated.
      */
     projectId?: pulumi.Input<string>;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: pulumi.Input<string>;
     replicas?: pulumi.Input<number>;
     storage?: pulumi.Input<inputs.MongodbflexInstanceStorage>;
     version?: pulumi.Input<string>;
@@ -183,6 +193,10 @@ export interface MongodbflexInstanceArgs {
      * STACKIT project ID to which the instance is associated.
      */
     projectId: pulumi.Input<string>;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: pulumi.Input<string>;
     replicas: pulumi.Input<number>;
     storage: pulumi.Input<inputs.MongodbflexInstanceStorage>;
     version: pulumi.Input<string>;

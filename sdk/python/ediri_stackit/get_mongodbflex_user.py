@@ -27,7 +27,7 @@ class GetMongodbflexUserResult:
     """
     A collection of values returned by getMongodbflexUser.
     """
-    def __init__(__self__, database=None, host=None, id=None, instance_id=None, port=None, project_id=None, roles=None, user_id=None, username=None):
+    def __init__(__self__, database=None, host=None, id=None, instance_id=None, port=None, project_id=None, region=None, roles=None, user_id=None, username=None):
         if database and not isinstance(database, str):
             raise TypeError("Expected argument 'database' to be a str")
         pulumi.set(__self__, "database", database)
@@ -46,6 +46,9 @@ class GetMongodbflexUserResult:
         if project_id and not isinstance(project_id, str):
             raise TypeError("Expected argument 'project_id' to be a str")
         pulumi.set(__self__, "project_id", project_id)
+        if region and not isinstance(region, str):
+            raise TypeError("Expected argument 'region' to be a str")
+        pulumi.set(__self__, "region", region)
         if roles and not isinstance(roles, list):
             raise TypeError("Expected argument 'roles' to be a list")
         pulumi.set(__self__, "roles", roles)
@@ -94,6 +97,14 @@ class GetMongodbflexUserResult:
 
     @property
     @pulumi.getter
+    def region(self) -> builtins.str:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @property
+    @pulumi.getter
     def roles(self) -> Sequence[builtins.str]:
         return pulumi.get(self, "roles")
 
@@ -123,6 +134,7 @@ class AwaitableGetMongodbflexUserResult(GetMongodbflexUserResult):
             instance_id=self.instance_id,
             port=self.port,
             project_id=self.project_id,
+            region=self.region,
             roles=self.roles,
             user_id=self.user_id,
             username=self.username)
@@ -130,6 +142,7 @@ class AwaitableGetMongodbflexUserResult(GetMongodbflexUserResult):
 
 def get_mongodbflex_user(instance_id: Optional[builtins.str] = None,
                          project_id: Optional[builtins.str] = None,
+                         region: Optional[builtins.str] = None,
                          user_id: Optional[builtins.str] = None,
                          opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetMongodbflexUserResult:
     """
@@ -140,11 +153,13 @@ def get_mongodbflex_user(instance_id: Optional[builtins.str] = None,
 
     :param builtins.str instance_id: ID of the MongoDB Flex instance.
     :param builtins.str project_id: STACKIT project ID to which the instance is associated.
+    :param builtins.str region: The resource region. If not defined, the provider region is used.
     :param builtins.str user_id: User ID.
     """
     __args__ = dict()
     __args__['instanceId'] = instance_id
     __args__['projectId'] = project_id
+    __args__['region'] = region
     __args__['userId'] = user_id
     opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke('stackit:index/getMongodbflexUser:getMongodbflexUser', __args__, opts=opts, typ=GetMongodbflexUserResult).value
@@ -156,11 +171,13 @@ def get_mongodbflex_user(instance_id: Optional[builtins.str] = None,
         instance_id=pulumi.get(__ret__, 'instance_id'),
         port=pulumi.get(__ret__, 'port'),
         project_id=pulumi.get(__ret__, 'project_id'),
+        region=pulumi.get(__ret__, 'region'),
         roles=pulumi.get(__ret__, 'roles'),
         user_id=pulumi.get(__ret__, 'user_id'),
         username=pulumi.get(__ret__, 'username'))
 def get_mongodbflex_user_output(instance_id: Optional[pulumi.Input[builtins.str]] = None,
                                 project_id: Optional[pulumi.Input[builtins.str]] = None,
+                                region: Optional[pulumi.Input[Optional[builtins.str]]] = None,
                                 user_id: Optional[pulumi.Input[builtins.str]] = None,
                                 opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetMongodbflexUserResult]:
     """
@@ -171,11 +188,13 @@ def get_mongodbflex_user_output(instance_id: Optional[pulumi.Input[builtins.str]
 
     :param builtins.str instance_id: ID of the MongoDB Flex instance.
     :param builtins.str project_id: STACKIT project ID to which the instance is associated.
+    :param builtins.str region: The resource region. If not defined, the provider region is used.
     :param builtins.str user_id: User ID.
     """
     __args__ = dict()
     __args__['instanceId'] = instance_id
     __args__['projectId'] = project_id
+    __args__['region'] = region
     __args__['userId'] = user_id
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke_output('stackit:index/getMongodbflexUser:getMongodbflexUser', __args__, opts=opts, typ=GetMongodbflexUserResult)
@@ -186,6 +205,7 @@ def get_mongodbflex_user_output(instance_id: Optional[pulumi.Input[builtins.str]
         instance_id=pulumi.get(__response__, 'instance_id'),
         port=pulumi.get(__response__, 'port'),
         project_id=pulumi.get(__response__, 'project_id'),
+        region=pulumi.get(__response__, 'region'),
         roles=pulumi.get(__response__, 'roles'),
         user_id=pulumi.get(__response__, 'user_id'),
         username=pulumi.get(__response__, 'username')))

@@ -26,6 +26,8 @@ type Loadbalancer struct {
 	Networks LoadbalancerNetworkArrayOutput `pulumi:"networks"`
 	// Defines any optional functionality you want to have enabled on your load balancer.
 	Options LoadbalancerOptionsOutput `pulumi:"options"`
+	// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+	PlanId pulumi.StringOutput `pulumi:"planId"`
 	// Transient private Load Balancer IP address. It can change any time.
 	PrivateAddress pulumi.StringOutput `pulumi:"privateAddress"`
 	// STACKIT project ID to which the Load Balancer is associated.
@@ -88,6 +90,8 @@ type loadbalancerState struct {
 	Networks []LoadbalancerNetwork `pulumi:"networks"`
 	// Defines any optional functionality you want to have enabled on your load balancer.
 	Options *LoadbalancerOptions `pulumi:"options"`
+	// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+	PlanId *string `pulumi:"planId"`
 	// Transient private Load Balancer IP address. It can change any time.
 	PrivateAddress *string `pulumi:"privateAddress"`
 	// STACKIT project ID to which the Load Balancer is associated.
@@ -109,6 +113,8 @@ type LoadbalancerState struct {
 	Networks LoadbalancerNetworkArrayInput
 	// Defines any optional functionality you want to have enabled on your load balancer.
 	Options LoadbalancerOptionsPtrInput
+	// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+	PlanId pulumi.StringPtrInput
 	// Transient private Load Balancer IP address. It can change any time.
 	PrivateAddress pulumi.StringPtrInput
 	// STACKIT project ID to which the Load Balancer is associated.
@@ -134,6 +140,8 @@ type loadbalancerArgs struct {
 	Networks []LoadbalancerNetwork `pulumi:"networks"`
 	// Defines any optional functionality you want to have enabled on your load balancer.
 	Options *LoadbalancerOptions `pulumi:"options"`
+	// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+	PlanId *string `pulumi:"planId"`
 	// STACKIT project ID to which the Load Balancer is associated.
 	ProjectId string `pulumi:"projectId"`
 	// The resource region. If not defined, the provider region is used.
@@ -154,6 +162,8 @@ type LoadbalancerArgs struct {
 	Networks LoadbalancerNetworkArrayInput
 	// Defines any optional functionality you want to have enabled on your load balancer.
 	Options LoadbalancerOptionsPtrInput
+	// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+	PlanId pulumi.StringPtrInput
 	// STACKIT project ID to which the Load Balancer is associated.
 	ProjectId pulumi.StringInput
 	// The resource region. If not defined, the provider region is used.
@@ -272,6 +282,11 @@ func (o LoadbalancerOutput) Networks() LoadbalancerNetworkArrayOutput {
 // Defines any optional functionality you want to have enabled on your load balancer.
 func (o LoadbalancerOutput) Options() LoadbalancerOptionsOutput {
 	return o.ApplyT(func(v *Loadbalancer) LoadbalancerOptionsOutput { return v.Options }).(LoadbalancerOptionsOutput)
+}
+
+// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+func (o LoadbalancerOutput) PlanId() pulumi.StringOutput {
+	return o.ApplyT(func(v *Loadbalancer) pulumi.StringOutput { return v.PlanId }).(pulumi.StringOutput)
 }
 
 // Transient private Load Balancer IP address. It can change any time.

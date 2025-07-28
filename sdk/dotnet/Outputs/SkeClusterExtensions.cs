@@ -19,13 +19,17 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly Outputs.SkeClusterExtensionsAcl? Acl;
         /// <summary>
-        /// A single argus block as defined below.
+        /// A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
         /// </summary>
         public readonly Outputs.SkeClusterExtensionsArgus? Argus;
         /// <summary>
         /// DNS extension configuration
         /// </summary>
         public readonly Outputs.SkeClusterExtensionsDns? Dns;
+        /// <summary>
+        /// A single observability block as defined below.
+        /// </summary>
+        public readonly Outputs.SkeClusterExtensionsObservability? Observability;
 
         [OutputConstructor]
         private SkeClusterExtensions(
@@ -33,11 +37,14 @@ namespace ediri.Stackit.Outputs
 
             Outputs.SkeClusterExtensionsArgus? argus,
 
-            Outputs.SkeClusterExtensionsDns? dns)
+            Outputs.SkeClusterExtensionsDns? dns,
+
+            Outputs.SkeClusterExtensionsObservability? observability)
         {
             Acl = acl;
             Argus = argus;
             Dns = dns;
+            Observability = observability;
         }
     }
 }

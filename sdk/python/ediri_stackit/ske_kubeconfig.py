@@ -23,13 +23,15 @@ class SkeKubeconfigArgs:
                  cluster_name: pulumi.Input[builtins.str],
                  project_id: pulumi.Input[builtins.str],
                  expiration: Optional[pulumi.Input[builtins.int]] = None,
-                 refresh: Optional[pulumi.Input[builtins.bool]] = None):
+                 refresh: Optional[pulumi.Input[builtins.bool]] = None,
+                 region: Optional[pulumi.Input[builtins.str]] = None):
         """
         The set of arguments for constructing a SkeKubeconfig resource.
         :param pulumi.Input[builtins.str] cluster_name: Name of the SKE cluster.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the cluster is associated.
         :param pulumi.Input[builtins.int] expiration: Expiration time of the kubeconfig, in seconds. Defaults to `3600`
         :param pulumi.Input[builtins.bool] refresh: If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
+        :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         """
         pulumi.set(__self__, "cluster_name", cluster_name)
         pulumi.set(__self__, "project_id", project_id)
@@ -37,6 +39,8 @@ class SkeKubeconfigArgs:
             pulumi.set(__self__, "expiration", expiration)
         if refresh is not None:
             pulumi.set(__self__, "refresh", refresh)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
 
     @property
     @pulumi.getter(name="clusterName")
@@ -86,6 +90,18 @@ class SkeKubeconfigArgs:
     def refresh(self, value: Optional[pulumi.Input[builtins.bool]]):
         pulumi.set(self, "refresh", value)
 
+    @property
+    @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "region", value)
+
 
 @pulumi.input_type
 class _SkeKubeconfigState:
@@ -97,7 +113,8 @@ class _SkeKubeconfigState:
                  kube_config: Optional[pulumi.Input[builtins.str]] = None,
                  kube_config_id: Optional[pulumi.Input[builtins.str]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
-                 refresh: Optional[pulumi.Input[builtins.bool]] = None):
+                 refresh: Optional[pulumi.Input[builtins.bool]] = None,
+                 region: Optional[pulumi.Input[builtins.str]] = None):
         """
         Input properties used for looking up and filtering SkeKubeconfig resources.
         :param pulumi.Input[builtins.str] cluster_name: Name of the SKE cluster.
@@ -107,6 +124,7 @@ class _SkeKubeconfigState:
         :param pulumi.Input[builtins.str] kube_config: Raw short-lived admin kubeconfig.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the cluster is associated.
         :param pulumi.Input[builtins.bool] refresh: If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
+        :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         """
         if cluster_name is not None:
             pulumi.set(__self__, "cluster_name", cluster_name)
@@ -124,6 +142,8 @@ class _SkeKubeconfigState:
             pulumi.set(__self__, "project_id", project_id)
         if refresh is not None:
             pulumi.set(__self__, "refresh", refresh)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
 
     @property
     @pulumi.getter(name="clusterName")
@@ -218,6 +238,18 @@ class _SkeKubeconfigState:
     def refresh(self, value: Optional[pulumi.Input[builtins.bool]]):
         pulumi.set(self, "refresh", value)
 
+    @property
+    @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "region", value)
+
 
 @pulumi.type_token("stackit:index/skeKubeconfig:SkeKubeconfig")
 class SkeKubeconfig(pulumi.CustomResource):
@@ -229,6 +261,7 @@ class SkeKubeconfig(pulumi.CustomResource):
                  expiration: Optional[pulumi.Input[builtins.int]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
                  refresh: Optional[pulumi.Input[builtins.bool]] = None,
+                 region: Optional[pulumi.Input[builtins.str]] = None,
                  __props__=None):
         """
         SKE kubeconfig resource schema. Must have a `region` specified in the provider configuration.
@@ -241,6 +274,7 @@ class SkeKubeconfig(pulumi.CustomResource):
         :param pulumi.Input[builtins.int] expiration: Expiration time of the kubeconfig, in seconds. Defaults to `3600`
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the cluster is associated.
         :param pulumi.Input[builtins.bool] refresh: If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
+        :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         """
         ...
     @overload
@@ -272,6 +306,7 @@ class SkeKubeconfig(pulumi.CustomResource):
                  expiration: Optional[pulumi.Input[builtins.int]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
                  refresh: Optional[pulumi.Input[builtins.bool]] = None,
+                 region: Optional[pulumi.Input[builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -289,6 +324,7 @@ class SkeKubeconfig(pulumi.CustomResource):
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
             __props__.__dict__["refresh"] = refresh
+            __props__.__dict__["region"] = region
             __props__.__dict__["creation_time"] = None
             __props__.__dict__["expires_at"] = None
             __props__.__dict__["kube_config"] = None
@@ -312,7 +348,8 @@ class SkeKubeconfig(pulumi.CustomResource):
             kube_config: Optional[pulumi.Input[builtins.str]] = None,
             kube_config_id: Optional[pulumi.Input[builtins.str]] = None,
             project_id: Optional[pulumi.Input[builtins.str]] = None,
-            refresh: Optional[pulumi.Input[builtins.bool]] = None) -> 'SkeKubeconfig':
+            refresh: Optional[pulumi.Input[builtins.bool]] = None,
+            region: Optional[pulumi.Input[builtins.str]] = None) -> 'SkeKubeconfig':
         """
         Get an existing SkeKubeconfig resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -327,6 +364,7 @@ class SkeKubeconfig(pulumi.CustomResource):
         :param pulumi.Input[builtins.str] kube_config: Raw short-lived admin kubeconfig.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the cluster is associated.
         :param pulumi.Input[builtins.bool] refresh: If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
+        :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -340,6 +378,7 @@ class SkeKubeconfig(pulumi.CustomResource):
         __props__.__dict__["kube_config_id"] = kube_config_id
         __props__.__dict__["project_id"] = project_id
         __props__.__dict__["refresh"] = refresh
+        __props__.__dict__["region"] = region
         return SkeKubeconfig(resource_name, opts=opts, __props__=__props__)
 
     @property
@@ -402,4 +441,12 @@ class SkeKubeconfig(pulumi.CustomResource):
         If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
         """
         return pulumi.get(self, "refresh")
+
+    @property
+    @pulumi.getter
+    def region(self) -> pulumi.Output[builtins.str]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
 

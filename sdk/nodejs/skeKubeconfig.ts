@@ -66,6 +66,10 @@ export class SkeKubeconfig extends pulumi.CustomResource {
      * If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
      */
     public readonly refresh!: pulumi.Output<boolean | undefined>;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    public readonly region!: pulumi.Output<string>;
 
     /**
      * Create a SkeKubeconfig resource with the given unique name, arguments, and options.
@@ -88,6 +92,7 @@ export class SkeKubeconfig extends pulumi.CustomResource {
             resourceInputs["kubeConfigId"] = state ? state.kubeConfigId : undefined;
             resourceInputs["projectId"] = state ? state.projectId : undefined;
             resourceInputs["refresh"] = state ? state.refresh : undefined;
+            resourceInputs["region"] = state ? state.region : undefined;
         } else {
             const args = argsOrState as SkeKubeconfigArgs | undefined;
             if ((!args || args.clusterName === undefined) && !opts.urn) {
@@ -100,6 +105,7 @@ export class SkeKubeconfig extends pulumi.CustomResource {
             resourceInputs["expiration"] = args ? args.expiration : undefined;
             resourceInputs["projectId"] = args ? args.projectId : undefined;
             resourceInputs["refresh"] = args ? args.refresh : undefined;
+            resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["creationTime"] = undefined /*out*/;
             resourceInputs["expiresAt"] = undefined /*out*/;
             resourceInputs["kubeConfig"] = undefined /*out*/;
@@ -145,6 +151,10 @@ export interface SkeKubeconfigState {
      * If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
      */
     refresh?: pulumi.Input<boolean>;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: pulumi.Input<string>;
 }
 
 /**
@@ -167,4 +177,8 @@ export interface SkeKubeconfigArgs {
      * If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
      */
     refresh?: pulumi.Input<boolean>;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: pulumi.Input<string>;
 }

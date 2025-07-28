@@ -58,6 +58,10 @@ export class Loadbalancer extends pulumi.CustomResource {
      */
     public readonly options!: pulumi.Output<outputs.LoadbalancerOptions>;
     /**
+     * The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+     */
+    public readonly planId!: pulumi.Output<string>;
+    /**
      * Transient private Load Balancer IP address. It can change any time.
      */
     public /*out*/ readonly privateAddress!: pulumi.Output<string>;
@@ -92,6 +96,7 @@ export class Loadbalancer extends pulumi.CustomResource {
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["networks"] = state ? state.networks : undefined;
             resourceInputs["options"] = state ? state.options : undefined;
+            resourceInputs["planId"] = state ? state.planId : undefined;
             resourceInputs["privateAddress"] = state ? state.privateAddress : undefined;
             resourceInputs["projectId"] = state ? state.projectId : undefined;
             resourceInputs["region"] = state ? state.region : undefined;
@@ -115,6 +120,7 @@ export class Loadbalancer extends pulumi.CustomResource {
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["networks"] = args ? args.networks : undefined;
             resourceInputs["options"] = args ? args.options : undefined;
+            resourceInputs["planId"] = args ? args.planId : undefined;
             resourceInputs["projectId"] = args ? args.projectId : undefined;
             resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["targetPools"] = args ? args.targetPools : undefined;
@@ -149,6 +155,10 @@ export interface LoadbalancerState {
      * Defines any optional functionality you want to have enabled on your load balancer.
      */
     options?: pulumi.Input<inputs.LoadbalancerOptions>;
+    /**
+     * The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+     */
+    planId?: pulumi.Input<string>;
     /**
      * Transient private Load Balancer IP address. It can change any time.
      */
@@ -191,6 +201,10 @@ export interface LoadbalancerArgs {
      * Defines any optional functionality you want to have enabled on your load balancer.
      */
     options?: pulumi.Input<inputs.LoadbalancerOptions>;
+    /**
+     * The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+     */
+    planId?: pulumi.Input<string>;
     /**
      * STACKIT project ID to which the Load Balancer is associated.
      */

@@ -47,6 +47,8 @@ type LookupLoadbalancerResult struct {
 	Networks []GetLoadbalancerNetwork `pulumi:"networks"`
 	// Defines any optional functionality you want to have enabled on your load balancer.
 	Options GetLoadbalancerOptions `pulumi:"options"`
+	// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+	PlanId string `pulumi:"planId"`
 	// Transient private Load Balancer IP address. It can change any time.
 	PrivateAddress string `pulumi:"privateAddress"`
 	// STACKIT project ID to which the Load Balancer is associated.
@@ -122,6 +124,11 @@ func (o LookupLoadbalancerResultOutput) Networks() GetLoadbalancerNetworkArrayOu
 // Defines any optional functionality you want to have enabled on your load balancer.
 func (o LookupLoadbalancerResultOutput) Options() GetLoadbalancerOptionsOutput {
 	return o.ApplyT(func(v LookupLoadbalancerResult) GetLoadbalancerOptions { return v.Options }).(GetLoadbalancerOptionsOutput)
+}
+
+// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+func (o LookupLoadbalancerResultOutput) PlanId() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupLoadbalancerResult) string { return v.PlanId }).(pulumi.StringOutput)
 }
 
 // Transient private Load Balancer IP address. It can change any time.

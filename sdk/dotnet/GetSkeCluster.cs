@@ -116,12 +116,6 @@ namespace ediri.Stackit
     public sealed class GetSkeClusterResult
     {
         /// <summary>
-        /// DEPRECATED as of Kubernetes 1.25+
-        /// Flag to specify if privileged mode for containers is enabled or not.
-        /// This should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).
-        /// </summary>
-        public readonly bool AllowPrivilegedContainers;
-        /// <summary>
         /// The outgoing network ranges (in CIDR notation) of traffic originating from workload on the cluster.
         /// </summary>
         public readonly ImmutableArray<string> EgressAddressRanges;
@@ -134,10 +128,6 @@ namespace ediri.Stackit
         /// </summary>
         public readonly ImmutableArray<Outputs.GetSkeClusterHibernationResult> Hibernations;
         public readonly string Id;
-        /// <summary>
-        /// Kubernetes version. This field is deprecated, use `kubernetes_version_used` instead
-        /// </summary>
-        public readonly string KubernetesVersion;
         /// <summary>
         /// The minimum Kubernetes version, this field is always nil. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the `kubernetes_version_used` field.
         /// </summary>
@@ -163,6 +153,10 @@ namespace ediri.Stackit
         /// </summary>
         public readonly ImmutableArray<Outputs.GetSkeClusterNodePoolResult> NodePools;
         /// <summary>
+        /// The network ranges (in CIDR notation) used by pods of the cluster.
+        /// </summary>
+        public readonly ImmutableArray<string> PodAddressRanges;
+        /// <summary>
         /// STACKIT project ID to which the cluster is associated.
         /// </summary>
         public readonly string ProjectId;
@@ -173,8 +167,6 @@ namespace ediri.Stackit
 
         [OutputConstructor]
         private GetSkeClusterResult(
-            bool allowPrivilegedContainers,
-
             ImmutableArray<string> egressAddressRanges,
 
             Outputs.GetSkeClusterExtensionsResult extensions,
@@ -182,8 +174,6 @@ namespace ediri.Stackit
             ImmutableArray<Outputs.GetSkeClusterHibernationResult> hibernations,
 
             string id,
-
-            string kubernetesVersion,
 
             string kubernetesVersionMin,
 
@@ -197,22 +187,23 @@ namespace ediri.Stackit
 
             ImmutableArray<Outputs.GetSkeClusterNodePoolResult> nodePools,
 
+            ImmutableArray<string> podAddressRanges,
+
             string projectId,
 
             string? region)
         {
-            AllowPrivilegedContainers = allowPrivilegedContainers;
             EgressAddressRanges = egressAddressRanges;
             Extensions = extensions;
             Hibernations = hibernations;
             Id = id;
-            KubernetesVersion = kubernetesVersion;
             KubernetesVersionMin = kubernetesVersionMin;
             KubernetesVersionUsed = kubernetesVersionUsed;
             Maintenance = maintenance;
             Name = name;
             Network = network;
             NodePools = nodePools;
+            PodAddressRanges = podAddressRanges;
             ProjectId = projectId;
             Region = region;
         }

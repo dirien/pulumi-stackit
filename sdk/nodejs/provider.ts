@@ -26,12 +26,6 @@ export class Provider extends pulumi.ProviderResource {
     }
 
     /**
-     * Custom endpoint for the Argus service
-     *
-     * @deprecated Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observabilityCustomEndpoint` and `observability` resources instead, which offer the exact same functionality.
-     */
-    public readonly argusCustomEndpoint!: pulumi.Output<string | undefined>;
-    /**
      * Custom endpoint for the Membership service
      */
     public readonly authorizationCustomEndpoint!: pulumi.Output<string | undefined>;
@@ -188,7 +182,6 @@ export class Provider extends pulumi.ProviderResource {
         let resourceInputs: pulumi.Inputs = {};
         opts = opts || {};
         {
-            resourceInputs["argusCustomEndpoint"] = args ? args.argusCustomEndpoint : undefined;
             resourceInputs["authorizationCustomEndpoint"] = args ? args.authorizationCustomEndpoint : undefined;
             resourceInputs["cdnCustomEndpoint"] = args ? args.cdnCustomEndpoint : undefined;
             resourceInputs["credentialsPath"] = args ? args.credentialsPath : undefined;
@@ -245,12 +238,6 @@ export class Provider extends pulumi.ProviderResource {
  */
 export interface ProviderArgs {
     /**
-     * Custom endpoint for the Argus service
-     *
-     * @deprecated Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observabilityCustomEndpoint` and `observability` resources instead, which offer the exact same functionality.
-     */
-    argusCustomEndpoint?: pulumi.Input<string>;
-    /**
      * Custom endpoint for the Membership service
      */
     authorizationCustomEndpoint?: pulumi.Input<string>;
@@ -277,7 +264,7 @@ export interface ProviderArgs {
     enableBetaResources?: pulumi.Input<boolean>;
     /**
      * Enables experiments. These are unstable features without official support. More information can be found in the README.
-     * Available Experiments: [iam]
+     * Available Experiments: iam, routing-tables, network
      */
     experiments?: pulumi.Input<pulumi.Input<string>[]>;
     /**

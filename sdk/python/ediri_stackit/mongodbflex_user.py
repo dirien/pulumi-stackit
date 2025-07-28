@@ -24,17 +24,21 @@ class MongodbflexUserArgs:
                  instance_id: pulumi.Input[builtins.str],
                  project_id: pulumi.Input[builtins.str],
                  roles: pulumi.Input[Sequence[pulumi.Input[builtins.str]]],
+                 region: Optional[pulumi.Input[builtins.str]] = None,
                  username: Optional[pulumi.Input[builtins.str]] = None):
         """
         The set of arguments for constructing a MongodbflexUser resource.
         :param pulumi.Input[builtins.str] instance_id: ID of the MongoDB Flex instance.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the instance is associated.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] roles: Database access levels for the user. Some of the possible values are: [`read`, `readWrite`, `readWriteAnyDatabase`]
+        :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         """
         pulumi.set(__self__, "database", database)
         pulumi.set(__self__, "instance_id", instance_id)
         pulumi.set(__self__, "project_id", project_id)
         pulumi.set(__self__, "roles", roles)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
         if username is not None:
             pulumi.set(__self__, "username", username)
 
@@ -85,6 +89,18 @@ class MongodbflexUserArgs:
 
     @property
     @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "region", value)
+
+    @property
+    @pulumi.getter
     def username(self) -> Optional[pulumi.Input[builtins.str]]:
         return pulumi.get(self, "username")
 
@@ -102,6 +118,7 @@ class _MongodbflexUserState:
                  password: Optional[pulumi.Input[builtins.str]] = None,
                  port: Optional[pulumi.Input[builtins.int]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
+                 region: Optional[pulumi.Input[builtins.str]] = None,
                  roles: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
                  uri: Optional[pulumi.Input[builtins.str]] = None,
                  user_id: Optional[pulumi.Input[builtins.str]] = None,
@@ -110,6 +127,7 @@ class _MongodbflexUserState:
         Input properties used for looking up and filtering MongodbflexUser resources.
         :param pulumi.Input[builtins.str] instance_id: ID of the MongoDB Flex instance.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the instance is associated.
+        :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] roles: Database access levels for the user. Some of the possible values are: [`read`, `readWrite`, `readWriteAnyDatabase`]
         :param pulumi.Input[builtins.str] user_id: User ID.
         """
@@ -125,6 +143,8 @@ class _MongodbflexUserState:
             pulumi.set(__self__, "port", port)
         if project_id is not None:
             pulumi.set(__self__, "project_id", project_id)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
         if roles is not None:
             pulumi.set(__self__, "roles", roles)
         if uri is not None:
@@ -196,6 +216,18 @@ class _MongodbflexUserState:
 
     @property
     @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "region", value)
+
+    @property
+    @pulumi.getter
     def roles(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]:
         """
         Database access levels for the user. Some of the possible values are: [`read`, `readWrite`, `readWriteAnyDatabase`]
@@ -246,6 +278,7 @@ class MongodbflexUser(pulumi.CustomResource):
                  database: Optional[pulumi.Input[builtins.str]] = None,
                  instance_id: Optional[pulumi.Input[builtins.str]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
+                 region: Optional[pulumi.Input[builtins.str]] = None,
                  roles: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
                  username: Optional[pulumi.Input[builtins.str]] = None,
                  __props__=None):
@@ -258,6 +291,7 @@ class MongodbflexUser(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[builtins.str] instance_id: ID of the MongoDB Flex instance.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the instance is associated.
+        :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] roles: Database access levels for the user. Some of the possible values are: [`read`, `readWrite`, `readWriteAnyDatabase`]
         """
         ...
@@ -289,6 +323,7 @@ class MongodbflexUser(pulumi.CustomResource):
                  database: Optional[pulumi.Input[builtins.str]] = None,
                  instance_id: Optional[pulumi.Input[builtins.str]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
+                 region: Optional[pulumi.Input[builtins.str]] = None,
                  roles: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
                  username: Optional[pulumi.Input[builtins.str]] = None,
                  __props__=None):
@@ -309,6 +344,7 @@ class MongodbflexUser(pulumi.CustomResource):
             if project_id is None and not opts.urn:
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
+            __props__.__dict__["region"] = region
             if roles is None and not opts.urn:
                 raise TypeError("Missing required property 'roles'")
             __props__.__dict__["roles"] = roles
@@ -336,6 +372,7 @@ class MongodbflexUser(pulumi.CustomResource):
             password: Optional[pulumi.Input[builtins.str]] = None,
             port: Optional[pulumi.Input[builtins.int]] = None,
             project_id: Optional[pulumi.Input[builtins.str]] = None,
+            region: Optional[pulumi.Input[builtins.str]] = None,
             roles: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
             uri: Optional[pulumi.Input[builtins.str]] = None,
             user_id: Optional[pulumi.Input[builtins.str]] = None,
@@ -349,6 +386,7 @@ class MongodbflexUser(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[builtins.str] instance_id: ID of the MongoDB Flex instance.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the instance is associated.
+        :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] roles: Database access levels for the user. Some of the possible values are: [`read`, `readWrite`, `readWriteAnyDatabase`]
         :param pulumi.Input[builtins.str] user_id: User ID.
         """
@@ -362,6 +400,7 @@ class MongodbflexUser(pulumi.CustomResource):
         __props__.__dict__["password"] = password
         __props__.__dict__["port"] = port
         __props__.__dict__["project_id"] = project_id
+        __props__.__dict__["region"] = region
         __props__.__dict__["roles"] = roles
         __props__.__dict__["uri"] = uri
         __props__.__dict__["user_id"] = user_id
@@ -403,6 +442,14 @@ class MongodbflexUser(pulumi.CustomResource):
         STACKIT project ID to which the instance is associated.
         """
         return pulumi.get(self, "project_id")
+
+    @property
+    @pulumi.getter
+    def region(self) -> pulumi.Output[builtins.str]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
 
     @property
     @pulumi.getter

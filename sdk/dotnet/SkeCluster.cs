@@ -21,14 +21,6 @@ namespace ediri.Stackit
     public partial class SkeCluster : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// Flag to specify if privileged mode for containers is enabled or not.
-        /// This should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).
-        /// Deprecated as of Kubernetes 1.25 and later
-        /// </summary>
-        [Output("allowPrivilegedContainers")]
-        public Output<bool?> AllowPrivilegedContainers { get; private set; } = null!;
-
-        /// <summary>
         /// The outgoing network ranges (in CIDR notation) of traffic originating from workload on the cluster.
         /// </summary>
         [Output("egressAddressRanges")]
@@ -45,12 +37,6 @@ namespace ediri.Stackit
         /// </summary>
         [Output("hibernations")]
         public Output<ImmutableArray<Outputs.SkeClusterHibernation>> Hibernations { get; private set; } = null!;
-
-        /// <summary>
-        /// Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`
-        /// </summary>
-        [Output("kubernetesVersion")]
-        public Output<string?> KubernetesVersion { get; private set; } = null!;
 
         /// <summary>
         /// The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
@@ -87,6 +73,12 @@ namespace ediri.Stackit
         /// </summary>
         [Output("nodePools")]
         public Output<ImmutableArray<Outputs.SkeClusterNodePool>> NodePools { get; private set; } = null!;
+
+        /// <summary>
+        /// The network ranges (in CIDR notation) used by pods of the cluster.
+        /// </summary>
+        [Output("podAddressRanges")]
+        public Output<ImmutableArray<string>> PodAddressRanges { get; private set; } = null!;
 
         /// <summary>
         /// STACKIT project ID to which the cluster is associated.
@@ -148,14 +140,6 @@ namespace ediri.Stackit
     public sealed class SkeClusterArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Flag to specify if privileged mode for containers is enabled or not.
-        /// This should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).
-        /// Deprecated as of Kubernetes 1.25 and later
-        /// </summary>
-        [Input("allowPrivilegedContainers")]
-        public Input<bool>? AllowPrivilegedContainers { get; set; }
-
-        /// <summary>
         /// A single extensions block as defined below.
         /// </summary>
         [Input("extensions")]
@@ -172,12 +156,6 @@ namespace ediri.Stackit
             get => _hibernations ?? (_hibernations = new InputList<Inputs.SkeClusterHibernationArgs>());
             set => _hibernations = value;
         }
-
-        /// <summary>
-        /// Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`
-        /// </summary>
-        [Input("kubernetesVersion")]
-        public Input<string>? KubernetesVersion { get; set; }
 
         /// <summary>
         /// The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
@@ -235,14 +213,6 @@ namespace ediri.Stackit
 
     public sealed class SkeClusterState : global::Pulumi.ResourceArgs
     {
-        /// <summary>
-        /// Flag to specify if privileged mode for containers is enabled or not.
-        /// This should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).
-        /// Deprecated as of Kubernetes 1.25 and later
-        /// </summary>
-        [Input("allowPrivilegedContainers")]
-        public Input<bool>? AllowPrivilegedContainers { get; set; }
-
         [Input("egressAddressRanges")]
         private InputList<string>? _egressAddressRanges;
 
@@ -272,12 +242,6 @@ namespace ediri.Stackit
             get => _hibernations ?? (_hibernations = new InputList<Inputs.SkeClusterHibernationGetArgs>());
             set => _hibernations = value;
         }
-
-        /// <summary>
-        /// Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`
-        /// </summary>
-        [Input("kubernetesVersion")]
-        public Input<string>? KubernetesVersion { get; set; }
 
         /// <summary>
         /// The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
@@ -319,6 +283,18 @@ namespace ediri.Stackit
         {
             get => _nodePools ?? (_nodePools = new InputList<Inputs.SkeClusterNodePoolGetArgs>());
             set => _nodePools = value;
+        }
+
+        [Input("podAddressRanges")]
+        private InputList<string>? _podAddressRanges;
+
+        /// <summary>
+        /// The network ranges (in CIDR notation) used by pods of the cluster.
+        /// </summary>
+        public InputList<string> PodAddressRanges
+        {
+            get => _podAddressRanges ?? (_podAddressRanges = new InputList<string>());
+            set => _podAddressRanges = value;
         }
 
         /// <summary>
