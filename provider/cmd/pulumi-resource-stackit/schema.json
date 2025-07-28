@@ -55,11 +55,6 @@
     },
     "config": {
         "variables": {
-            "argusCustomEndpoint": {
-                "type": "string",
-                "description": "Custom endpoint for the Argus service\n",
-                "deprecationMessage": "Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observability_custom_endpoint` and `observability` resources instead, which offer the exact same functionality."
-            },
             "authorizationCustomEndpoint": {
                 "type": "string",
                 "description": "Custom endpoint for the Membership service\n"
@@ -89,7 +84,7 @@
                 "items": {
                     "type": "string"
                 },
-                "description": "Enables experiments. These are unstable features without official support. More information can be found in the README.\nAvailable Experiments: [iam]\n"
+                "description": "Enables experiments. These are unstable features without official support. More information can be found in the README.\nAvailable Experiments: iam, routing-tables, network\n"
             },
             "gitCustomEndpoint": {
                 "type": "string",
@@ -218,6 +213,17 @@
                     "$ref": "#/types/stackit:index/CdnDistributionConfigBackend:CdnDistributionConfigBackend",
                     "description": "The configured backend for the distribution\n"
                 },
+                "blockedCountries": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The configured countries where distribution of content is blocked\n"
+                },
+                "optimizer": {
+                    "$ref": "#/types/stackit:index/CdnDistributionConfigOptimizer:CdnDistributionConfigOptimizer",
+                    "description": "Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.\n"
+                },
                 "regions": {
                     "type": "array",
                     "items": {
@@ -230,7 +236,16 @@
             "required": [
                 "backend",
                 "regions"
-            ]
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "backend",
+                        "optimizer",
+                        "regions"
+                    ]
+                }
+            }
         },
         "stackit:index/CdnDistributionConfigBackend:CdnDistributionConfigBackend": {
             "properties": {
@@ -255,6 +270,21 @@
                 "originUrl",
                 "type"
             ]
+        },
+        "stackit:index/CdnDistributionConfigOptimizer:CdnDistributionConfigOptimizer": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "enabled"
+                    ]
+                }
+            }
         },
         "stackit:index/CdnDistributionDomain:CdnDistributionDomain": {
             "properties": {
@@ -1418,7 +1448,10 @@
                     "description": "List of TLS ciphers to use.\n"
                 },
                 "tlsProtocols": {
-                    "type": "string",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
                     "description": "The TLS protocol to use.\n"
                 }
             },
@@ -1705,6 +1738,39 @@
                 }
             }
         },
+        "stackit:index/RoutingTableRouteDestination:RoutingTableRouteDestination": {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.\n"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "An CIDR string.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "type",
+                "value"
+            ]
+        },
+        "stackit:index/RoutingTableRouteNextHop:RoutingTableRouteNextHop": {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..\n"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "type"
+            ]
+        },
         "stackit:index/SecurityGroupRuleIcmpParameters:SecurityGroupRuleIcmpParameters": {
             "properties": {
                 "code": {
@@ -1832,11 +1898,16 @@
                 },
                 "argus": {
                     "$ref": "#/types/stackit:index/SkeClusterExtensionsArgus:SkeClusterExtensionsArgus",
-                    "description": "A single argus block as defined below.\n"
+                    "description": "A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.\n",
+                    "deprecationMessage": "Use observability instead."
                 },
                 "dns": {
                     "$ref": "#/types/stackit:index/SkeClusterExtensionsDns:SkeClusterExtensionsDns",
                     "description": "DNS extension configuration\n"
+                },
+                "observability": {
+                    "$ref": "#/types/stackit:index/SkeClusterExtensionsObservability:SkeClusterExtensionsObservability",
+                    "description": "A single observability block as defined below.\n"
                 }
             },
             "type": "object"
@@ -1903,6 +1974,22 @@
                     ]
                 }
             }
+        },
+        "stackit:index/SkeClusterExtensionsObservability:SkeClusterExtensionsObservability": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Flag to enable/disable Observability extensions.\n"
+                },
+                "instanceId": {
+                    "type": "string",
+                    "description": "Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "enabled"
+            ]
         },
         "stackit:index/SkeClusterHibernation:SkeClusterHibernation": {
             "properties": {
@@ -2210,6 +2297,17 @@
                     "$ref": "#/types/stackit:index/getCdnDistributionConfigBackend:getCdnDistributionConfigBackend",
                     "description": "The configured backend for the distribution\n"
                 },
+                "blockedCountries": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The configured countries where distribution of content is blocked\n"
+                },
+                "optimizer": {
+                    "$ref": "#/types/stackit:index/getCdnDistributionConfigOptimizer:getCdnDistributionConfigOptimizer",
+                    "description": "Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.\n"
+                },
                 "regions": {
                     "type": "array",
                     "items": {
@@ -2221,6 +2319,7 @@
             "type": "object",
             "required": [
                 "backend",
+                "optimizer",
                 "regions"
             ],
             "language": {
@@ -2252,6 +2351,22 @@
                 "originRequestHeaders",
                 "originUrl",
                 "type"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "stackit:index/getCdnDistributionConfigOptimizer:getCdnDistributionConfigOptimizer": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object",
+            "required": [
+                "enabled"
             ],
             "language": {
                 "nodejs": {
@@ -3812,6 +3927,194 @@
                 }
             }
         },
+        "stackit:index/getRoutingTableRouteDestination:getRoutingTableRouteDestination": {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.\n"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "An CIDR string.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "type",
+                "value"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "stackit:index/getRoutingTableRouteNextHop:getRoutingTableRouteNextHop": {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..\n"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "type",
+                "value"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "stackit:index/getRoutingTableRoutesRoute:getRoutingTableRoutesRoute": {
+            "properties": {
+                "createdAt": {
+                    "type": "string",
+                    "description": "Date-time when the route was created\n"
+                },
+                "destination": {
+                    "$ref": "#/types/stackit:index/getRoutingTableRoutesRouteDestination:getRoutingTableRoutesRouteDestination",
+                    "description": "Destination of the route.\n"
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Labels are key-value string pairs which can be attached to a resource container\n"
+                },
+                "nextHop": {
+                    "$ref": "#/types/stackit:index/getRoutingTableRoutesRouteNextHop:getRoutingTableRoutesRouteNextHop",
+                    "description": "Next hop destination.\n"
+                },
+                "routeId": {
+                    "type": "string",
+                    "description": "Route ID.\n"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "description": "Date-time when the route was updated\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "createdAt",
+                "destination",
+                "labels",
+                "nextHop",
+                "routeId",
+                "updatedAt"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "stackit:index/getRoutingTableRoutesRouteDestination:getRoutingTableRoutesRouteDestination": {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.\n"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "An CIDR string.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "type",
+                "value"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "stackit:index/getRoutingTableRoutesRouteNextHop:getRoutingTableRoutesRouteNextHop": {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..\n"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "type",
+                "value"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "stackit:index/getRoutingTablesItem:getRoutingTablesItem": {
+            "properties": {
+                "createdAt": {
+                    "type": "string",
+                    "description": "Date-time when the routing table was created\n"
+                },
+                "default": {
+                    "type": "boolean",
+                    "description": "When true this is the default routing table for this network area. It can't be deleted and is used if the user does not specify it otherwise.\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the routing table.\n"
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Labels are key-value string pairs which can be attached to a resource container\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the routing table.\n"
+                },
+                "routingTableId": {
+                    "type": "string",
+                    "description": "The routing tables ID.\n"
+                },
+                "systemRoutes": {
+                    "type": "boolean",
+                    "description": "This controls whether the routes for project-to-project communication are created automatically or not.\n"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "description": "Date-time when the routing table was updated\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "createdAt",
+                "default",
+                "description",
+                "labels",
+                "name",
+                "routingTableId",
+                "systemRoutes",
+                "updatedAt"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
         "stackit:index/getSecurityGroupRuleIcmpParameters:getSecurityGroupRuleIcmpParameters": {
             "properties": {
                 "code": {
@@ -4034,18 +4337,24 @@
                 },
                 "argus": {
                     "$ref": "#/types/stackit:index/getSkeClusterExtensionsArgus:getSkeClusterExtensionsArgus",
-                    "description": "A single argus block as defined below\n"
+                    "description": "A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.\n",
+                    "deprecationMessage": "Use observability instead."
                 },
                 "dns": {
                     "$ref": "#/types/stackit:index/getSkeClusterExtensionsDns:getSkeClusterExtensionsDns",
                     "description": "DNS extension configuration\n"
+                },
+                "observability": {
+                    "$ref": "#/types/stackit:index/getSkeClusterExtensionsObservability:getSkeClusterExtensionsObservability",
+                    "description": "A single observability block as defined below.\n"
                 }
             },
             "type": "object",
             "required": [
                 "acl",
                 "argus",
-                "dns"
+                "dns",
+                "observability"
             ],
             "language": {
                 "nodejs": {
@@ -4118,6 +4427,28 @@
             "required": [
                 "enabled",
                 "zones"
+            ],
+            "language": {
+                "nodejs": {
+                    "requiredInputs": []
+                }
+            }
+        },
+        "stackit:index/getSkeClusterExtensionsObservability:getSkeClusterExtensionsObservability": {
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Flag to enable/disable Observability extensions.\n"
+                },
+                "instanceId": {
+                    "type": "string",
+                    "description": "Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.\n"
+                }
+            },
+            "type": "object",
+            "required": [
+                "enabled",
+                "instanceId"
             ],
             "language": {
                 "nodejs": {
@@ -4428,11 +4759,6 @@
     "provider": {
         "description": "The provider type for the stackit package. By default, resources use package-wide configuration\nsettings, however an explicit `Provider` instance may be created and passed during resource\nconstruction to achieve fine-grained programmatic control over provider settings. See the\n[documentation](https://www.pulumi.com/docs/reference/programming-model/#providers) for more information.\n",
         "properties": {
-            "argusCustomEndpoint": {
-                "type": "string",
-                "description": "Custom endpoint for the Argus service\n",
-                "deprecationMessage": "Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observability_custom_endpoint` and `observability` resources instead, which offer the exact same functionality."
-            },
             "authorizationCustomEndpoint": {
                 "type": "string",
                 "description": "Custom endpoint for the Membership service\n"
@@ -4462,7 +4788,7 @@
                 "items": {
                     "type": "string"
                 },
-                "description": "Enables experiments. These are unstable features without official support. More information can be found in the README.\nAvailable Experiments: [iam]\n"
+                "description": "Enables experiments. These are unstable features without official support. More information can be found in the README.\nAvailable Experiments: iam, routing-tables, network\n"
             },
             "gitCustomEndpoint": {
                 "type": "string",
@@ -4584,11 +4910,6 @@
             }
         },
         "inputProperties": {
-            "argusCustomEndpoint": {
-                "type": "string",
-                "description": "Custom endpoint for the Argus service\n",
-                "deprecationMessage": "Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observability_custom_endpoint` and `observability` resources instead, which offer the exact same functionality."
-            },
             "authorizationCustomEndpoint": {
                 "type": "string",
                 "description": "Custom endpoint for the Membership service\n"
@@ -4618,7 +4939,7 @@
                 "items": {
                     "type": "string"
                 },
-                "description": "Enables experiments. These are unstable features without official support. More information can be found in the README.\nAvailable Experiments: [iam]\n"
+                "description": "Enables experiments. These are unstable features without official support. More information can be found in the README.\nAvailable Experiments: iam, routing-tables, network\n"
             },
             "gitCustomEndpoint": {
                 "type": "string",
@@ -5024,7 +5345,7 @@
             }
         },
         "stackit:index/cdnDistribution:CdnDistribution": {
-            "description": "CDN distribution data source schema.\n\n\u003e This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\nresource \"stackit_cdn_distribution\" \"example_distribution\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  config = {\n    backend = {\n      type       = \"http\"\n      origin_url = \"mybackend.onstackit.cloud\"\n    }\n    regions = [\"EU\", \"US\", \"ASIA\", \"AF\", \"SA\"]\n  }\n}\n```\n",
+            "description": "CDN distribution data source schema.\n\n\u003e This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\nresource \"stackit_cdn_distribution\" \"example_distribution\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  config = {\n    backend = {\n      type       = \"http\"\n      origin_url = \"mybackend.onstackit.cloud\"\n    }\n    regions           = [\"EU\", \"US\", \"ASIA\", \"AF\", \"SA\"]\n    blocked_countries = [\"DE\", \"AT\", \"CH\"]\n\n    optimizer = {\n      enabled = true\n    }\n  }\n}\n```\n",
             "properties": {
                 "config": {
                     "$ref": "#/types/stackit:index/CdnDistributionConfig:CdnDistributionConfig",
@@ -5579,8 +5900,31 @@
             }
         },
         "stackit:index/git:Git": {
-            "description": "Git Instance resource schema.\n\n\u003e This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\nresource \"stackit_git\" \"git\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"git-example-instance\"\n}\n```\n",
+            "description": "Git Instance resource schema.\n\n\u003e This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources. This resource currently does not support updates. Changing the ACLs, flavor, or name will trigger resource recreation. Update functionality will be added soon. In the meantime, please proceed with caution. To update these attributes, please open a support ticket.\n\n## Example Usage\n\n```terraform\nresource \"stackit_git\" \"git\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"git-example-instance\"\n}\n\nresource \"stackit_git\" \"git\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"git-example-instance\"\n  acl = [\n    \"0.0.0.0/0\"\n  ]\n  flavor = \"git-100\"\n}\n```\n",
             "properties": {
+                "acls": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Restricted ACL for instance access.\n"
+                },
+                "consumedDisk": {
+                    "type": "string",
+                    "description": "How many bytes of disk space is consumed.\n"
+                },
+                "consumedObjectStorage": {
+                    "type": "string",
+                    "description": "How many bytes of Object Storage is consumed.\n"
+                },
+                "created": {
+                    "type": "string",
+                    "description": "Instance creation timestamp in RFC3339 format.\n"
+                },
+                "flavor": {
+                    "type": "string",
+                    "description": "Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`\n"
+                },
                 "instanceId": {
                     "type": "string",
                     "description": "ID linked to the git instance.\n"
@@ -5603,6 +5947,11 @@
                 }
             },
             "required": [
+                "acls",
+                "consumedDisk",
+                "consumedObjectStorage",
+                "created",
+                "flavor",
                 "instanceId",
                 "name",
                 "projectId",
@@ -5610,6 +5959,17 @@
                 "version"
             ],
             "inputProperties": {
+                "acls": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Restricted ACL for instance access.\n"
+                },
+                "flavor": {
+                    "type": "string",
+                    "description": "Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`\n"
+                },
                 "name": {
                     "type": "string",
                     "description": "Unique name linked to the git instance.\n"
@@ -5625,6 +5985,29 @@
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering Git resources.\n",
                 "properties": {
+                    "acls": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Restricted ACL for instance access.\n"
+                    },
+                    "consumedDisk": {
+                        "type": "string",
+                        "description": "How many bytes of disk space is consumed.\n"
+                    },
+                    "consumedObjectStorage": {
+                        "type": "string",
+                        "description": "How many bytes of Object Storage is consumed.\n"
+                    },
+                    "created": {
+                        "type": "string",
+                        "description": "Instance creation timestamp in RFC3339 format.\n"
+                    },
+                    "flavor": {
+                        "type": "string",
+                        "description": "Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`\n"
+                    },
                     "instanceId": {
                         "type": "string",
                         "description": "ID linked to the git instance.\n"
@@ -5892,7 +6275,7 @@
             }
         },
         "stackit:index/loadbalancer:Loadbalancer": {
-            "description": "## Example Usage\n\n```terraform\n# Create a network\nresource \"stackit_network\" \"example_network\" {\n  project_id       = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name             = \"example-network\"\n  ipv4_nameservers = [\"8.8.8.8\"]\n  ipv4_prefix      = \"192.168.0.0/25\"\n  labels = {\n    \"key\" = \"value\"\n  }\n  routed = true\n}\n\n# Create a network interface\nresource \"stackit_network_interface\" \"nic\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_id = stackit_network.example_network.network_id\n}\n\n# Create a public IP for the load balancer\nresource \"stackit_public_ip\" \"public-ip\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  lifecycle {\n    ignore_changes = [network_interface_id]\n  }\n}\n\n# Create a key pair for accessing the server instance\nresource \"stackit_key_pair\" \"keypair\" {\n  name       = \"example-key-pair\"\n  public_key = chomp(file(\"path/to/id_rsa.pub\"))\n}\n\n# Create a server instance\nresource \"stackit_server\" \"boot-from-image\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-server\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"59838a89-51b1-4892-b57f-b3caf598ee2f\" // Ubuntu 24.04\n  }\n  availability_zone = \"xxxx-x\"\n  machine_type      = \"g1.1\"\n  keypair_name      = stackit_key_pair.keypair.name\n  network_interfaces = [\n    stackit_network_interface.nic.network_interface_id\n  ]\n}\n\n# Create a load balancer\nresource \"stackit_loadbalancer\" \"example\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-load-balancer\"\n  target_pools = [\n    {\n      name        = \"example-target-pool\"\n      target_port = 80\n      targets = [\n        {\n          display_name = stackit_server.boot-from-image.name\n          ip           = stackit_network_interface.nic.ipv4\n        }\n      ]\n      active_health_check = {\n        healthy_threshold   = 10\n        interval            = \"3s\"\n        interval_jitter     = \"3s\"\n        timeout             = \"3s\"\n        unhealthy_threshold = 10\n      }\n    }\n  ]\n  listeners = [\n    {\n      display_name = \"example-listener\"\n      port         = 80\n      protocol     = \"PROTOCOL_TCP\"\n      target_pool  = \"example-target-pool\"\n    }\n  ]\n  networks = [\n    {\n      network_id = stackit_network.example_network.network_id\n      role       = \"ROLE_LISTENERS_AND_TARGETS\"\n    }\n  ]\n  external_address = stackit_public_ip.public-ip.ip\n  options = {\n    private_network_only = false\n  }\n}\n```\n",
+            "description": "## Example Usage\n\n```terraform\n# Create a network\nresource \"stackit_network\" \"example_network\" {\n  project_id       = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name             = \"example-network\"\n  ipv4_nameservers = [\"8.8.8.8\"]\n  ipv4_prefix      = \"192.168.0.0/25\"\n  labels = {\n    \"key\" = \"value\"\n  }\n  routed = true\n}\n\n# Create a network interface\nresource \"stackit_network_interface\" \"nic\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_id = stackit_network.example_network.network_id\n}\n\n# Create a public IP for the load balancer\nresource \"stackit_public_ip\" \"public-ip\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  lifecycle {\n    ignore_changes = [network_interface_id]\n  }\n}\n\n# Create a key pair for accessing the server instance\nresource \"stackit_key_pair\" \"keypair\" {\n  name       = \"example-key-pair\"\n  public_key = chomp(file(\"path/to/id_rsa.pub\"))\n}\n\n# Create a server instance\nresource \"stackit_server\" \"boot-from-image\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-server\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"59838a89-51b1-4892-b57f-b3caf598ee2f\" // Ubuntu 24.04\n  }\n  availability_zone = \"xxxx-x\"\n  machine_type      = \"g1.1\"\n  keypair_name      = stackit_key_pair.keypair.name\n  network_interfaces = [\n    stackit_network_interface.nic.network_interface_id\n  ]\n}\n\n# Create a load balancer\nresource \"stackit_loadbalancer\" \"example\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-load-balancer\"\n  plan_id    = \"p10\"\n  target_pools = [\n    {\n      name        = \"example-target-pool\"\n      target_port = 80\n      targets = [\n        {\n          display_name = stackit_server.boot-from-image.name\n          ip           = stackit_network_interface.nic.ipv4\n        }\n      ]\n      active_health_check = {\n        healthy_threshold   = 10\n        interval            = \"3s\"\n        interval_jitter     = \"3s\"\n        timeout             = \"3s\"\n        unhealthy_threshold = 10\n      }\n    }\n  ]\n  listeners = [\n    {\n      display_name = \"example-listener\"\n      port         = 80\n      protocol     = \"PROTOCOL_TCP\"\n      target_pool  = \"example-target-pool\"\n    }\n  ]\n  networks = [\n    {\n      network_id = stackit_network.example_network.network_id\n      role       = \"ROLE_LISTENERS_AND_TARGETS\"\n    }\n  ]\n  external_address = stackit_public_ip.public-ip.ip\n  options = {\n    private_network_only = false\n  }\n}\n```\n",
             "properties": {
                 "externalAddress": {
                     "type": "string",
@@ -5920,6 +6303,10 @@
                     "$ref": "#/types/stackit:index/LoadbalancerOptions:LoadbalancerOptions",
                     "description": "Defines any optional functionality you want to have enabled on your load balancer.\n"
                 },
+                "planId": {
+                    "type": "string",
+                    "description": "The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.\n"
+                },
                 "privateAddress": {
                     "type": "string",
                     "description": "Transient private Load Balancer IP address. It can change any time.\n"
@@ -5945,6 +6332,7 @@
                 "name",
                 "networks",
                 "options",
+                "planId",
                 "privateAddress",
                 "projectId",
                 "region",
@@ -5976,6 +6364,10 @@
                 "options": {
                     "$ref": "#/types/stackit:index/LoadbalancerOptions:LoadbalancerOptions",
                     "description": "Defines any optional functionality you want to have enabled on your load balancer.\n"
+                },
+                "planId": {
+                    "type": "string",
+                    "description": "The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.\n"
                 },
                 "projectId": {
                     "type": "string",
@@ -6027,6 +6419,10 @@
                     "options": {
                         "$ref": "#/types/stackit:index/LoadbalancerOptions:LoadbalancerOptions",
                         "description": "Defines any optional functionality you want to have enabled on your load balancer.\n"
+                    },
+                    "planId": {
+                        "type": "string",
+                        "description": "The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.\n"
                     },
                     "privateAddress": {
                         "type": "string",
@@ -6794,6 +7190,10 @@
                     "type": "string",
                     "description": "STACKIT project ID to which the instance is associated.\n"
                 },
+                "region": {
+                    "type": "string",
+                    "description": "The resource region. If not defined, the provider region is used.\n"
+                },
                 "replicas": {
                     "type": "integer"
                 },
@@ -6812,6 +7212,7 @@
                 "name",
                 "options",
                 "projectId",
+                "region",
                 "replicas",
                 "storage",
                 "version"
@@ -6841,6 +7242,10 @@
                 "projectId": {
                     "type": "string",
                     "description": "STACKIT project ID to which the instance is associated.\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The resource region. If not defined, the provider region is used.\n"
                 },
                 "replicas": {
                     "type": "integer"
@@ -6894,6 +7299,10 @@
                         "type": "string",
                         "description": "STACKIT project ID to which the instance is associated.\n"
                     },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
+                    },
                     "replicas": {
                         "type": "integer"
                     },
@@ -6931,6 +7340,10 @@
                     "type": "string",
                     "description": "STACKIT project ID to which the instance is associated.\n"
                 },
+                "region": {
+                    "type": "string",
+                    "description": "The resource region. If not defined, the provider region is used.\n"
+                },
                 "roles": {
                     "type": "array",
                     "items": {
@@ -6957,6 +7370,7 @@
                 "password",
                 "port",
                 "projectId",
+                "region",
                 "roles",
                 "uri",
                 "userId",
@@ -6973,6 +7387,10 @@
                 "projectId": {
                     "type": "string",
                     "description": "STACKIT project ID to which the instance is associated.\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The resource region. If not defined, the provider region is used.\n"
                 },
                 "roles": {
                     "type": "array",
@@ -7014,6 +7432,10 @@
                     "projectId": {
                         "type": "string",
                         "description": "STACKIT project ID to which the instance is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
                     },
                     "roles": {
                         "type": "array",
@@ -7139,9 +7561,17 @@
                     "type": "string",
                     "description": "The public IP of the network.\n"
                 },
+                "region": {
+                    "type": "string",
+                    "description": "Can only be used when experimental \"network\" is set.\nThe resource region. If not defined, the provider region is used.\n"
+                },
                 "routed": {
                     "type": "boolean",
                     "description": "If set to `true`, the network is routed and therefore accessible from other networks.\n"
+                },
+                "routingTableId": {
+                    "type": "string",
+                    "description": "Can only be used when experimental \"network\" is set.\nThe ID of the routing table associated with the network.\n"
                 }
             },
             "required": [
@@ -7159,7 +7589,9 @@
                 "prefixes",
                 "projectId",
                 "publicIp",
-                "routed"
+                "region",
+                "routed",
+                "routingTableId"
             ],
             "inputProperties": {
                 "ipv4Gateway": {
@@ -7231,9 +7663,17 @@
                     "type": "string",
                     "description": "STACKIT project ID to which the network is associated.\n"
                 },
+                "region": {
+                    "type": "string",
+                    "description": "Can only be used when experimental \"network\" is set.\nThe resource region. If not defined, the provider region is used.\n"
+                },
                 "routed": {
                     "type": "boolean",
                     "description": "If set to `true`, the network is routed and therefore accessible from other networks.\n"
+                },
+                "routingTableId": {
+                    "type": "string",
+                    "description": "Can only be used when experimental \"network\" is set.\nThe ID of the routing table associated with the network.\n"
                 }
             },
             "requiredInputs": [
@@ -7341,9 +7781,17 @@
                         "type": "string",
                         "description": "The public IP of the network.\n"
                     },
+                    "region": {
+                        "type": "string",
+                        "description": "Can only be used when experimental \"network\" is set.\nThe resource region. If not defined, the provider region is used.\n"
+                    },
                     "routed": {
                         "type": "boolean",
                         "description": "If set to `true`, the network is routed and therefore accessible from other networks.\n"
+                    },
+                    "routingTableId": {
+                        "type": "string",
+                        "description": "Can only be used when experimental \"network\" is set.\nThe ID of the routing table associated with the network.\n"
                     }
                 },
                 "type": "object"
@@ -10195,6 +10643,299 @@
                 "type": "object"
             }
         },
+        "stackit:index/routingTable:RoutingTable": {
+            "description": "Routing table resource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This resource is part of the routing-tables experiment and is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.\n\n## Example Usage\n\n```terraform\nresource \"stackit_routing_table\" \"example\" {\n  organization_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_area_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name            = \"example\"\n  labels = {\n    \"key\" = \"value\"\n  }\n}\n```\n",
+            "properties": {
+                "createdAt": {
+                    "type": "string",
+                    "description": "Date-time when the routing table was created\n"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the routing table.\n"
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Labels are key-value string pairs which can be attached to a resource container\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the routing table.\n"
+                },
+                "networkAreaId": {
+                    "type": "string",
+                    "description": "The network area ID to which the routing table is associated.\n"
+                },
+                "organizationId": {
+                    "type": "string",
+                    "description": "STACKIT organization ID to which the routing table is associated.\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The resource region. If not defined, the provider region is used.\n"
+                },
+                "routingTableId": {
+                    "type": "string",
+                    "description": "The routing tables ID.\n"
+                },
+                "systemRoutes": {
+                    "type": "boolean",
+                    "description": "This controls whether the routes for project-to-project communication are created automatically or not.\n"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "description": "Date-time when the routing table was updated\n"
+                }
+            },
+            "required": [
+                "createdAt",
+                "description",
+                "name",
+                "networkAreaId",
+                "organizationId",
+                "region",
+                "routingTableId",
+                "systemRoutes",
+                "updatedAt"
+            ],
+            "inputProperties": {
+                "description": {
+                    "type": "string",
+                    "description": "Description of the routing table.\n"
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Labels are key-value string pairs which can be attached to a resource container\n"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the routing table.\n"
+                },
+                "networkAreaId": {
+                    "type": "string",
+                    "description": "The network area ID to which the routing table is associated.\n"
+                },
+                "organizationId": {
+                    "type": "string",
+                    "description": "STACKIT organization ID to which the routing table is associated.\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The resource region. If not defined, the provider region is used.\n"
+                },
+                "systemRoutes": {
+                    "type": "boolean",
+                    "description": "This controls whether the routes for project-to-project communication are created automatically or not.\n"
+                }
+            },
+            "requiredInputs": [
+                "networkAreaId",
+                "organizationId"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering RoutingTable resources.\n",
+                "properties": {
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Date-time when the routing table was created\n"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description of the routing table.\n"
+                    },
+                    "labels": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Labels are key-value string pairs which can be attached to a resource container\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the routing table.\n"
+                    },
+                    "networkAreaId": {
+                        "type": "string",
+                        "description": "The network area ID to which the routing table is associated.\n"
+                    },
+                    "organizationId": {
+                        "type": "string",
+                        "description": "STACKIT organization ID to which the routing table is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
+                    },
+                    "routingTableId": {
+                        "type": "string",
+                        "description": "The routing tables ID.\n"
+                    },
+                    "systemRoutes": {
+                        "type": "boolean",
+                        "description": "This controls whether the routes for project-to-project communication are created automatically or not.\n"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Date-time when the routing table was updated\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "stackit:index/routingTableRoute:RoutingTableRoute": {
+            "description": "Routing table route resource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This resource is part of the routing-tables experiment and is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.\n\n## Example Usage\n\n```terraform\nresource \"stackit_routing_table_route\" \"example\" {\n  organization_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_area_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  routing_table_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  destination = {\n    type  = \"cidrv4\"\n    value = \"192.168.178.0/24\"\n  }\n  next_hop = {\n    type  = \"ipv4\"\n    value = \"192.168.178.1\"\n  }\n  labels = {\n    \"key\" = \"value\"\n  }\n}\n```\n",
+            "properties": {
+                "createdAt": {
+                    "type": "string",
+                    "description": "Date-time when the route was created.\n"
+                },
+                "destination": {
+                    "$ref": "#/types/stackit:index/RoutingTableRouteDestination:RoutingTableRouteDestination",
+                    "description": "Destination of the route.\n"
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Labels are key-value string pairs which can be attached to a resource container\n"
+                },
+                "networkAreaId": {
+                    "type": "string",
+                    "description": "The network area ID to which the routing table is associated.\n"
+                },
+                "nextHop": {
+                    "$ref": "#/types/stackit:index/RoutingTableRouteNextHop:RoutingTableRouteNextHop",
+                    "description": "Next hop destination.\n"
+                },
+                "organizationId": {
+                    "type": "string",
+                    "description": "STACKIT organization ID to which the routing table is associated.\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The resource region. If not defined, the provider region is used.\n"
+                },
+                "routeId": {
+                    "type": "string",
+                    "description": "The ID of the route.\n"
+                },
+                "routingTableId": {
+                    "type": "string",
+                    "description": "The routing tables ID.\n"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "description": "Date-time when the route was updated.\n"
+                }
+            },
+            "required": [
+                "createdAt",
+                "destination",
+                "networkAreaId",
+                "nextHop",
+                "organizationId",
+                "region",
+                "routeId",
+                "routingTableId",
+                "updatedAt"
+            ],
+            "inputProperties": {
+                "destination": {
+                    "$ref": "#/types/stackit:index/RoutingTableRouteDestination:RoutingTableRouteDestination",
+                    "description": "Destination of the route.\n"
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "Labels are key-value string pairs which can be attached to a resource container\n"
+                },
+                "networkAreaId": {
+                    "type": "string",
+                    "description": "The network area ID to which the routing table is associated.\n"
+                },
+                "nextHop": {
+                    "$ref": "#/types/stackit:index/RoutingTableRouteNextHop:RoutingTableRouteNextHop",
+                    "description": "Next hop destination.\n"
+                },
+                "organizationId": {
+                    "type": "string",
+                    "description": "STACKIT organization ID to which the routing table is associated.\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The resource region. If not defined, the provider region is used.\n"
+                },
+                "routingTableId": {
+                    "type": "string",
+                    "description": "The routing tables ID.\n"
+                }
+            },
+            "requiredInputs": [
+                "destination",
+                "networkAreaId",
+                "nextHop",
+                "organizationId",
+                "routingTableId"
+            ],
+            "stateInputs": {
+                "description": "Input properties used for looking up and filtering RoutingTableRoute resources.\n",
+                "properties": {
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Date-time when the route was created.\n"
+                    },
+                    "destination": {
+                        "$ref": "#/types/stackit:index/RoutingTableRouteDestination:RoutingTableRouteDestination",
+                        "description": "Destination of the route.\n"
+                    },
+                    "labels": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Labels are key-value string pairs which can be attached to a resource container\n"
+                    },
+                    "networkAreaId": {
+                        "type": "string",
+                        "description": "The network area ID to which the routing table is associated.\n"
+                    },
+                    "nextHop": {
+                        "$ref": "#/types/stackit:index/RoutingTableRouteNextHop:RoutingTableRouteNextHop",
+                        "description": "Next hop destination.\n"
+                    },
+                    "organizationId": {
+                        "type": "string",
+                        "description": "STACKIT organization ID to which the routing table is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
+                    },
+                    "routeId": {
+                        "type": "string",
+                        "description": "The ID of the route.\n"
+                    },
+                    "routingTableId": {
+                        "type": "string",
+                        "description": "The routing tables ID.\n"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Date-time when the route was updated.\n"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "stackit:index/secretsmanagerInstance:SecretsmanagerInstance": {
             "description": "Secrets Manager instance resource schema. Must have a `region` specified in the provider configuration.\n\n## Example Usage\n\n```terraform\nresource \"stackit_secretsmanager_instance\" \"example\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-instance\"\n  acls       = [\"XXX.XXX.XXX.X/XX\", \"XX.XXX.XX.X/XX\"]\n}\n```\n",
             "properties": {
@@ -11561,10 +12302,6 @@
         "stackit:index/skeCluster:SkeCluster": {
             "description": "SKE Cluster Resource schema. Must have a `region` specified in the provider configuration.\n\n\u003e When updating `node_pools` of a `stackit.SkeCluster`, the pulumi preview might appear incorrect as it matches the node pools by index rather than by name. However, the SKE API correctly identifies node pools by name and applies the intended changes. Please review your changes carefully to ensure the correct configuration will be applied.\n\n## Example Usage\n\n```terraform\nresource \"stackit_ske_cluster\" \"example\" {\n  project_id         = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name               = \"example\"\n  kubernetes_version = \"x.x\"\n  node_pools = [\n    {\n      name               = \"np-example\"\n      machine_type       = \"x.x\"\n      os_version         = \"x.x.x\"\n      minimum            = \"2\"\n      maximum            = \"3\"\n      availability_zones = [\"eu01-3\"]\n    }\n  ]\n  maintenance = {\n    enable_kubernetes_version_updates    = true\n    enable_machine_image_version_updates = true\n    start                                = \"01:00:00Z\"\n    end                                  = \"02:00:00Z\"\n  }\n}\n```\n",
             "properties": {
-                "allowPrivilegedContainers": {
-                    "type": "boolean",
-                    "description": "Flag to specify if privileged mode for containers is enabled or not.\nThis should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).\nDeprecated as of Kubernetes 1.25 and later\n"
-                },
                 "egressAddressRanges": {
                     "type": "array",
                     "items": {
@@ -11582,11 +12319,6 @@
                         "$ref": "#/types/stackit:index/SkeClusterHibernation:SkeClusterHibernation"
                     },
                     "description": "One or more hibernation block as defined below.\n"
-                },
-                "kubernetesVersion": {
-                    "type": "string",
-                    "description": "Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`\n",
-                    "deprecationMessage": "Use `kubernetes_version_min instead`. Setting a specific kubernetes version would cause errors during minor version upgrades due to forced updates. In those cases, this field might not represent the actual kubernetes version used in the cluster."
                 },
                 "kubernetesVersionMin": {
                     "type": "string",
@@ -11615,6 +12347,13 @@
                     },
                     "description": "One or more `node_pool` block as defined below.\n"
                 },
+                "podAddressRanges": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The network ranges (in CIDR notation) used by pods of the cluster.\n"
+                },
                 "projectId": {
                     "type": "string",
                     "description": "STACKIT project ID to which the cluster is associated.\n"
@@ -11630,14 +12369,11 @@
                 "maintenance",
                 "name",
                 "nodePools",
+                "podAddressRanges",
                 "projectId",
                 "region"
             ],
             "inputProperties": {
-                "allowPrivilegedContainers": {
-                    "type": "boolean",
-                    "description": "Flag to specify if privileged mode for containers is enabled or not.\nThis should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).\nDeprecated as of Kubernetes 1.25 and later\n"
-                },
                 "extensions": {
                     "$ref": "#/types/stackit:index/SkeClusterExtensions:SkeClusterExtensions",
                     "description": "A single extensions block as defined below.\n"
@@ -11648,11 +12384,6 @@
                         "$ref": "#/types/stackit:index/SkeClusterHibernation:SkeClusterHibernation"
                     },
                     "description": "One or more hibernation block as defined below.\n"
-                },
-                "kubernetesVersion": {
-                    "type": "string",
-                    "description": "Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`\n",
-                    "deprecationMessage": "Use `kubernetes_version_min instead`. Setting a specific kubernetes version would cause errors during minor version upgrades due to forced updates. In those cases, this field might not represent the actual kubernetes version used in the cluster."
                 },
                 "kubernetesVersionMin": {
                     "type": "string",
@@ -11693,10 +12424,6 @@
             "stateInputs": {
                 "description": "Input properties used for looking up and filtering SkeCluster resources.\n",
                 "properties": {
-                    "allowPrivilegedContainers": {
-                        "type": "boolean",
-                        "description": "Flag to specify if privileged mode for containers is enabled or not.\nThis should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).\nDeprecated as of Kubernetes 1.25 and later\n"
-                    },
                     "egressAddressRanges": {
                         "type": "array",
                         "items": {
@@ -11714,11 +12441,6 @@
                             "$ref": "#/types/stackit:index/SkeClusterHibernation:SkeClusterHibernation"
                         },
                         "description": "One or more hibernation block as defined below.\n"
-                    },
-                    "kubernetesVersion": {
-                        "type": "string",
-                        "description": "Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`\n",
-                        "deprecationMessage": "Use `kubernetes_version_min instead`. Setting a specific kubernetes version would cause errors during minor version upgrades due to forced updates. In those cases, this field might not represent the actual kubernetes version used in the cluster."
                     },
                     "kubernetesVersionMin": {
                         "type": "string",
@@ -11746,6 +12468,13 @@
                             "$ref": "#/types/stackit:index/SkeClusterNodePool:SkeClusterNodePool"
                         },
                         "description": "One or more `node_pool` block as defined below.\n"
+                    },
+                    "podAddressRanges": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "The network ranges (in CIDR notation) used by pods of the cluster.\n"
                     },
                     "projectId": {
                         "type": "string",
@@ -11793,6 +12522,10 @@
                 "refresh": {
                     "type": "boolean",
                     "description": "If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The resource region. If not defined, the provider region is used.\n"
                 }
             },
             "required": [
@@ -11802,7 +12535,8 @@
                 "expiresAt",
                 "kubeConfig",
                 "kubeConfigId",
-                "projectId"
+                "projectId",
+                "region"
             ],
             "inputProperties": {
                 "clusterName": {
@@ -11820,6 +12554,10 @@
                 "refresh": {
                     "type": "boolean",
                     "description": "If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place\n"
+                },
+                "region": {
+                    "type": "string",
+                    "description": "The resource region. If not defined, the provider region is used.\n"
                 }
             },
             "requiredInputs": [
@@ -11860,6 +12598,10 @@
                     "refresh": {
                         "type": "boolean",
                         "description": "If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
                     }
                 },
                 "type": "object"
@@ -12379,7 +13121,7 @@
             }
         },
         "stackit:index/getCdnCustomDomain:getCdnCustomDomain": {
-            "description": "CDN distribution data source schema.\n\n\u003e This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_cdn_custom_domain\" \"example\" {\n  project_id      = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  distribution_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name            = \"https://xxx.xxx\"\n}\n```\n",
+            "description": "CDN distribution data source schema.\n\n\u003e This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_cdn_custom_domain\" \"example\" {\n  project_id      = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  distribution_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name            = \"https://xxx.xxx\"\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getCdnCustomDomain.\n",
                 "properties": {
@@ -12443,7 +13185,7 @@
             }
         },
         "stackit:index/getCdnDistribution:getCdnDistribution": {
-            "description": "CDN distribution data source schema.\n\n\u003e This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_cdn_distribution\" \"example\" {\n  project_id      = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  distribution_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
+            "description": "CDN distribution data source schema.\n\n\u003e This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_cdn_distribution\" \"example\" {\n  project_id      = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  distribution_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getCdnDistribution.\n",
                 "properties": {
@@ -12764,7 +13506,7 @@
             }
         },
         "stackit:index/getGit:getGit": {
-            "description": "Git Instance datasource schema.\n\n\u003e This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_git\" \"git\" {\n  project_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  instance_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
+            "description": "Git Instance datasource schema.\n\n\u003e This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_git\" \"git\" {\n  project_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  instance_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getGit.\n",
                 "properties": {
@@ -12786,6 +13528,29 @@
             "outputs": {
                 "description": "A collection of values returned by getGit.\n",
                 "properties": {
+                    "acls": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Restricted ACL for instance access.\n"
+                    },
+                    "consumedDisk": {
+                        "type": "string",
+                        "description": "How many bytes of disk space is consumed.\n"
+                    },
+                    "consumedObjectStorage": {
+                        "type": "string",
+                        "description": "How many bytes of Object Storage is consumed.\n"
+                    },
+                    "created": {
+                        "type": "string",
+                        "description": "Instance creation timestamp in RFC3339 format.\n"
+                    },
+                    "flavor": {
+                        "type": "string",
+                        "description": "Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`\n"
+                    },
                     "id": {
                         "type": "string"
                     },
@@ -12812,6 +13577,11 @@
                 },
                 "type": "object",
                 "required": [
+                    "acls",
+                    "consumedDisk",
+                    "consumedObjectStorage",
+                    "created",
+                    "flavor",
                     "id",
                     "instanceId",
                     "name",
@@ -13019,6 +13789,10 @@
                         "$ref": "#/types/stackit:index/getLoadbalancerOptions:getLoadbalancerOptions",
                         "description": "Defines any optional functionality you want to have enabled on your load balancer.\n"
                     },
+                    "planId": {
+                        "type": "string",
+                        "description": "The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.\n"
+                    },
                     "privateAddress": {
                         "type": "string",
                         "description": "Transient private Load Balancer IP address. It can change any time.\n"
@@ -13047,6 +13821,7 @@
                     "name",
                     "networks",
                     "options",
+                    "planId",
                     "privateAddress",
                     "projectId",
                     "targetPools"
@@ -13400,6 +14175,10 @@
                     "projectId": {
                         "type": "string",
                         "description": "STACKIT project ID to which the instance is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
                     }
                 },
                 "type": "object",
@@ -13444,6 +14223,10 @@
                         "type": "string",
                         "description": "STACKIT project ID to which the instance is associated.\n"
                     },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
+                    },
                     "replicas": {
                         "type": "integer"
                     },
@@ -13464,6 +14247,7 @@
                     "name",
                     "options",
                     "projectId",
+                    "region",
                     "replicas",
                     "storage",
                     "version"
@@ -13482,6 +14266,10 @@
                     "projectId": {
                         "type": "string",
                         "description": "STACKIT project ID to which the instance is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
                     },
                     "userId": {
                         "type": "string",
@@ -13518,6 +14306,10 @@
                         "type": "string",
                         "description": "STACKIT project ID to which the instance is associated.\n"
                     },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
+                    },
                     "roles": {
                         "type": "array",
                         "items": {
@@ -13540,6 +14332,7 @@
                     "instanceId",
                     "port",
                     "projectId",
+                    "region",
                     "roles",
                     "userId",
                     "username"
@@ -13558,6 +14351,10 @@
                     "projectId": {
                         "type": "string",
                         "description": "STACKIT project ID to which the network is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "Can only be used when experimental \"network\" is set. This is likely going to undergo significant changes or be removed in the future.\nThe resource region. If not defined, the provider region is used.\n"
                     }
                 },
                 "type": "object",
@@ -13665,9 +14462,17 @@
                         "type": "string",
                         "description": "The public IP of the network.\n"
                     },
+                    "region": {
+                        "type": "string",
+                        "description": "Can only be used when experimental \"network\" is set. This is likely going to undergo significant changes or be removed in the future.\nThe resource region. If not defined, the provider region is used.\n"
+                    },
                     "routed": {
                         "type": "boolean",
                         "description": "Shows if the network is routed and therefore accessible from other networks.\n"
+                    },
+                    "routingTableId": {
+                        "type": "string",
+                        "description": "Can only be used when experimental \"network\" is set. This is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.\nThe ID of the routing table associated with the network.\n"
                     }
                 },
                 "type": "object",
@@ -13690,7 +14495,8 @@
                     "prefixes",
                     "projectId",
                     "publicIp",
-                    "routed"
+                    "routed",
+                    "routingTableId"
                 ]
             }
         },
@@ -15467,6 +16273,332 @@
                 ]
             }
         },
+        "stackit:index/getRoutingTable:getRoutingTable": {
+            "description": "Routing table datasource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This datasource is part of the routing-tables experiment and is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.\n\n## Example Usage\n\n```terraform\ndata \"stackit_routing_table\" \"example\" {\n  organization_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_area_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  routing_table_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getRoutingTable.\n",
+                "properties": {
+                    "networkAreaId": {
+                        "type": "string",
+                        "description": "The network area ID to which the routing table is associated.\n"
+                    },
+                    "organizationId": {
+                        "type": "string",
+                        "description": "STACKIT organization ID to which the routing table is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
+                    },
+                    "routingTableId": {
+                        "type": "string",
+                        "description": "The routing tables ID.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "networkAreaId",
+                    "organizationId",
+                    "routingTableId"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getRoutingTable.\n",
+                "properties": {
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Date-time when the routing table was created\n"
+                    },
+                    "default": {
+                        "type": "boolean",
+                        "description": "When true this is the default routing table for this network area. It can't be deleted and is used if the user does not specify it otherwise.\n"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description of the routing table.\n"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "labels": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Labels are key-value string pairs which can be attached to a resource container\n"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the routing table.\n"
+                    },
+                    "networkAreaId": {
+                        "type": "string",
+                        "description": "The network area ID to which the routing table is associated.\n"
+                    },
+                    "organizationId": {
+                        "type": "string",
+                        "description": "STACKIT organization ID to which the routing table is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
+                    },
+                    "routingTableId": {
+                        "type": "string",
+                        "description": "The routing tables ID.\n"
+                    },
+                    "systemRoutes": {
+                        "type": "boolean",
+                        "description": "This controls whether the routes for project-to-project communication are created automatically or not.\n"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Date-time when the routing table was updated\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "createdAt",
+                    "default",
+                    "description",
+                    "id",
+                    "labels",
+                    "name",
+                    "networkAreaId",
+                    "organizationId",
+                    "routingTableId",
+                    "systemRoutes",
+                    "updatedAt"
+                ]
+            }
+        },
+        "stackit:index/getRoutingTableRoute:getRoutingTableRoute": {
+            "description": "Routing table route datasource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This datasource is part of the routing-tables experiment and is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.\n\n## Example Usage\n\n```terraform\ndata \"stackit_routing_table_route\" \"example\" {\n  organization_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_area_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  routing_table_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  route_id         = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getRoutingTableRoute.\n",
+                "properties": {
+                    "networkAreaId": {
+                        "type": "string",
+                        "description": "The network area ID to which the routing table is associated.\n"
+                    },
+                    "organizationId": {
+                        "type": "string",
+                        "description": "STACKIT organization ID to which the routing table is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
+                    },
+                    "routeId": {
+                        "type": "string",
+                        "description": "Route ID.\n"
+                    },
+                    "routingTableId": {
+                        "type": "string",
+                        "description": "The routing tables ID.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "networkAreaId",
+                    "organizationId",
+                    "routeId",
+                    "routingTableId"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getRoutingTableRoute.\n",
+                "properties": {
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Date-time when the route was created\n"
+                    },
+                    "destination": {
+                        "$ref": "#/types/stackit:index/getRoutingTableRouteDestination:getRoutingTableRouteDestination",
+                        "description": "Destination of the route.\n"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "labels": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Labels are key-value string pairs which can be attached to a resource container\n"
+                    },
+                    "networkAreaId": {
+                        "type": "string",
+                        "description": "The network area ID to which the routing table is associated.\n"
+                    },
+                    "nextHop": {
+                        "$ref": "#/types/stackit:index/getRoutingTableRouteNextHop:getRoutingTableRouteNextHop",
+                        "description": "Next hop destination.\n"
+                    },
+                    "organizationId": {
+                        "type": "string",
+                        "description": "STACKIT organization ID to which the routing table is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
+                    },
+                    "routeId": {
+                        "type": "string",
+                        "description": "Route ID.\n"
+                    },
+                    "routingTableId": {
+                        "type": "string",
+                        "description": "The routing tables ID.\n"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "Date-time when the route was updated\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "createdAt",
+                    "destination",
+                    "id",
+                    "labels",
+                    "networkAreaId",
+                    "nextHop",
+                    "organizationId",
+                    "routeId",
+                    "routingTableId",
+                    "updatedAt"
+                ]
+            }
+        },
+        "stackit:index/getRoutingTableRoutes:getRoutingTableRoutes": {
+            "description": "Routing table routes datasource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This datasource is part of the routing-tables experiment and is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.\n\n## Example Usage\n\n```terraform\ndata \"stackit_routing_table_routes\" \"example\" {\n  organization_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_area_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  routing_table_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getRoutingTableRoutes.\n",
+                "properties": {
+                    "networkAreaId": {
+                        "type": "string",
+                        "description": "The network area ID to which the routing table is associated.\n"
+                    },
+                    "organizationId": {
+                        "type": "string",
+                        "description": "STACKIT organization ID to which the routing table is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The datasource region. If not defined, the provider region is used.\n"
+                    },
+                    "routingTableId": {
+                        "type": "string",
+                        "description": "The routing tables ID.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "networkAreaId",
+                    "organizationId",
+                    "routingTableId"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getRoutingTableRoutes.\n",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "networkAreaId": {
+                        "type": "string",
+                        "description": "The network area ID to which the routing table is associated.\n"
+                    },
+                    "organizationId": {
+                        "type": "string",
+                        "description": "STACKIT organization ID to which the routing table is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The datasource region. If not defined, the provider region is used.\n"
+                    },
+                    "routes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/stackit:index/getRoutingTableRoutesRoute:getRoutingTableRoutesRoute"
+                        },
+                        "description": "List of routes.\n"
+                    },
+                    "routingTableId": {
+                        "type": "string",
+                        "description": "The routing tables ID.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "networkAreaId",
+                    "organizationId",
+                    "routes",
+                    "routingTableId"
+                ]
+            }
+        },
+        "stackit:index/getRoutingTables:getRoutingTables": {
+            "description": "Routing table datasource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This datasource is part of the routing-tables experiment and is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.\n\n## Example Usage\n\n```terraform\ndata \"stackit_routing_tables\" \"example\" {\n  organization_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_area_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getRoutingTables.\n",
+                "properties": {
+                    "networkAreaId": {
+                        "type": "string",
+                        "description": "The network area ID to which the routing table is associated.\n"
+                    },
+                    "organizationId": {
+                        "type": "string",
+                        "description": "STACKIT organization ID to which the routing table is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "networkAreaId",
+                    "organizationId"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getRoutingTables.\n",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/types/stackit:index/getRoutingTablesItem:getRoutingTablesItem"
+                        },
+                        "description": "List of routing tables.\n"
+                    },
+                    "networkAreaId": {
+                        "type": "string",
+                        "description": "The network area ID to which the routing table is associated.\n"
+                    },
+                    "organizationId": {
+                        "type": "string",
+                        "description": "STACKIT organization ID to which the routing table is associated.\n"
+                    },
+                    "region": {
+                        "type": "string",
+                        "description": "The resource region. If not defined, the provider region is used.\n"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "items",
+                    "networkAreaId",
+                    "organizationId"
+                ]
+            }
+        },
         "stackit:index/getSecretsmanagerInstance:getSecretsmanagerInstance": {
             "description": "Secrets Manager instance data source schema. Must have a `region` specified in the provider configuration.\n\n## Example Usage\n\n```terraform\ndata \"stackit_secretsmanager_instance\" \"example\" {\n  project_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  instance_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
             "inputs": {
@@ -15865,7 +16997,7 @@
             }
         },
         "stackit:index/getServerBackupSchedule:getServerBackupSchedule": {
-            "description": "Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_server_backup_schedule\" \"example\" {\n  project_id         = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  server_id          = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  backup_schedule_id = xxxxx\n}\n```\n",
+            "description": "Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_server_backup_schedule\" \"example\" {\n  project_id         = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  server_id          = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  backup_schedule_id = xxxxx\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getServerBackupSchedule.\n",
                 "properties": {
@@ -15946,7 +17078,7 @@
             }
         },
         "stackit:index/getServerBackupSchedules:getServerBackupSchedules": {
-            "description": "Server backup schedules datasource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_server_backup_schedules\" \"example\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  server_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
+            "description": "Server backup schedules datasource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_server_backup_schedules\" \"example\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  server_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getServerBackupSchedules.\n",
                 "properties": {
@@ -16004,7 +17136,7 @@
             }
         },
         "stackit:index/getServerUpdateSchedule:getServerUpdateSchedule": {
-            "description": "Server update schedule datasource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_server_update_schedule\" \"example\" {\n  project_id         = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  server_id          = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  update_schedule_id = xxxxx\n}\n```\n",
+            "description": "Server update schedule datasource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_server_update_schedule\" \"example\" {\n  project_id         = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  server_id          = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  update_schedule_id = xxxxx\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getServerUpdateSchedule.\n",
                 "properties": {
@@ -16085,7 +17217,7 @@
             }
         },
         "stackit:index/getServerUpdateSchedules:getServerUpdateSchedules": {
-            "description": "Server update schedules datasource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_server_update_schedules\" \"example\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  server_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
+            "description": "Server update schedules datasource schema. Must have a `region` specified in the provider configuration.\n\n\u003e This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_server_update_schedules\" \"example\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  server_id  = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
             "inputs": {
                 "description": "A collection of arguments for invoking getServerUpdateSchedules.\n",
                 "properties": {
@@ -16217,11 +17349,6 @@
             "outputs": {
                 "description": "A collection of values returned by getSkeCluster.\n",
                 "properties": {
-                    "allowPrivilegedContainers": {
-                        "type": "boolean",
-                        "description": "DEPRECATED as of Kubernetes 1.25+\nFlag to specify if privileged mode for containers is enabled or not.\nThis should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).\n",
-                        "deprecationMessage": "Please remove this flag from your configuration when using Kubernetes version 1.25+."
-                    },
                     "egressAddressRanges": {
                         "type": "array",
                         "items": {
@@ -16242,11 +17369,6 @@
                     },
                     "id": {
                         "type": "string"
-                    },
-                    "kubernetesVersion": {
-                        "type": "string",
-                        "description": "Kubernetes version. This field is deprecated, use `kubernetes_version_used` instead\n",
-                        "deprecationMessage": "This field is always nil, use `kubernetes_version_used` to get the cluster kubernetes version. This field would cause errors when the cluster got a kubernetes version minor upgrade, either triggered by automatic or forceful updates."
                     },
                     "kubernetesVersionMin": {
                         "type": "string",
@@ -16275,6 +17397,13 @@
                         },
                         "description": "One or more `node_pool` block as defined below.\n"
                     },
+                    "podAddressRanges": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "The network ranges (in CIDR notation) used by pods of the cluster.\n"
+                    },
                     "projectId": {
                         "type": "string",
                         "description": "STACKIT project ID to which the cluster is associated.\n"
@@ -16286,18 +17415,17 @@
                 },
                 "type": "object",
                 "required": [
-                    "allowPrivilegedContainers",
                     "egressAddressRanges",
                     "extensions",
                     "hibernations",
                     "id",
-                    "kubernetesVersion",
                     "kubernetesVersionMin",
                     "kubernetesVersionUsed",
                     "maintenance",
                     "name",
                     "network",
                     "nodePools",
+                    "podAddressRanges",
                     "projectId"
                 ]
             }
