@@ -82,7 +82,9 @@ jobs:
         with:
           repo: pulumi/pulumictl
       - name: Install Pulumi CLI
-        uses: pulumi/action-install-pulumi-cli@b374ceb6168550de27c6eba92e01c1a774040e11 # tag=v2.0.0
+        uses: pulumi/actions@cc7494be991dba0978f7ffafaf995b0449a0998e # tag=v6.5.0
+        with:
+          pulumi-version: 3.185.0
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # tag=v4.4.0
         with:
