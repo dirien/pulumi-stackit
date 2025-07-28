@@ -118,9 +118,19 @@ export class Network extends pulumi.CustomResource {
      */
     public /*out*/ readonly publicIp!: pulumi.Output<string>;
     /**
+     * Can only be used when experimental "network" is set.
+     * The resource region. If not defined, the provider region is used.
+     */
+    public readonly region!: pulumi.Output<string>;
+    /**
      * If set to `true`, the network is routed and therefore accessible from other networks.
      */
     public readonly routed!: pulumi.Output<boolean>;
+    /**
+     * Can only be used when experimental "network" is set.
+     * The ID of the routing table associated with the network.
+     */
+    public readonly routingTableId!: pulumi.Output<string>;
 
     /**
      * Create a Network resource with the given unique name, arguments, and options.
@@ -154,7 +164,9 @@ export class Network extends pulumi.CustomResource {
             resourceInputs["prefixes"] = state ? state.prefixes : undefined;
             resourceInputs["projectId"] = state ? state.projectId : undefined;
             resourceInputs["publicIp"] = state ? state.publicIp : undefined;
+            resourceInputs["region"] = state ? state.region : undefined;
             resourceInputs["routed"] = state ? state.routed : undefined;
+            resourceInputs["routingTableId"] = state ? state.routingTableId : undefined;
         } else {
             const args = argsOrState as NetworkArgs | undefined;
             if ((!args || args.projectId === undefined) && !opts.urn) {
@@ -174,7 +186,9 @@ export class Network extends pulumi.CustomResource {
             resourceInputs["noIpv4Gateway"] = args ? args.noIpv4Gateway : undefined;
             resourceInputs["noIpv6Gateway"] = args ? args.noIpv6Gateway : undefined;
             resourceInputs["projectId"] = args ? args.projectId : undefined;
+            resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["routed"] = args ? args.routed : undefined;
+            resourceInputs["routingTableId"] = args ? args.routingTableId : undefined;
             resourceInputs["ipv4Prefixes"] = undefined /*out*/;
             resourceInputs["ipv6Prefixes"] = undefined /*out*/;
             resourceInputs["networkId"] = undefined /*out*/;
@@ -271,9 +285,19 @@ export interface NetworkState {
      */
     publicIp?: pulumi.Input<string>;
     /**
+     * Can only be used when experimental "network" is set.
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: pulumi.Input<string>;
+    /**
      * If set to `true`, the network is routed and therefore accessible from other networks.
      */
     routed?: pulumi.Input<boolean>;
+    /**
+     * Can only be used when experimental "network" is set.
+     * The ID of the routing table associated with the network.
+     */
+    routingTableId?: pulumi.Input<string>;
 }
 
 /**
@@ -339,7 +363,17 @@ export interface NetworkArgs {
      */
     projectId: pulumi.Input<string>;
     /**
+     * Can only be used when experimental "network" is set.
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: pulumi.Input<string>;
+    /**
      * If set to `true`, the network is routed and therefore accessible from other networks.
      */
     routed?: pulumi.Input<boolean>;
+    /**
+     * Can only be used when experimental "network" is set.
+     * The ID of the routing table associated with the network.
+     */
+    routingTableId?: pulumi.Input<string>;
 }

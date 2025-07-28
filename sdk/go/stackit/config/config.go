@@ -11,13 +11,6 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
-// Custom endpoint for the Argus service
-//
-// Deprecated: Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observabilityCustomEndpoint` and `observability` resources instead, which offer the exact same functionality.
-func GetArgusCustomEndpoint(ctx *pulumi.Context) string {
-	return config.Get(ctx, "stackit:argusCustomEndpoint")
-}
-
 // Custom endpoint for the Membership service
 func GetAuthorizationCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:authorizationCustomEndpoint")
@@ -50,7 +43,7 @@ func GetEnableBetaResources(ctx *pulumi.Context) bool {
 }
 
 // Enables experiments. These are unstable features without official support. More information can be found in the README.
-// Available Experiments: [iam]
+// Available Experiments: iam, routing-tables, network
 func GetExperiments(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:experiments")
 }

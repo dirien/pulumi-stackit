@@ -28,7 +28,7 @@ class GetLoadbalancerResult:
     """
     A collection of values returned by getLoadbalancer.
     """
-    def __init__(__self__, external_address=None, id=None, listeners=None, name=None, networks=None, options=None, private_address=None, project_id=None, region=None, target_pools=None):
+    def __init__(__self__, external_address=None, id=None, listeners=None, name=None, networks=None, options=None, plan_id=None, private_address=None, project_id=None, region=None, target_pools=None):
         if external_address and not isinstance(external_address, str):
             raise TypeError("Expected argument 'external_address' to be a str")
         pulumi.set(__self__, "external_address", external_address)
@@ -47,6 +47,9 @@ class GetLoadbalancerResult:
         if options and not isinstance(options, dict):
             raise TypeError("Expected argument 'options' to be a dict")
         pulumi.set(__self__, "options", options)
+        if plan_id and not isinstance(plan_id, str):
+            raise TypeError("Expected argument 'plan_id' to be a str")
+        pulumi.set(__self__, "plan_id", plan_id)
         if private_address and not isinstance(private_address, str):
             raise TypeError("Expected argument 'private_address' to be a str")
         pulumi.set(__self__, "private_address", private_address)
@@ -106,6 +109,14 @@ class GetLoadbalancerResult:
         return pulumi.get(self, "options")
 
     @property
+    @pulumi.getter(name="planId")
+    def plan_id(self) -> builtins.str:
+        """
+        The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+        """
+        return pulumi.get(self, "plan_id")
+
+    @property
     @pulumi.getter(name="privateAddress")
     def private_address(self) -> builtins.str:
         """
@@ -150,6 +161,7 @@ class AwaitableGetLoadbalancerResult(GetLoadbalancerResult):
             name=self.name,
             networks=self.networks,
             options=self.options,
+            plan_id=self.plan_id,
             private_address=self.private_address,
             project_id=self.project_id,
             region=self.region,
@@ -184,6 +196,7 @@ def get_loadbalancer(name: Optional[builtins.str] = None,
         name=pulumi.get(__ret__, 'name'),
         networks=pulumi.get(__ret__, 'networks'),
         options=pulumi.get(__ret__, 'options'),
+        plan_id=pulumi.get(__ret__, 'plan_id'),
         private_address=pulumi.get(__ret__, 'private_address'),
         project_id=pulumi.get(__ret__, 'project_id'),
         region=pulumi.get(__ret__, 'region'),
@@ -215,6 +228,7 @@ def get_loadbalancer_output(name: Optional[pulumi.Input[builtins.str]] = None,
         name=pulumi.get(__response__, 'name'),
         networks=pulumi.get(__response__, 'networks'),
         options=pulumi.get(__response__, 'options'),
+        plan_id=pulumi.get(__response__, 'plan_id'),
         private_address=pulumi.get(__response__, 'private_address'),
         project_id=pulumi.get(__response__, 'project_id'),
         region=pulumi.get(__response__, 'region'),

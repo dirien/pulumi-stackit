@@ -8,17 +8,6 @@ declare var exports: any;
 const __config = new pulumi.Config("stackit");
 
 /**
- * Custom endpoint for the Argus service
- */
-export declare const argusCustomEndpoint: string | undefined;
-Object.defineProperty(exports, "argusCustomEndpoint", {
-    get() {
-        return __config.get("argusCustomEndpoint");
-    },
-    enumerable: true,
-});
-
-/**
  * Custom endpoint for the Membership service
  */
 export declare const authorizationCustomEndpoint: string | undefined;
@@ -87,7 +76,7 @@ Object.defineProperty(exports, "enableBetaResources", {
 
 /**
  * Enables experiments. These are unstable features without official support. More information can be found in the README.
- * Available Experiments: [iam]
+ * Available Experiments: iam, routing-tables, network
  */
 export declare const experiments: string[] | undefined;
 Object.defineProperty(exports, "experiments", {

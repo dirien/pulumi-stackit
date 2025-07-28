@@ -20,12 +20,6 @@ namespace ediri.Stackit
     public partial class Provider : global::Pulumi.ProviderResource
     {
         /// <summary>
-        /// Custom endpoint for the Argus service
-        /// </summary>
-        [Output("argusCustomEndpoint")]
-        public Output<string?> ArgusCustomEndpoint { get; private set; } = null!;
-
-        /// <summary>
         /// Custom endpoint for the Membership service
         /// </summary>
         [Output("authorizationCustomEndpoint")]
@@ -270,12 +264,6 @@ namespace ediri.Stackit
     public sealed class ProviderArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Custom endpoint for the Argus service
-        /// </summary>
-        [Input("argusCustomEndpoint")]
-        public Input<string>? ArgusCustomEndpoint { get; set; }
-
-        /// <summary>
         /// Custom endpoint for the Membership service
         /// </summary>
         [Input("authorizationCustomEndpoint")]
@@ -317,7 +305,7 @@ namespace ediri.Stackit
 
         /// <summary>
         /// Enables experiments. These are unstable features without official support. More information can be found in the README.
-        /// Available Experiments: [iam]
+        /// Available Experiments: iam, routing-tables, network
         /// </summary>
         public InputList<string> Experiments
         {

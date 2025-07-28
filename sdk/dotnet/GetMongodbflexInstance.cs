@@ -73,6 +73,12 @@ namespace ediri.Stackit
         [Input("projectId", required: true)]
         public string ProjectId { get; set; } = null!;
 
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public string? Region { get; set; }
+
         public GetMongodbflexInstanceArgs()
         {
         }
@@ -92,6 +98,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("projectId", required: true)]
         public Input<string> ProjectId { get; set; } = null!;
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
 
         public GetMongodbflexInstanceInvokeArgs()
         {
@@ -129,6 +141,10 @@ namespace ediri.Stackit
         /// STACKIT project ID to which the instance is associated.
         /// </summary>
         public readonly string ProjectId;
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        public readonly string Region;
         public readonly int Replicas;
         public readonly Outputs.GetMongodbflexInstanceStorageResult Storage;
         public readonly string Version;
@@ -151,6 +167,8 @@ namespace ediri.Stackit
 
             string projectId,
 
+            string region,
+
             int replicas,
 
             Outputs.GetMongodbflexInstanceStorageResult storage,
@@ -165,6 +183,7 @@ namespace ediri.Stackit
             Name = name;
             Options = options;
             ProjectId = projectId;
+            Region = region;
             Replicas = replicas;
             Storage = storage;
             Version = version;

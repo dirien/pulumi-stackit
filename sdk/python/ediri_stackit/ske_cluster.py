@@ -24,10 +24,8 @@ class SkeClusterArgs:
     def __init__(__self__, *,
                  node_pools: pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolArgs']]],
                  project_id: pulumi.Input[builtins.str],
-                 allow_privileged_containers: Optional[pulumi.Input[builtins.bool]] = None,
                  extensions: Optional[pulumi.Input['SkeClusterExtensionsArgs']] = None,
                  hibernations: Optional[pulumi.Input[Sequence[pulumi.Input['SkeClusterHibernationArgs']]]] = None,
-                 kubernetes_version: Optional[pulumi.Input[builtins.str]] = None,
                  kubernetes_version_min: Optional[pulumi.Input[builtins.str]] = None,
                  maintenance: Optional[pulumi.Input['SkeClusterMaintenanceArgs']] = None,
                  name: Optional[pulumi.Input[builtins.str]] = None,
@@ -37,12 +35,8 @@ class SkeClusterArgs:
         The set of arguments for constructing a SkeCluster resource.
         :param pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolArgs']]] node_pools: One or more `node_pool` block as defined below.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the cluster is associated.
-        :param pulumi.Input[builtins.bool] allow_privileged_containers: Flag to specify if privileged mode for containers is enabled or not.
-               This should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).
-               Deprecated as of Kubernetes 1.25 and later
         :param pulumi.Input['SkeClusterExtensionsArgs'] extensions: A single extensions block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input['SkeClusterHibernationArgs']]] hibernations: One or more hibernation block as defined below.
-        :param pulumi.Input[builtins.str] kubernetes_version: Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`
         :param pulumi.Input[builtins.str] kubernetes_version_min: The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
         :param pulumi.Input['SkeClusterMaintenanceArgs'] maintenance: A single maintenance block as defined below.
         :param pulumi.Input[builtins.str] name: The cluster name.
@@ -51,17 +45,10 @@ class SkeClusterArgs:
         """
         pulumi.set(__self__, "node_pools", node_pools)
         pulumi.set(__self__, "project_id", project_id)
-        if allow_privileged_containers is not None:
-            pulumi.set(__self__, "allow_privileged_containers", allow_privileged_containers)
         if extensions is not None:
             pulumi.set(__self__, "extensions", extensions)
         if hibernations is not None:
             pulumi.set(__self__, "hibernations", hibernations)
-        if kubernetes_version is not None:
-            warnings.warn("""Use `kubernetes_version_min instead`. Setting a specific kubernetes version would cause errors during minor version upgrades due to forced updates. In those cases, this field might not represent the actual kubernetes version used in the cluster.""", DeprecationWarning)
-            pulumi.log.warn("""kubernetes_version is deprecated: Use `kubernetes_version_min instead`. Setting a specific kubernetes version would cause errors during minor version upgrades due to forced updates. In those cases, this field might not represent the actual kubernetes version used in the cluster.""")
-        if kubernetes_version is not None:
-            pulumi.set(__self__, "kubernetes_version", kubernetes_version)
         if kubernetes_version_min is not None:
             pulumi.set(__self__, "kubernetes_version_min", kubernetes_version_min)
         if maintenance is not None:
@@ -98,20 +85,6 @@ class SkeClusterArgs:
         pulumi.set(self, "project_id", value)
 
     @property
-    @pulumi.getter(name="allowPrivilegedContainers")
-    def allow_privileged_containers(self) -> Optional[pulumi.Input[builtins.bool]]:
-        """
-        Flag to specify if privileged mode for containers is enabled or not.
-        This should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).
-        Deprecated as of Kubernetes 1.25 and later
-        """
-        return pulumi.get(self, "allow_privileged_containers")
-
-    @allow_privileged_containers.setter
-    def allow_privileged_containers(self, value: Optional[pulumi.Input[builtins.bool]]):
-        pulumi.set(self, "allow_privileged_containers", value)
-
-    @property
     @pulumi.getter
     def extensions(self) -> Optional[pulumi.Input['SkeClusterExtensionsArgs']]:
         """
@@ -134,19 +107,6 @@ class SkeClusterArgs:
     @hibernations.setter
     def hibernations(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SkeClusterHibernationArgs']]]]):
         pulumi.set(self, "hibernations", value)
-
-    @property
-    @pulumi.getter(name="kubernetesVersion")
-    @_utilities.deprecated("""Use `kubernetes_version_min instead`. Setting a specific kubernetes version would cause errors during minor version upgrades due to forced updates. In those cases, this field might not represent the actual kubernetes version used in the cluster.""")
-    def kubernetes_version(self) -> Optional[pulumi.Input[builtins.str]]:
-        """
-        Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`
-        """
-        return pulumi.get(self, "kubernetes_version")
-
-    @kubernetes_version.setter
-    def kubernetes_version(self, value: Optional[pulumi.Input[builtins.str]]):
-        pulumi.set(self, "kubernetes_version", value)
 
     @property
     @pulumi.getter(name="kubernetesVersionMin")
@@ -212,50 +172,39 @@ class SkeClusterArgs:
 @pulumi.input_type
 class _SkeClusterState:
     def __init__(__self__, *,
-                 allow_privileged_containers: Optional[pulumi.Input[builtins.bool]] = None,
                  egress_address_ranges: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
                  extensions: Optional[pulumi.Input['SkeClusterExtensionsArgs']] = None,
                  hibernations: Optional[pulumi.Input[Sequence[pulumi.Input['SkeClusterHibernationArgs']]]] = None,
-                 kubernetes_version: Optional[pulumi.Input[builtins.str]] = None,
                  kubernetes_version_min: Optional[pulumi.Input[builtins.str]] = None,
                  kubernetes_version_used: Optional[pulumi.Input[builtins.str]] = None,
                  maintenance: Optional[pulumi.Input['SkeClusterMaintenanceArgs']] = None,
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  network: Optional[pulumi.Input['SkeClusterNetworkArgs']] = None,
                  node_pools: Optional[pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolArgs']]]] = None,
+                 pod_address_ranges: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
                  region: Optional[pulumi.Input[builtins.str]] = None):
         """
         Input properties used for looking up and filtering SkeCluster resources.
-        :param pulumi.Input[builtins.bool] allow_privileged_containers: Flag to specify if privileged mode for containers is enabled or not.
-               This should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).
-               Deprecated as of Kubernetes 1.25 and later
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] egress_address_ranges: The outgoing network ranges (in CIDR notation) of traffic originating from workload on the cluster.
         :param pulumi.Input['SkeClusterExtensionsArgs'] extensions: A single extensions block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input['SkeClusterHibernationArgs']]] hibernations: One or more hibernation block as defined below.
-        :param pulumi.Input[builtins.str] kubernetes_version: Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`
         :param pulumi.Input[builtins.str] kubernetes_version_min: The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
         :param pulumi.Input[builtins.str] kubernetes_version_used: Full Kubernetes version used. For example, if 1.22 was set in `kubernetes_version_min`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
         :param pulumi.Input['SkeClusterMaintenanceArgs'] maintenance: A single maintenance block as defined below.
         :param pulumi.Input[builtins.str] name: The cluster name.
         :param pulumi.Input['SkeClusterNetworkArgs'] network: Network block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolArgs']]] node_pools: One or more `node_pool` block as defined below.
+        :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] pod_address_ranges: The network ranges (in CIDR notation) used by pods of the cluster.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the cluster is associated.
         :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         """
-        if allow_privileged_containers is not None:
-            pulumi.set(__self__, "allow_privileged_containers", allow_privileged_containers)
         if egress_address_ranges is not None:
             pulumi.set(__self__, "egress_address_ranges", egress_address_ranges)
         if extensions is not None:
             pulumi.set(__self__, "extensions", extensions)
         if hibernations is not None:
             pulumi.set(__self__, "hibernations", hibernations)
-        if kubernetes_version is not None:
-            warnings.warn("""Use `kubernetes_version_min instead`. Setting a specific kubernetes version would cause errors during minor version upgrades due to forced updates. In those cases, this field might not represent the actual kubernetes version used in the cluster.""", DeprecationWarning)
-            pulumi.log.warn("""kubernetes_version is deprecated: Use `kubernetes_version_min instead`. Setting a specific kubernetes version would cause errors during minor version upgrades due to forced updates. In those cases, this field might not represent the actual kubernetes version used in the cluster.""")
-        if kubernetes_version is not None:
-            pulumi.set(__self__, "kubernetes_version", kubernetes_version)
         if kubernetes_version_min is not None:
             pulumi.set(__self__, "kubernetes_version_min", kubernetes_version_min)
         if kubernetes_version_used is not None:
@@ -268,24 +217,12 @@ class _SkeClusterState:
             pulumi.set(__self__, "network", network)
         if node_pools is not None:
             pulumi.set(__self__, "node_pools", node_pools)
+        if pod_address_ranges is not None:
+            pulumi.set(__self__, "pod_address_ranges", pod_address_ranges)
         if project_id is not None:
             pulumi.set(__self__, "project_id", project_id)
         if region is not None:
             pulumi.set(__self__, "region", region)
-
-    @property
-    @pulumi.getter(name="allowPrivilegedContainers")
-    def allow_privileged_containers(self) -> Optional[pulumi.Input[builtins.bool]]:
-        """
-        Flag to specify if privileged mode for containers is enabled or not.
-        This should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).
-        Deprecated as of Kubernetes 1.25 and later
-        """
-        return pulumi.get(self, "allow_privileged_containers")
-
-    @allow_privileged_containers.setter
-    def allow_privileged_containers(self, value: Optional[pulumi.Input[builtins.bool]]):
-        pulumi.set(self, "allow_privileged_containers", value)
 
     @property
     @pulumi.getter(name="egressAddressRanges")
@@ -322,19 +259,6 @@ class _SkeClusterState:
     @hibernations.setter
     def hibernations(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['SkeClusterHibernationArgs']]]]):
         pulumi.set(self, "hibernations", value)
-
-    @property
-    @pulumi.getter(name="kubernetesVersion")
-    @_utilities.deprecated("""Use `kubernetes_version_min instead`. Setting a specific kubernetes version would cause errors during minor version upgrades due to forced updates. In those cases, this field might not represent the actual kubernetes version used in the cluster.""")
-    def kubernetes_version(self) -> Optional[pulumi.Input[builtins.str]]:
-        """
-        Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`
-        """
-        return pulumi.get(self, "kubernetes_version")
-
-    @kubernetes_version.setter
-    def kubernetes_version(self, value: Optional[pulumi.Input[builtins.str]]):
-        pulumi.set(self, "kubernetes_version", value)
 
     @property
     @pulumi.getter(name="kubernetesVersionMin")
@@ -409,6 +333,18 @@ class _SkeClusterState:
         pulumi.set(self, "node_pools", value)
 
     @property
+    @pulumi.getter(name="podAddressRanges")
+    def pod_address_ranges(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]:
+        """
+        The network ranges (in CIDR notation) used by pods of the cluster.
+        """
+        return pulumi.get(self, "pod_address_ranges")
+
+    @pod_address_ranges.setter
+    def pod_address_ranges(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]):
+        pulumi.set(self, "pod_address_ranges", value)
+
+    @property
     @pulumi.getter(name="projectId")
     def project_id(self) -> Optional[pulumi.Input[builtins.str]]:
         """
@@ -439,10 +375,8 @@ class SkeCluster(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 allow_privileged_containers: Optional[pulumi.Input[builtins.bool]] = None,
                  extensions: Optional[pulumi.Input[Union['SkeClusterExtensionsArgs', 'SkeClusterExtensionsArgsDict']]] = None,
                  hibernations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['SkeClusterHibernationArgs', 'SkeClusterHibernationArgsDict']]]]] = None,
-                 kubernetes_version: Optional[pulumi.Input[builtins.str]] = None,
                  kubernetes_version_min: Optional[pulumi.Input[builtins.str]] = None,
                  maintenance: Optional[pulumi.Input[Union['SkeClusterMaintenanceArgs', 'SkeClusterMaintenanceArgsDict']]] = None,
                  name: Optional[pulumi.Input[builtins.str]] = None,
@@ -460,12 +394,8 @@ class SkeCluster(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[builtins.bool] allow_privileged_containers: Flag to specify if privileged mode for containers is enabled or not.
-               This should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).
-               Deprecated as of Kubernetes 1.25 and later
         :param pulumi.Input[Union['SkeClusterExtensionsArgs', 'SkeClusterExtensionsArgsDict']] extensions: A single extensions block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input[Union['SkeClusterHibernationArgs', 'SkeClusterHibernationArgsDict']]]] hibernations: One or more hibernation block as defined below.
-        :param pulumi.Input[builtins.str] kubernetes_version: Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`
         :param pulumi.Input[builtins.str] kubernetes_version_min: The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
         :param pulumi.Input[Union['SkeClusterMaintenanceArgs', 'SkeClusterMaintenanceArgsDict']] maintenance: A single maintenance block as defined below.
         :param pulumi.Input[builtins.str] name: The cluster name.
@@ -502,10 +432,8 @@ class SkeCluster(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 allow_privileged_containers: Optional[pulumi.Input[builtins.bool]] = None,
                  extensions: Optional[pulumi.Input[Union['SkeClusterExtensionsArgs', 'SkeClusterExtensionsArgsDict']]] = None,
                  hibernations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['SkeClusterHibernationArgs', 'SkeClusterHibernationArgsDict']]]]] = None,
-                 kubernetes_version: Optional[pulumi.Input[builtins.str]] = None,
                  kubernetes_version_min: Optional[pulumi.Input[builtins.str]] = None,
                  maintenance: Optional[pulumi.Input[Union['SkeClusterMaintenanceArgs', 'SkeClusterMaintenanceArgsDict']]] = None,
                  name: Optional[pulumi.Input[builtins.str]] = None,
@@ -522,10 +450,8 @@ class SkeCluster(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = SkeClusterArgs.__new__(SkeClusterArgs)
 
-            __props__.__dict__["allow_privileged_containers"] = allow_privileged_containers
             __props__.__dict__["extensions"] = extensions
             __props__.__dict__["hibernations"] = hibernations
-            __props__.__dict__["kubernetes_version"] = kubernetes_version
             __props__.__dict__["kubernetes_version_min"] = kubernetes_version_min
             __props__.__dict__["maintenance"] = maintenance
             __props__.__dict__["name"] = name
@@ -539,6 +465,7 @@ class SkeCluster(pulumi.CustomResource):
             __props__.__dict__["region"] = region
             __props__.__dict__["egress_address_ranges"] = None
             __props__.__dict__["kubernetes_version_used"] = None
+            __props__.__dict__["pod_address_ranges"] = None
         super(SkeCluster, __self__).__init__(
             'stackit:index/skeCluster:SkeCluster',
             resource_name,
@@ -549,17 +476,16 @@ class SkeCluster(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
-            allow_privileged_containers: Optional[pulumi.Input[builtins.bool]] = None,
             egress_address_ranges: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
             extensions: Optional[pulumi.Input[Union['SkeClusterExtensionsArgs', 'SkeClusterExtensionsArgsDict']]] = None,
             hibernations: Optional[pulumi.Input[Sequence[pulumi.Input[Union['SkeClusterHibernationArgs', 'SkeClusterHibernationArgsDict']]]]] = None,
-            kubernetes_version: Optional[pulumi.Input[builtins.str]] = None,
             kubernetes_version_min: Optional[pulumi.Input[builtins.str]] = None,
             kubernetes_version_used: Optional[pulumi.Input[builtins.str]] = None,
             maintenance: Optional[pulumi.Input[Union['SkeClusterMaintenanceArgs', 'SkeClusterMaintenanceArgsDict']]] = None,
             name: Optional[pulumi.Input[builtins.str]] = None,
             network: Optional[pulumi.Input[Union['SkeClusterNetworkArgs', 'SkeClusterNetworkArgsDict']]] = None,
             node_pools: Optional[pulumi.Input[Sequence[pulumi.Input[Union['SkeClusterNodePoolArgs', 'SkeClusterNodePoolArgsDict']]]]] = None,
+            pod_address_ranges: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
             project_id: Optional[pulumi.Input[builtins.str]] = None,
             region: Optional[pulumi.Input[builtins.str]] = None) -> 'SkeCluster':
         """
@@ -569,19 +495,16 @@ class SkeCluster(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[builtins.bool] allow_privileged_containers: Flag to specify if privileged mode for containers is enabled or not.
-               This should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).
-               Deprecated as of Kubernetes 1.25 and later
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] egress_address_ranges: The outgoing network ranges (in CIDR notation) of traffic originating from workload on the cluster.
         :param pulumi.Input[Union['SkeClusterExtensionsArgs', 'SkeClusterExtensionsArgsDict']] extensions: A single extensions block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input[Union['SkeClusterHibernationArgs', 'SkeClusterHibernationArgsDict']]]] hibernations: One or more hibernation block as defined below.
-        :param pulumi.Input[builtins.str] kubernetes_version: Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`
         :param pulumi.Input[builtins.str] kubernetes_version_min: The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
         :param pulumi.Input[builtins.str] kubernetes_version_used: Full Kubernetes version used. For example, if 1.22 was set in `kubernetes_version_min`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
         :param pulumi.Input[Union['SkeClusterMaintenanceArgs', 'SkeClusterMaintenanceArgsDict']] maintenance: A single maintenance block as defined below.
         :param pulumi.Input[builtins.str] name: The cluster name.
         :param pulumi.Input[Union['SkeClusterNetworkArgs', 'SkeClusterNetworkArgsDict']] network: Network block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input[Union['SkeClusterNodePoolArgs', 'SkeClusterNodePoolArgsDict']]]] node_pools: One or more `node_pool` block as defined below.
+        :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] pod_address_ranges: The network ranges (in CIDR notation) used by pods of the cluster.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the cluster is associated.
         :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         """
@@ -589,30 +512,19 @@ class SkeCluster(pulumi.CustomResource):
 
         __props__ = _SkeClusterState.__new__(_SkeClusterState)
 
-        __props__.__dict__["allow_privileged_containers"] = allow_privileged_containers
         __props__.__dict__["egress_address_ranges"] = egress_address_ranges
         __props__.__dict__["extensions"] = extensions
         __props__.__dict__["hibernations"] = hibernations
-        __props__.__dict__["kubernetes_version"] = kubernetes_version
         __props__.__dict__["kubernetes_version_min"] = kubernetes_version_min
         __props__.__dict__["kubernetes_version_used"] = kubernetes_version_used
         __props__.__dict__["maintenance"] = maintenance
         __props__.__dict__["name"] = name
         __props__.__dict__["network"] = network
         __props__.__dict__["node_pools"] = node_pools
+        __props__.__dict__["pod_address_ranges"] = pod_address_ranges
         __props__.__dict__["project_id"] = project_id
         __props__.__dict__["region"] = region
         return SkeCluster(resource_name, opts=opts, __props__=__props__)
-
-    @property
-    @pulumi.getter(name="allowPrivilegedContainers")
-    def allow_privileged_containers(self) -> pulumi.Output[Optional[builtins.bool]]:
-        """
-        Flag to specify if privileged mode for containers is enabled or not.
-        This should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).
-        Deprecated as of Kubernetes 1.25 and later
-        """
-        return pulumi.get(self, "allow_privileged_containers")
 
     @property
     @pulumi.getter(name="egressAddressRanges")
@@ -637,15 +549,6 @@ class SkeCluster(pulumi.CustomResource):
         One or more hibernation block as defined below.
         """
         return pulumi.get(self, "hibernations")
-
-    @property
-    @pulumi.getter(name="kubernetesVersion")
-    @_utilities.deprecated("""Use `kubernetes_version_min instead`. Setting a specific kubernetes version would cause errors during minor version upgrades due to forced updates. In those cases, this field might not represent the actual kubernetes version used in the cluster.""")
-    def kubernetes_version(self) -> pulumi.Output[Optional[builtins.str]]:
-        """
-        Kubernetes version. Must only contain major and minor version (e.g. 1.22). This field is deprecated, use `kubernetes_version_min instead`
-        """
-        return pulumi.get(self, "kubernetes_version")
 
     @property
     @pulumi.getter(name="kubernetesVersionMin")
@@ -694,6 +597,14 @@ class SkeCluster(pulumi.CustomResource):
         One or more `node_pool` block as defined below.
         """
         return pulumi.get(self, "node_pools")
+
+    @property
+    @pulumi.getter(name="podAddressRanges")
+    def pod_address_ranges(self) -> pulumi.Output[Sequence[builtins.str]]:
+        """
+        The network ranges (in CIDR notation) used by pods of the cluster.
+        """
+        return pulumi.get(self, "pod_address_ranges")
 
     @property
     @pulumi.getter(name="projectId")

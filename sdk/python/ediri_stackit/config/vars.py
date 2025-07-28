@@ -22,13 +22,6 @@ __config__ = pulumi.Config('stackit')
 
 class _ExportableConfig(types.ModuleType):
     @property
-    def argus_custom_endpoint(self) -> Optional[str]:
-        """
-        Custom endpoint for the Argus service
-        """
-        return __config__.get('argusCustomEndpoint')
-
-    @property
     def authorization_custom_endpoint(self) -> Optional[str]:
         """
         Custom endpoint for the Membership service
@@ -75,7 +68,7 @@ class _ExportableConfig(types.ModuleType):
     def experiments(self) -> Optional[str]:
         """
         Enables experiments. These are unstable features without official support. More information can be found in the README.
-        Available Experiments: [iam]
+        Available Experiments: iam, routing-tables, network
         """
         return __config__.get('experiments')
 

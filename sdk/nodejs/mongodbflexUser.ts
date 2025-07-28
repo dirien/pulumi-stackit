@@ -50,6 +50,10 @@ export class MongodbflexUser extends pulumi.CustomResource {
      */
     public readonly projectId!: pulumi.Output<string>;
     /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    public readonly region!: pulumi.Output<string>;
+    /**
      * Database access levels for the user. Some of the possible values are: [`read`, `readWrite`, `readWriteAnyDatabase`]
      */
     public readonly roles!: pulumi.Output<string[]>;
@@ -79,6 +83,7 @@ export class MongodbflexUser extends pulumi.CustomResource {
             resourceInputs["password"] = state ? state.password : undefined;
             resourceInputs["port"] = state ? state.port : undefined;
             resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["region"] = state ? state.region : undefined;
             resourceInputs["roles"] = state ? state.roles : undefined;
             resourceInputs["uri"] = state ? state.uri : undefined;
             resourceInputs["userId"] = state ? state.userId : undefined;
@@ -100,6 +105,7 @@ export class MongodbflexUser extends pulumi.CustomResource {
             resourceInputs["database"] = args ? args.database : undefined;
             resourceInputs["instanceId"] = args ? args.instanceId : undefined;
             resourceInputs["projectId"] = args ? args.projectId : undefined;
+            resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["roles"] = args ? args.roles : undefined;
             resourceInputs["username"] = args ? args.username : undefined;
             resourceInputs["host"] = undefined /*out*/;
@@ -132,6 +138,10 @@ export interface MongodbflexUserState {
      */
     projectId?: pulumi.Input<string>;
     /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: pulumi.Input<string>;
+    /**
      * Database access levels for the user. Some of the possible values are: [`read`, `readWrite`, `readWriteAnyDatabase`]
      */
     roles?: pulumi.Input<pulumi.Input<string>[]>;
@@ -156,6 +166,10 @@ export interface MongodbflexUserArgs {
      * STACKIT project ID to which the instance is associated.
      */
     projectId: pulumi.Input<string>;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: pulumi.Input<string>;
     /**
      * Database access levels for the user. Some of the possible values are: [`read`, `readWrite`, `readWriteAnyDatabase`]
      */

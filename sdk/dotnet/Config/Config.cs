@@ -32,16 +32,6 @@ namespace ediri.Stackit
 
         private static readonly global::Pulumi.Config __config = new global::Pulumi.Config("stackit");
 
-        private static readonly __Value<string?> _argusCustomEndpoint = new __Value<string?>(() => __config.Get("argusCustomEndpoint"));
-        /// <summary>
-        /// Custom endpoint for the Argus service
-        /// </summary>
-        public static string? ArgusCustomEndpoint
-        {
-            get => _argusCustomEndpoint.Get();
-            set => _argusCustomEndpoint.Set(value);
-        }
-
         private static readonly __Value<string?> _authorizationCustomEndpoint = new __Value<string?>(() => __config.Get("authorizationCustomEndpoint"));
         /// <summary>
         /// Custom endpoint for the Membership service
@@ -106,7 +96,7 @@ namespace ediri.Stackit
         private static readonly __Value<ImmutableArray<string>> _experiments = new __Value<ImmutableArray<string>>(() => __config.GetObject<ImmutableArray<string>>("experiments"));
         /// <summary>
         /// Enables experiments. These are unstable features without official support. More information can be found in the README.
-        /// Available Experiments: [iam]
+        /// Available Experiments: iam, routing-tables, network
         /// </summary>
         public static ImmutableArray<string> Experiments
         {

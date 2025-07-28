@@ -20,7 +20,6 @@ __all__ = ['ProviderArgs', 'Provider']
 @pulumi.input_type
 class ProviderArgs:
     def __init__(__self__, *,
-                 argus_custom_endpoint: Optional[pulumi.Input[builtins.str]] = None,
                  authorization_custom_endpoint: Optional[pulumi.Input[builtins.str]] = None,
                  cdn_custom_endpoint: Optional[pulumi.Input[builtins.str]] = None,
                  credentials_path: Optional[pulumi.Input[builtins.str]] = None,
@@ -59,7 +58,6 @@ class ProviderArgs:
                  token_custom_endpoint: Optional[pulumi.Input[builtins.str]] = None):
         """
         The set of arguments for constructing a Provider resource.
-        :param pulumi.Input[builtins.str] argus_custom_endpoint: Custom endpoint for the Argus service
         :param pulumi.Input[builtins.str] authorization_custom_endpoint: Custom endpoint for the Membership service
         :param pulumi.Input[builtins.str] cdn_custom_endpoint: Custom endpoint for the CDN service
         :param pulumi.Input[builtins.str] credentials_path: Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
@@ -68,7 +66,7 @@ class ProviderArgs:
         :param pulumi.Input[builtins.str] dns_custom_endpoint: Custom endpoint for the DNS service
         :param pulumi.Input[builtins.bool] enable_beta_resources: Enable beta resources. Default is false.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] experiments: Enables experiments. These are unstable features without official support. More information can be found in the README.
-               Available Experiments: [iam]
+               Available Experiments: iam, routing-tables, network
         :param pulumi.Input[builtins.str] git_custom_endpoint: Custom endpoint for the Git service
         :param pulumi.Input[builtins.str] iaas_custom_endpoint: Custom endpoint for the IaaS service
         :param pulumi.Input[builtins.str] loadbalancer_custom_endpoint: Custom endpoint for the Load Balancer service
@@ -103,11 +101,6 @@ class ProviderArgs:
         :param pulumi.Input[builtins.str] sqlserverflex_custom_endpoint: Custom endpoint for the SQL Server Flex service
         :param pulumi.Input[builtins.str] token_custom_endpoint: Custom endpoint for the token API, which is used to request access tokens when using the key flow
         """
-        if argus_custom_endpoint is not None:
-            warnings.warn("""Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observability_custom_endpoint` and `observability` resources instead, which offer the exact same functionality.""", DeprecationWarning)
-            pulumi.log.warn("""argus_custom_endpoint is deprecated: Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observability_custom_endpoint` and `observability` resources instead, which offer the exact same functionality.""")
-        if argus_custom_endpoint is not None:
-            pulumi.set(__self__, "argus_custom_endpoint", argus_custom_endpoint)
         if authorization_custom_endpoint is not None:
             pulumi.set(__self__, "authorization_custom_endpoint", authorization_custom_endpoint)
         if cdn_custom_endpoint is not None:
@@ -188,19 +181,6 @@ class ProviderArgs:
             pulumi.set(__self__, "token_custom_endpoint", token_custom_endpoint)
 
     @property
-    @pulumi.getter(name="argusCustomEndpoint")
-    @_utilities.deprecated("""Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observability_custom_endpoint` and `observability` resources instead, which offer the exact same functionality.""")
-    def argus_custom_endpoint(self) -> Optional[pulumi.Input[builtins.str]]:
-        """
-        Custom endpoint for the Argus service
-        """
-        return pulumi.get(self, "argus_custom_endpoint")
-
-    @argus_custom_endpoint.setter
-    def argus_custom_endpoint(self, value: Optional[pulumi.Input[builtins.str]]):
-        pulumi.set(self, "argus_custom_endpoint", value)
-
-    @property
     @pulumi.getter(name="authorizationCustomEndpoint")
     def authorization_custom_endpoint(self) -> Optional[pulumi.Input[builtins.str]]:
         """
@@ -278,7 +258,7 @@ class ProviderArgs:
     def experiments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]:
         """
         Enables experiments. These are unstable features without official support. More information can be found in the README.
-        Available Experiments: [iam]
+        Available Experiments: iam, routing-tables, network
         """
         return pulumi.get(self, "experiments")
 
@@ -647,7 +627,6 @@ class Provider(pulumi.ProviderResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 argus_custom_endpoint: Optional[pulumi.Input[builtins.str]] = None,
                  authorization_custom_endpoint: Optional[pulumi.Input[builtins.str]] = None,
                  cdn_custom_endpoint: Optional[pulumi.Input[builtins.str]] = None,
                  credentials_path: Optional[pulumi.Input[builtins.str]] = None,
@@ -693,7 +672,6 @@ class Provider(pulumi.ProviderResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[builtins.str] argus_custom_endpoint: Custom endpoint for the Argus service
         :param pulumi.Input[builtins.str] authorization_custom_endpoint: Custom endpoint for the Membership service
         :param pulumi.Input[builtins.str] cdn_custom_endpoint: Custom endpoint for the CDN service
         :param pulumi.Input[builtins.str] credentials_path: Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
@@ -702,7 +680,7 @@ class Provider(pulumi.ProviderResource):
         :param pulumi.Input[builtins.str] dns_custom_endpoint: Custom endpoint for the DNS service
         :param pulumi.Input[builtins.bool] enable_beta_resources: Enable beta resources. Default is false.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] experiments: Enables experiments. These are unstable features without official support. More information can be found in the README.
-               Available Experiments: [iam]
+               Available Experiments: iam, routing-tables, network
         :param pulumi.Input[builtins.str] git_custom_endpoint: Custom endpoint for the Git service
         :param pulumi.Input[builtins.str] iaas_custom_endpoint: Custom endpoint for the IaaS service
         :param pulumi.Input[builtins.str] loadbalancer_custom_endpoint: Custom endpoint for the Load Balancer service
@@ -764,7 +742,6 @@ class Provider(pulumi.ProviderResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
-                 argus_custom_endpoint: Optional[pulumi.Input[builtins.str]] = None,
                  authorization_custom_endpoint: Optional[pulumi.Input[builtins.str]] = None,
                  cdn_custom_endpoint: Optional[pulumi.Input[builtins.str]] = None,
                  credentials_path: Optional[pulumi.Input[builtins.str]] = None,
@@ -810,7 +787,6 @@ class Provider(pulumi.ProviderResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = ProviderArgs.__new__(ProviderArgs)
 
-            __props__.__dict__["argus_custom_endpoint"] = argus_custom_endpoint
             __props__.__dict__["authorization_custom_endpoint"] = authorization_custom_endpoint
             __props__.__dict__["cdn_custom_endpoint"] = cdn_custom_endpoint
             __props__.__dict__["credentials_path"] = credentials_path
@@ -852,15 +828,6 @@ class Provider(pulumi.ProviderResource):
             resource_name,
             __props__,
             opts)
-
-    @property
-    @pulumi.getter(name="argusCustomEndpoint")
-    @_utilities.deprecated("""Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observability_custom_endpoint` and `observability` resources instead, which offer the exact same functionality.""")
-    def argus_custom_endpoint(self) -> pulumi.Output[Optional[builtins.str]]:
-        """
-        Custom endpoint for the Argus service
-        """
-        return pulumi.get(self, "argus_custom_endpoint")
 
     @property
     @pulumi.getter(name="authorizationCustomEndpoint")

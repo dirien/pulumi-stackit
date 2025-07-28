@@ -230,6 +230,26 @@ export const getResourcemanagerProject: typeof import("./getResourcemanagerProje
 export const getResourcemanagerProjectOutput: typeof import("./getResourcemanagerProject").getResourcemanagerProjectOutput = null as any;
 utilities.lazyLoad(exports, ["getResourcemanagerProject","getResourcemanagerProjectOutput"], () => require("./getResourcemanagerProject"));
 
+export { GetRoutingTableArgs, GetRoutingTableResult, GetRoutingTableOutputArgs } from "./getRoutingTable";
+export const getRoutingTable: typeof import("./getRoutingTable").getRoutingTable = null as any;
+export const getRoutingTableOutput: typeof import("./getRoutingTable").getRoutingTableOutput = null as any;
+utilities.lazyLoad(exports, ["getRoutingTable","getRoutingTableOutput"], () => require("./getRoutingTable"));
+
+export { GetRoutingTableRouteArgs, GetRoutingTableRouteResult, GetRoutingTableRouteOutputArgs } from "./getRoutingTableRoute";
+export const getRoutingTableRoute: typeof import("./getRoutingTableRoute").getRoutingTableRoute = null as any;
+export const getRoutingTableRouteOutput: typeof import("./getRoutingTableRoute").getRoutingTableRouteOutput = null as any;
+utilities.lazyLoad(exports, ["getRoutingTableRoute","getRoutingTableRouteOutput"], () => require("./getRoutingTableRoute"));
+
+export { GetRoutingTableRoutesArgs, GetRoutingTableRoutesResult, GetRoutingTableRoutesOutputArgs } from "./getRoutingTableRoutes";
+export const getRoutingTableRoutes: typeof import("./getRoutingTableRoutes").getRoutingTableRoutes = null as any;
+export const getRoutingTableRoutesOutput: typeof import("./getRoutingTableRoutes").getRoutingTableRoutesOutput = null as any;
+utilities.lazyLoad(exports, ["getRoutingTableRoutes","getRoutingTableRoutesOutput"], () => require("./getRoutingTableRoutes"));
+
+export { GetRoutingTablesArgs, GetRoutingTablesResult, GetRoutingTablesOutputArgs } from "./getRoutingTables";
+export const getRoutingTables: typeof import("./getRoutingTables").getRoutingTables = null as any;
+export const getRoutingTablesOutput: typeof import("./getRoutingTables").getRoutingTablesOutput = null as any;
+utilities.lazyLoad(exports, ["getRoutingTables","getRoutingTablesOutput"], () => require("./getRoutingTables"));
+
 export { GetSecretsmanagerInstanceArgs, GetSecretsmanagerInstanceResult, GetSecretsmanagerInstanceOutputArgs } from "./getSecretsmanagerInstance";
 export const getSecretsmanagerInstance: typeof import("./getSecretsmanagerInstance").getSecretsmanagerInstance = null as any;
 export const getSecretsmanagerInstanceOutput: typeof import("./getSecretsmanagerInstance").getSecretsmanagerInstanceOutput = null as any;
@@ -483,6 +503,16 @@ export type ResourcemanagerProject = import("./resourcemanagerProject").Resource
 export const ResourcemanagerProject: typeof import("./resourcemanagerProject").ResourcemanagerProject = null as any;
 utilities.lazyLoad(exports, ["ResourcemanagerProject"], () => require("./resourcemanagerProject"));
 
+export { RoutingTableArgs, RoutingTableState } from "./routingTable";
+export type RoutingTable = import("./routingTable").RoutingTable;
+export const RoutingTable: typeof import("./routingTable").RoutingTable = null as any;
+utilities.lazyLoad(exports, ["RoutingTable"], () => require("./routingTable"));
+
+export { RoutingTableRouteArgs, RoutingTableRouteState } from "./routingTableRoute";
+export type RoutingTableRoute = import("./routingTableRoute").RoutingTableRoute;
+export const RoutingTableRoute: typeof import("./routingTableRoute").RoutingTableRoute = null as any;
+utilities.lazyLoad(exports, ["RoutingTableRoute"], () => require("./routingTableRoute"));
+
 export { SecretsmanagerInstanceArgs, SecretsmanagerInstanceState } from "./secretsmanagerInstance";
 export type SecretsmanagerInstance = import("./secretsmanagerInstance").SecretsmanagerInstance;
 export const SecretsmanagerInstance: typeof import("./secretsmanagerInstance").SecretsmanagerInstance = null as any;
@@ -673,6 +703,10 @@ const _module = {
                 return new RedisInstance(name, <any>undefined, { urn })
             case "stackit:index/resourcemanagerProject:ResourcemanagerProject":
                 return new ResourcemanagerProject(name, <any>undefined, { urn })
+            case "stackit:index/routingTable:RoutingTable":
+                return new RoutingTable(name, <any>undefined, { urn })
+            case "stackit:index/routingTableRoute:RoutingTableRoute":
+                return new RoutingTableRoute(name, <any>undefined, { urn })
             case "stackit:index/secretsmanagerInstance:SecretsmanagerInstance":
                 return new SecretsmanagerInstance(name, <any>undefined, { urn })
             case "stackit:index/secretsmanagerUser:SecretsmanagerUser":
@@ -757,6 +791,8 @@ pulumi.runtime.registerResourceModule("stackit", "index/rabbitmqInstance", _modu
 pulumi.runtime.registerResourceModule("stackit", "index/redisCredential", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/redisInstance", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/resourcemanagerProject", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/routingTable", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/routingTableRoute", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/secretsmanagerInstance", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/secretsmanagerUser", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/securityGroup", _module)

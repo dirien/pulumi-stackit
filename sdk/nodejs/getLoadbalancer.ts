@@ -64,6 +64,10 @@ export interface GetLoadbalancerResult {
      */
     readonly options: outputs.GetLoadbalancerOptions;
     /**
+     * The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+     */
+    readonly planId: string;
+    /**
      * Transient private Load Balancer IP address. It can change any time.
      */
     readonly privateAddress: string;

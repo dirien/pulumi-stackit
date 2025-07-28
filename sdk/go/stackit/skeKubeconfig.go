@@ -33,6 +33,8 @@ type SkeKubeconfig struct {
 	ProjectId pulumi.StringOutput `pulumi:"projectId"`
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh pulumi.BoolPtrOutput `pulumi:"refresh"`
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringOutput `pulumi:"region"`
 }
 
 // NewSkeKubeconfig registers a new resource with the given unique name, arguments, and options.
@@ -90,6 +92,8 @@ type skeKubeconfigState struct {
 	ProjectId *string `pulumi:"projectId"`
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh *bool `pulumi:"refresh"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 }
 
 type SkeKubeconfigState struct {
@@ -108,6 +112,8 @@ type SkeKubeconfigState struct {
 	ProjectId pulumi.StringPtrInput
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh pulumi.BoolPtrInput
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput
 }
 
 func (SkeKubeconfigState) ElementType() reflect.Type {
@@ -123,6 +129,8 @@ type skeKubeconfigArgs struct {
 	ProjectId string `pulumi:"projectId"`
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh *bool `pulumi:"refresh"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 }
 
 // The set of arguments for constructing a SkeKubeconfig resource.
@@ -135,6 +143,8 @@ type SkeKubeconfigArgs struct {
 	ProjectId pulumi.StringInput
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh pulumi.BoolPtrInput
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput
 }
 
 func (SkeKubeconfigArgs) ElementType() reflect.Type {
@@ -261,6 +271,11 @@ func (o SkeKubeconfigOutput) ProjectId() pulumi.StringOutput {
 // If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 func (o SkeKubeconfigOutput) Refresh() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *SkeKubeconfig) pulumi.BoolPtrOutput { return v.Refresh }).(pulumi.BoolPtrOutput)
+}
+
+// The resource region. If not defined, the provider region is used.
+func (o SkeKubeconfigOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v *SkeKubeconfig) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }
 
 type SkeKubeconfigArrayOutput struct{ *pulumi.OutputState }

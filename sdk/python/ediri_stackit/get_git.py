@@ -27,7 +27,22 @@ class GetGitResult:
     """
     A collection of values returned by getGit.
     """
-    def __init__(__self__, id=None, instance_id=None, name=None, project_id=None, url=None, version=None):
+    def __init__(__self__, acls=None, consumed_disk=None, consumed_object_storage=None, created=None, flavor=None, id=None, instance_id=None, name=None, project_id=None, url=None, version=None):
+        if acls and not isinstance(acls, list):
+            raise TypeError("Expected argument 'acls' to be a list")
+        pulumi.set(__self__, "acls", acls)
+        if consumed_disk and not isinstance(consumed_disk, str):
+            raise TypeError("Expected argument 'consumed_disk' to be a str")
+        pulumi.set(__self__, "consumed_disk", consumed_disk)
+        if consumed_object_storage and not isinstance(consumed_object_storage, str):
+            raise TypeError("Expected argument 'consumed_object_storage' to be a str")
+        pulumi.set(__self__, "consumed_object_storage", consumed_object_storage)
+        if created and not isinstance(created, str):
+            raise TypeError("Expected argument 'created' to be a str")
+        pulumi.set(__self__, "created", created)
+        if flavor and not isinstance(flavor, str):
+            raise TypeError("Expected argument 'flavor' to be a str")
+        pulumi.set(__self__, "flavor", flavor)
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
@@ -46,6 +61,46 @@ class GetGitResult:
         if version and not isinstance(version, str):
             raise TypeError("Expected argument 'version' to be a str")
         pulumi.set(__self__, "version", version)
+
+    @property
+    @pulumi.getter
+    def acls(self) -> Sequence[builtins.str]:
+        """
+        Restricted ACL for instance access.
+        """
+        return pulumi.get(self, "acls")
+
+    @property
+    @pulumi.getter(name="consumedDisk")
+    def consumed_disk(self) -> builtins.str:
+        """
+        How many bytes of disk space is consumed.
+        """
+        return pulumi.get(self, "consumed_disk")
+
+    @property
+    @pulumi.getter(name="consumedObjectStorage")
+    def consumed_object_storage(self) -> builtins.str:
+        """
+        How many bytes of Object Storage is consumed.
+        """
+        return pulumi.get(self, "consumed_object_storage")
+
+    @property
+    @pulumi.getter
+    def created(self) -> builtins.str:
+        """
+        Instance creation timestamp in RFC3339 format.
+        """
+        return pulumi.get(self, "created")
+
+    @property
+    @pulumi.getter
+    def flavor(self) -> builtins.str:
+        """
+        Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
+        """
+        return pulumi.get(self, "flavor")
 
     @property
     @pulumi.getter
@@ -99,6 +154,11 @@ class AwaitableGetGitResult(GetGitResult):
         if False:
             yield self
         return GetGitResult(
+            acls=self.acls,
+            consumed_disk=self.consumed_disk,
+            consumed_object_storage=self.consumed_object_storage,
+            created=self.created,
+            flavor=self.flavor,
             id=self.id,
             instance_id=self.instance_id,
             name=self.name,
@@ -113,7 +173,7 @@ def get_git(instance_id: Optional[builtins.str] = None,
     """
     Git Instance datasource schema.
 
-    > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+    > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
 
     ## Example Usage
 
@@ -128,6 +188,11 @@ def get_git(instance_id: Optional[builtins.str] = None,
     __ret__ = pulumi.runtime.invoke('stackit:index/getGit:getGit', __args__, opts=opts, typ=GetGitResult).value
 
     return AwaitableGetGitResult(
+        acls=pulumi.get(__ret__, 'acls'),
+        consumed_disk=pulumi.get(__ret__, 'consumed_disk'),
+        consumed_object_storage=pulumi.get(__ret__, 'consumed_object_storage'),
+        created=pulumi.get(__ret__, 'created'),
+        flavor=pulumi.get(__ret__, 'flavor'),
         id=pulumi.get(__ret__, 'id'),
         instance_id=pulumi.get(__ret__, 'instance_id'),
         name=pulumi.get(__ret__, 'name'),
@@ -140,7 +205,7 @@ def get_git_output(instance_id: Optional[pulumi.Input[builtins.str]] = None,
     """
     Git Instance datasource schema.
 
-    > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+    > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
 
     ## Example Usage
 
@@ -154,6 +219,11 @@ def get_git_output(instance_id: Optional[pulumi.Input[builtins.str]] = None,
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke_output('stackit:index/getGit:getGit', __args__, opts=opts, typ=GetGitResult)
     return __ret__.apply(lambda __response__: GetGitResult(
+        acls=pulumi.get(__response__, 'acls'),
+        consumed_disk=pulumi.get(__response__, 'consumed_disk'),
+        consumed_object_storage=pulumi.get(__response__, 'consumed_object_storage'),
+        created=pulumi.get(__response__, 'created'),
+        flavor=pulumi.get(__response__, 'flavor'),
         id=pulumi.get(__response__, 'id'),
         instance_id=pulumi.get(__response__, 'instance_id'),
         name=pulumi.get(__response__, 'name'),

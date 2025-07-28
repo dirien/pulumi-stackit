@@ -28,10 +28,7 @@ class GetSkeClusterResult:
     """
     A collection of values returned by getSkeCluster.
     """
-    def __init__(__self__, allow_privileged_containers=None, egress_address_ranges=None, extensions=None, hibernations=None, id=None, kubernetes_version=None, kubernetes_version_min=None, kubernetes_version_used=None, maintenance=None, name=None, network=None, node_pools=None, project_id=None, region=None):
-        if allow_privileged_containers and not isinstance(allow_privileged_containers, bool):
-            raise TypeError("Expected argument 'allow_privileged_containers' to be a bool")
-        pulumi.set(__self__, "allow_privileged_containers", allow_privileged_containers)
+    def __init__(__self__, egress_address_ranges=None, extensions=None, hibernations=None, id=None, kubernetes_version_min=None, kubernetes_version_used=None, maintenance=None, name=None, network=None, node_pools=None, pod_address_ranges=None, project_id=None, region=None):
         if egress_address_ranges and not isinstance(egress_address_ranges, list):
             raise TypeError("Expected argument 'egress_address_ranges' to be a list")
         pulumi.set(__self__, "egress_address_ranges", egress_address_ranges)
@@ -44,9 +41,6 @@ class GetSkeClusterResult:
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
-        if kubernetes_version and not isinstance(kubernetes_version, str):
-            raise TypeError("Expected argument 'kubernetes_version' to be a str")
-        pulumi.set(__self__, "kubernetes_version", kubernetes_version)
         if kubernetes_version_min and not isinstance(kubernetes_version_min, str):
             raise TypeError("Expected argument 'kubernetes_version_min' to be a str")
         pulumi.set(__self__, "kubernetes_version_min", kubernetes_version_min)
@@ -65,23 +59,15 @@ class GetSkeClusterResult:
         if node_pools and not isinstance(node_pools, list):
             raise TypeError("Expected argument 'node_pools' to be a list")
         pulumi.set(__self__, "node_pools", node_pools)
+        if pod_address_ranges and not isinstance(pod_address_ranges, list):
+            raise TypeError("Expected argument 'pod_address_ranges' to be a list")
+        pulumi.set(__self__, "pod_address_ranges", pod_address_ranges)
         if project_id and not isinstance(project_id, str):
             raise TypeError("Expected argument 'project_id' to be a str")
         pulumi.set(__self__, "project_id", project_id)
         if region and not isinstance(region, str):
             raise TypeError("Expected argument 'region' to be a str")
         pulumi.set(__self__, "region", region)
-
-    @property
-    @pulumi.getter(name="allowPrivilegedContainers")
-    @_utilities.deprecated("""Please remove this flag from your configuration when using Kubernetes version 1.25+.""")
-    def allow_privileged_containers(self) -> builtins.bool:
-        """
-        DEPRECATED as of Kubernetes 1.25+
-        Flag to specify if privileged mode for containers is enabled or not.
-        This should be used with care since it also disables a couple of other features like the use of some volume type (e.g. PVCs).
-        """
-        return pulumi.get(self, "allow_privileged_containers")
 
     @property
     @pulumi.getter(name="egressAddressRanges")
@@ -111,15 +97,6 @@ class GetSkeClusterResult:
     @pulumi.getter
     def id(self) -> builtins.str:
         return pulumi.get(self, "id")
-
-    @property
-    @pulumi.getter(name="kubernetesVersion")
-    @_utilities.deprecated("""This field is always nil, use `kubernetes_version_used` to get the cluster kubernetes version. This field would cause errors when the cluster got a kubernetes version minor upgrade, either triggered by automatic or forceful updates.""")
-    def kubernetes_version(self) -> builtins.str:
-        """
-        Kubernetes version. This field is deprecated, use `kubernetes_version_used` instead
-        """
-        return pulumi.get(self, "kubernetes_version")
 
     @property
     @pulumi.getter(name="kubernetesVersionMin")
@@ -170,6 +147,14 @@ class GetSkeClusterResult:
         return pulumi.get(self, "node_pools")
 
     @property
+    @pulumi.getter(name="podAddressRanges")
+    def pod_address_ranges(self) -> Sequence[builtins.str]:
+        """
+        The network ranges (in CIDR notation) used by pods of the cluster.
+        """
+        return pulumi.get(self, "pod_address_ranges")
+
+    @property
     @pulumi.getter(name="projectId")
     def project_id(self) -> builtins.str:
         """
@@ -192,18 +177,17 @@ class AwaitableGetSkeClusterResult(GetSkeClusterResult):
         if False:
             yield self
         return GetSkeClusterResult(
-            allow_privileged_containers=self.allow_privileged_containers,
             egress_address_ranges=self.egress_address_ranges,
             extensions=self.extensions,
             hibernations=self.hibernations,
             id=self.id,
-            kubernetes_version=self.kubernetes_version,
             kubernetes_version_min=self.kubernetes_version_min,
             kubernetes_version_used=self.kubernetes_version_used,
             maintenance=self.maintenance,
             name=self.name,
             network=self.network,
             node_pools=self.node_pools,
+            pod_address_ranges=self.pod_address_ranges,
             project_id=self.project_id,
             region=self.region)
 
@@ -230,18 +214,17 @@ def get_ske_cluster(name: Optional[builtins.str] = None,
     __ret__ = pulumi.runtime.invoke('stackit:index/getSkeCluster:getSkeCluster', __args__, opts=opts, typ=GetSkeClusterResult).value
 
     return AwaitableGetSkeClusterResult(
-        allow_privileged_containers=pulumi.get(__ret__, 'allow_privileged_containers'),
         egress_address_ranges=pulumi.get(__ret__, 'egress_address_ranges'),
         extensions=pulumi.get(__ret__, 'extensions'),
         hibernations=pulumi.get(__ret__, 'hibernations'),
         id=pulumi.get(__ret__, 'id'),
-        kubernetes_version=pulumi.get(__ret__, 'kubernetes_version'),
         kubernetes_version_min=pulumi.get(__ret__, 'kubernetes_version_min'),
         kubernetes_version_used=pulumi.get(__ret__, 'kubernetes_version_used'),
         maintenance=pulumi.get(__ret__, 'maintenance'),
         name=pulumi.get(__ret__, 'name'),
         network=pulumi.get(__ret__, 'network'),
         node_pools=pulumi.get(__ret__, 'node_pools'),
+        pod_address_ranges=pulumi.get(__ret__, 'pod_address_ranges'),
         project_id=pulumi.get(__ret__, 'project_id'),
         region=pulumi.get(__ret__, 'region'))
 def get_ske_cluster_output(name: Optional[pulumi.Input[builtins.str]] = None,
@@ -265,17 +248,16 @@ def get_ske_cluster_output(name: Optional[pulumi.Input[builtins.str]] = None,
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke_output('stackit:index/getSkeCluster:getSkeCluster', __args__, opts=opts, typ=GetSkeClusterResult)
     return __ret__.apply(lambda __response__: GetSkeClusterResult(
-        allow_privileged_containers=pulumi.get(__response__, 'allow_privileged_containers'),
         egress_address_ranges=pulumi.get(__response__, 'egress_address_ranges'),
         extensions=pulumi.get(__response__, 'extensions'),
         hibernations=pulumi.get(__response__, 'hibernations'),
         id=pulumi.get(__response__, 'id'),
-        kubernetes_version=pulumi.get(__response__, 'kubernetes_version'),
         kubernetes_version_min=pulumi.get(__response__, 'kubernetes_version_min'),
         kubernetes_version_used=pulumi.get(__response__, 'kubernetes_version_used'),
         maintenance=pulumi.get(__response__, 'maintenance'),
         name=pulumi.get(__response__, 'name'),
         network=pulumi.get(__response__, 'network'),
         node_pools=pulumi.get(__response__, 'node_pools'),
+        pod_address_ranges=pulumi.get(__response__, 'pod_address_ranges'),
         project_id=pulumi.get(__response__, 'project_id'),
         region=pulumi.get(__response__, 'region')))

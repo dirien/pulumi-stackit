@@ -63,6 +63,12 @@ namespace ediri.Stackit
         [Output("refresh")]
         public Output<bool?> Refresh { get; private set; } = null!;
 
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Output("region")]
+        public Output<string> Region { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a SkeKubeconfig resource with the given unique name, arguments, and options.
@@ -138,6 +144,12 @@ namespace ediri.Stackit
         [Input("refresh")]
         public Input<bool>? Refresh { get; set; }
 
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
+
         public SkeKubeconfigArgs()
         {
         }
@@ -200,6 +212,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("refresh")]
         public Input<bool>? Refresh { get; set; }
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
 
         public SkeKubeconfigState()
         {

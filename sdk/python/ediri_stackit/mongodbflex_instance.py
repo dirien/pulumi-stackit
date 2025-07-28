@@ -30,13 +30,15 @@ class MongodbflexInstanceArgs:
                  replicas: pulumi.Input[builtins.int],
                  storage: pulumi.Input['MongodbflexInstanceStorageArgs'],
                  version: pulumi.Input[builtins.str],
-                 name: Optional[pulumi.Input[builtins.str]] = None):
+                 name: Optional[pulumi.Input[builtins.str]] = None,
+                 region: Optional[pulumi.Input[builtins.str]] = None):
         """
         The set of arguments for constructing a MongodbflexInstance resource.
         :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] acls: The Access Control List (ACL) for the MongoDB Flex instance.
         :param pulumi.Input[builtins.str] backup_schedule: The backup schedule. Should follow the cron scheduling system format (e.g. "0 0 * * *").
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the instance is associated.
         :param pulumi.Input[builtins.str] name: Instance name.
+        :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         """
         pulumi.set(__self__, "acls", acls)
         pulumi.set(__self__, "backup_schedule", backup_schedule)
@@ -48,6 +50,8 @@ class MongodbflexInstanceArgs:
         pulumi.set(__self__, "version", version)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
 
     @property
     @pulumi.getter
@@ -142,6 +146,18 @@ class MongodbflexInstanceArgs:
     def name(self, value: Optional[pulumi.Input[builtins.str]]):
         pulumi.set(self, "name", value)
 
+    @property
+    @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "region", value)
+
 
 @pulumi.input_type
 class _MongodbflexInstanceState:
@@ -153,6 +169,7 @@ class _MongodbflexInstanceState:
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  options: Optional[pulumi.Input['MongodbflexInstanceOptionsArgs']] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
+                 region: Optional[pulumi.Input[builtins.str]] = None,
                  replicas: Optional[pulumi.Input[builtins.int]] = None,
                  storage: Optional[pulumi.Input['MongodbflexInstanceStorageArgs']] = None,
                  version: Optional[pulumi.Input[builtins.str]] = None):
@@ -163,6 +180,7 @@ class _MongodbflexInstanceState:
         :param pulumi.Input[builtins.str] instance_id: ID of the MongoDB Flex instance.
         :param pulumi.Input[builtins.str] name: Instance name.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the instance is associated.
+        :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         """
         if acls is not None:
             pulumi.set(__self__, "acls", acls)
@@ -178,6 +196,8 @@ class _MongodbflexInstanceState:
             pulumi.set(__self__, "options", options)
         if project_id is not None:
             pulumi.set(__self__, "project_id", project_id)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
         if replicas is not None:
             pulumi.set(__self__, "replicas", replicas)
         if storage is not None:
@@ -265,6 +285,18 @@ class _MongodbflexInstanceState:
 
     @property
     @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "region", value)
+
+    @property
+    @pulumi.getter
     def replicas(self) -> Optional[pulumi.Input[builtins.int]]:
         return pulumi.get(self, "replicas")
 
@@ -303,6 +335,7 @@ class MongodbflexInstance(pulumi.CustomResource):
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  options: Optional[pulumi.Input[Union['MongodbflexInstanceOptionsArgs', 'MongodbflexInstanceOptionsArgsDict']]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
+                 region: Optional[pulumi.Input[builtins.str]] = None,
                  replicas: Optional[pulumi.Input[builtins.int]] = None,
                  storage: Optional[pulumi.Input[Union['MongodbflexInstanceStorageArgs', 'MongodbflexInstanceStorageArgsDict']]] = None,
                  version: Optional[pulumi.Input[builtins.str]] = None,
@@ -318,6 +351,7 @@ class MongodbflexInstance(pulumi.CustomResource):
         :param pulumi.Input[builtins.str] backup_schedule: The backup schedule. Should follow the cron scheduling system format (e.g. "0 0 * * *").
         :param pulumi.Input[builtins.str] name: Instance name.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the instance is associated.
+        :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         """
         ...
     @overload
@@ -351,6 +385,7 @@ class MongodbflexInstance(pulumi.CustomResource):
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  options: Optional[pulumi.Input[Union['MongodbflexInstanceOptionsArgs', 'MongodbflexInstanceOptionsArgsDict']]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
+                 region: Optional[pulumi.Input[builtins.str]] = None,
                  replicas: Optional[pulumi.Input[builtins.int]] = None,
                  storage: Optional[pulumi.Input[Union['MongodbflexInstanceStorageArgs', 'MongodbflexInstanceStorageArgsDict']]] = None,
                  version: Optional[pulumi.Input[builtins.str]] = None,
@@ -379,6 +414,7 @@ class MongodbflexInstance(pulumi.CustomResource):
             if project_id is None and not opts.urn:
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
+            __props__.__dict__["region"] = region
             if replicas is None and not opts.urn:
                 raise TypeError("Missing required property 'replicas'")
             __props__.__dict__["replicas"] = replicas
@@ -406,6 +442,7 @@ class MongodbflexInstance(pulumi.CustomResource):
             name: Optional[pulumi.Input[builtins.str]] = None,
             options: Optional[pulumi.Input[Union['MongodbflexInstanceOptionsArgs', 'MongodbflexInstanceOptionsArgsDict']]] = None,
             project_id: Optional[pulumi.Input[builtins.str]] = None,
+            region: Optional[pulumi.Input[builtins.str]] = None,
             replicas: Optional[pulumi.Input[builtins.int]] = None,
             storage: Optional[pulumi.Input[Union['MongodbflexInstanceStorageArgs', 'MongodbflexInstanceStorageArgsDict']]] = None,
             version: Optional[pulumi.Input[builtins.str]] = None) -> 'MongodbflexInstance':
@@ -421,6 +458,7 @@ class MongodbflexInstance(pulumi.CustomResource):
         :param pulumi.Input[builtins.str] instance_id: ID of the MongoDB Flex instance.
         :param pulumi.Input[builtins.str] name: Instance name.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the instance is associated.
+        :param pulumi.Input[builtins.str] region: The resource region. If not defined, the provider region is used.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -433,6 +471,7 @@ class MongodbflexInstance(pulumi.CustomResource):
         __props__.__dict__["name"] = name
         __props__.__dict__["options"] = options
         __props__.__dict__["project_id"] = project_id
+        __props__.__dict__["region"] = region
         __props__.__dict__["replicas"] = replicas
         __props__.__dict__["storage"] = storage
         __props__.__dict__["version"] = version
@@ -487,6 +526,14 @@ class MongodbflexInstance(pulumi.CustomResource):
         STACKIT project ID to which the instance is associated.
         """
         return pulumi.get(self, "project_id")
+
+    @property
+    @pulumi.getter
+    def region(self) -> pulumi.Output[builtins.str]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
 
     @property
     @pulumi.getter

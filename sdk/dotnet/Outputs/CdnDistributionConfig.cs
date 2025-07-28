@@ -19,6 +19,14 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly Outputs.CdnDistributionConfigBackend Backend;
         /// <summary>
+        /// The configured countries where distribution of content is blocked
+        /// </summary>
+        public readonly ImmutableArray<string> BlockedCountries;
+        /// <summary>
+        /// Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+        /// </summary>
+        public readonly Outputs.CdnDistributionConfigOptimizer? Optimizer;
+        /// <summary>
         /// The configured regions where content will be hosted
         /// </summary>
         public readonly ImmutableArray<string> Regions;
@@ -27,9 +35,15 @@ namespace ediri.Stackit.Outputs
         private CdnDistributionConfig(
             Outputs.CdnDistributionConfigBackend backend,
 
+            ImmutableArray<string> blockedCountries,
+
+            Outputs.CdnDistributionConfigOptimizer? optimizer,
+
             ImmutableArray<string> regions)
         {
             Backend = backend;
+            BlockedCountries = blockedCountries;
+            Optimizer = optimizer;
             Regions = regions;
         }
     }

@@ -100,7 +100,7 @@ def get_server_backup_schedules(project_id: Optional[builtins.str] = None,
     """
     Server backup schedules datasource schema. Must have a `region` specified in the provider configuration.
 
-    > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+    > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
 
     ## Example Usage
 
@@ -129,7 +129,7 @@ def get_server_backup_schedules_output(project_id: Optional[pulumi.Input[builtin
     """
     Server backup schedules datasource schema. Must have a `region` specified in the provider configuration.
 
-    > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+    > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
 
     ## Example Usage
 

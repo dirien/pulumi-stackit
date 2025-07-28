@@ -21,13 +21,21 @@ __all__ = ['GitArgs', 'Git']
 class GitArgs:
     def __init__(__self__, *,
                  project_id: pulumi.Input[builtins.str],
+                 acls: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
+                 flavor: Optional[pulumi.Input[builtins.str]] = None,
                  name: Optional[pulumi.Input[builtins.str]] = None):
         """
         The set of arguments for constructing a Git resource.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the git instance is associated.
+        :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] acls: Restricted ACL for instance access.
+        :param pulumi.Input[builtins.str] flavor: Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
         :param pulumi.Input[builtins.str] name: Unique name linked to the git instance.
         """
         pulumi.set(__self__, "project_id", project_id)
+        if acls is not None:
+            pulumi.set(__self__, "acls", acls)
+        if flavor is not None:
+            pulumi.set(__self__, "flavor", flavor)
         if name is not None:
             pulumi.set(__self__, "name", name)
 
@@ -45,6 +53,30 @@ class GitArgs:
 
     @property
     @pulumi.getter
+    def acls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]:
+        """
+        Restricted ACL for instance access.
+        """
+        return pulumi.get(self, "acls")
+
+    @acls.setter
+    def acls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]):
+        pulumi.set(self, "acls", value)
+
+    @property
+    @pulumi.getter
+    def flavor(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
+        """
+        return pulumi.get(self, "flavor")
+
+    @flavor.setter
+    def flavor(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "flavor", value)
+
+    @property
+    @pulumi.getter
     def name(self) -> Optional[pulumi.Input[builtins.str]]:
         """
         Unique name linked to the git instance.
@@ -59,6 +91,11 @@ class GitArgs:
 @pulumi.input_type
 class _GitState:
     def __init__(__self__, *,
+                 acls: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
+                 consumed_disk: Optional[pulumi.Input[builtins.str]] = None,
+                 consumed_object_storage: Optional[pulumi.Input[builtins.str]] = None,
+                 created: Optional[pulumi.Input[builtins.str]] = None,
+                 flavor: Optional[pulumi.Input[builtins.str]] = None,
                  instance_id: Optional[pulumi.Input[builtins.str]] = None,
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
@@ -66,12 +103,27 @@ class _GitState:
                  version: Optional[pulumi.Input[builtins.str]] = None):
         """
         Input properties used for looking up and filtering Git resources.
+        :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] acls: Restricted ACL for instance access.
+        :param pulumi.Input[builtins.str] consumed_disk: How many bytes of disk space is consumed.
+        :param pulumi.Input[builtins.str] consumed_object_storage: How many bytes of Object Storage is consumed.
+        :param pulumi.Input[builtins.str] created: Instance creation timestamp in RFC3339 format.
+        :param pulumi.Input[builtins.str] flavor: Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
         :param pulumi.Input[builtins.str] instance_id: ID linked to the git instance.
         :param pulumi.Input[builtins.str] name: Unique name linked to the git instance.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the git instance is associated.
         :param pulumi.Input[builtins.str] url: Url linked to the git instance.
         :param pulumi.Input[builtins.str] version: Version linked to the git instance.
         """
+        if acls is not None:
+            pulumi.set(__self__, "acls", acls)
+        if consumed_disk is not None:
+            pulumi.set(__self__, "consumed_disk", consumed_disk)
+        if consumed_object_storage is not None:
+            pulumi.set(__self__, "consumed_object_storage", consumed_object_storage)
+        if created is not None:
+            pulumi.set(__self__, "created", created)
+        if flavor is not None:
+            pulumi.set(__self__, "flavor", flavor)
         if instance_id is not None:
             pulumi.set(__self__, "instance_id", instance_id)
         if name is not None:
@@ -82,6 +134,66 @@ class _GitState:
             pulumi.set(__self__, "url", url)
         if version is not None:
             pulumi.set(__self__, "version", version)
+
+    @property
+    @pulumi.getter
+    def acls(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]:
+        """
+        Restricted ACL for instance access.
+        """
+        return pulumi.get(self, "acls")
+
+    @acls.setter
+    def acls(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]]):
+        pulumi.set(self, "acls", value)
+
+    @property
+    @pulumi.getter(name="consumedDisk")
+    def consumed_disk(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        How many bytes of disk space is consumed.
+        """
+        return pulumi.get(self, "consumed_disk")
+
+    @consumed_disk.setter
+    def consumed_disk(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "consumed_disk", value)
+
+    @property
+    @pulumi.getter(name="consumedObjectStorage")
+    def consumed_object_storage(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        How many bytes of Object Storage is consumed.
+        """
+        return pulumi.get(self, "consumed_object_storage")
+
+    @consumed_object_storage.setter
+    def consumed_object_storage(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "consumed_object_storage", value)
+
+    @property
+    @pulumi.getter
+    def created(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        Instance creation timestamp in RFC3339 format.
+        """
+        return pulumi.get(self, "created")
+
+    @created.setter
+    def created(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "created", value)
+
+    @property
+    @pulumi.getter
+    def flavor(self) -> Optional[pulumi.Input[builtins.str]]:
+        """
+        Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
+        """
+        return pulumi.get(self, "flavor")
+
+    @flavor.setter
+    def flavor(self, value: Optional[pulumi.Input[builtins.str]]):
+        pulumi.set(self, "flavor", value)
 
     @property
     @pulumi.getter(name="instanceId")
@@ -150,18 +262,22 @@ class Git(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 acls: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
+                 flavor: Optional[pulumi.Input[builtins.str]] = None,
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
                  __props__=None):
         """
         Git Instance resource schema.
 
-        > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+        > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources. This resource currently does not support updates. Changing the ACLs, flavor, or name will trigger resource recreation. Update functionality will be added soon. In the meantime, please proceed with caution. To update these attributes, please open a support ticket.
 
         ## Example Usage
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] acls: Restricted ACL for instance access.
+        :param pulumi.Input[builtins.str] flavor: Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
         :param pulumi.Input[builtins.str] name: Unique name linked to the git instance.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the git instance is associated.
         """
@@ -174,7 +290,7 @@ class Git(pulumi.CustomResource):
         """
         Git Instance resource schema.
 
-        > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+        > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources. This resource currently does not support updates. Changing the ACLs, flavor, or name will trigger resource recreation. Update functionality will be added soon. In the meantime, please proceed with caution. To update these attributes, please open a support ticket.
 
         ## Example Usage
 
@@ -193,6 +309,8 @@ class Git(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 acls: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
+                 flavor: Optional[pulumi.Input[builtins.str]] = None,
                  name: Optional[pulumi.Input[builtins.str]] = None,
                  project_id: Optional[pulumi.Input[builtins.str]] = None,
                  __props__=None):
@@ -204,10 +322,15 @@ class Git(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = GitArgs.__new__(GitArgs)
 
+            __props__.__dict__["acls"] = acls
+            __props__.__dict__["flavor"] = flavor
             __props__.__dict__["name"] = name
             if project_id is None and not opts.urn:
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
+            __props__.__dict__["consumed_disk"] = None
+            __props__.__dict__["consumed_object_storage"] = None
+            __props__.__dict__["created"] = None
             __props__.__dict__["instance_id"] = None
             __props__.__dict__["url"] = None
             __props__.__dict__["version"] = None
@@ -221,6 +344,11 @@ class Git(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
+            acls: Optional[pulumi.Input[Sequence[pulumi.Input[builtins.str]]]] = None,
+            consumed_disk: Optional[pulumi.Input[builtins.str]] = None,
+            consumed_object_storage: Optional[pulumi.Input[builtins.str]] = None,
+            created: Optional[pulumi.Input[builtins.str]] = None,
+            flavor: Optional[pulumi.Input[builtins.str]] = None,
             instance_id: Optional[pulumi.Input[builtins.str]] = None,
             name: Optional[pulumi.Input[builtins.str]] = None,
             project_id: Optional[pulumi.Input[builtins.str]] = None,
@@ -233,6 +361,11 @@ class Git(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Sequence[pulumi.Input[builtins.str]]] acls: Restricted ACL for instance access.
+        :param pulumi.Input[builtins.str] consumed_disk: How many bytes of disk space is consumed.
+        :param pulumi.Input[builtins.str] consumed_object_storage: How many bytes of Object Storage is consumed.
+        :param pulumi.Input[builtins.str] created: Instance creation timestamp in RFC3339 format.
+        :param pulumi.Input[builtins.str] flavor: Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
         :param pulumi.Input[builtins.str] instance_id: ID linked to the git instance.
         :param pulumi.Input[builtins.str] name: Unique name linked to the git instance.
         :param pulumi.Input[builtins.str] project_id: STACKIT project ID to which the git instance is associated.
@@ -243,12 +376,57 @@ class Git(pulumi.CustomResource):
 
         __props__ = _GitState.__new__(_GitState)
 
+        __props__.__dict__["acls"] = acls
+        __props__.__dict__["consumed_disk"] = consumed_disk
+        __props__.__dict__["consumed_object_storage"] = consumed_object_storage
+        __props__.__dict__["created"] = created
+        __props__.__dict__["flavor"] = flavor
         __props__.__dict__["instance_id"] = instance_id
         __props__.__dict__["name"] = name
         __props__.__dict__["project_id"] = project_id
         __props__.__dict__["url"] = url
         __props__.__dict__["version"] = version
         return Git(resource_name, opts=opts, __props__=__props__)
+
+    @property
+    @pulumi.getter
+    def acls(self) -> pulumi.Output[Sequence[builtins.str]]:
+        """
+        Restricted ACL for instance access.
+        """
+        return pulumi.get(self, "acls")
+
+    @property
+    @pulumi.getter(name="consumedDisk")
+    def consumed_disk(self) -> pulumi.Output[builtins.str]:
+        """
+        How many bytes of disk space is consumed.
+        """
+        return pulumi.get(self, "consumed_disk")
+
+    @property
+    @pulumi.getter(name="consumedObjectStorage")
+    def consumed_object_storage(self) -> pulumi.Output[builtins.str]:
+        """
+        How many bytes of Object Storage is consumed.
+        """
+        return pulumi.get(self, "consumed_object_storage")
+
+    @property
+    @pulumi.getter
+    def created(self) -> pulumi.Output[builtins.str]:
+        """
+        Instance creation timestamp in RFC3339 format.
+        """
+        return pulumi.get(self, "created")
+
+    @property
+    @pulumi.getter
+    def flavor(self) -> pulumi.Output[builtins.str]:
+        """
+        Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
+        """
+        return pulumi.get(self, "flavor")
 
     @property
     @pulumi.getter(name="instanceId")

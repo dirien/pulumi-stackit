@@ -7,7 +7,7 @@ import * as utilities from "./utilities";
 /**
  * CDN distribution data source schema.
  *
- * > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+ * > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
  *
  * ## Example Usage
  */
@@ -61,7 +61,7 @@ export interface GetCdnCustomDomainResult {
 /**
  * CDN distribution data source schema.
  *
- * > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+ * > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
  *
  * ## Example Usage
  */

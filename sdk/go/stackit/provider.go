@@ -18,10 +18,6 @@ import (
 type Provider struct {
 	pulumi.ProviderResourceState
 
-	// Custom endpoint for the Argus service
-	//
-	// Deprecated: Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observabilityCustomEndpoint` and `observability` resources instead, which offer the exact same functionality.
-	ArgusCustomEndpoint pulumi.StringPtrOutput `pulumi:"argusCustomEndpoint"`
 	// Custom endpoint for the Membership service
 	AuthorizationCustomEndpoint pulumi.StringPtrOutput `pulumi:"authorizationCustomEndpoint"`
 	// Custom endpoint for the CDN service
@@ -118,10 +114,6 @@ func NewProvider(ctx *pulumi.Context,
 }
 
 type providerArgs struct {
-	// Custom endpoint for the Argus service
-	//
-	// Deprecated: Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observabilityCustomEndpoint` and `observability` resources instead, which offer the exact same functionality.
-	ArgusCustomEndpoint *string `pulumi:"argusCustomEndpoint"`
 	// Custom endpoint for the Membership service
 	AuthorizationCustomEndpoint *string `pulumi:"authorizationCustomEndpoint"`
 	// Custom endpoint for the CDN service
@@ -136,7 +128,7 @@ type providerArgs struct {
 	// Enable beta resources. Default is false.
 	EnableBetaResources *bool `pulumi:"enableBetaResources"`
 	// Enables experiments. These are unstable features without official support. More information can be found in the README.
-	// Available Experiments: [iam]
+	// Available Experiments: iam, routing-tables, network
 	Experiments []string `pulumi:"experiments"`
 	// Custom endpoint for the Git service
 	GitCustomEndpoint *string `pulumi:"gitCustomEndpoint"`
@@ -208,10 +200,6 @@ type providerArgs struct {
 
 // The set of arguments for constructing a Provider resource.
 type ProviderArgs struct {
-	// Custom endpoint for the Argus service
-	//
-	// Deprecated: Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observabilityCustomEndpoint` and `observability` resources instead, which offer the exact same functionality.
-	ArgusCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the Membership service
 	AuthorizationCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the CDN service
@@ -226,7 +214,7 @@ type ProviderArgs struct {
 	// Enable beta resources. Default is false.
 	EnableBetaResources pulumi.BoolPtrInput
 	// Enables experiments. These are unstable features without official support. More information can be found in the README.
-	// Available Experiments: [iam]
+	// Available Experiments: iam, routing-tables, network
 	Experiments pulumi.StringArrayInput
 	// Custom endpoint for the Git service
 	GitCustomEndpoint pulumi.StringPtrInput
@@ -354,13 +342,6 @@ func (o ProviderOutput) ToProviderOutput() ProviderOutput {
 
 func (o ProviderOutput) ToProviderOutputWithContext(ctx context.Context) ProviderOutput {
 	return o
-}
-
-// Custom endpoint for the Argus service
-//
-// Deprecated: Argus service has been deprecated and integration will be removed after February 26th 2025. Please use `observabilityCustomEndpoint` and `observability` resources instead, which offer the exact same functionality.
-func (o ProviderOutput) ArgusCustomEndpoint() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ArgusCustomEndpoint }).(pulumi.StringPtrOutput)
 }
 
 // Custom endpoint for the Membership service

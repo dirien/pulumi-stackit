@@ -7,7 +7,7 @@ import * as utilities from "./utilities";
 /**
  * Git Instance resource schema.
  *
- * > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+ * > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources. This resource currently does not support updates. Changing the ACLs, flavor, or name will trigger resource recreation. Update functionality will be added soon. In the meantime, please proceed with caution. To update these attributes, please open a support ticket.
  *
  * ## Example Usage
  */
@@ -39,6 +39,26 @@ export class Git extends pulumi.CustomResource {
         return obj['__pulumiType'] === Git.__pulumiType;
     }
 
+    /**
+     * Restricted ACL for instance access.
+     */
+    public readonly acls!: pulumi.Output<string[]>;
+    /**
+     * How many bytes of disk space is consumed.
+     */
+    public /*out*/ readonly consumedDisk!: pulumi.Output<string>;
+    /**
+     * How many bytes of Object Storage is consumed.
+     */
+    public /*out*/ readonly consumedObjectStorage!: pulumi.Output<string>;
+    /**
+     * Instance creation timestamp in RFC3339 format.
+     */
+    public /*out*/ readonly created!: pulumi.Output<string>;
+    /**
+     * Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
+     */
+    public readonly flavor!: pulumi.Output<string>;
     /**
      * ID linked to the git instance.
      */
@@ -73,6 +93,11 @@ export class Git extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as GitState | undefined;
+            resourceInputs["acls"] = state ? state.acls : undefined;
+            resourceInputs["consumedDisk"] = state ? state.consumedDisk : undefined;
+            resourceInputs["consumedObjectStorage"] = state ? state.consumedObjectStorage : undefined;
+            resourceInputs["created"] = state ? state.created : undefined;
+            resourceInputs["flavor"] = state ? state.flavor : undefined;
             resourceInputs["instanceId"] = state ? state.instanceId : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["projectId"] = state ? state.projectId : undefined;
@@ -83,8 +108,13 @@ export class Git extends pulumi.CustomResource {
             if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
+            resourceInputs["acls"] = args ? args.acls : undefined;
+            resourceInputs["flavor"] = args ? args.flavor : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["projectId"] = args ? args.projectId : undefined;
+            resourceInputs["consumedDisk"] = undefined /*out*/;
+            resourceInputs["consumedObjectStorage"] = undefined /*out*/;
+            resourceInputs["created"] = undefined /*out*/;
             resourceInputs["instanceId"] = undefined /*out*/;
             resourceInputs["url"] = undefined /*out*/;
             resourceInputs["version"] = undefined /*out*/;
@@ -98,6 +128,26 @@ export class Git extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Git resources.
  */
 export interface GitState {
+    /**
+     * Restricted ACL for instance access.
+     */
+    acls?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * How many bytes of disk space is consumed.
+     */
+    consumedDisk?: pulumi.Input<string>;
+    /**
+     * How many bytes of Object Storage is consumed.
+     */
+    consumedObjectStorage?: pulumi.Input<string>;
+    /**
+     * Instance creation timestamp in RFC3339 format.
+     */
+    created?: pulumi.Input<string>;
+    /**
+     * Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
+     */
+    flavor?: pulumi.Input<string>;
     /**
      * ID linked to the git instance.
      */
@@ -124,6 +174,14 @@ export interface GitState {
  * The set of arguments for constructing a Git resource.
  */
 export interface GitArgs {
+    /**
+     * Restricted ACL for instance access.
+     */
+    acls?: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
+     */
+    flavor?: pulumi.Input<string>;
     /**
      * Unique name linked to the git instance.
      */
