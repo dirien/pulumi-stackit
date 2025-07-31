@@ -46,12 +46,12 @@ prepare::
 		find ./ ! -path './.git/*' -type f -exec sed -i '' 's/[x]yz/${NAME}/g' {} \; &> /dev/null; \
 	fi
 
-.PHONY: development provider build_sdks build_nodejs build_dotnet build_go build_python cleanup
+.PHONY: development provider generate_sdks build_nodejs build_dotnet build_go build_python cleanup
 
-development:: install_plugins provider lint_provider build_sdks install_sdks cleanup # Build the provider & SDKs for a development environment
+development:: install_plugins provider lint_provider generate_sdks install_sdks cleanup # Build the provider & SDKs for a development environment
 
 # Required for the codegen action that runs in pulumi/pulumi and pulumi/pulumi-terraform-bridge
-build:: install_plugins provider build_sdks install_sdks
+build:: install_plugins provider generate_sdks install_sdks
 only_build:: build
 
 tfgen:: install_plugins
