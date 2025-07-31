@@ -1,12 +1,12 @@
 module stackit-go
 
-go 1.23.0
+go 1.23.11
 
-toolchain go1.24.2
+toolchain go1.24.5
 
 require (
 	github.com/dirien/pulumi-stackit/sdk v0.1.0
-	github.com/pulumi/pulumi/sdk/v3 v3.181.0
+	github.com/pulumi/pulumi/sdk/v3 v3.186.0
 )
 
 replace github.com/dirien/pulumi-stackit/sdk => ../../sdk
