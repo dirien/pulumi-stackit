@@ -12,7 +12,7 @@ replace (
 require (
 	github.com/pulumi/pulumi-terraform-bridge/pf v0.49.0
 	github.com/pulumi/pulumi-terraform-bridge/v3 v3.111.0
-	github.com/pulumi/pulumi/sdk/v3 v3.185.0
+	github.com/pulumi/pulumi/sdk/v3 v3.187.0
 	github.com/stackitcloud/terraform-provider-stackit/shim v0.0.0
 )
 
