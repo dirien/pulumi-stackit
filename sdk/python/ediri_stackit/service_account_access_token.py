@@ -251,6 +251,9 @@ class ServiceAccountAccessToken(pulumi.CustomResource):
                  __props__=None):
         """
         Service account access token schema.
+
+        !> This resource is scheduled for deprecation and will be removed on December 17, 2025. To ensure a smooth transition, please refer to our migration guide at https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html for detailed instructions and recommendations.
+
         ## Example Usage
 
         ### Automatically rotate access tokens
@@ -270,6 +273,9 @@ class ServiceAccountAccessToken(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Service account access token schema.
+
+        !> This resource is scheduled for deprecation and will be removed on December 17, 2025. To ensure a smooth transition, please refer to our migration guide at https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html for detailed instructions and recommendations.
+
         ## Example Usage
 
         ### Automatically rotate access tokens
