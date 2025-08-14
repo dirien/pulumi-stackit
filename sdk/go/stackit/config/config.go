@@ -177,6 +177,8 @@ func GetServiceAccountKeyPath(ctx *pulumi.Context) string {
 }
 
 // Token used for authentication. If set, the token flow will be used to authenticate all operations.
+//
+// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html
 func GetServiceAccountToken(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:serviceAccountToken")
 }
