@@ -156,6 +156,8 @@ class KeyPair(pulumi.CustomResource):
         """
         Key pair resource schema. Must have a `region` specified in the provider configuration. Allows uploading an SSH public key to be used for server authentication.
 
+        ## Example Usage
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container.
@@ -170,6 +172,8 @@ class KeyPair(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Key pair resource schema. Must have a `region` specified in the provider configuration. Allows uploading an SSH public key to be used for server authentication.
+
+        ## Example Usage
 
         :param str resource_name: The name of the resource.
         :param KeyPairArgs args: The arguments to use to populate this resource's properties.

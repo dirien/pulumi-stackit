@@ -60,7 +60,7 @@ require (
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/golang-jwt/jwt/v5 v5.2.2 // indirect
+	github.com/golang-jwt/jwt/v5 v5.3.0 // indirect
 	github.com/golang/glog v1.2.4 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
@@ -85,7 +85,7 @@ require (
 	github.com/hashicorp/hcl/v2 v2.23.0 // indirect
 	github.com/hashicorp/hil v0.0.0-20190212132231-97b3a9cdfa93 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
-	github.com/hashicorp/terraform-plugin-framework v1.15.0 // indirect
+	github.com/hashicorp/terraform-plugin-framework v1.15.1 // indirect
 	github.com/hashicorp/terraform-plugin-framework-validators v0.18.0 // indirect
 	github.com/hashicorp/terraform-plugin-go v0.28.0 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
@@ -156,33 +156,33 @@ require (
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/cobra v1.9.1 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
-	github.com/stackitcloud/stackit-sdk-go/core v0.17.2 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/authorization v0.8.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/cdn v1.3.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/dns v0.17.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/git v0.6.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/iaas v0.26.0 // indirect
+	github.com/stackitcloud/stackit-sdk-go/core v0.17.3 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/authorization v0.8.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/cdn v1.4.0 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/dns v0.17.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/git v0.7.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/iaas v0.29.0 // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/iaasalpha v0.1.21-alpha // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/loadbalancer v1.4.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/logme v0.25.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/mariadb v0.25.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/modelserving v0.5.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/mongodbflex v1.4.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/objectstorage v1.3.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/observability v0.8.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/opensearch v0.24.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/postgresflex v1.2.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/rabbitmq v0.25.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/redis v0.25.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/resourcemanager v0.17.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/secretsmanager v0.13.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/serverbackup v1.3.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/serverupdate v1.2.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/serviceaccount v0.9.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/serviceenablement v1.2.1 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/ske v1.0.0 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/sqlserverflex v1.3.0 // indirect
-	github.com/stackitcloud/terraform-provider-stackit v0.58.2 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/loadbalancer v1.5.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/logme v0.25.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/mariadb v0.25.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/modelserving v0.5.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/mongodbflex v1.5.2 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/objectstorage v1.3.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/observability v0.10.0 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/opensearch v0.24.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/postgresflex v1.2.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/rabbitmq v0.25.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/redis v0.25.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/resourcemanager v0.17.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/secretsmanager v0.13.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/serverbackup v1.3.2 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/serverupdate v1.2.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/serviceaccount v0.11.0 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/serviceenablement v1.2.2 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/ske v1.3.0 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/sqlserverflex v1.3.1 // indirect
+	github.com/stackitcloud/terraform-provider-stackit v0.60.0 // indirect
 	github.com/teambition/rrule-go v1.8.2 // indirect
 	github.com/teekennedy/goldmark-markdown v0.3.0 // indirect
 	github.com/texttheater/golang-levenshtein v1.0.1 // indirect
@@ -203,17 +203,17 @@ require (
 	go.opentelemetry.io/otel/metric v1.36.0 // indirect
 	go.opentelemetry.io/otel/trace v1.36.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
-	golang.org/x/crypto v0.40.0 // indirect
+	golang.org/x/crypto v0.41.0 // indirect
 	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56 // indirect
-	golang.org/x/mod v0.26.0 // indirect
-	golang.org/x/net v0.42.0 // indirect
+	golang.org/x/mod v0.27.0 // indirect
+	golang.org/x/net v0.43.0 // indirect
 	golang.org/x/oauth2 v0.30.0 // indirect
 	golang.org/x/sync v0.16.0 // indirect
-	golang.org/x/sys v0.34.0 // indirect
-	golang.org/x/term v0.33.0 // indirect
-	golang.org/x/text v0.27.0 // indirect
+	golang.org/x/sys v0.35.0 // indirect
+	golang.org/x/term v0.34.0 // indirect
+	golang.org/x/text v0.28.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
-	golang.org/x/tools v0.35.0 // indirect
+	golang.org/x/tools v0.36.0 // indirect
 	google.golang.org/api v0.169.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto v0.0.0-20240311173647-c811ad7063a7 // indirect

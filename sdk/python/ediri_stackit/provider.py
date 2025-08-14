@@ -169,6 +169,9 @@ class ProviderArgs:
         if service_account_key_path is not None:
             pulumi.set(__self__, "service_account_key_path", service_account_key_path)
         if service_account_token is not None:
+            warnings.warn("""Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html""", DeprecationWarning)
+            pulumi.log.warn("""service_account_token is deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html""")
+        if service_account_token is not None:
             pulumi.set(__self__, "service_account_token", service_account_token)
         if service_enablement_custom_endpoint is not None:
             pulumi.set(__self__, "service_enablement_custom_endpoint", service_enablement_custom_endpoint)
@@ -561,6 +564,7 @@ class ProviderArgs:
 
     @_builtins.property
     @pulumi.getter(name="serviceAccountToken")
+    @_utilities.deprecated("""Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html""")
     def service_account_token(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         Token used for authentication. If set, the token flow will be used to authenticate all operations.
@@ -1069,6 +1073,7 @@ class Provider(pulumi.ProviderResource):
 
     @_builtins.property
     @pulumi.getter(name="serviceAccountToken")
+    @_utilities.deprecated("""Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html""")
     def service_account_token(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
         Token used for authentication. If set, the token flow will be used to authenticate all operations.

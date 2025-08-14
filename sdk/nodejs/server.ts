@@ -22,6 +22,8 @@ import * as utilities from "./utilities";
  * ### Server with attached volume
  *
  * ### Server with user data (cloud-init)
+ *
+ * ### Additional Examples
  */
 export class Server extends pulumi.CustomResource {
     /**
