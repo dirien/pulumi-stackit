@@ -152,6 +152,8 @@ export class Provider extends pulumi.ProviderResource {
     public readonly serviceAccountKeyPath!: pulumi.Output<string | undefined>;
     /**
      * Token used for authentication. If set, the token flow will be used to authenticate all operations.
+     *
+     * @deprecated Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html
      */
     public readonly serviceAccountToken!: pulumi.Output<string | undefined>;
     /**
@@ -373,6 +375,8 @@ export interface ProviderArgs {
     serviceAccountKeyPath?: pulumi.Input<string>;
     /**
      * Token used for authentication. If set, the token flow will be used to authenticate all operations.
+     *
+     * @deprecated Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html
      */
     serviceAccountToken?: pulumi.Input<string>;
     /**

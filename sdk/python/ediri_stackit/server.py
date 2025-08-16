@@ -516,6 +516,8 @@ class Server(pulumi.CustomResource):
 
         ### Server with user data (cloud-init)
 
+        ### Additional Examples
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] affinity_group: The affinity group the server is assigned to.
@@ -553,6 +555,8 @@ class Server(pulumi.CustomResource):
         ### Server with attached volume
 
         ### Server with user data (cloud-init)
+
+        ### Additional Examples
 
         :param str resource_name: The name of the resource.
         :param ServerArgs args: The arguments to use to populate this resource's properties.
