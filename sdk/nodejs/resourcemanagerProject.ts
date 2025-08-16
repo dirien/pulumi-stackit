@@ -40,7 +40,10 @@ export class ResourcemanagerProject extends pulumi.CustomResource {
      */
     public /*out*/ readonly containerId!: pulumi.Output<string>;
     /**
-     * Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9*-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9*-]{1,64}. To add a project to a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required.
+     * Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
+     * [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
+     * project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
+     * changed after project creation.
      */
     public readonly labels!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
@@ -48,7 +51,8 @@ export class ResourcemanagerProject extends pulumi.CustomResource {
      */
     public readonly name!: pulumi.Output<string>;
     /**
-     * Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
+     * Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
+     * have no effect.
      */
     public readonly ownerEmail!: pulumi.Output<string>;
     /**
@@ -108,7 +112,10 @@ export interface ResourcemanagerProjectState {
      */
     containerId?: pulumi.Input<string>;
     /**
-     * Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9*-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9*-]{1,64}. To add a project to a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required.
+     * Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
+     * [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
+     * project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
+     * changed after project creation.
      */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
@@ -116,7 +123,8 @@ export interface ResourcemanagerProjectState {
      */
     name?: pulumi.Input<string>;
     /**
-     * Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
+     * Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
+     * have no effect.
      */
     ownerEmail?: pulumi.Input<string>;
     /**
@@ -134,7 +142,10 @@ export interface ResourcemanagerProjectState {
  */
 export interface ResourcemanagerProjectArgs {
     /**
-     * Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9*-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9*-]{1,64}. To add a project to a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required.
+     * Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
+     * [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
+     * project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
+     * changed after project creation.
      */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
@@ -142,7 +153,8 @@ export interface ResourcemanagerProjectArgs {
      */
     name?: pulumi.Input<string>;
     /**
-     * Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
+     * Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
+     * have no effect.
      */
     ownerEmail: pulumi.Input<string>;
     /**

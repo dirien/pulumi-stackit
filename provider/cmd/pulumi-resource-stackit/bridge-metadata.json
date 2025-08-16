@@ -631,6 +631,9 @@
                     }
                 }
             },
+            "stackit_iaas_project": {
+                "current": "stackit:index/getIaasProject:getIaasProject"
+            },
             "stackit_image": {
                 "current": "stackit:index/getImage:getImage"
             },

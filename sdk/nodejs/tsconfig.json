@@ -28,6 +28,7 @@
         "getDnsRecordSet.ts",
         "getDnsZone.ts",
         "getGit.ts",
+        "getIaasProject.ts",
         "getImage.ts",
         "getKeyPair.ts",
         "getLoadbalancer.ts",

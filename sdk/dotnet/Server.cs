@@ -26,6 +26,8 @@ namespace ediri.Stackit
     /// ### Server with attached volume
     /// 
     /// ### Server with user data (cloud-init)
+    /// 
+    /// ### Additional Examples
     /// </summary>
     [StackitResourceType("stackit:index/server:Server")]
     public partial class Server : global::Pulumi.CustomResource

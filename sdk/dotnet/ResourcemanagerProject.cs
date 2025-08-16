@@ -23,7 +23,10 @@ namespace ediri.Stackit
         public Output<string> ContainerId { get; private set; } = null!;
 
         /// <summary>
-        /// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9*-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9*-]{1,64}. To add a project to a STACKIT Network Area, setting the label `networkArea=&lt;networkAreaID&gt;` is required.
+        /// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
+        /// [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
+        /// project within a STACKIT Network Area, setting the label `networkArea=&lt;networkAreaID&gt;` is required. This can not be
+        /// changed after project creation.
         /// </summary>
         [Output("labels")]
         public Output<ImmutableDictionary<string, string>?> Labels { get; private set; } = null!;
@@ -35,7 +38,8 @@ namespace ediri.Stackit
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
+        /// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
+        /// have no effect.
         /// </summary>
         [Output("ownerEmail")]
         public Output<string> OwnerEmail { get; private set; } = null!;
@@ -103,7 +107,10 @@ namespace ediri.Stackit
         private InputMap<string>? _labels;
 
         /// <summary>
-        /// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9*-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9*-]{1,64}. To add a project to a STACKIT Network Area, setting the label `networkArea=&lt;networkAreaID&gt;` is required.
+        /// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
+        /// [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
+        /// project within a STACKIT Network Area, setting the label `networkArea=&lt;networkAreaID&gt;` is required. This can not be
+        /// changed after project creation.
         /// </summary>
         public InputMap<string> Labels
         {
@@ -118,7 +125,8 @@ namespace ediri.Stackit
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
+        /// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
+        /// have no effect.
         /// </summary>
         [Input("ownerEmail", required: true)]
         public Input<string> OwnerEmail { get; set; } = null!;
@@ -147,7 +155,10 @@ namespace ediri.Stackit
         private InputMap<string>? _labels;
 
         /// <summary>
-        /// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9*-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9*-]{1,64}. To add a project to a STACKIT Network Area, setting the label `networkArea=&lt;networkAreaID&gt;` is required.
+        /// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
+        /// [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
+        /// project within a STACKIT Network Area, setting the label `networkArea=&lt;networkAreaID&gt;` is required. This can not be
+        /// changed after project creation.
         /// </summary>
         public InputMap<string> Labels
         {
@@ -162,7 +173,8 @@ namespace ediri.Stackit
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
+        /// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
+        /// have no effect.
         /// </summary>
         [Input("ownerEmail")]
         public Input<string>? OwnerEmail { get; set; }

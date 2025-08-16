@@ -55,7 +55,7 @@ export class SqlserverflexUser extends pulumi.CustomResource {
     /**
      * Database access levels for the user. The values for the default roles are: `##STACKIT_DatabaseManager##`, `##STACKIT_LoginManager##`, `##STACKIT_ProcessManager##`, `##STACKIT_ServerManager##`, `##STACKIT_SQLAgentManager##`, `##STACKIT_SQLAgentUser##`
      */
-    public readonly roles!: pulumi.Output<string[] | undefined>;
+    public readonly roles!: pulumi.Output<string[]>;
     /**
      * User ID.
      */
@@ -94,6 +94,9 @@ export class SqlserverflexUser extends pulumi.CustomResource {
             }
             if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
+            }
+            if ((!args || args.roles === undefined) && !opts.urn) {
+                throw new Error("Missing required property 'roles'");
             }
             if ((!args || args.username === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'username'");
@@ -164,7 +167,7 @@ export interface SqlserverflexUserArgs {
     /**
      * Database access levels for the user. The values for the default roles are: `##STACKIT_DatabaseManager##`, `##STACKIT_LoginManager##`, `##STACKIT_ProcessManager##`, `##STACKIT_ServerManager##`, `##STACKIT_SQLAgentManager##`, `##STACKIT_SQLAgentUser##`
      */
-    roles?: pulumi.Input<pulumi.Input<string>[]>;
+    roles: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * Username of the SQLServer Flex instance.
      */
