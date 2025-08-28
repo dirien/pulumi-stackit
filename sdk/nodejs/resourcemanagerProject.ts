@@ -38,27 +38,31 @@ export class ResourcemanagerProject extends pulumi.CustomResource {
     /**
      * Project container ID. Globally unique, user-friendly identifier.
      */
-    public /*out*/ readonly containerId!: pulumi.Output<string>;
+    declare public /*out*/ readonly containerId: pulumi.Output<string>;
     /**
-     * Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9*-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9*-]{1,64}. To add a project to a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required.
+     * Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
+     * [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
+     * project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
+     * changed after project creation.
      */
-    public readonly labels!: pulumi.Output<{[key: string]: string} | undefined>;
+    declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * Project name.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
-     * Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
+     * Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
+     * have no effect.
      */
-    public readonly ownerEmail!: pulumi.Output<string>;
+    declare public readonly ownerEmail: pulumi.Output<string>;
     /**
      * Parent resource identifier. Both container ID (user-friendly) and UUID are supported
      */
-    public readonly parentContainerId!: pulumi.Output<string>;
+    declare public readonly parentContainerId: pulumi.Output<string>;
     /**
      * Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project.
      */
-    public /*out*/ readonly projectId!: pulumi.Output<string>;
+    declare public /*out*/ readonly projectId: pulumi.Output<string>;
 
     /**
      * Create a ResourcemanagerProject resource with the given unique name, arguments, and options.
@@ -73,24 +77,24 @@ export class ResourcemanagerProject extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as ResourcemanagerProjectState | undefined;
-            resourceInputs["containerId"] = state ? state.containerId : undefined;
-            resourceInputs["labels"] = state ? state.labels : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["ownerEmail"] = state ? state.ownerEmail : undefined;
-            resourceInputs["parentContainerId"] = state ? state.parentContainerId : undefined;
-            resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["containerId"] = state?.containerId;
+            resourceInputs["labels"] = state?.labels;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["ownerEmail"] = state?.ownerEmail;
+            resourceInputs["parentContainerId"] = state?.parentContainerId;
+            resourceInputs["projectId"] = state?.projectId;
         } else {
             const args = argsOrState as ResourcemanagerProjectArgs | undefined;
-            if ((!args || args.ownerEmail === undefined) && !opts.urn) {
+            if (args?.ownerEmail === undefined && !opts.urn) {
                 throw new Error("Missing required property 'ownerEmail'");
             }
-            if ((!args || args.parentContainerId === undefined) && !opts.urn) {
+            if (args?.parentContainerId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'parentContainerId'");
             }
-            resourceInputs["labels"] = args ? args.labels : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["ownerEmail"] = args ? args.ownerEmail : undefined;
-            resourceInputs["parentContainerId"] = args ? args.parentContainerId : undefined;
+            resourceInputs["labels"] = args?.labels;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["ownerEmail"] = args?.ownerEmail;
+            resourceInputs["parentContainerId"] = args?.parentContainerId;
             resourceInputs["containerId"] = undefined /*out*/;
             resourceInputs["projectId"] = undefined /*out*/;
         }
@@ -108,7 +112,10 @@ export interface ResourcemanagerProjectState {
      */
     containerId?: pulumi.Input<string>;
     /**
-     * Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9*-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9*-]{1,64}. To add a project to a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required.
+     * Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
+     * [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
+     * project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
+     * changed after project creation.
      */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
@@ -116,7 +123,8 @@ export interface ResourcemanagerProjectState {
      */
     name?: pulumi.Input<string>;
     /**
-     * Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
+     * Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
+     * have no effect.
      */
     ownerEmail?: pulumi.Input<string>;
     /**
@@ -134,7 +142,10 @@ export interface ResourcemanagerProjectState {
  */
 export interface ResourcemanagerProjectArgs {
     /**
-     * Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9*-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9*-]{1,64}. To add a project to a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required.
+     * Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
+     * [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
+     * project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
+     * changed after project creation.
      */
     labels?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
@@ -142,7 +153,8 @@ export interface ResourcemanagerProjectArgs {
      */
     name?: pulumi.Input<string>;
     /**
-     * Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
+     * Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
+     * have no effect.
      */
     ownerEmail: pulumi.Input<string>;
     /**
