@@ -70,6 +70,11 @@ export const getGit: typeof import("./getGit").getGit = null as any;
 export const getGitOutput: typeof import("./getGit").getGitOutput = null as any;
 utilities.lazyLoad(exports, ["getGit","getGitOutput"], () => require("./getGit"));
 
+export { GetIaasProjectArgs, GetIaasProjectResult, GetIaasProjectOutputArgs } from "./getIaasProject";
+export const getIaasProject: typeof import("./getIaasProject").getIaasProject = null as any;
+export const getIaasProjectOutput: typeof import("./getIaasProject").getIaasProjectOutput = null as any;
+utilities.lazyLoad(exports, ["getIaasProject","getIaasProjectOutput"], () => require("./getIaasProject"));
+
 export { GetImageArgs, GetImageResult, GetImageOutputArgs } from "./getImage";
 export const getImage: typeof import("./getImage").getImage = null as any;
 export const getImageOutput: typeof import("./getImage").getImageOutput = null as any;

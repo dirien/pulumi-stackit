@@ -19,6 +19,7 @@ from .get_cdn_distribution import *
 from .get_dns_record_set import *
 from .get_dns_zone import *
 from .get_git import *
+from .get_iaas_project import *
 from .get_image import *
 from .get_key_pair import *
 from .get_loadbalancer import *

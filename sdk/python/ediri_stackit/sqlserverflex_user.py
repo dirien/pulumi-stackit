@@ -21,23 +21,22 @@ class SqlserverflexUserArgs:
     def __init__(__self__, *,
                  instance_id: pulumi.Input[_builtins.str],
                  project_id: pulumi.Input[_builtins.str],
+                 roles: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]],
                  username: pulumi.Input[_builtins.str],
-                 region: Optional[pulumi.Input[_builtins.str]] = None,
-                 roles: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
+                 region: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a SqlserverflexUser resource.
         :param pulumi.Input[_builtins.str] instance_id: ID of the SQLServer Flex instance.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
-        :param pulumi.Input[_builtins.str] username: Username of the SQLServer Flex instance.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] roles: Database access levels for the user. The values for the default roles are: `##STACKIT_DatabaseManager##`, `##STACKIT_LoginManager##`, `##STACKIT_ProcessManager##`, `##STACKIT_ServerManager##`, `##STACKIT_SQLAgentManager##`, `##STACKIT_SQLAgentUser##`
+        :param pulumi.Input[_builtins.str] username: Username of the SQLServer Flex instance.
         """
         pulumi.set(__self__, "instance_id", instance_id)
         pulumi.set(__self__, "project_id", project_id)
+        pulumi.set(__self__, "roles", roles)
         pulumi.set(__self__, "username", username)
         if region is not None:
             pulumi.set(__self__, "region", region)
-        if roles is not None:
-            pulumi.set(__self__, "roles", roles)
 
     @_builtins.property
     @pulumi.getter(name="instanceId")
@@ -65,6 +64,18 @@ class SqlserverflexUserArgs:
 
     @_builtins.property
     @pulumi.getter
+    def roles(self) -> pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]:
+        """
+        Database access levels for the user. The values for the default roles are: `##STACKIT_DatabaseManager##`, `##STACKIT_LoginManager##`, `##STACKIT_ProcessManager##`, `##STACKIT_ServerManager##`, `##STACKIT_SQLAgentManager##`, `##STACKIT_SQLAgentUser##`
+        """
+        return pulumi.get(self, "roles")
+
+    @roles.setter
+    def roles(self, value: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]):
+        pulumi.set(self, "roles", value)
+
+    @_builtins.property
+    @pulumi.getter
     def username(self) -> pulumi.Input[_builtins.str]:
         """
         Username of the SQLServer Flex instance.
@@ -83,18 +94,6 @@ class SqlserverflexUserArgs:
     @region.setter
     def region(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "region", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def roles(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
-        """
-        Database access levels for the user. The values for the default roles are: `##STACKIT_DatabaseManager##`, `##STACKIT_LoginManager##`, `##STACKIT_ProcessManager##`, `##STACKIT_ServerManager##`, `##STACKIT_SQLAgentManager##`, `##STACKIT_SQLAgentUser##`
-        """
-        return pulumi.get(self, "roles")
-
-    @roles.setter
-    def roles(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "roles", value)
 
 
 @pulumi.input_type
@@ -308,6 +307,8 @@ class SqlserverflexUser(pulumi.CustomResource):
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
             __props__.__dict__["region"] = region
+            if roles is None and not opts.urn:
+                raise TypeError("Missing required property 'roles'")
             __props__.__dict__["roles"] = roles
             if username is None and not opts.urn:
                 raise TypeError("Missing required property 'username'")
@@ -407,7 +408,7 @@ class SqlserverflexUser(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
-    def roles(self) -> pulumi.Output[Optional[Sequence[_builtins.str]]]:
+    def roles(self) -> pulumi.Output[Sequence[_builtins.str]]:
         """
         Database access levels for the user. The values for the default roles are: `##STACKIT_DatabaseManager##`, `##STACKIT_LoginManager##`, `##STACKIT_ProcessManager##`, `##STACKIT_ServerManager##`, `##STACKIT_SQLAgentManager##`, `##STACKIT_SQLAgentUser##`
         """
