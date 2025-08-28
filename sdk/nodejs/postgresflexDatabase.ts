@@ -40,27 +40,27 @@ export class PostgresflexDatabase extends pulumi.CustomResource {
     /**
      * Database ID.
      */
-    declare public /*out*/ readonly databaseId: pulumi.Output<string>;
+    public /*out*/ readonly databaseId!: pulumi.Output<string>;
     /**
      * ID of the Postgres Flex instance.
      */
-    declare public readonly instanceId: pulumi.Output<string>;
+    public readonly instanceId!: pulumi.Output<string>;
     /**
      * Database name.
      */
-    declare public readonly name: pulumi.Output<string>;
+    public readonly name!: pulumi.Output<string>;
     /**
      * Username of the database owner.
      */
-    declare public readonly owner: pulumi.Output<string>;
+    public readonly owner!: pulumi.Output<string>;
     /**
      * STACKIT project ID to which the instance is associated.
      */
-    declare public readonly projectId: pulumi.Output<string>;
+    public readonly projectId!: pulumi.Output<string>;
     /**
      * The resource region. If not defined, the provider region is used.
      */
-    declare public readonly region: pulumi.Output<string>;
+    public readonly region!: pulumi.Output<string>;
 
     /**
      * Create a PostgresflexDatabase resource with the given unique name, arguments, and options.
@@ -75,28 +75,28 @@ export class PostgresflexDatabase extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as PostgresflexDatabaseState | undefined;
-            resourceInputs["databaseId"] = state?.databaseId;
-            resourceInputs["instanceId"] = state?.instanceId;
-            resourceInputs["name"] = state?.name;
-            resourceInputs["owner"] = state?.owner;
-            resourceInputs["projectId"] = state?.projectId;
-            resourceInputs["region"] = state?.region;
+            resourceInputs["databaseId"] = state ? state.databaseId : undefined;
+            resourceInputs["instanceId"] = state ? state.instanceId : undefined;
+            resourceInputs["name"] = state ? state.name : undefined;
+            resourceInputs["owner"] = state ? state.owner : undefined;
+            resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["region"] = state ? state.region : undefined;
         } else {
             const args = argsOrState as PostgresflexDatabaseArgs | undefined;
-            if (args?.instanceId === undefined && !opts.urn) {
+            if ((!args || args.instanceId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'instanceId'");
             }
-            if (args?.owner === undefined && !opts.urn) {
+            if ((!args || args.owner === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'owner'");
             }
-            if (args?.projectId === undefined && !opts.urn) {
+            if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            resourceInputs["instanceId"] = args?.instanceId;
-            resourceInputs["name"] = args?.name;
-            resourceInputs["owner"] = args?.owner;
-            resourceInputs["projectId"] = args?.projectId;
-            resourceInputs["region"] = args?.region;
+            resourceInputs["instanceId"] = args ? args.instanceId : undefined;
+            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["owner"] = args ? args.owner : undefined;
+            resourceInputs["projectId"] = args ? args.projectId : undefined;
+            resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["databaseId"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);

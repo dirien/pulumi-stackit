@@ -42,43 +42,43 @@ export class Git extends pulumi.CustomResource {
     /**
      * Restricted ACL for instance access.
      */
-    declare public readonly acls: pulumi.Output<string[]>;
+    public readonly acls!: pulumi.Output<string[]>;
     /**
      * How many bytes of disk space is consumed.
      */
-    declare public /*out*/ readonly consumedDisk: pulumi.Output<string>;
+    public /*out*/ readonly consumedDisk!: pulumi.Output<string>;
     /**
      * How many bytes of Object Storage is consumed.
      */
-    declare public /*out*/ readonly consumedObjectStorage: pulumi.Output<string>;
+    public /*out*/ readonly consumedObjectStorage!: pulumi.Output<string>;
     /**
      * Instance creation timestamp in RFC3339 format.
      */
-    declare public /*out*/ readonly created: pulumi.Output<string>;
+    public /*out*/ readonly created!: pulumi.Output<string>;
     /**
      * Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
      */
-    declare public readonly flavor: pulumi.Output<string>;
+    public readonly flavor!: pulumi.Output<string>;
     /**
      * ID linked to the git instance.
      */
-    declare public /*out*/ readonly instanceId: pulumi.Output<string>;
+    public /*out*/ readonly instanceId!: pulumi.Output<string>;
     /**
      * Unique name linked to the git instance.
      */
-    declare public readonly name: pulumi.Output<string>;
+    public readonly name!: pulumi.Output<string>;
     /**
      * STACKIT project ID to which the git instance is associated.
      */
-    declare public readonly projectId: pulumi.Output<string>;
+    public readonly projectId!: pulumi.Output<string>;
     /**
      * Url linked to the git instance.
      */
-    declare public /*out*/ readonly url: pulumi.Output<string>;
+    public /*out*/ readonly url!: pulumi.Output<string>;
     /**
      * Version linked to the git instance.
      */
-    declare public /*out*/ readonly version: pulumi.Output<string>;
+    public /*out*/ readonly version!: pulumi.Output<string>;
 
     /**
      * Create a Git resource with the given unique name, arguments, and options.
@@ -93,25 +93,25 @@ export class Git extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as GitState | undefined;
-            resourceInputs["acls"] = state?.acls;
-            resourceInputs["consumedDisk"] = state?.consumedDisk;
-            resourceInputs["consumedObjectStorage"] = state?.consumedObjectStorage;
-            resourceInputs["created"] = state?.created;
-            resourceInputs["flavor"] = state?.flavor;
-            resourceInputs["instanceId"] = state?.instanceId;
-            resourceInputs["name"] = state?.name;
-            resourceInputs["projectId"] = state?.projectId;
-            resourceInputs["url"] = state?.url;
-            resourceInputs["version"] = state?.version;
+            resourceInputs["acls"] = state ? state.acls : undefined;
+            resourceInputs["consumedDisk"] = state ? state.consumedDisk : undefined;
+            resourceInputs["consumedObjectStorage"] = state ? state.consumedObjectStorage : undefined;
+            resourceInputs["created"] = state ? state.created : undefined;
+            resourceInputs["flavor"] = state ? state.flavor : undefined;
+            resourceInputs["instanceId"] = state ? state.instanceId : undefined;
+            resourceInputs["name"] = state ? state.name : undefined;
+            resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["url"] = state ? state.url : undefined;
+            resourceInputs["version"] = state ? state.version : undefined;
         } else {
             const args = argsOrState as GitArgs | undefined;
-            if (args?.projectId === undefined && !opts.urn) {
+            if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            resourceInputs["acls"] = args?.acls;
-            resourceInputs["flavor"] = args?.flavor;
-            resourceInputs["name"] = args?.name;
-            resourceInputs["projectId"] = args?.projectId;
+            resourceInputs["acls"] = args ? args.acls : undefined;
+            resourceInputs["flavor"] = args ? args.flavor : undefined;
+            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["projectId"] = args ? args.projectId : undefined;
             resourceInputs["consumedDisk"] = undefined /*out*/;
             resourceInputs["consumedObjectStorage"] = undefined /*out*/;
             resourceInputs["created"] = undefined /*out*/;

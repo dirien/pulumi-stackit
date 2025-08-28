@@ -40,19 +40,19 @@ export class ObservabilityCredential extends pulumi.CustomResource {
     /**
      * The Observability Instance ID the credential belongs to.
      */
-    declare public readonly instanceId: pulumi.Output<string>;
+    public readonly instanceId!: pulumi.Output<string>;
     /**
      * Credential password
      */
-    declare public /*out*/ readonly password: pulumi.Output<string>;
+    public /*out*/ readonly password!: pulumi.Output<string>;
     /**
      * STACKIT project ID to which the credential is associated.
      */
-    declare public readonly projectId: pulumi.Output<string>;
+    public readonly projectId!: pulumi.Output<string>;
     /**
      * Credential username
      */
-    declare public /*out*/ readonly username: pulumi.Output<string>;
+    public /*out*/ readonly username!: pulumi.Output<string>;
 
     /**
      * Create a ObservabilityCredential resource with the given unique name, arguments, and options.
@@ -67,20 +67,20 @@ export class ObservabilityCredential extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as ObservabilityCredentialState | undefined;
-            resourceInputs["instanceId"] = state?.instanceId;
-            resourceInputs["password"] = state?.password;
-            resourceInputs["projectId"] = state?.projectId;
-            resourceInputs["username"] = state?.username;
+            resourceInputs["instanceId"] = state ? state.instanceId : undefined;
+            resourceInputs["password"] = state ? state.password : undefined;
+            resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["username"] = state ? state.username : undefined;
         } else {
             const args = argsOrState as ObservabilityCredentialArgs | undefined;
-            if (args?.instanceId === undefined && !opts.urn) {
+            if ((!args || args.instanceId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'instanceId'");
             }
-            if (args?.projectId === undefined && !opts.urn) {
+            if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            resourceInputs["instanceId"] = args?.instanceId;
-            resourceInputs["projectId"] = args?.projectId;
+            resourceInputs["instanceId"] = args ? args.instanceId : undefined;
+            resourceInputs["projectId"] = args ? args.projectId : undefined;
             resourceInputs["password"] = undefined /*out*/;
             resourceInputs["username"] = undefined /*out*/;
         }

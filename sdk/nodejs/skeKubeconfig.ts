@@ -40,36 +40,36 @@ export class SkeKubeconfig extends pulumi.CustomResource {
     /**
      * Name of the SKE cluster.
      */
-    declare public readonly clusterName: pulumi.Output<string>;
+    public readonly clusterName!: pulumi.Output<string>;
     /**
      * Date-time when the kubeconfig was created
      */
-    declare public /*out*/ readonly creationTime: pulumi.Output<string>;
+    public /*out*/ readonly creationTime!: pulumi.Output<string>;
     /**
      * Expiration time of the kubeconfig, in seconds. Defaults to `3600`
      */
-    declare public readonly expiration: pulumi.Output<number>;
+    public readonly expiration!: pulumi.Output<number>;
     /**
      * Timestamp when the kubeconfig expires
      */
-    declare public /*out*/ readonly expiresAt: pulumi.Output<string>;
+    public /*out*/ readonly expiresAt!: pulumi.Output<string>;
     /**
      * Raw short-lived admin kubeconfig.
      */
-    declare public /*out*/ readonly kubeConfig: pulumi.Output<string>;
-    declare public /*out*/ readonly kubeConfigId: pulumi.Output<string>;
+    public /*out*/ readonly kubeConfig!: pulumi.Output<string>;
+    public /*out*/ readonly kubeConfigId!: pulumi.Output<string>;
     /**
      * STACKIT project ID to which the cluster is associated.
      */
-    declare public readonly projectId: pulumi.Output<string>;
+    public readonly projectId!: pulumi.Output<string>;
     /**
      * If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
      */
-    declare public readonly refresh: pulumi.Output<boolean | undefined>;
+    public readonly refresh!: pulumi.Output<boolean | undefined>;
     /**
      * The resource region. If not defined, the provider region is used.
      */
-    declare public readonly region: pulumi.Output<string>;
+    public readonly region!: pulumi.Output<string>;
 
     /**
      * Create a SkeKubeconfig resource with the given unique name, arguments, and options.
@@ -84,28 +84,28 @@ export class SkeKubeconfig extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as SkeKubeconfigState | undefined;
-            resourceInputs["clusterName"] = state?.clusterName;
-            resourceInputs["creationTime"] = state?.creationTime;
-            resourceInputs["expiration"] = state?.expiration;
-            resourceInputs["expiresAt"] = state?.expiresAt;
-            resourceInputs["kubeConfig"] = state?.kubeConfig;
-            resourceInputs["kubeConfigId"] = state?.kubeConfigId;
-            resourceInputs["projectId"] = state?.projectId;
-            resourceInputs["refresh"] = state?.refresh;
-            resourceInputs["region"] = state?.region;
+            resourceInputs["clusterName"] = state ? state.clusterName : undefined;
+            resourceInputs["creationTime"] = state ? state.creationTime : undefined;
+            resourceInputs["expiration"] = state ? state.expiration : undefined;
+            resourceInputs["expiresAt"] = state ? state.expiresAt : undefined;
+            resourceInputs["kubeConfig"] = state ? state.kubeConfig : undefined;
+            resourceInputs["kubeConfigId"] = state ? state.kubeConfigId : undefined;
+            resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["refresh"] = state ? state.refresh : undefined;
+            resourceInputs["region"] = state ? state.region : undefined;
         } else {
             const args = argsOrState as SkeKubeconfigArgs | undefined;
-            if (args?.clusterName === undefined && !opts.urn) {
+            if ((!args || args.clusterName === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'clusterName'");
             }
-            if (args?.projectId === undefined && !opts.urn) {
+            if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            resourceInputs["clusterName"] = args?.clusterName;
-            resourceInputs["expiration"] = args?.expiration;
-            resourceInputs["projectId"] = args?.projectId;
-            resourceInputs["refresh"] = args?.refresh;
-            resourceInputs["region"] = args?.region;
+            resourceInputs["clusterName"] = args ? args.clusterName : undefined;
+            resourceInputs["expiration"] = args ? args.expiration : undefined;
+            resourceInputs["projectId"] = args ? args.projectId : undefined;
+            resourceInputs["refresh"] = args ? args.refresh : undefined;
+            resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["creationTime"] = undefined /*out*/;
             resourceInputs["expiresAt"] = undefined /*out*/;
             resourceInputs["kubeConfig"] = undefined /*out*/;

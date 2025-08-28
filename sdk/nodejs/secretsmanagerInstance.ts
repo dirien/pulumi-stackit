@@ -40,19 +40,19 @@ export class SecretsmanagerInstance extends pulumi.CustomResource {
     /**
      * The access control list for this instance. Each entry is an IP or IP range that is permitted to access, in CIDR notation
      */
-    declare public readonly acls: pulumi.Output<string[] | undefined>;
+    public readonly acls!: pulumi.Output<string[] | undefined>;
     /**
      * ID of the Secrets Manager instance.
      */
-    declare public /*out*/ readonly instanceId: pulumi.Output<string>;
+    public /*out*/ readonly instanceId!: pulumi.Output<string>;
     /**
      * Instance name.
      */
-    declare public readonly name: pulumi.Output<string>;
+    public readonly name!: pulumi.Output<string>;
     /**
      * STACKIT project ID to which the instance is associated.
      */
-    declare public readonly projectId: pulumi.Output<string>;
+    public readonly projectId!: pulumi.Output<string>;
 
     /**
      * Create a SecretsmanagerInstance resource with the given unique name, arguments, and options.
@@ -67,18 +67,18 @@ export class SecretsmanagerInstance extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as SecretsmanagerInstanceState | undefined;
-            resourceInputs["acls"] = state?.acls;
-            resourceInputs["instanceId"] = state?.instanceId;
-            resourceInputs["name"] = state?.name;
-            resourceInputs["projectId"] = state?.projectId;
+            resourceInputs["acls"] = state ? state.acls : undefined;
+            resourceInputs["instanceId"] = state ? state.instanceId : undefined;
+            resourceInputs["name"] = state ? state.name : undefined;
+            resourceInputs["projectId"] = state ? state.projectId : undefined;
         } else {
             const args = argsOrState as SecretsmanagerInstanceArgs | undefined;
-            if (args?.projectId === undefined && !opts.urn) {
+            if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            resourceInputs["acls"] = args?.acls;
-            resourceInputs["name"] = args?.name;
-            resourceInputs["projectId"] = args?.projectId;
+            resourceInputs["acls"] = args ? args.acls : undefined;
+            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["projectId"] = args ? args.projectId : undefined;
             resourceInputs["instanceId"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);

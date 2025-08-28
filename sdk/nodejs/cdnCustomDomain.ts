@@ -42,20 +42,20 @@ export class CdnCustomDomain extends pulumi.CustomResource {
     /**
      * CDN distribution ID
      */
-    declare public readonly distributionId: pulumi.Output<string>;
+    public readonly distributionId!: pulumi.Output<string>;
     /**
      * List of distribution errors
      */
-    declare public /*out*/ readonly errors: pulumi.Output<string[]>;
-    declare public readonly name: pulumi.Output<string>;
+    public /*out*/ readonly errors!: pulumi.Output<string[]>;
+    public readonly name!: pulumi.Output<string>;
     /**
      * STACKIT project ID associated with the distribution
      */
-    declare public readonly projectId: pulumi.Output<string>;
+    public readonly projectId!: pulumi.Output<string>;
     /**
      * Status of the distribution
      */
-    declare public /*out*/ readonly status: pulumi.Output<string>;
+    public /*out*/ readonly status!: pulumi.Output<string>;
 
     /**
      * Create a CdnCustomDomain resource with the given unique name, arguments, and options.
@@ -70,22 +70,22 @@ export class CdnCustomDomain extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as CdnCustomDomainState | undefined;
-            resourceInputs["distributionId"] = state?.distributionId;
-            resourceInputs["errors"] = state?.errors;
-            resourceInputs["name"] = state?.name;
-            resourceInputs["projectId"] = state?.projectId;
-            resourceInputs["status"] = state?.status;
+            resourceInputs["distributionId"] = state ? state.distributionId : undefined;
+            resourceInputs["errors"] = state ? state.errors : undefined;
+            resourceInputs["name"] = state ? state.name : undefined;
+            resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["status"] = state ? state.status : undefined;
         } else {
             const args = argsOrState as CdnCustomDomainArgs | undefined;
-            if (args?.distributionId === undefined && !opts.urn) {
+            if ((!args || args.distributionId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'distributionId'");
             }
-            if (args?.projectId === undefined && !opts.urn) {
+            if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            resourceInputs["distributionId"] = args?.distributionId;
-            resourceInputs["name"] = args?.name;
-            resourceInputs["projectId"] = args?.projectId;
+            resourceInputs["distributionId"] = args ? args.distributionId : undefined;
+            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["projectId"] = args ? args.projectId : undefined;
             resourceInputs["errors"] = undefined /*out*/;
             resourceInputs["status"] = undefined /*out*/;
         }

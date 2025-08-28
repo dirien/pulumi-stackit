@@ -40,23 +40,23 @@ export class AffinityGroup extends pulumi.CustomResource {
     /**
      * The affinity group ID.
      */
-    declare public /*out*/ readonly affinityGroupId: pulumi.Output<string>;
+    public /*out*/ readonly affinityGroupId!: pulumi.Output<string>;
     /**
      * The servers that are part of the affinity group.
      */
-    declare public /*out*/ readonly members: pulumi.Output<string[]>;
+    public /*out*/ readonly members!: pulumi.Output<string[]>;
     /**
      * The name of the affinity group.
      */
-    declare public readonly name: pulumi.Output<string>;
+    public readonly name!: pulumi.Output<string>;
     /**
      * The policy of the affinity group.
      */
-    declare public readonly policy: pulumi.Output<string>;
+    public readonly policy!: pulumi.Output<string>;
     /**
      * STACKIT Project ID to which the affinity group is associated.
      */
-    declare public readonly projectId: pulumi.Output<string>;
+    public readonly projectId!: pulumi.Output<string>;
 
     /**
      * Create a AffinityGroup resource with the given unique name, arguments, and options.
@@ -71,22 +71,22 @@ export class AffinityGroup extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as AffinityGroupState | undefined;
-            resourceInputs["affinityGroupId"] = state?.affinityGroupId;
-            resourceInputs["members"] = state?.members;
-            resourceInputs["name"] = state?.name;
-            resourceInputs["policy"] = state?.policy;
-            resourceInputs["projectId"] = state?.projectId;
+            resourceInputs["affinityGroupId"] = state ? state.affinityGroupId : undefined;
+            resourceInputs["members"] = state ? state.members : undefined;
+            resourceInputs["name"] = state ? state.name : undefined;
+            resourceInputs["policy"] = state ? state.policy : undefined;
+            resourceInputs["projectId"] = state ? state.projectId : undefined;
         } else {
             const args = argsOrState as AffinityGroupArgs | undefined;
-            if (args?.policy === undefined && !opts.urn) {
+            if ((!args || args.policy === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'policy'");
             }
-            if (args?.projectId === undefined && !opts.urn) {
+            if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            resourceInputs["name"] = args?.name;
-            resourceInputs["policy"] = args?.policy;
-            resourceInputs["projectId"] = args?.projectId;
+            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["policy"] = args ? args.policy : undefined;
+            resourceInputs["projectId"] = args ? args.projectId : undefined;
             resourceInputs["affinityGroupId"] = undefined /*out*/;
             resourceInputs["members"] = undefined /*out*/;
         }
