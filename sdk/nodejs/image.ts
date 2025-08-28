@@ -42,51 +42,51 @@ export class Image extends pulumi.CustomResource {
     /**
      * Representation of an image checksum.
      */
-    declare public /*out*/ readonly checksum: pulumi.Output<outputs.ImageChecksum>;
+    public /*out*/ readonly checksum!: pulumi.Output<outputs.ImageChecksum>;
     /**
      * Properties to set hardware and scheduling settings for an image.
      */
-    declare public readonly config: pulumi.Output<outputs.ImageConfig>;
+    public readonly config!: pulumi.Output<outputs.ImageConfig>;
     /**
      * The disk format of the image.
      */
-    declare public readonly diskFormat: pulumi.Output<string>;
+    public readonly diskFormat!: pulumi.Output<string>;
     /**
      * The image ID.
      */
-    declare public /*out*/ readonly imageId: pulumi.Output<string>;
+    public /*out*/ readonly imageId!: pulumi.Output<string>;
     /**
      * Labels are key-value string pairs which can be attached to a resource container
      */
-    declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
+    public readonly labels!: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The filepath of the raw image file to be uploaded.
      */
-    declare public readonly localFilePath: pulumi.Output<string>;
+    public readonly localFilePath!: pulumi.Output<string>;
     /**
      * The minimum disk size of the image in GB.
      */
-    declare public readonly minDiskSize: pulumi.Output<number>;
+    public readonly minDiskSize!: pulumi.Output<number>;
     /**
      * The minimum RAM of the image in MB.
      */
-    declare public readonly minRam: pulumi.Output<number>;
+    public readonly minRam!: pulumi.Output<number>;
     /**
      * The name of the image.
      */
-    declare public readonly name: pulumi.Output<string>;
+    public readonly name!: pulumi.Output<string>;
     /**
      * STACKIT project ID to which the image is associated.
      */
-    declare public readonly projectId: pulumi.Output<string>;
+    public readonly projectId!: pulumi.Output<string>;
     /**
      * Whether the image is protected.
      */
-    declare public /*out*/ readonly protected: pulumi.Output<boolean>;
+    public /*out*/ readonly protected!: pulumi.Output<boolean>;
     /**
      * The scope of the image.
      */
-    declare public /*out*/ readonly scope: pulumi.Output<string>;
+    public /*out*/ readonly scope!: pulumi.Output<string>;
 
     /**
      * Create a Image resource with the given unique name, arguments, and options.
@@ -101,37 +101,37 @@ export class Image extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as ImageState | undefined;
-            resourceInputs["checksum"] = state?.checksum;
-            resourceInputs["config"] = state?.config;
-            resourceInputs["diskFormat"] = state?.diskFormat;
-            resourceInputs["imageId"] = state?.imageId;
-            resourceInputs["labels"] = state?.labels;
-            resourceInputs["localFilePath"] = state?.localFilePath;
-            resourceInputs["minDiskSize"] = state?.minDiskSize;
-            resourceInputs["minRam"] = state?.minRam;
-            resourceInputs["name"] = state?.name;
-            resourceInputs["projectId"] = state?.projectId;
-            resourceInputs["protected"] = state?.protected;
-            resourceInputs["scope"] = state?.scope;
+            resourceInputs["checksum"] = state ? state.checksum : undefined;
+            resourceInputs["config"] = state ? state.config : undefined;
+            resourceInputs["diskFormat"] = state ? state.diskFormat : undefined;
+            resourceInputs["imageId"] = state ? state.imageId : undefined;
+            resourceInputs["labels"] = state ? state.labels : undefined;
+            resourceInputs["localFilePath"] = state ? state.localFilePath : undefined;
+            resourceInputs["minDiskSize"] = state ? state.minDiskSize : undefined;
+            resourceInputs["minRam"] = state ? state.minRam : undefined;
+            resourceInputs["name"] = state ? state.name : undefined;
+            resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["protected"] = state ? state.protected : undefined;
+            resourceInputs["scope"] = state ? state.scope : undefined;
         } else {
             const args = argsOrState as ImageArgs | undefined;
-            if (args?.diskFormat === undefined && !opts.urn) {
+            if ((!args || args.diskFormat === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'diskFormat'");
             }
-            if (args?.localFilePath === undefined && !opts.urn) {
+            if ((!args || args.localFilePath === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'localFilePath'");
             }
-            if (args?.projectId === undefined && !opts.urn) {
+            if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            resourceInputs["config"] = args?.config;
-            resourceInputs["diskFormat"] = args?.diskFormat;
-            resourceInputs["labels"] = args?.labels;
-            resourceInputs["localFilePath"] = args?.localFilePath;
-            resourceInputs["minDiskSize"] = args?.minDiskSize;
-            resourceInputs["minRam"] = args?.minRam;
-            resourceInputs["name"] = args?.name;
-            resourceInputs["projectId"] = args?.projectId;
+            resourceInputs["config"] = args ? args.config : undefined;
+            resourceInputs["diskFormat"] = args ? args.diskFormat : undefined;
+            resourceInputs["labels"] = args ? args.labels : undefined;
+            resourceInputs["localFilePath"] = args ? args.localFilePath : undefined;
+            resourceInputs["minDiskSize"] = args ? args.minDiskSize : undefined;
+            resourceInputs["minRam"] = args ? args.minRam : undefined;
+            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["projectId"] = args ? args.projectId : undefined;
             resourceInputs["checksum"] = undefined /*out*/;
             resourceInputs["imageId"] = undefined /*out*/;
             resourceInputs["protected"] = undefined /*out*/;

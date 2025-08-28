@@ -43,19 +43,19 @@ export class PublicIpAssociate extends pulumi.CustomResource {
     /**
      * The IP address.
      */
-    declare public /*out*/ readonly ip: pulumi.Output<string>;
+    public /*out*/ readonly ip!: pulumi.Output<string>;
     /**
      * The ID of the network interface (or virtual IP) to which the public IP should be attached to.
      */
-    declare public readonly networkInterfaceId: pulumi.Output<string>;
+    public readonly networkInterfaceId!: pulumi.Output<string>;
     /**
      * STACKIT project ID to which the public IP is associated.
      */
-    declare public readonly projectId: pulumi.Output<string>;
+    public readonly projectId!: pulumi.Output<string>;
     /**
      * The public IP ID.
      */
-    declare public readonly publicIpId: pulumi.Output<string>;
+    public readonly publicIpId!: pulumi.Output<string>;
 
     /**
      * Create a PublicIpAssociate resource with the given unique name, arguments, and options.
@@ -70,24 +70,24 @@ export class PublicIpAssociate extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as PublicIpAssociateState | undefined;
-            resourceInputs["ip"] = state?.ip;
-            resourceInputs["networkInterfaceId"] = state?.networkInterfaceId;
-            resourceInputs["projectId"] = state?.projectId;
-            resourceInputs["publicIpId"] = state?.publicIpId;
+            resourceInputs["ip"] = state ? state.ip : undefined;
+            resourceInputs["networkInterfaceId"] = state ? state.networkInterfaceId : undefined;
+            resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["publicIpId"] = state ? state.publicIpId : undefined;
         } else {
             const args = argsOrState as PublicIpAssociateArgs | undefined;
-            if (args?.networkInterfaceId === undefined && !opts.urn) {
+            if ((!args || args.networkInterfaceId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'networkInterfaceId'");
             }
-            if (args?.projectId === undefined && !opts.urn) {
+            if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            if (args?.publicIpId === undefined && !opts.urn) {
+            if ((!args || args.publicIpId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'publicIpId'");
             }
-            resourceInputs["networkInterfaceId"] = args?.networkInterfaceId;
-            resourceInputs["projectId"] = args?.projectId;
-            resourceInputs["publicIpId"] = args?.publicIpId;
+            resourceInputs["networkInterfaceId"] = args ? args.networkInterfaceId : undefined;
+            resourceInputs["projectId"] = args ? args.projectId : undefined;
+            resourceInputs["publicIpId"] = args ? args.publicIpId : undefined;
             resourceInputs["ip"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);

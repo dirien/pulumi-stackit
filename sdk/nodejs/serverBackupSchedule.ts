@@ -44,35 +44,35 @@ export class ServerBackupSchedule extends pulumi.CustomResource {
     /**
      * Backup schedule details for the backups.
      */
-    declare public readonly backupProperties: pulumi.Output<outputs.ServerBackupScheduleBackupProperties>;
+    public readonly backupProperties!: pulumi.Output<outputs.ServerBackupScheduleBackupProperties>;
     /**
      * Backup schedule ID.
      */
-    declare public /*out*/ readonly backupScheduleId: pulumi.Output<number>;
+    public /*out*/ readonly backupScheduleId!: pulumi.Output<number>;
     /**
      * Is the backup schedule enabled or disabled.
      */
-    declare public readonly enabled: pulumi.Output<boolean>;
+    public readonly enabled!: pulumi.Output<boolean>;
     /**
      * The schedule name.
      */
-    declare public readonly name: pulumi.Output<string>;
+    public readonly name!: pulumi.Output<string>;
     /**
      * STACKIT Project ID to which the server is associated.
      */
-    declare public readonly projectId: pulumi.Output<string>;
+    public readonly projectId!: pulumi.Output<string>;
     /**
      * The resource region. If not defined, the provider region is used.
      */
-    declare public readonly region: pulumi.Output<string>;
+    public readonly region!: pulumi.Output<string>;
     /**
      * Backup schedule described in `rrule` (recurrence rule) format.
      */
-    declare public readonly rrule: pulumi.Output<string>;
+    public readonly rrule!: pulumi.Output<string>;
     /**
      * Server ID for the backup schedule.
      */
-    declare public readonly serverId: pulumi.Output<string>;
+    public readonly serverId!: pulumi.Output<string>;
 
     /**
      * Create a ServerBackupSchedule resource with the given unique name, arguments, and options.
@@ -87,38 +87,38 @@ export class ServerBackupSchedule extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as ServerBackupScheduleState | undefined;
-            resourceInputs["backupProperties"] = state?.backupProperties;
-            resourceInputs["backupScheduleId"] = state?.backupScheduleId;
-            resourceInputs["enabled"] = state?.enabled;
-            resourceInputs["name"] = state?.name;
-            resourceInputs["projectId"] = state?.projectId;
-            resourceInputs["region"] = state?.region;
-            resourceInputs["rrule"] = state?.rrule;
-            resourceInputs["serverId"] = state?.serverId;
+            resourceInputs["backupProperties"] = state ? state.backupProperties : undefined;
+            resourceInputs["backupScheduleId"] = state ? state.backupScheduleId : undefined;
+            resourceInputs["enabled"] = state ? state.enabled : undefined;
+            resourceInputs["name"] = state ? state.name : undefined;
+            resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["region"] = state ? state.region : undefined;
+            resourceInputs["rrule"] = state ? state.rrule : undefined;
+            resourceInputs["serverId"] = state ? state.serverId : undefined;
         } else {
             const args = argsOrState as ServerBackupScheduleArgs | undefined;
-            if (args?.backupProperties === undefined && !opts.urn) {
+            if ((!args || args.backupProperties === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'backupProperties'");
             }
-            if (args?.enabled === undefined && !opts.urn) {
+            if ((!args || args.enabled === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'enabled'");
             }
-            if (args?.projectId === undefined && !opts.urn) {
+            if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            if (args?.rrule === undefined && !opts.urn) {
+            if ((!args || args.rrule === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'rrule'");
             }
-            if (args?.serverId === undefined && !opts.urn) {
+            if ((!args || args.serverId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'serverId'");
             }
-            resourceInputs["backupProperties"] = args?.backupProperties;
-            resourceInputs["enabled"] = args?.enabled;
-            resourceInputs["name"] = args?.name;
-            resourceInputs["projectId"] = args?.projectId;
-            resourceInputs["region"] = args?.region;
-            resourceInputs["rrule"] = args?.rrule;
-            resourceInputs["serverId"] = args?.serverId;
+            resourceInputs["backupProperties"] = args ? args.backupProperties : undefined;
+            resourceInputs["enabled"] = args ? args.enabled : undefined;
+            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["projectId"] = args ? args.projectId : undefined;
+            resourceInputs["region"] = args ? args.region : undefined;
+            resourceInputs["rrule"] = args ? args.rrule : undefined;
+            resourceInputs["serverId"] = args ? args.serverId : undefined;
             resourceInputs["backupScheduleId"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);

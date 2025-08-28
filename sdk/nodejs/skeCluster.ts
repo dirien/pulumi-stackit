@@ -44,51 +44,51 @@ export class SkeCluster extends pulumi.CustomResource {
     /**
      * The outgoing network ranges (in CIDR notation) of traffic originating from workload on the cluster.
      */
-    declare public /*out*/ readonly egressAddressRanges: pulumi.Output<string[]>;
+    public /*out*/ readonly egressAddressRanges!: pulumi.Output<string[]>;
     /**
      * A single extensions block as defined below.
      */
-    declare public readonly extensions: pulumi.Output<outputs.SkeClusterExtensions | undefined>;
+    public readonly extensions!: pulumi.Output<outputs.SkeClusterExtensions | undefined>;
     /**
      * One or more hibernation block as defined below.
      */
-    declare public readonly hibernations: pulumi.Output<outputs.SkeClusterHibernation[] | undefined>;
+    public readonly hibernations!: pulumi.Output<outputs.SkeClusterHibernation[] | undefined>;
     /**
      * The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetesVersionUsed` field.
      */
-    declare public readonly kubernetesVersionMin: pulumi.Output<string | undefined>;
+    public readonly kubernetesVersionMin!: pulumi.Output<string | undefined>;
     /**
      * Full Kubernetes version used. For example, if 1.22 was set in `kubernetesVersionMin`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
      */
-    declare public /*out*/ readonly kubernetesVersionUsed: pulumi.Output<string>;
+    public /*out*/ readonly kubernetesVersionUsed!: pulumi.Output<string>;
     /**
      * A single maintenance block as defined below.
      */
-    declare public readonly maintenance: pulumi.Output<outputs.SkeClusterMaintenance>;
+    public readonly maintenance!: pulumi.Output<outputs.SkeClusterMaintenance>;
     /**
      * The cluster name.
      */
-    declare public readonly name: pulumi.Output<string>;
+    public readonly name!: pulumi.Output<string>;
     /**
      * Network block as defined below.
      */
-    declare public readonly network: pulumi.Output<outputs.SkeClusterNetwork | undefined>;
+    public readonly network!: pulumi.Output<outputs.SkeClusterNetwork | undefined>;
     /**
      * One or more `nodePool` block as defined below.
      */
-    declare public readonly nodePools: pulumi.Output<outputs.SkeClusterNodePool[]>;
+    public readonly nodePools!: pulumi.Output<outputs.SkeClusterNodePool[]>;
     /**
      * The network ranges (in CIDR notation) used by pods of the cluster.
      */
-    declare public /*out*/ readonly podAddressRanges: pulumi.Output<string[]>;
+    public /*out*/ readonly podAddressRanges!: pulumi.Output<string[]>;
     /**
      * STACKIT project ID to which the cluster is associated.
      */
-    declare public readonly projectId: pulumi.Output<string>;
+    public readonly projectId!: pulumi.Output<string>;
     /**
      * The resource region. If not defined, the provider region is used.
      */
-    declare public readonly region: pulumi.Output<string>;
+    public readonly region!: pulumi.Output<string>;
 
     /**
      * Create a SkeCluster resource with the given unique name, arguments, and options.
@@ -103,35 +103,35 @@ export class SkeCluster extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as SkeClusterState | undefined;
-            resourceInputs["egressAddressRanges"] = state?.egressAddressRanges;
-            resourceInputs["extensions"] = state?.extensions;
-            resourceInputs["hibernations"] = state?.hibernations;
-            resourceInputs["kubernetesVersionMin"] = state?.kubernetesVersionMin;
-            resourceInputs["kubernetesVersionUsed"] = state?.kubernetesVersionUsed;
-            resourceInputs["maintenance"] = state?.maintenance;
-            resourceInputs["name"] = state?.name;
-            resourceInputs["network"] = state?.network;
-            resourceInputs["nodePools"] = state?.nodePools;
-            resourceInputs["podAddressRanges"] = state?.podAddressRanges;
-            resourceInputs["projectId"] = state?.projectId;
-            resourceInputs["region"] = state?.region;
+            resourceInputs["egressAddressRanges"] = state ? state.egressAddressRanges : undefined;
+            resourceInputs["extensions"] = state ? state.extensions : undefined;
+            resourceInputs["hibernations"] = state ? state.hibernations : undefined;
+            resourceInputs["kubernetesVersionMin"] = state ? state.kubernetesVersionMin : undefined;
+            resourceInputs["kubernetesVersionUsed"] = state ? state.kubernetesVersionUsed : undefined;
+            resourceInputs["maintenance"] = state ? state.maintenance : undefined;
+            resourceInputs["name"] = state ? state.name : undefined;
+            resourceInputs["network"] = state ? state.network : undefined;
+            resourceInputs["nodePools"] = state ? state.nodePools : undefined;
+            resourceInputs["podAddressRanges"] = state ? state.podAddressRanges : undefined;
+            resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["region"] = state ? state.region : undefined;
         } else {
             const args = argsOrState as SkeClusterArgs | undefined;
-            if (args?.nodePools === undefined && !opts.urn) {
+            if ((!args || args.nodePools === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'nodePools'");
             }
-            if (args?.projectId === undefined && !opts.urn) {
+            if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            resourceInputs["extensions"] = args?.extensions;
-            resourceInputs["hibernations"] = args?.hibernations;
-            resourceInputs["kubernetesVersionMin"] = args?.kubernetesVersionMin;
-            resourceInputs["maintenance"] = args?.maintenance;
-            resourceInputs["name"] = args?.name;
-            resourceInputs["network"] = args?.network;
-            resourceInputs["nodePools"] = args?.nodePools;
-            resourceInputs["projectId"] = args?.projectId;
-            resourceInputs["region"] = args?.region;
+            resourceInputs["extensions"] = args ? args.extensions : undefined;
+            resourceInputs["hibernations"] = args ? args.hibernations : undefined;
+            resourceInputs["kubernetesVersionMin"] = args ? args.kubernetesVersionMin : undefined;
+            resourceInputs["maintenance"] = args ? args.maintenance : undefined;
+            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["network"] = args ? args.network : undefined;
+            resourceInputs["nodePools"] = args ? args.nodePools : undefined;
+            resourceInputs["projectId"] = args ? args.projectId : undefined;
+            resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["egressAddressRanges"] = undefined /*out*/;
             resourceInputs["kubernetesVersionUsed"] = undefined /*out*/;
             resourceInputs["podAddressRanges"] = undefined /*out*/;

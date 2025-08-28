@@ -40,17 +40,17 @@ export class ObjectstorageBucket extends pulumi.CustomResource {
     /**
      * The bucket name. It must be DNS conform.
      */
-    declare public readonly name: pulumi.Output<string>;
+    public readonly name!: pulumi.Output<string>;
     /**
      * STACKIT Project ID to which the bucket is associated.
      */
-    declare public readonly projectId: pulumi.Output<string>;
+    public readonly projectId!: pulumi.Output<string>;
     /**
      * The resource region. If not defined, the provider region is used.
      */
-    declare public readonly region: pulumi.Output<string>;
-    declare public /*out*/ readonly urlPathStyle: pulumi.Output<string>;
-    declare public /*out*/ readonly urlVirtualHostedStyle: pulumi.Output<string>;
+    public readonly region!: pulumi.Output<string>;
+    public /*out*/ readonly urlPathStyle!: pulumi.Output<string>;
+    public /*out*/ readonly urlVirtualHostedStyle!: pulumi.Output<string>;
 
     /**
      * Create a ObjectstorageBucket resource with the given unique name, arguments, and options.
@@ -65,19 +65,19 @@ export class ObjectstorageBucket extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as ObjectstorageBucketState | undefined;
-            resourceInputs["name"] = state?.name;
-            resourceInputs["projectId"] = state?.projectId;
-            resourceInputs["region"] = state?.region;
-            resourceInputs["urlPathStyle"] = state?.urlPathStyle;
-            resourceInputs["urlVirtualHostedStyle"] = state?.urlVirtualHostedStyle;
+            resourceInputs["name"] = state ? state.name : undefined;
+            resourceInputs["projectId"] = state ? state.projectId : undefined;
+            resourceInputs["region"] = state ? state.region : undefined;
+            resourceInputs["urlPathStyle"] = state ? state.urlPathStyle : undefined;
+            resourceInputs["urlVirtualHostedStyle"] = state ? state.urlVirtualHostedStyle : undefined;
         } else {
             const args = argsOrState as ObjectstorageBucketArgs | undefined;
-            if (args?.projectId === undefined && !opts.urn) {
+            if ((!args || args.projectId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            resourceInputs["name"] = args?.name;
-            resourceInputs["projectId"] = args?.projectId;
-            resourceInputs["region"] = args?.region;
+            resourceInputs["name"] = args ? args.name : undefined;
+            resourceInputs["projectId"] = args ? args.projectId : undefined;
+            resourceInputs["region"] = args ? args.region : undefined;
             resourceInputs["urlPathStyle"] = undefined /*out*/;
             resourceInputs["urlVirtualHostedStyle"] = undefined /*out*/;
         }
