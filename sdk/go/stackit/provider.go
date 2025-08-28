@@ -86,6 +86,8 @@ type Provider struct {
 	// operations.
 	ServiceAccountKeyPath pulumi.StringPtrOutput `pulumi:"serviceAccountKeyPath"`
 	// Token used for authentication. If set, the token flow will be used to authenticate all operations.
+	//
+	// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html
 	ServiceAccountToken pulumi.StringPtrOutput `pulumi:"serviceAccountToken"`
 	// Custom endpoint for the Service Enablement API
 	ServiceEnablementCustomEndpoint pulumi.StringPtrOutput `pulumi:"serviceEnablementCustomEndpoint"`
@@ -187,6 +189,8 @@ type providerArgs struct {
 	// operations.
 	ServiceAccountKeyPath *string `pulumi:"serviceAccountKeyPath"`
 	// Token used for authentication. If set, the token flow will be used to authenticate all operations.
+	//
+	// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html
 	ServiceAccountToken *string `pulumi:"serviceAccountToken"`
 	// Custom endpoint for the Service Enablement API
 	ServiceEnablementCustomEndpoint *string `pulumi:"serviceEnablementCustomEndpoint"`
@@ -273,6 +277,8 @@ type ProviderArgs struct {
 	// operations.
 	ServiceAccountKeyPath pulumi.StringPtrInput
 	// Token used for authentication. If set, the token flow will be used to authenticate all operations.
+	//
+	// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html
 	ServiceAccountToken pulumi.StringPtrInput
 	// Custom endpoint for the Service Enablement API
 	ServiceEnablementCustomEndpoint pulumi.StringPtrInput
@@ -499,6 +505,8 @@ func (o ProviderOutput) ServiceAccountKeyPath() pulumi.StringPtrOutput {
 }
 
 // Token used for authentication. If set, the token flow will be used to authenticate all operations.
+//
+// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html
 func (o ProviderOutput) ServiceAccountToken() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ServiceAccountToken }).(pulumi.StringPtrOutput)
 }
