@@ -25,6 +25,7 @@ from .get_key_pair import *
 from .get_loadbalancer import *
 from .get_logme_credential import *
 from .get_logme_instance import *
+from .get_machine_type import *
 from .get_mariadb_credential import *
 from .get_mariadb_instance import *
 from .get_mongodbflex_instance import *

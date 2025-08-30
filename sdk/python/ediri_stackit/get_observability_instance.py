@@ -236,7 +236,7 @@ class GetObservabilityInstanceResult:
     @pulumi.getter(name="metricsRetentionDays")
     def metrics_retention_days(self) -> _builtins.int:
         """
-        Specifies for how many days the raw metrics are kept.
+        Specifies for how many days the raw metrics are kept. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days")
 
@@ -244,7 +244,7 @@ class GetObservabilityInstanceResult:
     @pulumi.getter(name="metricsRetentionDays1hDownsampling")
     def metrics_retention_days1h_downsampling(self) -> _builtins.int:
         """
-        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days1h_downsampling")
 
@@ -252,7 +252,7 @@ class GetObservabilityInstanceResult:
     @pulumi.getter(name="metricsRetentionDays5mDownsampling")
     def metrics_retention_days5m_downsampling(self) -> _builtins.int:
         """
-        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days5m_downsampling")
 

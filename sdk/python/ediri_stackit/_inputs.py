@@ -2857,6 +2857,10 @@ if not MYPY:
         """
         The host to send OpsGenie API requests to. Must be a valid URL
         """
+        priority: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        """
         tags: NotRequired[pulumi.Input[_builtins.str]]
         """
         Comma separated list of tags attached to the notifications.
@@ -2869,16 +2873,20 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs:
     def __init__(__self__, *,
                  api_key: Optional[pulumi.Input[_builtins.str]] = None,
                  api_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 priority: Optional[pulumi.Input[_builtins.str]] = None,
                  tags: Optional[pulumi.Input[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] api_key: The API key for OpsGenie.
         :param pulumi.Input[_builtins.str] api_url: The host to send OpsGenie API requests to. Must be a valid URL
+        :param pulumi.Input[_builtins.str] priority: Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
         :param pulumi.Input[_builtins.str] tags: Comma separated list of tags attached to the notifications.
         """
         if api_key is not None:
             pulumi.set(__self__, "api_key", api_key)
         if api_url is not None:
             pulumi.set(__self__, "api_url", api_url)
+        if priority is not None:
+            pulumi.set(__self__, "priority", priority)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
 
@@ -2908,6 +2916,18 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs:
 
     @_builtins.property
     @pulumi.getter
+    def priority(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        """
+        return pulumi.get(self, "priority")
+
+    @priority.setter
+    def priority(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "priority", value)
+
+    @_builtins.property
+    @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         Comma separated list of tags attached to the notifications.
@@ -2921,6 +2941,10 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs:
 
 if not MYPY:
     class ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgsDict(TypedDict):
+        google_chat: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        """
         ms_teams: NotRequired[pulumi.Input[_builtins.bool]]
         """
         Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
@@ -2935,16 +2959,32 @@ elif False:
 @pulumi.input_type
 class ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs:
     def __init__(__self__, *,
+                 google_chat: Optional[pulumi.Input[_builtins.bool]] = None,
                  ms_teams: Optional[pulumi.Input[_builtins.bool]] = None,
                  url: Optional[pulumi.Input[_builtins.str]] = None):
         """
+        :param pulumi.Input[_builtins.bool] google_chat: Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
         :param pulumi.Input[_builtins.bool] ms_teams: Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
         :param pulumi.Input[_builtins.str] url: The endpoint to send HTTP POST requests to. Must be a valid URL
         """
+        if google_chat is not None:
+            pulumi.set(__self__, "google_chat", google_chat)
         if ms_teams is not None:
             pulumi.set(__self__, "ms_teams", ms_teams)
         if url is not None:
             pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter(name="googleChat")
+    def google_chat(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        """
+        return pulumi.get(self, "google_chat")
+
+    @google_chat.setter
+    def google_chat(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "google_chat", value)
 
     @_builtins.property
     @pulumi.getter(name="msTeams")

@@ -26,6 +26,12 @@ namespace ediri.Stackit.Inputs
         public Input<string>? ApiUrl { get; set; }
 
         /// <summary>
+        /// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        /// </summary>
+        [Input("priority")]
+        public Input<string>? Priority { get; set; }
+
+        /// <summary>
         /// Comma separated list of tags attached to the notifications.
         /// </summary>
         [Input("tags")]

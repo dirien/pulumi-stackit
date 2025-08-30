@@ -100,6 +100,11 @@ export const getLogmeInstance: typeof import("./getLogmeInstance").getLogmeInsta
 export const getLogmeInstanceOutput: typeof import("./getLogmeInstance").getLogmeInstanceOutput = null as any;
 utilities.lazyLoad(exports, ["getLogmeInstance","getLogmeInstanceOutput"], () => require("./getLogmeInstance"));
 
+export { GetMachineTypeArgs, GetMachineTypeResult, GetMachineTypeOutputArgs } from "./getMachineType";
+export const getMachineType: typeof import("./getMachineType").getMachineType = null as any;
+export const getMachineTypeOutput: typeof import("./getMachineType").getMachineTypeOutput = null as any;
+utilities.lazyLoad(exports, ["getMachineType","getMachineTypeOutput"], () => require("./getMachineType"));
+
 export { GetMariadbCredentialArgs, GetMariadbCredentialResult, GetMariadbCredentialOutputArgs } from "./getMariadbCredential";
 export const getMariadbCredential: typeof import("./getMariadbCredential").getMariadbCredential = null as any;
 export const getMariadbCredentialOutput: typeof import("./getMariadbCredential").getMariadbCredentialOutput = null as any;
