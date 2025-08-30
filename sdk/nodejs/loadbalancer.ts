@@ -40,43 +40,43 @@ export class Loadbalancer extends pulumi.CustomResource {
     /**
      * External Load Balancer IP address where this Load Balancer is exposed.
      */
-    public readonly externalAddress!: pulumi.Output<string | undefined>;
+    declare public readonly externalAddress: pulumi.Output<string | undefined>;
     /**
      * List of all listeners which will accept traffic. Limited to 20.
      */
-    public readonly listeners!: pulumi.Output<outputs.LoadbalancerListener[]>;
+    declare public readonly listeners: pulumi.Output<outputs.LoadbalancerListener[]>;
     /**
      * Load balancer name.
      */
-    public readonly name!: pulumi.Output<string>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * List of networks that listeners and targets reside in.
      */
-    public readonly networks!: pulumi.Output<outputs.LoadbalancerNetwork[]>;
+    declare public readonly networks: pulumi.Output<outputs.LoadbalancerNetwork[]>;
     /**
      * Defines any optional functionality you want to have enabled on your load balancer.
      */
-    public readonly options!: pulumi.Output<outputs.LoadbalancerOptions>;
+    declare public readonly options: pulumi.Output<outputs.LoadbalancerOptions>;
     /**
      * The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
      */
-    public readonly planId!: pulumi.Output<string>;
+    declare public readonly planId: pulumi.Output<string>;
     /**
      * Transient private Load Balancer IP address. It can change any time.
      */
-    public /*out*/ readonly privateAddress!: pulumi.Output<string>;
+    declare public /*out*/ readonly privateAddress: pulumi.Output<string>;
     /**
      * STACKIT project ID to which the Load Balancer is associated.
      */
-    public readonly projectId!: pulumi.Output<string>;
+    declare public readonly projectId: pulumi.Output<string>;
     /**
      * The resource region. If not defined, the provider region is used.
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
     /**
      * List of all target pools which will be used in the Load Balancer. Limited to 20.
      */
-    public readonly targetPools!: pulumi.Output<outputs.LoadbalancerTargetPool[]>;
+    declare public readonly targetPools: pulumi.Output<outputs.LoadbalancerTargetPool[]>;
 
     /**
      * Create a Loadbalancer resource with the given unique name, arguments, and options.
@@ -91,39 +91,39 @@ export class Loadbalancer extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as LoadbalancerState | undefined;
-            resourceInputs["externalAddress"] = state ? state.externalAddress : undefined;
-            resourceInputs["listeners"] = state ? state.listeners : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["networks"] = state ? state.networks : undefined;
-            resourceInputs["options"] = state ? state.options : undefined;
-            resourceInputs["planId"] = state ? state.planId : undefined;
-            resourceInputs["privateAddress"] = state ? state.privateAddress : undefined;
-            resourceInputs["projectId"] = state ? state.projectId : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["targetPools"] = state ? state.targetPools : undefined;
+            resourceInputs["externalAddress"] = state?.externalAddress;
+            resourceInputs["listeners"] = state?.listeners;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["networks"] = state?.networks;
+            resourceInputs["options"] = state?.options;
+            resourceInputs["planId"] = state?.planId;
+            resourceInputs["privateAddress"] = state?.privateAddress;
+            resourceInputs["projectId"] = state?.projectId;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["targetPools"] = state?.targetPools;
         } else {
             const args = argsOrState as LoadbalancerArgs | undefined;
-            if ((!args || args.listeners === undefined) && !opts.urn) {
+            if (args?.listeners === undefined && !opts.urn) {
                 throw new Error("Missing required property 'listeners'");
             }
-            if ((!args || args.networks === undefined) && !opts.urn) {
+            if (args?.networks === undefined && !opts.urn) {
                 throw new Error("Missing required property 'networks'");
             }
-            if ((!args || args.projectId === undefined) && !opts.urn) {
+            if (args?.projectId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            if ((!args || args.targetPools === undefined) && !opts.urn) {
+            if (args?.targetPools === undefined && !opts.urn) {
                 throw new Error("Missing required property 'targetPools'");
             }
-            resourceInputs["externalAddress"] = args ? args.externalAddress : undefined;
-            resourceInputs["listeners"] = args ? args.listeners : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["networks"] = args ? args.networks : undefined;
-            resourceInputs["options"] = args ? args.options : undefined;
-            resourceInputs["planId"] = args ? args.planId : undefined;
-            resourceInputs["projectId"] = args ? args.projectId : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
-            resourceInputs["targetPools"] = args ? args.targetPools : undefined;
+            resourceInputs["externalAddress"] = args?.externalAddress;
+            resourceInputs["listeners"] = args?.listeners;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["networks"] = args?.networks;
+            resourceInputs["options"] = args?.options;
+            resourceInputs["planId"] = args?.planId;
+            resourceInputs["projectId"] = args?.projectId;
+            resourceInputs["region"] = args?.region;
+            resourceInputs["targetPools"] = args?.targetPools;
             resourceInputs["privateAddress"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);

@@ -5006,6 +5006,8 @@ type ObservabilityInstanceAlertConfigReceiverOpsgenieConfig struct {
 	ApiKey *string `pulumi:"apiKey"`
 	// The host to send OpsGenie API requests to. Must be a valid URL
 	ApiUrl *string `pulumi:"apiUrl"`
+	// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+	Priority *string `pulumi:"priority"`
 	// Comma separated list of tags attached to the notifications.
 	Tags *string `pulumi:"tags"`
 }
@@ -5026,6 +5028,8 @@ type ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs struct {
 	ApiKey pulumi.StringPtrInput `pulumi:"apiKey"`
 	// The host to send OpsGenie API requests to. Must be a valid URL
 	ApiUrl pulumi.StringPtrInput `pulumi:"apiUrl"`
+	// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+	Priority pulumi.StringPtrInput `pulumi:"priority"`
 	// Comma separated list of tags attached to the notifications.
 	Tags pulumi.StringPtrInput `pulumi:"tags"`
 }
@@ -5091,6 +5095,11 @@ func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) ApiUrl() p
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverOpsgenieConfig) *string { return v.ApiUrl }).(pulumi.StringPtrOutput)
 }
 
+// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) Priority() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverOpsgenieConfig) *string { return v.Priority }).(pulumi.StringPtrOutput)
+}
+
 // Comma separated list of tags attached to the notifications.
 func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) Tags() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverOpsgenieConfig) *string { return v.Tags }).(pulumi.StringPtrOutput)
@@ -5117,6 +5126,8 @@ func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArrayOutput) Index
 }
 
 type ObservabilityInstanceAlertConfigReceiverWebhooksConfig struct {
+	// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+	GoogleChat *bool `pulumi:"googleChat"`
 	// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 	MsTeams *bool `pulumi:"msTeams"`
 	// The endpoint to send HTTP POST requests to. Must be a valid URL
@@ -5135,6 +5146,8 @@ type ObservabilityInstanceAlertConfigReceiverWebhooksConfigInput interface {
 }
 
 type ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs struct {
+	// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+	GoogleChat pulumi.BoolPtrInput `pulumi:"googleChat"`
 	// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 	MsTeams pulumi.BoolPtrInput `pulumi:"msTeams"`
 	// The endpoint to send HTTP POST requests to. Must be a valid URL
@@ -5190,6 +5203,11 @@ func (o ObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) ToObservab
 
 func (o ObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) ToObservabilityInstanceAlertConfigReceiverWebhooksConfigOutputWithContext(ctx context.Context) ObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput {
 	return o
+}
+
+// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+func (o ObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) GoogleChat() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverWebhooksConfig) *bool { return v.GoogleChat }).(pulumi.BoolPtrOutput)
 }
 
 // Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
@@ -14064,6 +14082,8 @@ type GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig struct {
 	ApiKey string `pulumi:"apiKey"`
 	// The host to send OpsGenie API requests to. Must be a valid URL
 	ApiUrl string `pulumi:"apiUrl"`
+	// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+	Priority string `pulumi:"priority"`
 	// Comma separated list of tags attached to the notifications.
 	Tags string `pulumi:"tags"`
 }
@@ -14084,6 +14104,8 @@ type GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs struct {
 	ApiKey pulumi.StringInput `pulumi:"apiKey"`
 	// The host to send OpsGenie API requests to. Must be a valid URL
 	ApiUrl pulumi.StringInput `pulumi:"apiUrl"`
+	// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+	Priority pulumi.StringInput `pulumi:"priority"`
 	// Comma separated list of tags attached to the notifications.
 	Tags pulumi.StringInput `pulumi:"tags"`
 }
@@ -14149,6 +14171,11 @@ func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) ApiUrl(
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig) string { return v.ApiUrl }).(pulumi.StringOutput)
 }
 
+// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) Priority() pulumi.StringOutput {
+	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig) string { return v.Priority }).(pulumi.StringOutput)
+}
+
 // Comma separated list of tags attached to the notifications.
 func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) Tags() pulumi.StringOutput {
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig) string { return v.Tags }).(pulumi.StringOutput)
@@ -14175,6 +14202,8 @@ func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigArrayOutput) In
 }
 
 type GetObservabilityInstanceAlertConfigReceiverWebhooksConfig struct {
+	// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+	GoogleChat bool `pulumi:"googleChat"`
 	// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 	MsTeams bool `pulumi:"msTeams"`
 	// The endpoint to send HTTP POST requests to. Must be a valid URL
@@ -14193,6 +14222,8 @@ type GetObservabilityInstanceAlertConfigReceiverWebhooksConfigInput interface {
 }
 
 type GetObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs struct {
+	// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+	GoogleChat pulumi.BoolInput `pulumi:"googleChat"`
 	// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 	MsTeams pulumi.BoolInput `pulumi:"msTeams"`
 	// The endpoint to send HTTP POST requests to. Must be a valid URL
@@ -14248,6 +14279,11 @@ func (o GetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) ToGetOb
 
 func (o GetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) ToGetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutputWithContext(ctx context.Context) GetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput {
 	return o
+}
+
+// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+func (o GetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) GoogleChat() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverWebhooksConfig) bool { return v.GoogleChat }).(pulumi.BoolOutput)
 }
 
 // Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.

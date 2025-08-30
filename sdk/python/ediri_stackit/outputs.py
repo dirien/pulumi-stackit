@@ -2278,16 +2278,20 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfig(dict):
     def __init__(__self__, *,
                  api_key: Optional[_builtins.str] = None,
                  api_url: Optional[_builtins.str] = None,
+                 priority: Optional[_builtins.str] = None,
                  tags: Optional[_builtins.str] = None):
         """
         :param _builtins.str api_key: The API key for OpsGenie.
         :param _builtins.str api_url: The host to send OpsGenie API requests to. Must be a valid URL
+        :param _builtins.str priority: Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
         :param _builtins.str tags: Comma separated list of tags attached to the notifications.
         """
         if api_key is not None:
             pulumi.set(__self__, "api_key", api_key)
         if api_url is not None:
             pulumi.set(__self__, "api_url", api_url)
+        if priority is not None:
+            pulumi.set(__self__, "priority", priority)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
 
@@ -2309,6 +2313,14 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfig(dict):
 
     @_builtins.property
     @pulumi.getter
+    def priority(self) -> Optional[_builtins.str]:
+        """
+        Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        """
+        return pulumi.get(self, "priority")
+
+    @_builtins.property
+    @pulumi.getter
     def tags(self) -> Optional[_builtins.str]:
         """
         Comma separated list of tags attached to the notifications.
@@ -2321,7 +2333,9 @@ class ObservabilityInstanceAlertConfigReceiverWebhooksConfig(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "msTeams":
+        if key == "googleChat":
+            suggest = "google_chat"
+        elif key == "msTeams":
             suggest = "ms_teams"
 
         if suggest:
@@ -2336,16 +2350,28 @@ class ObservabilityInstanceAlertConfigReceiverWebhooksConfig(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 google_chat: Optional[_builtins.bool] = None,
                  ms_teams: Optional[_builtins.bool] = None,
                  url: Optional[_builtins.str] = None):
         """
+        :param _builtins.bool google_chat: Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
         :param _builtins.bool ms_teams: Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
         :param _builtins.str url: The endpoint to send HTTP POST requests to. Must be a valid URL
         """
+        if google_chat is not None:
+            pulumi.set(__self__, "google_chat", google_chat)
         if ms_teams is not None:
             pulumi.set(__self__, "ms_teams", ms_teams)
         if url is not None:
             pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter(name="googleChat")
+    def google_chat(self) -> Optional[_builtins.bool]:
+        """
+        Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        """
+        return pulumi.get(self, "google_chat")
 
     @_builtins.property
     @pulumi.getter(name="msTeams")
@@ -6168,14 +6194,17 @@ class GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigResult(dict):
     def __init__(__self__, *,
                  api_key: _builtins.str,
                  api_url: _builtins.str,
+                 priority: _builtins.str,
                  tags: _builtins.str):
         """
         :param _builtins.str api_key: The API key for OpsGenie.
         :param _builtins.str api_url: The host to send OpsGenie API requests to. Must be a valid URL
+        :param _builtins.str priority: Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
         :param _builtins.str tags: Comma separated list of tags attached to the notifications.
         """
         pulumi.set(__self__, "api_key", api_key)
         pulumi.set(__self__, "api_url", api_url)
+        pulumi.set(__self__, "priority", priority)
         pulumi.set(__self__, "tags", tags)
 
     @_builtins.property
@@ -6196,6 +6225,14 @@ class GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigResult(dict):
 
     @_builtins.property
     @pulumi.getter
+    def priority(self) -> _builtins.str:
+        """
+        Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        """
+        return pulumi.get(self, "priority")
+
+    @_builtins.property
+    @pulumi.getter
     def tags(self) -> _builtins.str:
         """
         Comma separated list of tags attached to the notifications.
@@ -6206,14 +6243,25 @@ class GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigResult(dict):
 @pulumi.output_type
 class GetObservabilityInstanceAlertConfigReceiverWebhooksConfigResult(dict):
     def __init__(__self__, *,
+                 google_chat: _builtins.bool,
                  ms_teams: _builtins.bool,
                  url: _builtins.str):
         """
+        :param _builtins.bool google_chat: Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
         :param _builtins.bool ms_teams: Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
         :param _builtins.str url: The endpoint to send HTTP POST requests to. Must be a valid URL
         """
+        pulumi.set(__self__, "google_chat", google_chat)
         pulumi.set(__self__, "ms_teams", ms_teams)
         pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter(name="googleChat")
+    def google_chat(self) -> _builtins.bool:
+        """
+        Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        """
+        return pulumi.get(self, "google_chat")
 
     @_builtins.property
     @pulumi.getter(name="msTeams")

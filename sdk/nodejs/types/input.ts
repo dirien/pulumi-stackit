@@ -547,12 +547,20 @@ export interface ObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
      */
     apiUrl?: pulumi.Input<string>;
     /**
+     * Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+     */
+    priority?: pulumi.Input<string>;
+    /**
      * Comma separated list of tags attached to the notifications.
      */
     tags?: pulumi.Input<string>;
 }
 
 export interface ObservabilityInstanceAlertConfigReceiverWebhooksConfig {
+    /**
+     * Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+     */
+    googleChat?: pulumi.Input<boolean>;
     /**
      * Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
      */

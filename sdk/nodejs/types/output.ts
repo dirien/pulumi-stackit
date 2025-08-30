@@ -598,12 +598,20 @@ export interface GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
      */
     apiUrl: string;
     /**
+     * Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+     */
+    priority: string;
+    /**
      * Comma separated list of tags attached to the notifications.
      */
     tags: string;
 }
 
 export interface GetObservabilityInstanceAlertConfigReceiverWebhooksConfig {
+    /**
+     * Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+     */
+    googleChat: boolean;
     /**
      * Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
      */
@@ -1863,6 +1871,10 @@ export interface ObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
      */
     apiUrl?: string;
     /**
+     * Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+     */
+    priority?: string;
+    /**
      * Comma separated list of tags attached to the notifications.
      */
     tags?: string;
@@ -1870,9 +1882,13 @@ export interface ObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
 
 export interface ObservabilityInstanceAlertConfigReceiverWebhooksConfig {
     /**
+     * Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+     */
+    googleChat: boolean;
+    /**
      * Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
      */
-    msTeams?: boolean;
+    msTeams: boolean;
     /**
      * The endpoint to send HTTP POST requests to. Must be a valid URL
      */
