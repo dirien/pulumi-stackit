@@ -696,6 +696,9 @@
                     }
                 }
             },
+            "stackit_machine_type": {
+                "current": "stackit:index/getMachineType:getMachineType"
+            },
             "stackit_mariadb_credential": {
                 "current": "stackit:index/getMariadbCredential:getMariadbCredential",
                 "fields": {

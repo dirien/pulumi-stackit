@@ -57,153 +57,153 @@
         "variables": {
             "authorizationCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Membership service\n"
+                "description": "Custom endpoint for the Membership service"
             },
             "cdnCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the CDN service\n"
+                "description": "Custom endpoint for the CDN service"
             },
             "credentialsPath": {
                 "type": "string",
-                "description": "Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default\nvalue is `~/.stackit/credentials.json`.\n"
+                "description": "Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`."
             },
             "defaultRegion": {
                 "type": "string",
-                "description": "Region will be used as the default location for regional services. Not all services require a region, some are global\n"
+                "description": "Region will be used as the default location for regional services. Not all services require a region, some are global"
             },
             "dnsCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the DNS service\n"
+                "description": "Custom endpoint for the DNS service"
             },
             "enableBetaResources": {
                 "type": "boolean",
-                "description": "Enable beta resources. Default is false.\n"
+                "description": "Enable beta resources. Default is false."
             },
             "experiments": {
                 "type": "array",
                 "items": {
                     "type": "string"
                 },
-                "description": "Enables experiments. These are unstable features without official support. More information can be found in the README.\nAvailable Experiments: iam, routing-tables, network\n"
+                "description": "Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network"
             },
             "gitCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Git service\n"
+                "description": "Custom endpoint for the Git service"
             },
             "iaasCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the IaaS service\n"
+                "description": "Custom endpoint for the IaaS service"
             },
             "loadbalancerCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Load Balancer service\n"
+                "description": "Custom endpoint for the Load Balancer service"
             },
             "logmeCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the LogMe service\n"
+                "description": "Custom endpoint for the LogMe service"
             },
             "mariadbCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the MariaDB service\n"
+                "description": "Custom endpoint for the MariaDB service"
             },
             "modelservingCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the AI Model Serving service\n"
+                "description": "Custom endpoint for the AI Model Serving service"
             },
             "mongodbflexCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the MongoDB Flex service\n"
+                "description": "Custom endpoint for the MongoDB Flex service"
             },
             "objectstorageCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Object Storage service\n"
+                "description": "Custom endpoint for the Object Storage service"
             },
             "observabilityCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Observability service\n"
+                "description": "Custom endpoint for the Observability service"
             },
             "opensearchCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the OpenSearch service\n"
+                "description": "Custom endpoint for the OpenSearch service"
             },
             "postgresflexCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the PostgresFlex service\n"
+                "description": "Custom endpoint for the PostgresFlex service"
             },
             "privateKey": {
                 "type": "string",
-                "description": "Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is\nincluded in the service account key.\n"
+                "description": "Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key."
             },
             "privateKeyPath": {
                 "type": "string",
-                "description": "Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private\nkey that is included in the service account key.\n"
+                "description": "Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key."
             },
             "rabbitmqCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the RabbitMQ service\n"
+                "description": "Custom endpoint for the RabbitMQ service"
             },
             "redisCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Redis service\n"
+                "description": "Custom endpoint for the Redis service"
             },
             "region": {
                 "type": "string",
-                "description": "Region will be used as the default location for regional services. Not all services require a region, some are global\n",
+                "description": "Region will be used as the default location for regional services. Not all services require a region, some are global",
                 "deprecationMessage": "This attribute is deprecated. Use 'default_region' instead"
             },
             "resourcemanagerCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Resource Manager service\n"
+                "description": "Custom endpoint for the Resource Manager service"
             },
             "secretsmanagerCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Secrets Manager service\n"
+                "description": "Custom endpoint for the Secrets Manager service"
             },
             "serverBackupCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Server Backup service\n"
+                "description": "Custom endpoint for the Server Backup service"
             },
             "serverUpdateCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Server Update service\n"
+                "description": "Custom endpoint for the Server Update service"
             },
             "serviceAccountCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Service Account service\n"
+                "description": "Custom endpoint for the Service Account service"
             },
             "serviceAccountEmail": {
                 "type": "string",
-                "description": "Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required\nif you want to use the resource manager project resource.\n",
+                "description": "Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.",
                 "deprecationMessage": "The `service_account_email` field has been deprecated because it is not required. Will be removed after June 12th 2025."
             },
             "serviceAccountKey": {
                 "type": "string",
-                "description": "Service account key used for authentication. If set, the key flow will be used to authenticate all operations.\n"
+                "description": "Service account key used for authentication. If set, the key flow will be used to authenticate all operations."
             },
             "serviceAccountKeyPath": {
                 "type": "string",
-                "description": "Path for the service account key used for authentication. If set, the key flow will be used to authenticate all\noperations.\n"
+                "description": "Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations."
             },
             "serviceAccountToken": {
                 "type": "string",
-                "description": "Token used for authentication. If set, the token flow will be used to authenticate all operations.\n",
+                "description": "Token used for authentication. If set, the token flow will be used to authenticate all operations.",
                 "deprecationMessage": "Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html"
             },
             "serviceEnablementCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Service Enablement API\n"
+                "description": "Custom endpoint for the Service Enablement API"
             },
             "skeCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Kubernetes Engine (SKE) service\n"
+                "description": "Custom endpoint for the Kubernetes Engine (SKE) service"
             },
             "sqlserverflexCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the SQL Server Flex service\n"
+                "description": "Custom endpoint for the SQL Server Flex service"
             },
             "tokenCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the token API, which is used to request access tokens when using the key flow\n"
+                "description": "Custom endpoint for the token API, which is used to request access tokens when using the key flow"
             }
         }
     },
@@ -1126,7 +1126,8 @@
                 },
                 "authPassword": {
                     "type": "string",
-                    "description": "SMTP authentication password.\n"
+                    "description": "SMTP authentication password.\n",
+                    "secret": true
                 },
                 "authUsername": {
                     "type": "string",
@@ -1157,6 +1158,10 @@
                     "type": "string",
                     "description": "The host to send OpsGenie API requests to. Must be a valid URL\n"
                 },
+                "priority": {
+                    "type": "string",
+                    "description": "Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.\n"
+                },
                 "tags": {
                     "type": "string",
                     "description": "Comma separated list of tags attached to the notifications.\n"
@@ -1166,16 +1171,29 @@
         },
         "stackit:index/ObservabilityInstanceAlertConfigReceiverWebhooksConfig:ObservabilityInstanceAlertConfigReceiverWebhooksConfig": {
             "properties": {
+                "googleChat": {
+                    "type": "boolean",
+                    "description": "Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.\n"
+                },
                 "msTeams": {
                     "type": "boolean",
                     "description": "Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.\n"
                 },
                 "url": {
                     "type": "string",
-                    "description": "The endpoint to send HTTP POST requests to. Must be a valid URL\n"
+                    "description": "The endpoint to send HTTP POST requests to. Must be a valid URL\n",
+                    "secret": true
                 }
             },
-            "type": "object"
+            "type": "object",
+            "language": {
+                "nodejs": {
+                    "requiredOutputs": [
+                        "googleChat",
+                        "msTeams"
+                    ]
+                }
+            }
         },
         "stackit:index/ObservabilityInstanceAlertConfigRoute:ObservabilityInstanceAlertConfigRoute": {
             "properties": {
@@ -3241,7 +3259,8 @@
                 },
                 "authPassword": {
                     "type": "string",
-                    "description": "SMTP authentication password.\n"
+                    "description": "SMTP authentication password.\n",
+                    "secret": true
                 },
                 "authUsername": {
                     "type": "string",
@@ -3285,6 +3304,10 @@
                     "type": "string",
                     "description": "The host to send OpsGenie API requests to. Must be a valid URL\n"
                 },
+                "priority": {
+                    "type": "string",
+                    "description": "Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.\n"
+                },
                 "tags": {
                     "type": "string",
                     "description": "Comma separated list of tags attached to the notifications.\n"
@@ -3294,6 +3317,7 @@
             "required": [
                 "apiKey",
                 "apiUrl",
+                "priority",
                 "tags"
             ],
             "language": {
@@ -3304,17 +3328,23 @@
         },
         "stackit:index/getObservabilityInstanceAlertConfigReceiverWebhooksConfig:getObservabilityInstanceAlertConfigReceiverWebhooksConfig": {
             "properties": {
+                "googleChat": {
+                    "type": "boolean",
+                    "description": "Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.\n"
+                },
                 "msTeams": {
                     "type": "boolean",
                     "description": "Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.\n"
                 },
                 "url": {
                     "type": "string",
-                    "description": "The endpoint to send HTTP POST requests to. Must be a valid URL\n"
+                    "description": "The endpoint to send HTTP POST requests to. Must be a valid URL\n",
+                    "secret": true
                 }
             },
             "type": "object",
             "required": [
+                "googleChat",
                 "msTeams",
                 "url"
             ],
@@ -4762,305 +4792,305 @@
         "properties": {
             "authorizationCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Membership service\n"
+                "description": "Custom endpoint for the Membership service"
             },
             "cdnCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the CDN service\n"
+                "description": "Custom endpoint for the CDN service"
             },
             "credentialsPath": {
                 "type": "string",
-                "description": "Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default\nvalue is `~/.stackit/credentials.json`.\n"
+                "description": "Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`."
             },
             "defaultRegion": {
                 "type": "string",
-                "description": "Region will be used as the default location for regional services. Not all services require a region, some are global\n"
+                "description": "Region will be used as the default location for regional services. Not all services require a region, some are global"
             },
             "dnsCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the DNS service\n"
+                "description": "Custom endpoint for the DNS service"
             },
             "enableBetaResources": {
                 "type": "boolean",
-                "description": "Enable beta resources. Default is false.\n"
+                "description": "Enable beta resources. Default is false."
             },
             "experiments": {
                 "type": "array",
                 "items": {
                     "type": "string"
                 },
-                "description": "Enables experiments. These are unstable features without official support. More information can be found in the README.\nAvailable Experiments: iam, routing-tables, network\n"
+                "description": "Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network"
             },
             "gitCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Git service\n"
+                "description": "Custom endpoint for the Git service"
             },
             "iaasCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the IaaS service\n"
+                "description": "Custom endpoint for the IaaS service"
             },
             "loadbalancerCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Load Balancer service\n"
+                "description": "Custom endpoint for the Load Balancer service"
             },
             "logmeCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the LogMe service\n"
+                "description": "Custom endpoint for the LogMe service"
             },
             "mariadbCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the MariaDB service\n"
+                "description": "Custom endpoint for the MariaDB service"
             },
             "modelservingCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the AI Model Serving service\n"
+                "description": "Custom endpoint for the AI Model Serving service"
             },
             "mongodbflexCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the MongoDB Flex service\n"
+                "description": "Custom endpoint for the MongoDB Flex service"
             },
             "objectstorageCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Object Storage service\n"
+                "description": "Custom endpoint for the Object Storage service"
             },
             "observabilityCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Observability service\n"
+                "description": "Custom endpoint for the Observability service"
             },
             "opensearchCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the OpenSearch service\n"
+                "description": "Custom endpoint for the OpenSearch service"
             },
             "postgresflexCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the PostgresFlex service\n"
+                "description": "Custom endpoint for the PostgresFlex service"
             },
             "privateKey": {
                 "type": "string",
-                "description": "Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is\nincluded in the service account key.\n"
+                "description": "Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key."
             },
             "privateKeyPath": {
                 "type": "string",
-                "description": "Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private\nkey that is included in the service account key.\n"
+                "description": "Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key."
             },
             "rabbitmqCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the RabbitMQ service\n"
+                "description": "Custom endpoint for the RabbitMQ service"
             },
             "redisCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Redis service\n"
+                "description": "Custom endpoint for the Redis service"
             },
             "region": {
                 "type": "string",
-                "description": "Region will be used as the default location for regional services. Not all services require a region, some are global\n",
+                "description": "Region will be used as the default location for regional services. Not all services require a region, some are global",
                 "deprecationMessage": "This attribute is deprecated. Use 'default_region' instead"
             },
             "resourcemanagerCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Resource Manager service\n"
+                "description": "Custom endpoint for the Resource Manager service"
             },
             "secretsmanagerCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Secrets Manager service\n"
+                "description": "Custom endpoint for the Secrets Manager service"
             },
             "serverBackupCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Server Backup service\n"
+                "description": "Custom endpoint for the Server Backup service"
             },
             "serverUpdateCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Server Update service\n"
+                "description": "Custom endpoint for the Server Update service"
             },
             "serviceAccountCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Service Account service\n"
+                "description": "Custom endpoint for the Service Account service"
             },
             "serviceAccountEmail": {
                 "type": "string",
-                "description": "Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required\nif you want to use the resource manager project resource.\n",
+                "description": "Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.",
                 "deprecationMessage": "The `service_account_email` field has been deprecated because it is not required. Will be removed after June 12th 2025."
             },
             "serviceAccountKey": {
                 "type": "string",
-                "description": "Service account key used for authentication. If set, the key flow will be used to authenticate all operations.\n"
+                "description": "Service account key used for authentication. If set, the key flow will be used to authenticate all operations."
             },
             "serviceAccountKeyPath": {
                 "type": "string",
-                "description": "Path for the service account key used for authentication. If set, the key flow will be used to authenticate all\noperations.\n"
+                "description": "Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations."
             },
             "serviceAccountToken": {
                 "type": "string",
-                "description": "Token used for authentication. If set, the token flow will be used to authenticate all operations.\n",
+                "description": "Token used for authentication. If set, the token flow will be used to authenticate all operations.",
                 "deprecationMessage": "Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html"
             },
             "serviceEnablementCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Service Enablement API\n"
+                "description": "Custom endpoint for the Service Enablement API"
             },
             "skeCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Kubernetes Engine (SKE) service\n"
+                "description": "Custom endpoint for the Kubernetes Engine (SKE) service"
             },
             "sqlserverflexCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the SQL Server Flex service\n"
+                "description": "Custom endpoint for the SQL Server Flex service"
             },
             "tokenCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the token API, which is used to request access tokens when using the key flow\n"
+                "description": "Custom endpoint for the token API, which is used to request access tokens when using the key flow"
             }
         },
         "inputProperties": {
             "authorizationCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Membership service\n"
+                "description": "Custom endpoint for the Membership service"
             },
             "cdnCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the CDN service\n"
+                "description": "Custom endpoint for the CDN service"
             },
             "credentialsPath": {
                 "type": "string",
-                "description": "Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default\nvalue is `~/.stackit/credentials.json`.\n"
+                "description": "Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`."
             },
             "defaultRegion": {
                 "type": "string",
-                "description": "Region will be used as the default location for regional services. Not all services require a region, some are global\n"
+                "description": "Region will be used as the default location for regional services. Not all services require a region, some are global"
             },
             "dnsCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the DNS service\n"
+                "description": "Custom endpoint for the DNS service"
             },
             "enableBetaResources": {
                 "type": "boolean",
-                "description": "Enable beta resources. Default is false.\n"
+                "description": "Enable beta resources. Default is false."
             },
             "experiments": {
                 "type": "array",
                 "items": {
                     "type": "string"
                 },
-                "description": "Enables experiments. These are unstable features without official support. More information can be found in the README.\nAvailable Experiments: iam, routing-tables, network\n"
+                "description": "Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network"
             },
             "gitCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Git service\n"
+                "description": "Custom endpoint for the Git service"
             },
             "iaasCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the IaaS service\n"
+                "description": "Custom endpoint for the IaaS service"
             },
             "loadbalancerCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Load Balancer service\n"
+                "description": "Custom endpoint for the Load Balancer service"
             },
             "logmeCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the LogMe service\n"
+                "description": "Custom endpoint for the LogMe service"
             },
             "mariadbCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the MariaDB service\n"
+                "description": "Custom endpoint for the MariaDB service"
             },
             "modelservingCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the AI Model Serving service\n"
+                "description": "Custom endpoint for the AI Model Serving service"
             },
             "mongodbflexCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the MongoDB Flex service\n"
+                "description": "Custom endpoint for the MongoDB Flex service"
             },
             "objectstorageCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Object Storage service\n"
+                "description": "Custom endpoint for the Object Storage service"
             },
             "observabilityCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Observability service\n"
+                "description": "Custom endpoint for the Observability service"
             },
             "opensearchCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the OpenSearch service\n"
+                "description": "Custom endpoint for the OpenSearch service"
             },
             "postgresflexCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the PostgresFlex service\n"
+                "description": "Custom endpoint for the PostgresFlex service"
             },
             "privateKey": {
                 "type": "string",
-                "description": "Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is\nincluded in the service account key.\n"
+                "description": "Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key."
             },
             "privateKeyPath": {
                 "type": "string",
-                "description": "Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private\nkey that is included in the service account key.\n"
+                "description": "Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key."
             },
             "rabbitmqCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the RabbitMQ service\n"
+                "description": "Custom endpoint for the RabbitMQ service"
             },
             "redisCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Redis service\n"
+                "description": "Custom endpoint for the Redis service"
             },
             "region": {
                 "type": "string",
-                "description": "Region will be used as the default location for regional services. Not all services require a region, some are global\n",
+                "description": "Region will be used as the default location for regional services. Not all services require a region, some are global",
                 "deprecationMessage": "This attribute is deprecated. Use 'default_region' instead"
             },
             "resourcemanagerCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Resource Manager service\n"
+                "description": "Custom endpoint for the Resource Manager service"
             },
             "secretsmanagerCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Secrets Manager service\n"
+                "description": "Custom endpoint for the Secrets Manager service"
             },
             "serverBackupCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Server Backup service\n"
+                "description": "Custom endpoint for the Server Backup service"
             },
             "serverUpdateCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Server Update service\n"
+                "description": "Custom endpoint for the Server Update service"
             },
             "serviceAccountCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Service Account service\n"
+                "description": "Custom endpoint for the Service Account service"
             },
             "serviceAccountEmail": {
                 "type": "string",
-                "description": "Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required\nif you want to use the resource manager project resource.\n",
+                "description": "Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.",
                 "deprecationMessage": "The `service_account_email` field has been deprecated because it is not required. Will be removed after June 12th 2025."
             },
             "serviceAccountKey": {
                 "type": "string",
-                "description": "Service account key used for authentication. If set, the key flow will be used to authenticate all operations.\n"
+                "description": "Service account key used for authentication. If set, the key flow will be used to authenticate all operations."
             },
             "serviceAccountKeyPath": {
                 "type": "string",
-                "description": "Path for the service account key used for authentication. If set, the key flow will be used to authenticate all\noperations.\n"
+                "description": "Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations."
             },
             "serviceAccountToken": {
                 "type": "string",
-                "description": "Token used for authentication. If set, the token flow will be used to authenticate all operations.\n",
+                "description": "Token used for authentication. If set, the token flow will be used to authenticate all operations.",
                 "deprecationMessage": "Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html"
             },
             "serviceEnablementCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Service Enablement API\n"
+                "description": "Custom endpoint for the Service Enablement API"
             },
             "skeCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the Kubernetes Engine (SKE) service\n"
+                "description": "Custom endpoint for the Kubernetes Engine (SKE) service"
             },
             "sqlserverflexCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the SQL Server Flex service\n"
+                "description": "Custom endpoint for the SQL Server Flex service"
             },
             "tokenCustomEndpoint": {
                 "type": "string",
-                "description": "Custom endpoint for the token API, which is used to request access tokens when using the key flow\n"
+                "description": "Custom endpoint for the token API, which is used to request access tokens when using the key flow"
             }
         },
         "methods": {
@@ -6278,7 +6308,7 @@
             }
         },
         "stackit:index/loadbalancer:Loadbalancer": {
-            "description": "## Example Usage\n\n```terraform\n# Create a network\nresource \"stackit_network\" \"example_network\" {\n  project_id       = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name             = \"example-network\"\n  ipv4_nameservers = [\"8.8.8.8\"]\n  ipv4_prefix      = \"192.168.0.0/25\"\n  labels = {\n    \"key\" = \"value\"\n  }\n  routed = true\n}\n\n# Create a network interface\nresource \"stackit_network_interface\" \"nic\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_id = stackit_network.example_network.network_id\n}\n\n# Create a public IP for the load balancer\nresource \"stackit_public_ip\" \"public-ip\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  lifecycle {\n    ignore_changes = [network_interface_id]\n  }\n}\n\n# Create a key pair for accessing the server instance\nresource \"stackit_key_pair\" \"keypair\" {\n  name       = \"example-key-pair\"\n  public_key = chomp(file(\"path/to/id_rsa.pub\"))\n}\n\n# Create a server instance\nresource \"stackit_server\" \"boot-from-image\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-server\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"59838a89-51b1-4892-b57f-b3caf598ee2f\" // Ubuntu 24.04\n  }\n  availability_zone = \"xxxx-x\"\n  machine_type      = \"g1.1\"\n  keypair_name      = stackit_key_pair.keypair.name\n  network_interfaces = [\n    stackit_network_interface.nic.network_interface_id\n  ]\n}\n\n# Create a load balancer\nresource \"stackit_loadbalancer\" \"example\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-load-balancer\"\n  plan_id    = \"p10\"\n  target_pools = [\n    {\n      name        = \"example-target-pool\"\n      target_port = 80\n      targets = [\n        {\n          display_name = stackit_server.boot-from-image.name\n          ip           = stackit_network_interface.nic.ipv4\n        }\n      ]\n      active_health_check = {\n        healthy_threshold   = 10\n        interval            = \"3s\"\n        interval_jitter     = \"3s\"\n        timeout             = \"3s\"\n        unhealthy_threshold = 10\n      }\n    }\n  ]\n  listeners = [\n    {\n      display_name = \"example-listener\"\n      port         = 80\n      protocol     = \"PROTOCOL_TCP\"\n      target_pool  = \"example-target-pool\"\n    }\n  ]\n  networks = [\n    {\n      network_id = stackit_network.example_network.network_id\n      role       = \"ROLE_LISTENERS_AND_TARGETS\"\n    }\n  ]\n  external_address = stackit_public_ip.public-ip.ip\n  options = {\n    private_network_only = false\n  }\n}\n\n# Only use the import statement, if you want to import an existing loadbalancer\nimport {\n  to = stackit_loadbalancer.import-example\n  id = \"${var.project_id},${var.region},${var.loadbalancer_name}\"\n}\n```\n",
+            "description": "## Example Usage\n\n```terraform\n# Create a network\nresource \"stackit_network\" \"example_network\" {\n  project_id       = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name             = \"example-network\"\n  ipv4_nameservers = [\"8.8.8.8\"]\n  ipv4_prefix      = \"192.168.0.0/25\"\n  labels = {\n    \"key\" = \"value\"\n  }\n  routed = true\n}\n\n# Create a network interface\nresource \"stackit_network_interface\" \"nic\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_id = stackit_network.example_network.network_id\n}\n\n# Create a public IP for the load balancer\nresource \"stackit_public_ip\" \"public-ip\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  lifecycle {\n    ignore_changes = [network_interface_id]\n  }\n}\n\n# Create a key pair for accessing the server instance\nresource \"stackit_key_pair\" \"keypair\" {\n  name       = \"example-key-pair\"\n  public_key = chomp(file(\"path/to/id_rsa.pub\"))\n}\n\n# Create a server instance\nresource \"stackit_server\" \"boot-from-image\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-server\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"59838a89-51b1-4892-b57f-b3caf598ee2f\" // Ubuntu 24.04\n  }\n  availability_zone = \"xxxx-x\"\n  machine_type      = \"g2i.1\"\n  keypair_name      = stackit_key_pair.keypair.name\n  network_interfaces = [\n    stackit_network_interface.nic.network_interface_id\n  ]\n}\n\n# Create a load balancer\nresource \"stackit_loadbalancer\" \"example\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-load-balancer\"\n  plan_id    = \"p10\"\n  target_pools = [\n    {\n      name        = \"example-target-pool\"\n      target_port = 80\n      targets = [\n        {\n          display_name = stackit_server.boot-from-image.name\n          ip           = stackit_network_interface.nic.ipv4\n        }\n      ]\n      active_health_check = {\n        healthy_threshold   = 10\n        interval            = \"3s\"\n        interval_jitter     = \"3s\"\n        timeout             = \"3s\"\n        unhealthy_threshold = 10\n      }\n    }\n  ]\n  listeners = [\n    {\n      display_name = \"example-listener\"\n      port         = 80\n      protocol     = \"PROTOCOL_TCP\"\n      target_pool  = \"example-target-pool\"\n    }\n  ]\n  networks = [\n    {\n      network_id = stackit_network.example_network.network_id\n      role       = \"ROLE_LISTENERS_AND_TARGETS\"\n    }\n  ]\n  external_address = stackit_public_ip.public-ip.ip\n  options = {\n    private_network_only = false\n  }\n}\n\n# Only use the import statement, if you want to import an existing loadbalancer\nimport {\n  to = stackit_loadbalancer.import-example\n  id = \"${var.project_id},${var.region},${var.loadbalancer_name}\"\n}\n```\n",
             "properties": {
                 "externalAddress": {
                     "type": "string",
@@ -8677,7 +8707,7 @@
             }
         },
         "stackit:index/observabilityInstance:ObservabilityInstance": {
-            "description": "Observability instance resource schema. Must have a `region` specified in the provider configuration.\n\n## Example Usage\n\n```terraform\nresource \"stackit_observability_instance\" \"example\" {\n  project_id                             = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name                                   = \"example-instance\"\n  plan_name                              = \"Observability-Monitoring-Medium-EU01\"\n  acl                                    = [\"1.1.1.1/32\", \"2.2.2.2/32\"]\n  metrics_retention_days                 = 30\n  metrics_retention_days_5m_downsampling = 10\n  metrics_retention_days_1h_downsampling = 5\n}\n\n# Only use the import statement, if you want to import an existing observability instance\nimport {\n  to = stackit_observability_instance.import-example\n  id = \"${var.project_id},${var.observability_instance_id}\"\n}\n```\n",
+            "description": "Observability instance resource schema. Must have a `region` specified in the provider configuration.\n\n## Example Usage\n\n```terraform\nresource \"stackit_observability_instance\" \"example\" {\n  project_id                             = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name                                   = \"example-instance\"\n  plan_name                              = \"Observability-Monitoring-Medium-EU01\"\n  acl                                    = [\"1.1.1.1/32\", \"2.2.2.2/32\"]\n  metrics_retention_days                 = 90\n  metrics_retention_days_5m_downsampling = 90\n  metrics_retention_days_1h_downsampling = 90\n}\n\n# Only use the import statement, if you want to import an existing observability instance\nimport {\n  to = stackit_observability_instance.import-example\n  id = \"${var.project_id},${var.observability_instance_id}\"\n}\n```\n",
             "properties": {
                 "acls": {
                     "type": "array",
@@ -8743,15 +8773,15 @@
                 },
                 "metricsRetentionDays": {
                     "type": "integer",
-                    "description": "Specifies for how many days the raw metrics are kept.\n"
+                    "description": "Specifies for how many days the raw metrics are kept. Default is set to `90`.\n"
                 },
                 "metricsRetentionDays1hDownsampling": {
                     "type": "integer",
-                    "description": "Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).\n"
+                    "description": "Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.\n"
                 },
                 "metricsRetentionDays5mDownsampling": {
                     "type": "integer",
-                    "description": "Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).\n"
+                    "description": "Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.\n"
                 },
                 "metricsUrl": {
                     "type": "string",
@@ -8832,15 +8862,15 @@
                 },
                 "metricsRetentionDays": {
                     "type": "integer",
-                    "description": "Specifies for how many days the raw metrics are kept.\n"
+                    "description": "Specifies for how many days the raw metrics are kept. Default is set to `90`.\n"
                 },
                 "metricsRetentionDays1hDownsampling": {
                     "type": "integer",
-                    "description": "Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).\n"
+                    "description": "Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.\n"
                 },
                 "metricsRetentionDays5mDownsampling": {
                     "type": "integer",
-                    "description": "Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).\n"
+                    "description": "Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.\n"
                 },
                 "name": {
                     "type": "string",
@@ -8933,15 +8963,15 @@
                     },
                     "metricsRetentionDays": {
                         "type": "integer",
-                        "description": "Specifies for how many days the raw metrics are kept.\n"
+                        "description": "Specifies for how many days the raw metrics are kept. Default is set to `90`.\n"
                     },
                     "metricsRetentionDays1hDownsampling": {
                         "type": "integer",
-                        "description": "Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).\n"
+                        "description": "Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.\n"
                     },
                     "metricsRetentionDays5mDownsampling": {
                         "type": "integer",
-                        "description": "Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).\n"
+                        "description": "Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.\n"
                     },
                     "metricsUrl": {
                         "type": "string",
@@ -10554,30 +10584,30 @@
             "properties": {
                 "containerId": {
                     "type": "string",
-                    "description": "Project container ID. Globally unique, user-friendly identifier.\n"
+                    "description": "Project container ID. Globally unique, user-friendly identifier."
                 },
                 "labels": {
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
                     },
-                    "description": "Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex\n[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a\nproject within a STACKIT Network Area, setting the label `networkArea=\u003cnetworkAreaID\u003e` is required. This can not be\nchanged after project creation.\n"
+                    "description": "Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.  \nTo create a project within a STACKIT Network Area, setting the label `networkArea=\u003cnetworkAreaID\u003e` is required. This can not be changed after project creation."
                 },
                 "name": {
                     "type": "string",
-                    "description": "Project name.\n"
+                    "description": "Project name."
                 },
                 "ownerEmail": {
                     "type": "string",
-                    "description": "Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will\nhave no effect.\n"
+                    "description": "Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect."
                 },
                 "parentContainerId": {
                     "type": "string",
-                    "description": "Parent resource identifier. Both container ID (user-friendly) and UUID are supported\n"
+                    "description": "Parent resource identifier. Both container ID (user-friendly) and UUID are supported"
                 },
                 "projectId": {
                     "type": "string",
-                    "description": "Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project.\n"
+                    "description": "Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project."
                 }
             },
             "required": [
@@ -10593,19 +10623,19 @@
                     "additionalProperties": {
                         "type": "string"
                     },
-                    "description": "Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex\n[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a\nproject within a STACKIT Network Area, setting the label `networkArea=\u003cnetworkAreaID\u003e` is required. This can not be\nchanged after project creation.\n"
+                    "description": "Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.  \nTo create a project within a STACKIT Network Area, setting the label `networkArea=\u003cnetworkAreaID\u003e` is required. This can not be changed after project creation."
                 },
                 "name": {
                     "type": "string",
-                    "description": "Project name.\n"
+                    "description": "Project name."
                 },
                 "ownerEmail": {
                     "type": "string",
-                    "description": "Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will\nhave no effect.\n"
+                    "description": "Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect."
                 },
                 "parentContainerId": {
                     "type": "string",
-                    "description": "Parent resource identifier. Both container ID (user-friendly) and UUID are supported\n"
+                    "description": "Parent resource identifier. Both container ID (user-friendly) and UUID are supported"
                 }
             },
             "requiredInputs": [
@@ -10617,30 +10647,30 @@
                 "properties": {
                     "containerId": {
                         "type": "string",
-                        "description": "Project container ID. Globally unique, user-friendly identifier.\n"
+                        "description": "Project container ID. Globally unique, user-friendly identifier."
                     },
                     "labels": {
                         "type": "object",
                         "additionalProperties": {
                             "type": "string"
                         },
-                        "description": "Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex\n[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a\nproject within a STACKIT Network Area, setting the label `networkArea=\u003cnetworkAreaID\u003e` is required. This can not be\nchanged after project creation.\n"
+                        "description": "Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.  \nTo create a project within a STACKIT Network Area, setting the label `networkArea=\u003cnetworkAreaID\u003e` is required. This can not be changed after project creation."
                     },
                     "name": {
                         "type": "string",
-                        "description": "Project name.\n"
+                        "description": "Project name."
                     },
                     "ownerEmail": {
                         "type": "string",
-                        "description": "Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will\nhave no effect.\n"
+                        "description": "Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect."
                     },
                     "parentContainerId": {
                         "type": "string",
-                        "description": "Parent resource identifier. Both container ID (user-friendly) and UUID are supported\n"
+                        "description": "Parent resource identifier. Both container ID (user-friendly) and UUID are supported"
                     },
                     "projectId": {
                         "type": "string",
-                        "description": "Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project.\n"
+                        "description": "Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project."
                     }
                 },
                 "type": "object"
@@ -11372,7 +11402,7 @@
             }
         },
         "stackit:index/server:Server": {
-            "description": "Server resource schema. Must have a region specified in the provider configuration.\n\n## Example Usage\n\n### With key pair\n```terraform\nresource \"stackit_key_pair\" \"keypair\" {\n  name       = \"example-key-pair\"\n  public_key = chomp(file(\"path/to/id_rsa.pub\"))\n}\n\nresource \"stackit_server\" \"user-data-from-file\" {\n  project_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  name         = \"example-server\"\n  machine_type = \"g1.1\"\n  keypair_name = stackit_key_pair.keypair.name\n  user_data    = file(\"${path.module}/cloud-init.yaml\")\n}\n\n```\n\n### Boot from volume\n```terraform\nresource \"stackit_server\" \"boot-from-volume\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-server\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  availability_zone = \"eu01-1\"\n  machine_type      = \"g1.1\"\n  keypair_name      = \"example-keypair\"\n}\n\n```\n\n### Boot from existing volume\n```terraform\nresource \"stackit_volume\" \"example-volume\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  size       = 12\n  source = {\n    type = \"image\"\n    id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  name              = \"example-volume\"\n  availability_zone = \"eu01-1\"\n}\n\nresource \"stackit_server\" \"boot-from-volume\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-server\"\n  boot_volume = {\n    source_type = \"volume\"\n    source_id   = stackit_volume.example-volume.volume_id\n  }\n  availability_zone = \"eu01-1\"\n  machine_type      = \"g1.1\"\n  keypair_name = stackit_key_pair.keypair.name\n}\n\n```\n\n### Network setup\n```terraform\nresource \"stackit_network\" \"network\" {\n  project_id         = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name               = \"example-network\"\n  nameservers        = [\"192.0.2.0\", \"198.51.100.0\", \"203.0.113.0\"]\n  ipv4_prefix_length = 24\n}\n\nresource \"stackit_security_group\" \"sec-group\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-security-group\"\n  stateful   = true\n}\n\nresource \"stackit_security_group_rule\" \"rule\" {\n  project_id        = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  security_group_id = stackit_security_group.sec-group.security_group_id\n  direction         = \"ingress\"\n  ether_type         = \"IPv4\"\n}\n\nresource \"stackit_network_interface\" \"nic\" {\n  project_id         = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_id         = stackit_network.network.network_id\n  security_group_ids = [stackit_security_group.sec-group.security_group_id]\n}\n\nresource \"stackit_server\" \"server-with-network\" {\n  project_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name         = \"example-server\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  machine_type = \"g1.1\"\n  keypair_name = stackit_key_pair.keypair.name\n  network_interfaces = [\n    stackit_network_interface.nic.network_interface_id\n  ]\t\n}\n\nresource \"stackit_public_ip\" \"public-ip\" {\n  project_id           = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_interface_id = stackit_network_interface.nic.network_interface_id\n}\n\n```\n\n### Server with attached volume\n```terraform\nresource \"stackit_volume\" \"example-volume\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  size       = 12\n  performance_class = \"storage_premium_perf6\"\n  name              = \"example-volume\"\n  availability_zone = \"eu01-1\"\n}\n\nresource \"stackit_server\" \"server-with-volume\" {\n  project_id        = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name              = \"example-server\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  availability_zone = \"eu01-1\"\n  machine_type      = \"g1.1\"\n  keypair_name = stackit_key_pair.keypair.name\n}\n\nresource \"stackit_server_volume_attach\" \"attach_volume\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  server_id  = stackit_server.server-with-volume.server_id\n  volume_id  = stackit_volume.example-volume.volume_id\n}\n\n```\n\n### Server with user data (cloud-init)\n```terraform\nresource \"stackit_server\" \"user-data\" {\n  project_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  name         = \"example-server\"\n  machine_type = \"g1.1\"\n  keypair_name = stackit_key_pair.keypair.name\n  user_data    = \"#!/bin/bash\\n/bin/su\"\n}\n\nresource \"stackit_server\" \"user-data-from-file\" {\n  project_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  name         = \"example-server\"\n  machine_type = \"g1.1\"\n  keypair_name = stackit_key_pair.keypair.name\n  user_data    = file(\"${path.module}/cloud-init.yaml\")\n}\n\n```\n\n\n### Additional Examples\n\n```terraform\nresource \"stackit_server\" \"example\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-server\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"59838a89-51b1-4892-b57f-b3caf598ee2f\" // Ubuntu 24.04\n  }\n  availability_zone = \"xxxx-x\"\n  machine_type      = \"g1.1\"\n  network_interfaces = [\n    stackit_network_interface.example.network_interface_id\n  ]\n}\n\n# Only use the import statement, if you want to import an existing server\n# Note: There will be a conflict which needs to be resolved manually.\n# Must set a configuration value for the boot_volume.source_type and boot_volume.source_id attribute as the provider has marked it as required.\n# Since those attributes are not fetched in general from the API call, after adding them this would replace your server resource after an pulumi up.\n# In order to prevent this you need to add:\n# lifecycle {\n#   ignore_changes = [ boot_volume ]\n# }\nimport {\n  to = stackit_server.import-example\n  id = \"${var.project_id},${var.server_id}\"\n}\n```\n",
+            "description": "Server resource schema. Must have a region specified in the provider configuration.\n\n## Example Usage\n\n### With key pair\n```terraform\nresource \"stackit_key_pair\" \"keypair\" {\n  name       = \"example-key-pair\"\n  public_key = chomp(file(\"path/to/id_rsa.pub\"))\n}\n\nresource \"stackit_server\" \"user-data-from-file\" {\n  project_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  name         = \"example-server\"\n  machine_type = \"g2i.1\"\n  keypair_name = stackit_key_pair.keypair.name\n  user_data    = file(\"${path.module}/cloud-init.yaml\")\n}\n\n```\n\n### Boot from volume\n```terraform\nresource \"stackit_server\" \"boot-from-volume\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-server\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  availability_zone = \"eu01-1\"\n  machine_type      = \"g2i.1\"\n  keypair_name      = \"example-keypair\"\n}\n\n```\n\n### Boot from existing volume\n```terraform\nresource \"stackit_volume\" \"example-volume\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  size       = 12\n  source = {\n    type = \"image\"\n    id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  name              = \"example-volume\"\n  availability_zone = \"eu01-1\"\n}\n\nresource \"stackit_server\" \"boot-from-volume\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-server\"\n  boot_volume = {\n    source_type = \"volume\"\n    source_id   = stackit_volume.example-volume.volume_id\n  }\n  availability_zone = \"eu01-1\"\n  machine_type      = \"g2i.1\"\n  keypair_name = stackit_key_pair.keypair.name\n}\n\n```\n\n### Network setup\n```terraform\nresource \"stackit_network\" \"network\" {\n  project_id         = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name               = \"example-network\"\n  nameservers        = [\"192.0.2.0\", \"198.51.100.0\", \"203.0.113.0\"]\n  ipv4_prefix_length = 24\n}\n\nresource \"stackit_security_group\" \"sec-group\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-security-group\"\n  stateful   = true\n}\n\nresource \"stackit_security_group_rule\" \"rule\" {\n  project_id        = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  security_group_id = stackit_security_group.sec-group.security_group_id\n  direction         = \"ingress\"\n  ether_type         = \"IPv4\"\n}\n\nresource \"stackit_network_interface\" \"nic\" {\n  project_id         = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_id         = stackit_network.network.network_id\n  security_group_ids = [stackit_security_group.sec-group.security_group_id]\n}\n\nresource \"stackit_server\" \"server-with-network\" {\n  project_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name         = \"example-server\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  machine_type = \"g2i.1\"\n  keypair_name = stackit_key_pair.keypair.name\n  network_interfaces = [\n    stackit_network_interface.nic.network_interface_id\n  ]\t\n}\n\nresource \"stackit_public_ip\" \"public-ip\" {\n  project_id           = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  network_interface_id = stackit_network_interface.nic.network_interface_id\n}\n\n```\n\n### Server with attached volume\n```terraform\nresource \"stackit_volume\" \"example-volume\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  size       = 12\n  performance_class = \"storage_premium_perf6\"\n  name              = \"example-volume\"\n  availability_zone = \"eu01-1\"\n}\n\nresource \"stackit_server\" \"server-with-volume\" {\n  project_id        = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name              = \"example-server\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  availability_zone = \"eu01-1\"\n  machine_type      = \"g2i.1\"\n  keypair_name = stackit_key_pair.keypair.name\n}\n\nresource \"stackit_server_volume_attach\" \"attach_volume\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  server_id  = stackit_server.server-with-volume.server_id\n  volume_id  = stackit_volume.example-volume.volume_id\n}\n\n```\n\n### Server with user data (cloud-init)\n```terraform\nresource \"stackit_server\" \"user-data\" {\n  project_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  name         = \"example-server\"\n  machine_type = \"g2i.1\"\n  keypair_name = stackit_key_pair.keypair.name\n  user_data    = \"#!/bin/bash\\n/bin/su\"\n}\n\nresource \"stackit_server\" \"user-data-from-file\" {\n  project_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  }\n  name         = \"example-server\"\n  machine_type = \"g2i.1\"\n  keypair_name = stackit_key_pair.keypair.name\n  user_data    = file(\"${path.module}/cloud-init.yaml\")\n}\n\n```\n\n\n### Additional Examples\n\n```terraform\nresource \"stackit_server\" \"example\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  name       = \"example-server\"\n  boot_volume = {\n    size        = 64\n    source_type = \"image\"\n    source_id   = \"59838a89-51b1-4892-b57f-b3caf598ee2f\" // Ubuntu 24.04\n  }\n  availability_zone = \"xxxx-x\"\n  machine_type      = \"g2i.1\"\n  network_interfaces = [\n    stackit_network_interface.example.network_interface_id\n  ]\n}\n\n# Only use the import statement, if you want to import an existing server\n# Note: There will be a conflict which needs to be resolved manually.\n# Must set a configuration value for the boot_volume.source_type and boot_volume.source_id attribute as the provider has marked it as required.\n# Since those attributes are not fetched in general from the API call, after adding them this would replace your server resource after an pulumi up.\n# In order to prevent this you need to add:\n# lifecycle {\n#   ignore_changes = [ boot_volume ]\n# }\nimport {\n  to = stackit_server.import-example\n  id = \"${var.project_id},${var.server_id}\"\n}\n```\n",
             "properties": {
                 "affinityGroup": {
                     "type": "string",
@@ -14053,6 +14083,80 @@
                 ]
             }
         },
+        "stackit:index/getMachineType:getMachineType": {
+            "description": "Machine type data source.\n\n\u003e This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.\n\n## Example Usage\n\n```terraform\ndata \"stackit_machine_type\" \"two_vcpus_filter\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  filter     = \"vcpus==2\"\n}\n\ndata \"stackit_machine_type\" \"filter_sorted_ascending_false\" {\n  project_id     = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  filter         = \"vcpus \u003e= 2 \u0026\u0026 ram \u003e= 2048\"\n  sort_ascending = false\n}\n\ndata \"stackit_machine_type\" \"intel_icelake_generic_filter\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  filter     = \"extraSpecs.cpu==\\\"intel-icelake-generic\\\" \u0026\u0026 vcpus == 2\"\n}\n\n# returns warning\ndata \"stackit_machine_type\" \"no_match\" {\n  project_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  filter     = \"vcpus == 99\"\n}\n```\n",
+            "inputs": {
+                "description": "A collection of arguments for invoking getMachineType.\n",
+                "properties": {
+                    "filter": {
+                        "type": "string",
+                        "description": "Expr-lang filter for filtering machine types.\n"
+                    },
+                    "projectId": {
+                        "type": "string"
+                    },
+                    "sortAscending": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "filter",
+                    "projectId"
+                ]
+            },
+            "outputs": {
+                "description": "A collection of values returned by getMachineType.\n",
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    },
+                    "disk": {
+                        "type": "integer"
+                    },
+                    "extraSpecs": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "filter": {
+                        "type": "string",
+                        "description": "Expr-lang filter for filtering machine types.\n"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "projectId": {
+                        "type": "string"
+                    },
+                    "ram": {
+                        "type": "integer"
+                    },
+                    "sortAscending": {
+                        "type": "boolean"
+                    },
+                    "vcpus": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "description",
+                    "disk",
+                    "extraSpecs",
+                    "filter",
+                    "id",
+                    "name",
+                    "projectId",
+                    "ram",
+                    "vcpus"
+                ]
+            }
+        },
         "stackit:index/getMariadbCredential:getMariadbCredential": {
             "description": "MariaDB credential data source schema. Must have a `region` specified in the provider configuration.\n\n## Example Usage\n\n```terraform\ndata \"stackit_mariadb_credential\" \"example\" {\n  project_id    = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  instance_id   = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n  credential_id = \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n",
             "inputs": {
@@ -15182,15 +15286,15 @@
                     },
                     "metricsRetentionDays": {
                         "type": "integer",
-                        "description": "Specifies for how many days the raw metrics are kept.\n"
+                        "description": "Specifies for how many days the raw metrics are kept. Default is set to `90`.\n"
                     },
                     "metricsRetentionDays1hDownsampling": {
                         "type": "integer",
-                        "description": "Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).\n"
+                        "description": "Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.\n"
                     },
                     "metricsRetentionDays5mDownsampling": {
                         "type": "integer",
-                        "description": "Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).\n"
+                        "description": "Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.\n"
                     },
                     "metricsUrl": {
                         "type": "string",
