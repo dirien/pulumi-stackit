@@ -11,8 +11,8 @@ replace (
 
 require (
 	github.com/pulumi/pulumi-terraform-bridge/pf v0.49.0
-	github.com/pulumi/pulumi-terraform-bridge/v3 v3.112.0
-	github.com/pulumi/pulumi/sdk/v3 v3.185.0
+	github.com/pulumi/pulumi-terraform-bridge/v3 v3.113.0
+	github.com/pulumi/pulumi/sdk/v3 v3.190.0
 	github.com/stackitcloud/terraform-provider-stackit/shim v0.0.0
 )
 
@@ -136,11 +136,11 @@ require (
 	github.com/pkg/term v1.1.0 // indirect
 	github.com/posener/complete v1.2.3 // indirect
 	github.com/pulumi/appdash v0.0.0-20231130102222-75f619a67231 // indirect
-	github.com/pulumi/esc v0.14.3 // indirect
+	github.com/pulumi/esc v0.17.0 // indirect
 	github.com/pulumi/inflector v0.1.1 // indirect
 	github.com/pulumi/pulumi-java/pkg v1.12.0 // indirect
 	github.com/pulumi/pulumi-yaml v1.19.1 // indirect
-	github.com/pulumi/pulumi/pkg/v3 v3.185.0 // indirect
+	github.com/pulumi/pulumi/pkg/v3 v3.190.0 // indirect
 	github.com/pulumi/schema-tools v0.1.2 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
@@ -161,7 +161,7 @@ require (
 	github.com/stackitcloud/stackit-sdk-go/services/cdn v1.4.0 // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/dns v0.17.1 // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/git v0.7.1 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/iaas v0.29.1 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/iaas v0.29.2 // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/iaasalpha v0.1.21-alpha // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/loadbalancer v1.5.1 // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/logme v0.25.1 // indirect
@@ -169,7 +169,7 @@ require (
 	github.com/stackitcloud/stackit-sdk-go/services/modelserving v0.5.1 // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/mongodbflex v1.5.2 // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/objectstorage v1.3.1 // indirect
-	github.com/stackitcloud/stackit-sdk-go/services/observability v0.10.0 // indirect
+	github.com/stackitcloud/stackit-sdk-go/services/observability v0.11.1 // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/opensearch v0.24.1 // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/postgresflex v1.2.1 // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/rabbitmq v0.25.1 // indirect
@@ -182,7 +182,7 @@ require (
 	github.com/stackitcloud/stackit-sdk-go/services/serviceenablement v1.2.2 // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/ske v1.3.0 // indirect
 	github.com/stackitcloud/stackit-sdk-go/services/sqlserverflex v1.3.1 // indirect
-	github.com/stackitcloud/terraform-provider-stackit v0.61.0 // indirect
+	github.com/stackitcloud/terraform-provider-stackit v0.63.0 // indirect
 	github.com/teambition/rrule-go v1.8.2 // indirect
 	github.com/teekennedy/goldmark-markdown v0.3.0 // indirect
 	github.com/texttheater/golang-levenshtein v1.0.1 // indirect
