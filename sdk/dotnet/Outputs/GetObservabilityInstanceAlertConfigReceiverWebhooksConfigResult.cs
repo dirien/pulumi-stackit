@@ -15,6 +15,10 @@ namespace ediri.Stackit.Outputs
     public sealed class GetObservabilityInstanceAlertConfigReceiverWebhooksConfigResult
     {
         /// <summary>
+        /// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        /// </summary>
+        public readonly bool GoogleChat;
+        /// <summary>
         /// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
         /// </summary>
         public readonly bool MsTeams;
@@ -25,10 +29,13 @@ namespace ediri.Stackit.Outputs
 
         [OutputConstructor]
         private GetObservabilityInstanceAlertConfigReceiverWebhooksConfigResult(
+            bool googleChat,
+
             bool msTeams,
 
             string url)
         {
+            GoogleChat = googleChat;
             MsTeams = msTeams;
             Url = url;
         }

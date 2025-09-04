@@ -139,6 +139,8 @@ __all__ = [
     'SqlserverflexInstanceStorageArgsDict',
     'VolumeSourceArgs',
     'VolumeSourceArgsDict',
+    'GetImageV2FilterArgs',
+    'GetImageV2FilterArgsDict',
 ]
 
 MYPY = False
@@ -2394,7 +2396,7 @@ if not MYPY:
         """
         global_: NotRequired[pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgsDict']]
         """
-        Global configuration for the alerts.
+        Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
         """
 elif False:
     ObservabilityInstanceAlertConfigArgsDict: TypeAlias = Mapping[str, Any]
@@ -2408,7 +2410,7 @@ class ObservabilityInstanceAlertConfigArgs:
         """
         :param pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigReceiverArgs']]] receivers: List of alert receivers.
         :param pulumi.Input['ObservabilityInstanceAlertConfigRouteArgs'] route: Route configuration for the alerts.
-        :param pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgs'] global_: Global configuration for the alerts.
+        :param pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgs'] global_: Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
         """
         pulumi.set(__self__, "receivers", receivers)
         pulumi.set(__self__, "route", route)
@@ -2443,7 +2445,7 @@ class ObservabilityInstanceAlertConfigArgs:
     @pulumi.getter(name="global")
     def global_(self) -> Optional[pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgs']]:
         """
-        Global configuration for the alerts.
+        Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
         """
         return pulumi.get(self, "global_")
 
@@ -2857,6 +2859,10 @@ if not MYPY:
         """
         The host to send OpsGenie API requests to. Must be a valid URL
         """
+        priority: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        """
         tags: NotRequired[pulumi.Input[_builtins.str]]
         """
         Comma separated list of tags attached to the notifications.
@@ -2869,16 +2875,20 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs:
     def __init__(__self__, *,
                  api_key: Optional[pulumi.Input[_builtins.str]] = None,
                  api_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 priority: Optional[pulumi.Input[_builtins.str]] = None,
                  tags: Optional[pulumi.Input[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] api_key: The API key for OpsGenie.
         :param pulumi.Input[_builtins.str] api_url: The host to send OpsGenie API requests to. Must be a valid URL
+        :param pulumi.Input[_builtins.str] priority: Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
         :param pulumi.Input[_builtins.str] tags: Comma separated list of tags attached to the notifications.
         """
         if api_key is not None:
             pulumi.set(__self__, "api_key", api_key)
         if api_url is not None:
             pulumi.set(__self__, "api_url", api_url)
+        if priority is not None:
+            pulumi.set(__self__, "priority", priority)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
 
@@ -2908,6 +2918,18 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs:
 
     @_builtins.property
     @pulumi.getter
+    def priority(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        """
+        return pulumi.get(self, "priority")
+
+    @priority.setter
+    def priority(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "priority", value)
+
+    @_builtins.property
+    @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         Comma separated list of tags attached to the notifications.
@@ -2921,6 +2943,10 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs:
 
 if not MYPY:
     class ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgsDict(TypedDict):
+        google_chat: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        """
         ms_teams: NotRequired[pulumi.Input[_builtins.bool]]
         """
         Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
@@ -2935,16 +2961,32 @@ elif False:
 @pulumi.input_type
 class ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs:
     def __init__(__self__, *,
+                 google_chat: Optional[pulumi.Input[_builtins.bool]] = None,
                  ms_teams: Optional[pulumi.Input[_builtins.bool]] = None,
                  url: Optional[pulumi.Input[_builtins.str]] = None):
         """
+        :param pulumi.Input[_builtins.bool] google_chat: Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
         :param pulumi.Input[_builtins.bool] ms_teams: Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
         :param pulumi.Input[_builtins.str] url: The endpoint to send HTTP POST requests to. Must be a valid URL
         """
+        if google_chat is not None:
+            pulumi.set(__self__, "google_chat", google_chat)
         if ms_teams is not None:
             pulumi.set(__self__, "ms_teams", ms_teams)
         if url is not None:
             pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter(name="googleChat")
+    def google_chat(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        """
+        return pulumi.get(self, "google_chat")
+
+    @google_chat.setter
+    def google_chat(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "google_chat", value)
 
     @_builtins.property
     @pulumi.getter(name="msTeams")
@@ -6168,5 +6210,117 @@ class VolumeSourceArgs:
     @type.setter
     def type(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "type", value)
+
+
+if not MYPY:
+    class GetImageV2FilterArgsDict(TypedDict):
+        distro: NotRequired[_builtins.str]
+        """
+        Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+        """
+        os: NotRequired[_builtins.str]
+        """
+        Filter images by operating system type, such as `linux` or `windows`.
+        """
+        secure_boot: NotRequired[_builtins.bool]
+        """
+        Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+        """
+        uefi: NotRequired[_builtins.bool]
+        """
+        Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+        """
+        version: NotRequired[_builtins.str]
+        """
+        Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+        """
+elif False:
+    GetImageV2FilterArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class GetImageV2FilterArgs:
+    def __init__(__self__, *,
+                 distro: Optional[_builtins.str] = None,
+                 os: Optional[_builtins.str] = None,
+                 secure_boot: Optional[_builtins.bool] = None,
+                 uefi: Optional[_builtins.bool] = None,
+                 version: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str distro: Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+        :param _builtins.str os: Filter images by operating system type, such as `linux` or `windows`.
+        :param _builtins.bool secure_boot: Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+        :param _builtins.bool uefi: Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+        :param _builtins.str version: Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+        """
+        if distro is not None:
+            pulumi.set(__self__, "distro", distro)
+        if os is not None:
+            pulumi.set(__self__, "os", os)
+        if secure_boot is not None:
+            pulumi.set(__self__, "secure_boot", secure_boot)
+        if uefi is not None:
+            pulumi.set(__self__, "uefi", uefi)
+        if version is not None:
+            pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def distro(self) -> Optional[_builtins.str]:
+        """
+        Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+        """
+        return pulumi.get(self, "distro")
+
+    @distro.setter
+    def distro(self, value: Optional[_builtins.str]):
+        pulumi.set(self, "distro", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def os(self) -> Optional[_builtins.str]:
+        """
+        Filter images by operating system type, such as `linux` or `windows`.
+        """
+        return pulumi.get(self, "os")
+
+    @os.setter
+    def os(self, value: Optional[_builtins.str]):
+        pulumi.set(self, "os", value)
+
+    @_builtins.property
+    @pulumi.getter(name="secureBoot")
+    def secure_boot(self) -> Optional[_builtins.bool]:
+        """
+        Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+        """
+        return pulumi.get(self, "secure_boot")
+
+    @secure_boot.setter
+    def secure_boot(self, value: Optional[_builtins.bool]):
+        pulumi.set(self, "secure_boot", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def uefi(self) -> Optional[_builtins.bool]:
+        """
+        Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+        """
+        return pulumi.get(self, "uefi")
+
+    @uefi.setter
+    def uefi(self, value: Optional[_builtins.bool]):
+        pulumi.set(self, "uefi", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> Optional[_builtins.str]:
+        """
+        Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+        """
+        return pulumi.get(self, "version")
+
+    @version.setter
+    def version(self, value: Optional[_builtins.str]):
+        pulumi.set(self, "version", value)
 
 

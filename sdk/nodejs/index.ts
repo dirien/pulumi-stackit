@@ -80,6 +80,11 @@ export const getImage: typeof import("./getImage").getImage = null as any;
 export const getImageOutput: typeof import("./getImage").getImageOutput = null as any;
 utilities.lazyLoad(exports, ["getImage","getImageOutput"], () => require("./getImage"));
 
+export { GetImageV2Args, GetImageV2Result, GetImageV2OutputArgs } from "./getImageV2";
+export const getImageV2: typeof import("./getImageV2").getImageV2 = null as any;
+export const getImageV2Output: typeof import("./getImageV2").getImageV2Output = null as any;
+utilities.lazyLoad(exports, ["getImageV2","getImageV2Output"], () => require("./getImageV2"));
+
 export { GetKeyPairArgs, GetKeyPairResult, GetKeyPairOutputArgs } from "./getKeyPair";
 export const getKeyPair: typeof import("./getKeyPair").getKeyPair = null as any;
 export const getKeyPairOutput: typeof import("./getKeyPair").getKeyPairOutput = null as any;
@@ -99,6 +104,11 @@ export { GetLogmeInstanceArgs, GetLogmeInstanceResult, GetLogmeInstanceOutputArg
 export const getLogmeInstance: typeof import("./getLogmeInstance").getLogmeInstance = null as any;
 export const getLogmeInstanceOutput: typeof import("./getLogmeInstance").getLogmeInstanceOutput = null as any;
 utilities.lazyLoad(exports, ["getLogmeInstance","getLogmeInstanceOutput"], () => require("./getLogmeInstance"));
+
+export { GetMachineTypeArgs, GetMachineTypeResult, GetMachineTypeOutputArgs } from "./getMachineType";
+export const getMachineType: typeof import("./getMachineType").getMachineType = null as any;
+export const getMachineTypeOutput: typeof import("./getMachineType").getMachineTypeOutput = null as any;
+utilities.lazyLoad(exports, ["getMachineType","getMachineTypeOutput"], () => require("./getMachineType"));
 
 export { GetMariadbCredentialArgs, GetMariadbCredentialResult, GetMariadbCredentialOutputArgs } from "./getMariadbCredential";
 export const getMariadbCredential: typeof import("./getMariadbCredential").getMariadbCredential = null as any;
