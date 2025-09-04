@@ -62,6 +62,52 @@ export interface CdnDistributionDomain {
     type?: pulumi.Input<string>;
 }
 
+export interface GetImageV2Filter {
+    /**
+     * Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+     */
+    distro?: string;
+    /**
+     * Filter images by operating system type, such as `linux` or `windows`.
+     */
+    os?: string;
+    /**
+     * Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+     */
+    secureBoot?: boolean;
+    /**
+     * Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+     */
+    uefi?: boolean;
+    /**
+     * Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+     */
+    version?: string;
+}
+
+export interface GetImageV2FilterArgs {
+    /**
+     * Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+     */
+    distro?: pulumi.Input<string>;
+    /**
+     * Filter images by operating system type, such as `linux` or `windows`.
+     */
+    os?: pulumi.Input<string>;
+    /**
+     * Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+     */
+    secureBoot?: pulumi.Input<boolean>;
+    /**
+     * Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+     */
+    uefi?: pulumi.Input<boolean>;
+    /**
+     * Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+     */
+    version?: pulumi.Input<string>;
+}
+
 export interface ImageChecksum {
     /**
      * Algorithm for the checksum of the image data.
@@ -443,7 +489,7 @@ export interface ObservabilityAlertgroupRule {
 
 export interface ObservabilityInstanceAlertConfig {
     /**
-     * Global configuration for the alerts.
+     * Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
      */
     global?: pulumi.Input<inputs.ObservabilityInstanceAlertConfigGlobal>;
     /**
@@ -547,12 +593,20 @@ export interface ObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
      */
     apiUrl?: pulumi.Input<string>;
     /**
+     * Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+     */
+    priority?: pulumi.Input<string>;
+    /**
      * Comma separated list of tags attached to the notifications.
      */
     tags?: pulumi.Input<string>;
 }
 
 export interface ObservabilityInstanceAlertConfigReceiverWebhooksConfig {
+    /**
+     * Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+     */
+    googleChat?: pulumi.Input<boolean>;
     /**
      * Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
      */

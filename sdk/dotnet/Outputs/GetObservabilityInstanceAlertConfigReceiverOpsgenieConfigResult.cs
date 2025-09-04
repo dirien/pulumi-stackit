@@ -23,6 +23,10 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly string ApiUrl;
         /// <summary>
+        /// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        /// </summary>
+        public readonly string Priority;
+        /// <summary>
         /// Comma separated list of tags attached to the notifications.
         /// </summary>
         public readonly string Tags;
@@ -33,10 +37,13 @@ namespace ediri.Stackit.Outputs
 
             string apiUrl,
 
+            string priority,
+
             string tags)
         {
             ApiKey = apiKey;
             ApiUrl = apiUrl;
+            Priority = priority;
             Tags = tags;
         }
     }

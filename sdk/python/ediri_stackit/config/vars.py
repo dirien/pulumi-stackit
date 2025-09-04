@@ -37,8 +37,7 @@ class _ExportableConfig(types.ModuleType):
     @_builtins.property
     def credentials_path(self) -> Optional[str]:
         """
-        Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-        value is `~/.stackit/credentials.json`.
+        Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
         """
         return __config__.get('credentialsPath')
 
@@ -66,8 +65,7 @@ class _ExportableConfig(types.ModuleType):
     @_builtins.property
     def experiments(self) -> Optional[str]:
         """
-        Enables experiments. These are unstable features without official support. More information can be found in the README.
-        Available Experiments: iam, routing-tables, network
+        Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network
         """
         return __config__.get('experiments')
 
@@ -151,16 +149,14 @@ class _ExportableConfig(types.ModuleType):
     @_builtins.property
     def private_key(self) -> Optional[str]:
         """
-        Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-        included in the service account key.
+        Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         """
         return __config__.get('privateKey')
 
     @_builtins.property
     def private_key_path(self) -> Optional[str]:
         """
-        Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-        key that is included in the service account key.
+        Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         """
         return __config__.get('privateKeyPath')
 
@@ -223,8 +219,7 @@ class _ExportableConfig(types.ModuleType):
     @_builtins.property
     def service_account_email(self) -> Optional[str]:
         """
-        Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-        if you want to use the resource manager project resource.
+        Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
         """
         return __config__.get('serviceAccountEmail')
 
@@ -238,8 +233,7 @@ class _ExportableConfig(types.ModuleType):
     @_builtins.property
     def service_account_key_path(self) -> Optional[str]:
         """
-        Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-        operations.
+        Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
         """
         return __config__.get('serviceAccountKeyPath')
 

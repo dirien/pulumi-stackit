@@ -4283,7 +4283,7 @@ func (o ObservabilityAlertgroupRuleArrayOutput) Index(i pulumi.IntInput) Observa
 }
 
 type ObservabilityInstanceAlertConfig struct {
-	// Global configuration for the alerts.
+	// Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
 	Global *ObservabilityInstanceAlertConfigGlobal `pulumi:"global"`
 	// List of alert receivers.
 	Receivers []ObservabilityInstanceAlertConfigReceiver `pulumi:"receivers"`
@@ -4303,7 +4303,7 @@ type ObservabilityInstanceAlertConfigInput interface {
 }
 
 type ObservabilityInstanceAlertConfigArgs struct {
-	// Global configuration for the alerts.
+	// Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
 	Global ObservabilityInstanceAlertConfigGlobalPtrInput `pulumi:"global"`
 	// List of alert receivers.
 	Receivers ObservabilityInstanceAlertConfigReceiverArrayInput `pulumi:"receivers"`
@@ -4388,7 +4388,7 @@ func (o ObservabilityInstanceAlertConfigOutput) ToObservabilityInstanceAlertConf
 	}).(ObservabilityInstanceAlertConfigPtrOutput)
 }
 
-// Global configuration for the alerts.
+// Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
 func (o ObservabilityInstanceAlertConfigOutput) Global() ObservabilityInstanceAlertConfigGlobalPtrOutput {
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfig) *ObservabilityInstanceAlertConfigGlobal { return v.Global }).(ObservabilityInstanceAlertConfigGlobalPtrOutput)
 }
@@ -4429,7 +4429,7 @@ func (o ObservabilityInstanceAlertConfigPtrOutput) Elem() ObservabilityInstanceA
 	}).(ObservabilityInstanceAlertConfigOutput)
 }
 
-// Global configuration for the alerts.
+// Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
 func (o ObservabilityInstanceAlertConfigPtrOutput) Global() ObservabilityInstanceAlertConfigGlobalPtrOutput {
 	return o.ApplyT(func(v *ObservabilityInstanceAlertConfig) *ObservabilityInstanceAlertConfigGlobal {
 		if v == nil {
@@ -5006,6 +5006,8 @@ type ObservabilityInstanceAlertConfigReceiverOpsgenieConfig struct {
 	ApiKey *string `pulumi:"apiKey"`
 	// The host to send OpsGenie API requests to. Must be a valid URL
 	ApiUrl *string `pulumi:"apiUrl"`
+	// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+	Priority *string `pulumi:"priority"`
 	// Comma separated list of tags attached to the notifications.
 	Tags *string `pulumi:"tags"`
 }
@@ -5026,6 +5028,8 @@ type ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs struct {
 	ApiKey pulumi.StringPtrInput `pulumi:"apiKey"`
 	// The host to send OpsGenie API requests to. Must be a valid URL
 	ApiUrl pulumi.StringPtrInput `pulumi:"apiUrl"`
+	// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+	Priority pulumi.StringPtrInput `pulumi:"priority"`
 	// Comma separated list of tags attached to the notifications.
 	Tags pulumi.StringPtrInput `pulumi:"tags"`
 }
@@ -5091,6 +5095,11 @@ func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) ApiUrl() p
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverOpsgenieConfig) *string { return v.ApiUrl }).(pulumi.StringPtrOutput)
 }
 
+// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) Priority() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverOpsgenieConfig) *string { return v.Priority }).(pulumi.StringPtrOutput)
+}
+
 // Comma separated list of tags attached to the notifications.
 func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) Tags() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverOpsgenieConfig) *string { return v.Tags }).(pulumi.StringPtrOutput)
@@ -5117,6 +5126,8 @@ func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArrayOutput) Index
 }
 
 type ObservabilityInstanceAlertConfigReceiverWebhooksConfig struct {
+	// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+	GoogleChat *bool `pulumi:"googleChat"`
 	// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 	MsTeams *bool `pulumi:"msTeams"`
 	// The endpoint to send HTTP POST requests to. Must be a valid URL
@@ -5135,6 +5146,8 @@ type ObservabilityInstanceAlertConfigReceiverWebhooksConfigInput interface {
 }
 
 type ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs struct {
+	// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+	GoogleChat pulumi.BoolPtrInput `pulumi:"googleChat"`
 	// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 	MsTeams pulumi.BoolPtrInput `pulumi:"msTeams"`
 	// The endpoint to send HTTP POST requests to. Must be a valid URL
@@ -5190,6 +5203,11 @@ func (o ObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) ToObservab
 
 func (o ObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) ToObservabilityInstanceAlertConfigReceiverWebhooksConfigOutputWithContext(ctx context.Context) ObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput {
 	return o
+}
+
+// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+func (o ObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) GoogleChat() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverWebhooksConfig) *bool { return v.GoogleChat }).(pulumi.BoolPtrOutput)
 }
 
 // Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
@@ -11770,6 +11788,440 @@ func (o GetImageConfigOutput) VirtioScsi() pulumi.BoolOutput {
 	return o.ApplyT(func(v GetImageConfig) bool { return v.VirtioScsi }).(pulumi.BoolOutput)
 }
 
+type GetImageV2Checksum struct {
+	// Algorithm for the checksum of the image data.
+	Algorithm string `pulumi:"algorithm"`
+	// Hexdigest of the checksum of the image data.
+	Digest string `pulumi:"digest"`
+}
+
+// GetImageV2ChecksumInput is an input type that accepts GetImageV2ChecksumArgs and GetImageV2ChecksumOutput values.
+// You can construct a concrete instance of `GetImageV2ChecksumInput` via:
+//
+//	GetImageV2ChecksumArgs{...}
+type GetImageV2ChecksumInput interface {
+	pulumi.Input
+
+	ToGetImageV2ChecksumOutput() GetImageV2ChecksumOutput
+	ToGetImageV2ChecksumOutputWithContext(context.Context) GetImageV2ChecksumOutput
+}
+
+type GetImageV2ChecksumArgs struct {
+	// Algorithm for the checksum of the image data.
+	Algorithm pulumi.StringInput `pulumi:"algorithm"`
+	// Hexdigest of the checksum of the image data.
+	Digest pulumi.StringInput `pulumi:"digest"`
+}
+
+func (GetImageV2ChecksumArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageV2Checksum)(nil)).Elem()
+}
+
+func (i GetImageV2ChecksumArgs) ToGetImageV2ChecksumOutput() GetImageV2ChecksumOutput {
+	return i.ToGetImageV2ChecksumOutputWithContext(context.Background())
+}
+
+func (i GetImageV2ChecksumArgs) ToGetImageV2ChecksumOutputWithContext(ctx context.Context) GetImageV2ChecksumOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageV2ChecksumOutput)
+}
+
+type GetImageV2ChecksumOutput struct{ *pulumi.OutputState }
+
+func (GetImageV2ChecksumOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageV2Checksum)(nil)).Elem()
+}
+
+func (o GetImageV2ChecksumOutput) ToGetImageV2ChecksumOutput() GetImageV2ChecksumOutput {
+	return o
+}
+
+func (o GetImageV2ChecksumOutput) ToGetImageV2ChecksumOutputWithContext(ctx context.Context) GetImageV2ChecksumOutput {
+	return o
+}
+
+// Algorithm for the checksum of the image data.
+func (o GetImageV2ChecksumOutput) Algorithm() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Checksum) string { return v.Algorithm }).(pulumi.StringOutput)
+}
+
+// Hexdigest of the checksum of the image data.
+func (o GetImageV2ChecksumOutput) Digest() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Checksum) string { return v.Digest }).(pulumi.StringOutput)
+}
+
+type GetImageV2Config struct {
+	// Enables the BIOS bootmenu.
+	BootMenu bool `pulumi:"bootMenu"`
+	// Sets CDROM bus controller type.
+	CdromBus string `pulumi:"cdromBus"`
+	// Sets Disk bus controller type.
+	DiskBus string `pulumi:"diskBus"`
+	// Sets virtual network interface model.
+	NicModel string `pulumi:"nicModel"`
+	// Enables operating system specific optimizations.
+	OperatingSystem string `pulumi:"operatingSystem"`
+	// Operating system distribution.
+	OperatingSystemDistro string `pulumi:"operatingSystemDistro"`
+	// Version of the operating system.
+	OperatingSystemVersion string `pulumi:"operatingSystemVersion"`
+	// Sets the device bus when the image is used as a rescue image.
+	RescueBus string `pulumi:"rescueBus"`
+	// Sets the device when the image is used as a rescue image.
+	RescueDevice string `pulumi:"rescueDevice"`
+	// Enables Secure Boot.
+	SecureBoot bool `pulumi:"secureBoot"`
+	// Enables UEFI boot.
+	Uefi bool `pulumi:"uefi"`
+	// Sets Graphic device model.
+	VideoModel string `pulumi:"videoModel"`
+	// Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
+	VirtioScsi bool `pulumi:"virtioScsi"`
+}
+
+// GetImageV2ConfigInput is an input type that accepts GetImageV2ConfigArgs and GetImageV2ConfigOutput values.
+// You can construct a concrete instance of `GetImageV2ConfigInput` via:
+//
+//	GetImageV2ConfigArgs{...}
+type GetImageV2ConfigInput interface {
+	pulumi.Input
+
+	ToGetImageV2ConfigOutput() GetImageV2ConfigOutput
+	ToGetImageV2ConfigOutputWithContext(context.Context) GetImageV2ConfigOutput
+}
+
+type GetImageV2ConfigArgs struct {
+	// Enables the BIOS bootmenu.
+	BootMenu pulumi.BoolInput `pulumi:"bootMenu"`
+	// Sets CDROM bus controller type.
+	CdromBus pulumi.StringInput `pulumi:"cdromBus"`
+	// Sets Disk bus controller type.
+	DiskBus pulumi.StringInput `pulumi:"diskBus"`
+	// Sets virtual network interface model.
+	NicModel pulumi.StringInput `pulumi:"nicModel"`
+	// Enables operating system specific optimizations.
+	OperatingSystem pulumi.StringInput `pulumi:"operatingSystem"`
+	// Operating system distribution.
+	OperatingSystemDistro pulumi.StringInput `pulumi:"operatingSystemDistro"`
+	// Version of the operating system.
+	OperatingSystemVersion pulumi.StringInput `pulumi:"operatingSystemVersion"`
+	// Sets the device bus when the image is used as a rescue image.
+	RescueBus pulumi.StringInput `pulumi:"rescueBus"`
+	// Sets the device when the image is used as a rescue image.
+	RescueDevice pulumi.StringInput `pulumi:"rescueDevice"`
+	// Enables Secure Boot.
+	SecureBoot pulumi.BoolInput `pulumi:"secureBoot"`
+	// Enables UEFI boot.
+	Uefi pulumi.BoolInput `pulumi:"uefi"`
+	// Sets Graphic device model.
+	VideoModel pulumi.StringInput `pulumi:"videoModel"`
+	// Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
+	VirtioScsi pulumi.BoolInput `pulumi:"virtioScsi"`
+}
+
+func (GetImageV2ConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageV2Config)(nil)).Elem()
+}
+
+func (i GetImageV2ConfigArgs) ToGetImageV2ConfigOutput() GetImageV2ConfigOutput {
+	return i.ToGetImageV2ConfigOutputWithContext(context.Background())
+}
+
+func (i GetImageV2ConfigArgs) ToGetImageV2ConfigOutputWithContext(ctx context.Context) GetImageV2ConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageV2ConfigOutput)
+}
+
+type GetImageV2ConfigOutput struct{ *pulumi.OutputState }
+
+func (GetImageV2ConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageV2Config)(nil)).Elem()
+}
+
+func (o GetImageV2ConfigOutput) ToGetImageV2ConfigOutput() GetImageV2ConfigOutput {
+	return o
+}
+
+func (o GetImageV2ConfigOutput) ToGetImageV2ConfigOutputWithContext(ctx context.Context) GetImageV2ConfigOutput {
+	return o
+}
+
+// Enables the BIOS bootmenu.
+func (o GetImageV2ConfigOutput) BootMenu() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetImageV2Config) bool { return v.BootMenu }).(pulumi.BoolOutput)
+}
+
+// Sets CDROM bus controller type.
+func (o GetImageV2ConfigOutput) CdromBus() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.CdromBus }).(pulumi.StringOutput)
+}
+
+// Sets Disk bus controller type.
+func (o GetImageV2ConfigOutput) DiskBus() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.DiskBus }).(pulumi.StringOutput)
+}
+
+// Sets virtual network interface model.
+func (o GetImageV2ConfigOutput) NicModel() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.NicModel }).(pulumi.StringOutput)
+}
+
+// Enables operating system specific optimizations.
+func (o GetImageV2ConfigOutput) OperatingSystem() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.OperatingSystem }).(pulumi.StringOutput)
+}
+
+// Operating system distribution.
+func (o GetImageV2ConfigOutput) OperatingSystemDistro() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.OperatingSystemDistro }).(pulumi.StringOutput)
+}
+
+// Version of the operating system.
+func (o GetImageV2ConfigOutput) OperatingSystemVersion() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.OperatingSystemVersion }).(pulumi.StringOutput)
+}
+
+// Sets the device bus when the image is used as a rescue image.
+func (o GetImageV2ConfigOutput) RescueBus() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.RescueBus }).(pulumi.StringOutput)
+}
+
+// Sets the device when the image is used as a rescue image.
+func (o GetImageV2ConfigOutput) RescueDevice() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.RescueDevice }).(pulumi.StringOutput)
+}
+
+// Enables Secure Boot.
+func (o GetImageV2ConfigOutput) SecureBoot() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetImageV2Config) bool { return v.SecureBoot }).(pulumi.BoolOutput)
+}
+
+// Enables UEFI boot.
+func (o GetImageV2ConfigOutput) Uefi() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetImageV2Config) bool { return v.Uefi }).(pulumi.BoolOutput)
+}
+
+// Sets Graphic device model.
+func (o GetImageV2ConfigOutput) VideoModel() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.VideoModel }).(pulumi.StringOutput)
+}
+
+// Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
+func (o GetImageV2ConfigOutput) VirtioScsi() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetImageV2Config) bool { return v.VirtioScsi }).(pulumi.BoolOutput)
+}
+
+type GetImageV2Filter struct {
+	// Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+	Distro *string `pulumi:"distro"`
+	// Filter images by operating system type, such as `linux` or `windows`.
+	Os *string `pulumi:"os"`
+	// Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+	SecureBoot *bool `pulumi:"secureBoot"`
+	// Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+	Uefi *bool `pulumi:"uefi"`
+	// Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+	Version *string `pulumi:"version"`
+}
+
+// GetImageV2FilterInput is an input type that accepts GetImageV2FilterArgs and GetImageV2FilterOutput values.
+// You can construct a concrete instance of `GetImageV2FilterInput` via:
+//
+//	GetImageV2FilterArgs{...}
+type GetImageV2FilterInput interface {
+	pulumi.Input
+
+	ToGetImageV2FilterOutput() GetImageV2FilterOutput
+	ToGetImageV2FilterOutputWithContext(context.Context) GetImageV2FilterOutput
+}
+
+type GetImageV2FilterArgs struct {
+	// Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+	Distro pulumi.StringPtrInput `pulumi:"distro"`
+	// Filter images by operating system type, such as `linux` or `windows`.
+	Os pulumi.StringPtrInput `pulumi:"os"`
+	// Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+	SecureBoot pulumi.BoolPtrInput `pulumi:"secureBoot"`
+	// Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+	Uefi pulumi.BoolPtrInput `pulumi:"uefi"`
+	// Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+	Version pulumi.StringPtrInput `pulumi:"version"`
+}
+
+func (GetImageV2FilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageV2Filter)(nil)).Elem()
+}
+
+func (i GetImageV2FilterArgs) ToGetImageV2FilterOutput() GetImageV2FilterOutput {
+	return i.ToGetImageV2FilterOutputWithContext(context.Background())
+}
+
+func (i GetImageV2FilterArgs) ToGetImageV2FilterOutputWithContext(ctx context.Context) GetImageV2FilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageV2FilterOutput)
+}
+
+func (i GetImageV2FilterArgs) ToGetImageV2FilterPtrOutput() GetImageV2FilterPtrOutput {
+	return i.ToGetImageV2FilterPtrOutputWithContext(context.Background())
+}
+
+func (i GetImageV2FilterArgs) ToGetImageV2FilterPtrOutputWithContext(ctx context.Context) GetImageV2FilterPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageV2FilterOutput).ToGetImageV2FilterPtrOutputWithContext(ctx)
+}
+
+// GetImageV2FilterPtrInput is an input type that accepts GetImageV2FilterArgs, GetImageV2FilterPtr and GetImageV2FilterPtrOutput values.
+// You can construct a concrete instance of `GetImageV2FilterPtrInput` via:
+//
+//	        GetImageV2FilterArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetImageV2FilterPtrInput interface {
+	pulumi.Input
+
+	ToGetImageV2FilterPtrOutput() GetImageV2FilterPtrOutput
+	ToGetImageV2FilterPtrOutputWithContext(context.Context) GetImageV2FilterPtrOutput
+}
+
+type getImageV2FilterPtrType GetImageV2FilterArgs
+
+func GetImageV2FilterPtr(v *GetImageV2FilterArgs) GetImageV2FilterPtrInput {
+	return (*getImageV2FilterPtrType)(v)
+}
+
+func (*getImageV2FilterPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetImageV2Filter)(nil)).Elem()
+}
+
+func (i *getImageV2FilterPtrType) ToGetImageV2FilterPtrOutput() GetImageV2FilterPtrOutput {
+	return i.ToGetImageV2FilterPtrOutputWithContext(context.Background())
+}
+
+func (i *getImageV2FilterPtrType) ToGetImageV2FilterPtrOutputWithContext(ctx context.Context) GetImageV2FilterPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageV2FilterPtrOutput)
+}
+
+type GetImageV2FilterOutput struct{ *pulumi.OutputState }
+
+func (GetImageV2FilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageV2Filter)(nil)).Elem()
+}
+
+func (o GetImageV2FilterOutput) ToGetImageV2FilterOutput() GetImageV2FilterOutput {
+	return o
+}
+
+func (o GetImageV2FilterOutput) ToGetImageV2FilterOutputWithContext(ctx context.Context) GetImageV2FilterOutput {
+	return o
+}
+
+func (o GetImageV2FilterOutput) ToGetImageV2FilterPtrOutput() GetImageV2FilterPtrOutput {
+	return o.ToGetImageV2FilterPtrOutputWithContext(context.Background())
+}
+
+func (o GetImageV2FilterOutput) ToGetImageV2FilterPtrOutputWithContext(ctx context.Context) GetImageV2FilterPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetImageV2Filter) *GetImageV2Filter {
+		return &v
+	}).(GetImageV2FilterPtrOutput)
+}
+
+// Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+func (o GetImageV2FilterOutput) Distro() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImageV2Filter) *string { return v.Distro }).(pulumi.StringPtrOutput)
+}
+
+// Filter images by operating system type, such as `linux` or `windows`.
+func (o GetImageV2FilterOutput) Os() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImageV2Filter) *string { return v.Os }).(pulumi.StringPtrOutput)
+}
+
+// Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+func (o GetImageV2FilterOutput) SecureBoot() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GetImageV2Filter) *bool { return v.SecureBoot }).(pulumi.BoolPtrOutput)
+}
+
+// Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+func (o GetImageV2FilterOutput) Uefi() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GetImageV2Filter) *bool { return v.Uefi }).(pulumi.BoolPtrOutput)
+}
+
+// Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+func (o GetImageV2FilterOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImageV2Filter) *string { return v.Version }).(pulumi.StringPtrOutput)
+}
+
+type GetImageV2FilterPtrOutput struct{ *pulumi.OutputState }
+
+func (GetImageV2FilterPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetImageV2Filter)(nil)).Elem()
+}
+
+func (o GetImageV2FilterPtrOutput) ToGetImageV2FilterPtrOutput() GetImageV2FilterPtrOutput {
+	return o
+}
+
+func (o GetImageV2FilterPtrOutput) ToGetImageV2FilterPtrOutputWithContext(ctx context.Context) GetImageV2FilterPtrOutput {
+	return o
+}
+
+func (o GetImageV2FilterPtrOutput) Elem() GetImageV2FilterOutput {
+	return o.ApplyT(func(v *GetImageV2Filter) GetImageV2Filter {
+		if v != nil {
+			return *v
+		}
+		var ret GetImageV2Filter
+		return ret
+	}).(GetImageV2FilterOutput)
+}
+
+// Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+func (o GetImageV2FilterPtrOutput) Distro() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetImageV2Filter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Distro
+	}).(pulumi.StringPtrOutput)
+}
+
+// Filter images by operating system type, such as `linux` or `windows`.
+func (o GetImageV2FilterPtrOutput) Os() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetImageV2Filter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Os
+	}).(pulumi.StringPtrOutput)
+}
+
+// Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+func (o GetImageV2FilterPtrOutput) SecureBoot() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GetImageV2Filter) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.SecureBoot
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+func (o GetImageV2FilterPtrOutput) Uefi() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GetImageV2Filter) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Uefi
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+func (o GetImageV2FilterPtrOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetImageV2Filter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Version
+	}).(pulumi.StringPtrOutput)
+}
+
 type GetLoadbalancerListener struct {
 	DisplayName string `pulumi:"displayName"`
 	// Port number where we listen for traffic.
@@ -14064,6 +14516,8 @@ type GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig struct {
 	ApiKey string `pulumi:"apiKey"`
 	// The host to send OpsGenie API requests to. Must be a valid URL
 	ApiUrl string `pulumi:"apiUrl"`
+	// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+	Priority string `pulumi:"priority"`
 	// Comma separated list of tags attached to the notifications.
 	Tags string `pulumi:"tags"`
 }
@@ -14084,6 +14538,8 @@ type GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs struct {
 	ApiKey pulumi.StringInput `pulumi:"apiKey"`
 	// The host to send OpsGenie API requests to. Must be a valid URL
 	ApiUrl pulumi.StringInput `pulumi:"apiUrl"`
+	// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+	Priority pulumi.StringInput `pulumi:"priority"`
 	// Comma separated list of tags attached to the notifications.
 	Tags pulumi.StringInput `pulumi:"tags"`
 }
@@ -14149,6 +14605,11 @@ func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) ApiUrl(
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig) string { return v.ApiUrl }).(pulumi.StringOutput)
 }
 
+// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) Priority() pulumi.StringOutput {
+	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig) string { return v.Priority }).(pulumi.StringOutput)
+}
+
 // Comma separated list of tags attached to the notifications.
 func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) Tags() pulumi.StringOutput {
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig) string { return v.Tags }).(pulumi.StringOutput)
@@ -14175,6 +14636,8 @@ func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigArrayOutput) In
 }
 
 type GetObservabilityInstanceAlertConfigReceiverWebhooksConfig struct {
+	// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+	GoogleChat bool `pulumi:"googleChat"`
 	// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 	MsTeams bool `pulumi:"msTeams"`
 	// The endpoint to send HTTP POST requests to. Must be a valid URL
@@ -14193,6 +14656,8 @@ type GetObservabilityInstanceAlertConfigReceiverWebhooksConfigInput interface {
 }
 
 type GetObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs struct {
+	// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+	GoogleChat pulumi.BoolInput `pulumi:"googleChat"`
 	// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 	MsTeams pulumi.BoolInput `pulumi:"msTeams"`
 	// The endpoint to send HTTP POST requests to. Must be a valid URL
@@ -14248,6 +14713,11 @@ func (o GetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) ToGetOb
 
 func (o GetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) ToGetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutputWithContext(ctx context.Context) GetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput {
 	return o
+}
+
+// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+func (o GetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) GoogleChat() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverWebhooksConfig) bool { return v.GoogleChat }).(pulumi.BoolOutput)
 }
 
 // Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
@@ -18164,6 +18634,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetCdnDistributionDomainArrayInput)(nil)).Elem(), GetCdnDistributionDomainArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetImageChecksumInput)(nil)).Elem(), GetImageChecksumArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetImageConfigInput)(nil)).Elem(), GetImageConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageV2ChecksumInput)(nil)).Elem(), GetImageV2ChecksumArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageV2ConfigInput)(nil)).Elem(), GetImageV2ConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageV2FilterInput)(nil)).Elem(), GetImageV2FilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageV2FilterPtrInput)(nil)).Elem(), GetImageV2FilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLoadbalancerListenerInput)(nil)).Elem(), GetLoadbalancerListenerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLoadbalancerListenerArrayInput)(nil)).Elem(), GetLoadbalancerListenerArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLoadbalancerListenerServerNameIndicatorInput)(nil)).Elem(), GetLoadbalancerListenerServerNameIndicatorArgs{})
@@ -18382,6 +18856,10 @@ func init() {
 	pulumi.RegisterOutputType(GetCdnDistributionDomainArrayOutput{})
 	pulumi.RegisterOutputType(GetImageChecksumOutput{})
 	pulumi.RegisterOutputType(GetImageConfigOutput{})
+	pulumi.RegisterOutputType(GetImageV2ChecksumOutput{})
+	pulumi.RegisterOutputType(GetImageV2ConfigOutput{})
+	pulumi.RegisterOutputType(GetImageV2FilterOutput{})
+	pulumi.RegisterOutputType(GetImageV2FilterPtrOutput{})
 	pulumi.RegisterOutputType(GetLoadbalancerListenerOutput{})
 	pulumi.RegisterOutputType(GetLoadbalancerListenerArrayOutput{})
 	pulumi.RegisterOutputType(GetLoadbalancerListenerServerNameIndicatorOutput{})
