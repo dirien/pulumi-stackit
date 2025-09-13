@@ -27,14 +27,6 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly string GroupWait;
         /// <summary>
-        /// A set of equality matchers an alert has to fulfill to match the node.
-        /// </summary>
-        public readonly ImmutableDictionary<string, string> Match;
-        /// <summary>
-        /// A set of regex-matchers an alert has to fulfill to match the node.
-        /// </summary>
-        public readonly ImmutableDictionary<string, string> MatchRegex;
-        /// <summary>
         /// The name of the receiver to route the alerts to.
         /// </summary>
         public readonly string Receiver;
@@ -55,10 +47,6 @@ namespace ediri.Stackit.Outputs
 
             string groupWait,
 
-            ImmutableDictionary<string, string> match,
-
-            ImmutableDictionary<string, string> matchRegex,
-
             string receiver,
 
             string repeatInterval,
@@ -68,8 +56,6 @@ namespace ediri.Stackit.Outputs
             GroupBies = groupBies;
             GroupInterval = groupInterval;
             GroupWait = groupWait;
-            Match = match;
-            MatchRegex = matchRegex;
             Receiver = receiver;
             RepeatInterval = repeatInterval;
             Routes = routes;

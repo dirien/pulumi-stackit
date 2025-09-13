@@ -19,11 +19,21 @@ namespace ediri.Stackit.Inputs
         [Input("authIdentity")]
         public Input<string>? AuthIdentity { get; set; }
 
+        [Input("authPassword")]
+        private Input<string>? _authPassword;
+
         /// <summary>
         /// SMTP authentication password.
         /// </summary>
-        [Input("authPassword")]
-        public Input<string>? AuthPassword { get; set; }
+        public Input<string>? AuthPassword
+        {
+            get => _authPassword;
+            set
+            {
+                var emptySecret = Output.CreateSecret(0);
+                _authPassword = Output.Tuple<Input<string>?, int>(value, emptySecret).Apply(t => t.Item1);
+            }
+        }
 
         /// <summary>
         /// SMTP authentication username.

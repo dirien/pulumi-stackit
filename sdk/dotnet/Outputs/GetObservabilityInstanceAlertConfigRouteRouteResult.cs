@@ -27,13 +27,17 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly string GroupWait;
         /// <summary>
-        /// A set of equality matchers an alert has to fulfill to match the node.
+        /// A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
         /// </summary>
         public readonly ImmutableDictionary<string, string> Match;
         /// <summary>
-        /// A set of regex-matchers an alert has to fulfill to match the node.
+        /// A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
         /// </summary>
         public readonly ImmutableDictionary<string, string> MatchRegex;
+        /// <summary>
+        /// A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+        /// </summary>
+        public readonly ImmutableArray<string> Matchers;
         /// <summary>
         /// The name of the receiver to route the alerts to.
         /// </summary>
@@ -55,6 +59,8 @@ namespace ediri.Stackit.Outputs
 
             ImmutableDictionary<string, string> matchRegex,
 
+            ImmutableArray<string> matchers,
+
             string receiver,
 
             string repeatInterval)
@@ -64,6 +70,7 @@ namespace ediri.Stackit.Outputs
             GroupWait = groupWait;
             Match = match;
             MatchRegex = matchRegex;
+            Matchers = matchers;
             Receiver = receiver;
             RepeatInterval = repeatInterval;
         }
