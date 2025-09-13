@@ -185,6 +185,95 @@ export interface GetImageConfig {
     virtioScsi: boolean;
 }
 
+export interface GetImageV2Checksum {
+    /**
+     * Algorithm for the checksum of the image data.
+     */
+    algorithm: string;
+    /**
+     * Hexdigest of the checksum of the image data.
+     */
+    digest: string;
+}
+
+export interface GetImageV2Config {
+    /**
+     * Enables the BIOS bootmenu.
+     */
+    bootMenu: boolean;
+    /**
+     * Sets CDROM bus controller type.
+     */
+    cdromBus: string;
+    /**
+     * Sets Disk bus controller type.
+     */
+    diskBus: string;
+    /**
+     * Sets virtual network interface model.
+     */
+    nicModel: string;
+    /**
+     * Enables operating system specific optimizations.
+     */
+    operatingSystem: string;
+    /**
+     * Operating system distribution.
+     */
+    operatingSystemDistro: string;
+    /**
+     * Version of the operating system.
+     */
+    operatingSystemVersion: string;
+    /**
+     * Sets the device bus when the image is used as a rescue image.
+     */
+    rescueBus: string;
+    /**
+     * Sets the device when the image is used as a rescue image.
+     */
+    rescueDevice: string;
+    /**
+     * Enables Secure Boot.
+     */
+    secureBoot: boolean;
+    /**
+     * Enables UEFI boot.
+     */
+    uefi: boolean;
+    /**
+     * Sets Graphic device model.
+     */
+    videoModel: string;
+    /**
+     * Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
+     */
+    virtioScsi: boolean;
+}
+
+export interface GetImageV2Filter {
+    /**
+     * Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+     */
+    distro?: string;
+    /**
+     * Filter images by operating system type, such as `linux` or `windows`.
+     */
+    os?: string;
+    /**
+     * Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+     */
+    secureBoot?: boolean;
+    /**
+     * Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+     */
+    uefi?: boolean;
+    /**
+     * Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+     */
+    version?: string;
+}
+
 export interface GetLoadbalancerListener {
     displayName: string;
     /**
@@ -598,12 +687,20 @@ export interface GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
      */
     apiUrl: string;
     /**
+     * Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+     */
+    priority: string;
+    /**
      * Comma separated list of tags attached to the notifications.
      */
     tags: string;
 }
 
 export interface GetObservabilityInstanceAlertConfigReceiverWebhooksConfig {
+    /**
+     * Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+     */
+    googleChat: boolean;
     /**
      * Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
      */
@@ -627,14 +724,6 @@ export interface GetObservabilityInstanceAlertConfigRoute {
      * How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.) .
      */
     groupWait: string;
-    /**
-     * A set of equality matchers an alert has to fulfill to match the node.
-     */
-    match: {[key: string]: string};
-    /**
-     * A set of regex-matchers an alert has to fulfill to match the node.
-     */
-    matchRegex: {[key: string]: string};
     /**
      * The name of the receiver to route the alerts to.
      */
@@ -663,13 +752,21 @@ export interface GetObservabilityInstanceAlertConfigRouteRoute {
      */
     groupWait: string;
     /**
-     * A set of equality matchers an alert has to fulfill to match the node.
+     * A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+     *
+     * @deprecated Use `matchers` in the `routes` instead.
      */
     match: {[key: string]: string};
     /**
-     * A set of regex-matchers an alert has to fulfill to match the node.
+     * A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+     *
+     * @deprecated Use `matchers` in the `routes` instead.
      */
     matchRegex: {[key: string]: string};
+    /**
+     * A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+     */
+    matchers: string[];
     /**
      * The name of the receiver to route the alerts to.
      */
@@ -1759,7 +1856,7 @@ export interface ObservabilityAlertgroupRule {
 
 export interface ObservabilityInstanceAlertConfig {
     /**
-     * Global configuration for the alerts.
+     * Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
      */
     global: outputs.ObservabilityInstanceAlertConfigGlobal;
     /**
@@ -1863,6 +1960,10 @@ export interface ObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
      */
     apiUrl?: string;
     /**
+     * Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+     */
+    priority?: string;
+    /**
      * Comma separated list of tags attached to the notifications.
      */
     tags?: string;
@@ -1870,9 +1971,13 @@ export interface ObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
 
 export interface ObservabilityInstanceAlertConfigReceiverWebhooksConfig {
     /**
+     * Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+     */
+    googleChat: boolean;
+    /**
      * Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
      */
-    msTeams?: boolean;
+    msTeams: boolean;
     /**
      * The endpoint to send HTTP POST requests to. Must be a valid URL
      */
@@ -1892,14 +1997,6 @@ export interface ObservabilityInstanceAlertConfigRoute {
      * How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
      */
     groupWait: string;
-    /**
-     * A set of equality matchers an alert has to fulfill to match the node.
-     */
-    match?: {[key: string]: string};
-    /**
-     * A set of regex-matchers an alert has to fulfill to match the node.
-     */
-    matchRegex?: {[key: string]: string};
     /**
      * The name of the receiver to route the alerts to.
      */
@@ -1928,13 +2025,21 @@ export interface ObservabilityInstanceAlertConfigRouteRoute {
      */
     groupWait: string;
     /**
-     * A set of equality matchers an alert has to fulfill to match the node.
+     * A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+     *
+     * @deprecated Use `matchers` in the `routes` instead.
      */
     match?: {[key: string]: string};
     /**
-     * A set of regex-matchers an alert has to fulfill to match the node.
+     * A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+     *
+     * @deprecated Use `matchers` in the `routes` instead.
      */
     matchRegex?: {[key: string]: string};
+    /**
+     * A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+     */
+    matchers?: string[];
     /**
      * The name of the receiver to route the alerts to.
      */

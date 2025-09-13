@@ -36,9 +36,9 @@ class ObservabilityInstanceArgs:
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The access control list for this instance. Each entry is an IP address range that is permitted to access, in CIDR notation.
         :param pulumi.Input['ObservabilityInstanceAlertConfigArgs'] alert_config: Alert configuration for the instance.
-        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept.
-        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
-        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         :param pulumi.Input[_builtins.str] name: The name of the Observability instance.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Additional parameters.
         """
@@ -111,7 +111,7 @@ class ObservabilityInstanceArgs:
     @pulumi.getter(name="metricsRetentionDays")
     def metrics_retention_days(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Specifies for how many days the raw metrics are kept.
+        Specifies for how many days the raw metrics are kept. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days")
 
@@ -123,7 +123,7 @@ class ObservabilityInstanceArgs:
     @pulumi.getter(name="metricsRetentionDays1hDownsampling")
     def metrics_retention_days1h_downsampling(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days1h_downsampling")
 
@@ -135,7 +135,7 @@ class ObservabilityInstanceArgs:
     @pulumi.getter(name="metricsRetentionDays5mDownsampling")
     def metrics_retention_days5m_downsampling(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days5m_downsampling")
 
@@ -213,9 +213,9 @@ class _ObservabilityInstanceState:
         :param pulumi.Input[_builtins.str] logs_push_url: Specifies URL for pushing logs.
         :param pulumi.Input[_builtins.str] logs_url: Specifies Logs URL.
         :param pulumi.Input[_builtins.str] metrics_push_url: Specifies URL for pushing metrics.
-        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept.
-        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
-        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         :param pulumi.Input[_builtins.str] metrics_url: Specifies metrics URL.
         :param pulumi.Input[_builtins.str] name: The name of the Observability instance.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Additional parameters.
@@ -457,7 +457,7 @@ class _ObservabilityInstanceState:
     @pulumi.getter(name="metricsRetentionDays")
     def metrics_retention_days(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Specifies for how many days the raw metrics are kept.
+        Specifies for how many days the raw metrics are kept. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days")
 
@@ -469,7 +469,7 @@ class _ObservabilityInstanceState:
     @pulumi.getter(name="metricsRetentionDays1hDownsampling")
     def metrics_retention_days1h_downsampling(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days1h_downsampling")
 
@@ -481,7 +481,7 @@ class _ObservabilityInstanceState:
     @pulumi.getter(name="metricsRetentionDays5mDownsampling")
     def metrics_retention_days5m_downsampling(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days5m_downsampling")
 
@@ -617,9 +617,9 @@ class ObservabilityInstance(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The access control list for this instance. Each entry is an IP address range that is permitted to access, in CIDR notation.
         :param pulumi.Input[Union['ObservabilityInstanceAlertConfigArgs', 'ObservabilityInstanceAlertConfigArgsDict']] alert_config: Alert configuration for the instance.
-        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept.
-        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
-        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         :param pulumi.Input[_builtins.str] name: The name of the Observability instance.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Additional parameters.
         :param pulumi.Input[_builtins.str] plan_name: Specifies the Observability plan. E.g. `Observability-Monitoring-Medium-EU01`.
@@ -759,9 +759,9 @@ class ObservabilityInstance(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] logs_push_url: Specifies URL for pushing logs.
         :param pulumi.Input[_builtins.str] logs_url: Specifies Logs URL.
         :param pulumi.Input[_builtins.str] metrics_push_url: Specifies URL for pushing metrics.
-        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept.
-        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
-        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         :param pulumi.Input[_builtins.str] metrics_url: Specifies metrics URL.
         :param pulumi.Input[_builtins.str] name: The name of the Observability instance.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Additional parameters.
@@ -921,7 +921,7 @@ class ObservabilityInstance(pulumi.CustomResource):
     @pulumi.getter(name="metricsRetentionDays")
     def metrics_retention_days(self) -> pulumi.Output[_builtins.int]:
         """
-        Specifies for how many days the raw metrics are kept.
+        Specifies for how many days the raw metrics are kept. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days")
 
@@ -929,7 +929,7 @@ class ObservabilityInstance(pulumi.CustomResource):
     @pulumi.getter(name="metricsRetentionDays1hDownsampling")
     def metrics_retention_days1h_downsampling(self) -> pulumi.Output[_builtins.int]:
         """
-        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days1h_downsampling")
 
@@ -937,7 +937,7 @@ class ObservabilityInstance(pulumi.CustomResource):
     @pulumi.getter(name="metricsRetentionDays5mDownsampling")
     def metrics_retention_days5m_downsampling(self) -> pulumi.Output[_builtins.int]:
         """
-        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days5m_downsampling")
 

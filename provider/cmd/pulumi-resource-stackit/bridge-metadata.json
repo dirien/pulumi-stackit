@@ -282,6 +282,9 @@
                                             "fields": {
                                                 "group_by": {
                                                     "maxItemsOne": false
+                                                },
+                                                "matchers": {
+                                                    "maxItemsOne": false
                                                 }
                                             }
                                         }
@@ -637,6 +640,9 @@
             "stackit_image": {
                 "current": "stackit:index/getImage:getImage"
             },
+            "stackit_image_v2": {
+                "current": "stackit:index/getImageV2:getImageV2"
+            },
             "stackit_key_pair": {
                 "current": "stackit:index/getKeyPair:getKeyPair"
             },
@@ -695,6 +701,9 @@
                         }
                     }
                 }
+            },
+            "stackit_machine_type": {
+                "current": "stackit:index/getMachineType:getMachineType"
             },
             "stackit_mariadb_credential": {
                 "current": "stackit:index/getMariadbCredential:getMariadbCredential",
@@ -831,6 +840,9 @@
                                         "elem": {
                                             "fields": {
                                                 "group_by": {
+                                                    "maxItemsOne": false
+                                                },
+                                                "matchers": {
                                                     "maxItemsOne": false
                                                 }
                                             }
