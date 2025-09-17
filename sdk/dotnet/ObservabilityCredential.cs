@@ -19,6 +19,12 @@ namespace ediri.Stackit
     public partial class ObservabilityCredential : global::Pulumi.CustomResource
     {
         /// <summary>
+        /// A description of the credential.
+        /// </summary>
+        [Output("description")]
+        public Output<string?> Description { get; private set; } = null!;
+
+        /// <summary>
         /// The Observability Instance ID the credential belongs to.
         /// </summary>
         [Output("instanceId")]
@@ -94,6 +100,12 @@ namespace ediri.Stackit
     public sealed class ObservabilityCredentialArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// A description of the credential.
+        /// </summary>
+        [Input("description")]
+        public Input<string>? Description { get; set; }
+
+        /// <summary>
         /// The Observability Instance ID the credential belongs to.
         /// </summary>
         [Input("instanceId", required: true)]
@@ -113,6 +125,12 @@ namespace ediri.Stackit
 
     public sealed class ObservabilityCredentialState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// A description of the credential.
+        /// </summary>
+        [Input("description")]
+        public Input<string>? Description { get; set; }
+
         /// <summary>
         /// The Observability Instance ID the credential belongs to.
         /// </summary>

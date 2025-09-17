@@ -21,10 +21,12 @@ from .get_dns_zone import *
 from .get_git import *
 from .get_iaas_project import *
 from .get_image import *
+from .get_image_v2 import *
 from .get_key_pair import *
 from .get_loadbalancer import *
 from .get_logme_credential import *
 from .get_logme_instance import *
+from .get_machine_type import *
 from .get_mariadb_credential import *
 from .get_mariadb_instance import *
 from .get_mongodbflex_instance import *
