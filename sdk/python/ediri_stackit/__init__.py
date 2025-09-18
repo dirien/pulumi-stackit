@@ -21,10 +21,12 @@ from .get_dns_zone import *
 from .get_git import *
 from .get_iaas_project import *
 from .get_image import *
+from .get_image_v2 import *
 from .get_key_pair import *
 from .get_loadbalancer import *
 from .get_logme_credential import *
 from .get_logme_instance import *
+from .get_machine_type import *
 from .get_mariadb_credential import *
 from .get_mariadb_instance import *
 from .get_mongodbflex_instance import *
@@ -51,6 +53,7 @@ from .get_rabbitmq_credential import *
 from .get_rabbitmq_instance import *
 from .get_redis_credential import *
 from .get_redis_instance import *
+from .get_resourcemanager_folder import *
 from .get_resourcemanager_project import *
 from .get_routing_table import *
 from .get_routing_table_route import *
@@ -106,6 +109,7 @@ from .rabbitmq_credential import *
 from .rabbitmq_instance import *
 from .redis_credential import *
 from .redis_instance import *
+from .resourcemanager_folder import *
 from .resourcemanager_project import *
 from .routing_table import *
 from .routing_table_route import *
@@ -474,6 +478,14 @@ _utilities.register(
   "fqn": "ediri_stackit",
   "classes": {
    "stackit:index/redisInstance:RedisInstance": "RedisInstance"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/resourcemanagerFolder",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/resourcemanagerFolder:ResourcemanagerFolder": "ResourcemanagerFolder"
   }
  },
  {

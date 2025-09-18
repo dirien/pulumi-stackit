@@ -21,8 +21,7 @@ func GetCdnCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:cdnCustomEndpoint")
 }
 
-// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-// value is `~/.stackit/credentials.json`.
+// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
 func GetCredentialsPath(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:credentialsPath")
 }
@@ -42,8 +41,7 @@ func GetEnableBetaResources(ctx *pulumi.Context) bool {
 	return config.GetBool(ctx, "stackit:enableBetaResources")
 }
 
-// Enables experiments. These are unstable features without official support. More information can be found in the README.
-// Available Experiments: iam, routing-tables, network
+// Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network
 func GetExperiments(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:experiments")
 }
@@ -103,14 +101,12 @@ func GetPostgresflexCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:postgresflexCustomEndpoint")
 }
 
-// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-// included in the service account key.
+// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 func GetPrivateKey(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:privateKey")
 }
 
-// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-// key that is included in the service account key.
+// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 func GetPrivateKeyPath(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:privateKeyPath")
 }
@@ -157,8 +153,7 @@ func GetServiceAccountCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:serviceAccountCustomEndpoint")
 }
 
-// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-// if you want to use the resource manager project resource.
+// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
 //
 // Deprecated: The `serviceAccountEmail` field has been deprecated because it is not required. Will be removed after June 12th 2025.
 func GetServiceAccountEmail(ctx *pulumi.Context) string {
@@ -170,8 +165,7 @@ func GetServiceAccountKey(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:serviceAccountKey")
 }
 
-// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-// operations.
+// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
 func GetServiceAccountKeyPath(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:serviceAccountKeyPath")
 }
