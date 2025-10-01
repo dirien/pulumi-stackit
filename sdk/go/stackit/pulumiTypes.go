@@ -13,6 +13,181 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
+type CdnCustomDomainCertificate struct {
+	// The PEM-encoded TLS certificate. Required for custom certificates.
+	Certificate *string `pulumi:"certificate"`
+	// The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+	PrivateKey *string `pulumi:"privateKey"`
+	// A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+	Version *int `pulumi:"version"`
+}
+
+// CdnCustomDomainCertificateInput is an input type that accepts CdnCustomDomainCertificateArgs and CdnCustomDomainCertificateOutput values.
+// You can construct a concrete instance of `CdnCustomDomainCertificateInput` via:
+//
+//	CdnCustomDomainCertificateArgs{...}
+type CdnCustomDomainCertificateInput interface {
+	pulumi.Input
+
+	ToCdnCustomDomainCertificateOutput() CdnCustomDomainCertificateOutput
+	ToCdnCustomDomainCertificateOutputWithContext(context.Context) CdnCustomDomainCertificateOutput
+}
+
+type CdnCustomDomainCertificateArgs struct {
+	// The PEM-encoded TLS certificate. Required for custom certificates.
+	Certificate pulumi.StringPtrInput `pulumi:"certificate"`
+	// The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+	PrivateKey pulumi.StringPtrInput `pulumi:"privateKey"`
+	// A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+	Version pulumi.IntPtrInput `pulumi:"version"`
+}
+
+func (CdnCustomDomainCertificateArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*CdnCustomDomainCertificate)(nil)).Elem()
+}
+
+func (i CdnCustomDomainCertificateArgs) ToCdnCustomDomainCertificateOutput() CdnCustomDomainCertificateOutput {
+	return i.ToCdnCustomDomainCertificateOutputWithContext(context.Background())
+}
+
+func (i CdnCustomDomainCertificateArgs) ToCdnCustomDomainCertificateOutputWithContext(ctx context.Context) CdnCustomDomainCertificateOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CdnCustomDomainCertificateOutput)
+}
+
+func (i CdnCustomDomainCertificateArgs) ToCdnCustomDomainCertificatePtrOutput() CdnCustomDomainCertificatePtrOutput {
+	return i.ToCdnCustomDomainCertificatePtrOutputWithContext(context.Background())
+}
+
+func (i CdnCustomDomainCertificateArgs) ToCdnCustomDomainCertificatePtrOutputWithContext(ctx context.Context) CdnCustomDomainCertificatePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CdnCustomDomainCertificateOutput).ToCdnCustomDomainCertificatePtrOutputWithContext(ctx)
+}
+
+// CdnCustomDomainCertificatePtrInput is an input type that accepts CdnCustomDomainCertificateArgs, CdnCustomDomainCertificatePtr and CdnCustomDomainCertificatePtrOutput values.
+// You can construct a concrete instance of `CdnCustomDomainCertificatePtrInput` via:
+//
+//	        CdnCustomDomainCertificateArgs{...}
+//
+//	or:
+//
+//	        nil
+type CdnCustomDomainCertificatePtrInput interface {
+	pulumi.Input
+
+	ToCdnCustomDomainCertificatePtrOutput() CdnCustomDomainCertificatePtrOutput
+	ToCdnCustomDomainCertificatePtrOutputWithContext(context.Context) CdnCustomDomainCertificatePtrOutput
+}
+
+type cdnCustomDomainCertificatePtrType CdnCustomDomainCertificateArgs
+
+func CdnCustomDomainCertificatePtr(v *CdnCustomDomainCertificateArgs) CdnCustomDomainCertificatePtrInput {
+	return (*cdnCustomDomainCertificatePtrType)(v)
+}
+
+func (*cdnCustomDomainCertificatePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**CdnCustomDomainCertificate)(nil)).Elem()
+}
+
+func (i *cdnCustomDomainCertificatePtrType) ToCdnCustomDomainCertificatePtrOutput() CdnCustomDomainCertificatePtrOutput {
+	return i.ToCdnCustomDomainCertificatePtrOutputWithContext(context.Background())
+}
+
+func (i *cdnCustomDomainCertificatePtrType) ToCdnCustomDomainCertificatePtrOutputWithContext(ctx context.Context) CdnCustomDomainCertificatePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(CdnCustomDomainCertificatePtrOutput)
+}
+
+type CdnCustomDomainCertificateOutput struct{ *pulumi.OutputState }
+
+func (CdnCustomDomainCertificateOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*CdnCustomDomainCertificate)(nil)).Elem()
+}
+
+func (o CdnCustomDomainCertificateOutput) ToCdnCustomDomainCertificateOutput() CdnCustomDomainCertificateOutput {
+	return o
+}
+
+func (o CdnCustomDomainCertificateOutput) ToCdnCustomDomainCertificateOutputWithContext(ctx context.Context) CdnCustomDomainCertificateOutput {
+	return o
+}
+
+func (o CdnCustomDomainCertificateOutput) ToCdnCustomDomainCertificatePtrOutput() CdnCustomDomainCertificatePtrOutput {
+	return o.ToCdnCustomDomainCertificatePtrOutputWithContext(context.Background())
+}
+
+func (o CdnCustomDomainCertificateOutput) ToCdnCustomDomainCertificatePtrOutputWithContext(ctx context.Context) CdnCustomDomainCertificatePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v CdnCustomDomainCertificate) *CdnCustomDomainCertificate {
+		return &v
+	}).(CdnCustomDomainCertificatePtrOutput)
+}
+
+// The PEM-encoded TLS certificate. Required for custom certificates.
+func (o CdnCustomDomainCertificateOutput) Certificate() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CdnCustomDomainCertificate) *string { return v.Certificate }).(pulumi.StringPtrOutput)
+}
+
+// The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+func (o CdnCustomDomainCertificateOutput) PrivateKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v CdnCustomDomainCertificate) *string { return v.PrivateKey }).(pulumi.StringPtrOutput)
+}
+
+// A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+func (o CdnCustomDomainCertificateOutput) Version() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v CdnCustomDomainCertificate) *int { return v.Version }).(pulumi.IntPtrOutput)
+}
+
+type CdnCustomDomainCertificatePtrOutput struct{ *pulumi.OutputState }
+
+func (CdnCustomDomainCertificatePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**CdnCustomDomainCertificate)(nil)).Elem()
+}
+
+func (o CdnCustomDomainCertificatePtrOutput) ToCdnCustomDomainCertificatePtrOutput() CdnCustomDomainCertificatePtrOutput {
+	return o
+}
+
+func (o CdnCustomDomainCertificatePtrOutput) ToCdnCustomDomainCertificatePtrOutputWithContext(ctx context.Context) CdnCustomDomainCertificatePtrOutput {
+	return o
+}
+
+func (o CdnCustomDomainCertificatePtrOutput) Elem() CdnCustomDomainCertificateOutput {
+	return o.ApplyT(func(v *CdnCustomDomainCertificate) CdnCustomDomainCertificate {
+		if v != nil {
+			return *v
+		}
+		var ret CdnCustomDomainCertificate
+		return ret
+	}).(CdnCustomDomainCertificateOutput)
+}
+
+// The PEM-encoded TLS certificate. Required for custom certificates.
+func (o CdnCustomDomainCertificatePtrOutput) Certificate() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CdnCustomDomainCertificate) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Certificate
+	}).(pulumi.StringPtrOutput)
+}
+
+// The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+func (o CdnCustomDomainCertificatePtrOutput) PrivateKey() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *CdnCustomDomainCertificate) *string {
+		if v == nil {
+			return nil
+		}
+		return v.PrivateKey
+	}).(pulumi.StringPtrOutput)
+}
+
+// A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+func (o CdnCustomDomainCertificatePtrOutput) Version() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *CdnCustomDomainCertificate) *int {
+		if v == nil {
+			return nil
+		}
+		return v.Version
+	}).(pulumi.IntPtrOutput)
+}
+
 type CdnDistributionConfig struct {
 	// The configured backend for the distribution
 	Backend CdnDistributionConfigBackend `pulumi:"backend"`
@@ -4283,7 +4458,7 @@ func (o ObservabilityAlertgroupRuleArrayOutput) Index(i pulumi.IntInput) Observa
 }
 
 type ObservabilityInstanceAlertConfig struct {
-	// Global configuration for the alerts.
+	// Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
 	Global *ObservabilityInstanceAlertConfigGlobal `pulumi:"global"`
 	// List of alert receivers.
 	Receivers []ObservabilityInstanceAlertConfigReceiver `pulumi:"receivers"`
@@ -4303,7 +4478,7 @@ type ObservabilityInstanceAlertConfigInput interface {
 }
 
 type ObservabilityInstanceAlertConfigArgs struct {
-	// Global configuration for the alerts.
+	// Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
 	Global ObservabilityInstanceAlertConfigGlobalPtrInput `pulumi:"global"`
 	// List of alert receivers.
 	Receivers ObservabilityInstanceAlertConfigReceiverArrayInput `pulumi:"receivers"`
@@ -4388,7 +4563,7 @@ func (o ObservabilityInstanceAlertConfigOutput) ToObservabilityInstanceAlertConf
 	}).(ObservabilityInstanceAlertConfigPtrOutput)
 }
 
-// Global configuration for the alerts.
+// Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
 func (o ObservabilityInstanceAlertConfigOutput) Global() ObservabilityInstanceAlertConfigGlobalPtrOutput {
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfig) *ObservabilityInstanceAlertConfigGlobal { return v.Global }).(ObservabilityInstanceAlertConfigGlobalPtrOutput)
 }
@@ -4429,7 +4604,7 @@ func (o ObservabilityInstanceAlertConfigPtrOutput) Elem() ObservabilityInstanceA
 	}).(ObservabilityInstanceAlertConfigOutput)
 }
 
-// Global configuration for the alerts.
+// Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
 func (o ObservabilityInstanceAlertConfigPtrOutput) Global() ObservabilityInstanceAlertConfigGlobalPtrOutput {
 	return o.ApplyT(func(v *ObservabilityInstanceAlertConfig) *ObservabilityInstanceAlertConfigGlobal {
 		if v == nil {
@@ -4868,6 +5043,8 @@ type ObservabilityInstanceAlertConfigReceiverEmailConfig struct {
 	AuthUsername *string `pulumi:"authUsername"`
 	// The sender email address. Must be a valid email address
 	From *string `pulumi:"from"`
+	// Whether to notify about resolved alerts.
+	SendResolved *bool `pulumi:"sendResolved"`
 	// The SMTP host through which emails are sent.
 	SmartHost *string `pulumi:"smartHost"`
 	// The email address to send notifications to. Must be a valid email address
@@ -4894,6 +5071,8 @@ type ObservabilityInstanceAlertConfigReceiverEmailConfigArgs struct {
 	AuthUsername pulumi.StringPtrInput `pulumi:"authUsername"`
 	// The sender email address. Must be a valid email address
 	From pulumi.StringPtrInput `pulumi:"from"`
+	// Whether to notify about resolved alerts.
+	SendResolved pulumi.BoolPtrInput `pulumi:"sendResolved"`
 	// The SMTP host through which emails are sent.
 	SmartHost pulumi.StringPtrInput `pulumi:"smartHost"`
 	// The email address to send notifications to. Must be a valid email address
@@ -4971,6 +5150,11 @@ func (o ObservabilityInstanceAlertConfigReceiverEmailConfigOutput) From() pulumi
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverEmailConfig) *string { return v.From }).(pulumi.StringPtrOutput)
 }
 
+// Whether to notify about resolved alerts.
+func (o ObservabilityInstanceAlertConfigReceiverEmailConfigOutput) SendResolved() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverEmailConfig) *bool { return v.SendResolved }).(pulumi.BoolPtrOutput)
+}
+
 // The SMTP host through which emails are sent.
 func (o ObservabilityInstanceAlertConfigReceiverEmailConfigOutput) SmartHost() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverEmailConfig) *string { return v.SmartHost }).(pulumi.StringPtrOutput)
@@ -5006,6 +5190,10 @@ type ObservabilityInstanceAlertConfigReceiverOpsgenieConfig struct {
 	ApiKey *string `pulumi:"apiKey"`
 	// The host to send OpsGenie API requests to. Must be a valid URL
 	ApiUrl *string `pulumi:"apiUrl"`
+	// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+	Priority *string `pulumi:"priority"`
+	// Whether to notify about resolved alerts.
+	SendResolved *bool `pulumi:"sendResolved"`
 	// Comma separated list of tags attached to the notifications.
 	Tags *string `pulumi:"tags"`
 }
@@ -5026,6 +5214,10 @@ type ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs struct {
 	ApiKey pulumi.StringPtrInput `pulumi:"apiKey"`
 	// The host to send OpsGenie API requests to. Must be a valid URL
 	ApiUrl pulumi.StringPtrInput `pulumi:"apiUrl"`
+	// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+	Priority pulumi.StringPtrInput `pulumi:"priority"`
+	// Whether to notify about resolved alerts.
+	SendResolved pulumi.BoolPtrInput `pulumi:"sendResolved"`
 	// Comma separated list of tags attached to the notifications.
 	Tags pulumi.StringPtrInput `pulumi:"tags"`
 }
@@ -5091,6 +5283,16 @@ func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) ApiUrl() p
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverOpsgenieConfig) *string { return v.ApiUrl }).(pulumi.StringPtrOutput)
 }
 
+// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) Priority() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverOpsgenieConfig) *string { return v.Priority }).(pulumi.StringPtrOutput)
+}
+
+// Whether to notify about resolved alerts.
+func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) SendResolved() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverOpsgenieConfig) *bool { return v.SendResolved }).(pulumi.BoolPtrOutput)
+}
+
 // Comma separated list of tags attached to the notifications.
 func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) Tags() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverOpsgenieConfig) *string { return v.Tags }).(pulumi.StringPtrOutput)
@@ -5117,8 +5319,12 @@ func (o ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArrayOutput) Index
 }
 
 type ObservabilityInstanceAlertConfigReceiverWebhooksConfig struct {
+	// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+	GoogleChat *bool `pulumi:"googleChat"`
 	// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 	MsTeams *bool `pulumi:"msTeams"`
+	// Whether to notify about resolved alerts.
+	SendResolved *bool `pulumi:"sendResolved"`
 	// The endpoint to send HTTP POST requests to. Must be a valid URL
 	Url *string `pulumi:"url"`
 }
@@ -5135,8 +5341,12 @@ type ObservabilityInstanceAlertConfigReceiverWebhooksConfigInput interface {
 }
 
 type ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs struct {
+	// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+	GoogleChat pulumi.BoolPtrInput `pulumi:"googleChat"`
 	// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 	MsTeams pulumi.BoolPtrInput `pulumi:"msTeams"`
+	// Whether to notify about resolved alerts.
+	SendResolved pulumi.BoolPtrInput `pulumi:"sendResolved"`
 	// The endpoint to send HTTP POST requests to. Must be a valid URL
 	Url pulumi.StringPtrInput `pulumi:"url"`
 }
@@ -5192,9 +5402,19 @@ func (o ObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) ToObservab
 	return o
 }
 
+// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+func (o ObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) GoogleChat() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverWebhooksConfig) *bool { return v.GoogleChat }).(pulumi.BoolPtrOutput)
+}
+
 // Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 func (o ObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) MsTeams() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverWebhooksConfig) *bool { return v.MsTeams }).(pulumi.BoolPtrOutput)
+}
+
+// Whether to notify about resolved alerts.
+func (o ObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) SendResolved() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ObservabilityInstanceAlertConfigReceiverWebhooksConfig) *bool { return v.SendResolved }).(pulumi.BoolPtrOutput)
 }
 
 // The endpoint to send HTTP POST requests to. Must be a valid URL
@@ -5229,10 +5449,6 @@ type ObservabilityInstanceAlertConfigRoute struct {
 	GroupInterval *string `pulumi:"groupInterval"`
 	// How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
 	GroupWait *string `pulumi:"groupWait"`
-	// A set of equality matchers an alert has to fulfill to match the node.
-	Match map[string]string `pulumi:"match"`
-	// A set of regex-matchers an alert has to fulfill to match the node.
-	MatchRegex map[string]string `pulumi:"matchRegex"`
 	// The name of the receiver to route the alerts to.
 	Receiver string `pulumi:"receiver"`
 	// How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
@@ -5259,10 +5475,6 @@ type ObservabilityInstanceAlertConfigRouteArgs struct {
 	GroupInterval pulumi.StringPtrInput `pulumi:"groupInterval"`
 	// How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
 	GroupWait pulumi.StringPtrInput `pulumi:"groupWait"`
-	// A set of equality matchers an alert has to fulfill to match the node.
-	Match pulumi.StringMapInput `pulumi:"match"`
-	// A set of regex-matchers an alert has to fulfill to match the node.
-	MatchRegex pulumi.StringMapInput `pulumi:"matchRegex"`
 	// The name of the receiver to route the alerts to.
 	Receiver pulumi.StringInput `pulumi:"receiver"`
 	// How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
@@ -5363,16 +5575,6 @@ func (o ObservabilityInstanceAlertConfigRouteOutput) GroupWait() pulumi.StringPt
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigRoute) *string { return v.GroupWait }).(pulumi.StringPtrOutput)
 }
 
-// A set of equality matchers an alert has to fulfill to match the node.
-func (o ObservabilityInstanceAlertConfigRouteOutput) Match() pulumi.StringMapOutput {
-	return o.ApplyT(func(v ObservabilityInstanceAlertConfigRoute) map[string]string { return v.Match }).(pulumi.StringMapOutput)
-}
-
-// A set of regex-matchers an alert has to fulfill to match the node.
-func (o ObservabilityInstanceAlertConfigRouteOutput) MatchRegex() pulumi.StringMapOutput {
-	return o.ApplyT(func(v ObservabilityInstanceAlertConfigRoute) map[string]string { return v.MatchRegex }).(pulumi.StringMapOutput)
-}
-
 // The name of the receiver to route the alerts to.
 func (o ObservabilityInstanceAlertConfigRouteOutput) Receiver() pulumi.StringOutput {
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigRoute) string { return v.Receiver }).(pulumi.StringOutput)
@@ -5444,26 +5646,6 @@ func (o ObservabilityInstanceAlertConfigRoutePtrOutput) GroupWait() pulumi.Strin
 	}).(pulumi.StringPtrOutput)
 }
 
-// A set of equality matchers an alert has to fulfill to match the node.
-func (o ObservabilityInstanceAlertConfigRoutePtrOutput) Match() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *ObservabilityInstanceAlertConfigRoute) map[string]string {
-		if v == nil {
-			return nil
-		}
-		return v.Match
-	}).(pulumi.StringMapOutput)
-}
-
-// A set of regex-matchers an alert has to fulfill to match the node.
-func (o ObservabilityInstanceAlertConfigRoutePtrOutput) MatchRegex() pulumi.StringMapOutput {
-	return o.ApplyT(func(v *ObservabilityInstanceAlertConfigRoute) map[string]string {
-		if v == nil {
-			return nil
-		}
-		return v.MatchRegex
-	}).(pulumi.StringMapOutput)
-}
-
 // The name of the receiver to route the alerts to.
 func (o ObservabilityInstanceAlertConfigRoutePtrOutput) Receiver() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ObservabilityInstanceAlertConfigRoute) *string {
@@ -5495,16 +5677,24 @@ func (o ObservabilityInstanceAlertConfigRoutePtrOutput) Routes() ObservabilityIn
 }
 
 type ObservabilityInstanceAlertConfigRouteRoute struct {
+	// Whether an alert should continue matching subsequent sibling nodes.
+	Continue *bool `pulumi:"continue"`
 	// The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
 	GroupBies []string `pulumi:"groupBies"`
 	// How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
 	GroupInterval *string `pulumi:"groupInterval"`
 	// How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
 	GroupWait *string `pulumi:"groupWait"`
-	// A set of equality matchers an alert has to fulfill to match the node.
+	// A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+	//
+	// Deprecated: Use `matchers` in the `routes` instead.
 	Match map[string]string `pulumi:"match"`
-	// A set of regex-matchers an alert has to fulfill to match the node.
+	// A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+	//
+	// Deprecated: Use `matchers` in the `routes` instead.
 	MatchRegex map[string]string `pulumi:"matchRegex"`
+	// A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+	Matchers []string `pulumi:"matchers"`
 	// The name of the receiver to route the alerts to.
 	Receiver string `pulumi:"receiver"`
 	// How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
@@ -5523,16 +5713,24 @@ type ObservabilityInstanceAlertConfigRouteRouteInput interface {
 }
 
 type ObservabilityInstanceAlertConfigRouteRouteArgs struct {
+	// Whether an alert should continue matching subsequent sibling nodes.
+	Continue pulumi.BoolPtrInput `pulumi:"continue"`
 	// The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
 	GroupBies pulumi.StringArrayInput `pulumi:"groupBies"`
 	// How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
 	GroupInterval pulumi.StringPtrInput `pulumi:"groupInterval"`
 	// How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
 	GroupWait pulumi.StringPtrInput `pulumi:"groupWait"`
-	// A set of equality matchers an alert has to fulfill to match the node.
+	// A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+	//
+	// Deprecated: Use `matchers` in the `routes` instead.
 	Match pulumi.StringMapInput `pulumi:"match"`
-	// A set of regex-matchers an alert has to fulfill to match the node.
+	// A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+	//
+	// Deprecated: Use `matchers` in the `routes` instead.
 	MatchRegex pulumi.StringMapInput `pulumi:"matchRegex"`
+	// A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+	Matchers pulumi.StringArrayInput `pulumi:"matchers"`
 	// The name of the receiver to route the alerts to.
 	Receiver pulumi.StringInput `pulumi:"receiver"`
 	// How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
@@ -5590,6 +5788,11 @@ func (o ObservabilityInstanceAlertConfigRouteRouteOutput) ToObservabilityInstanc
 	return o
 }
 
+// Whether an alert should continue matching subsequent sibling nodes.
+func (o ObservabilityInstanceAlertConfigRouteRouteOutput) Continue() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v ObservabilityInstanceAlertConfigRouteRoute) *bool { return v.Continue }).(pulumi.BoolPtrOutput)
+}
+
 // The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
 func (o ObservabilityInstanceAlertConfigRouteRouteOutput) GroupBies() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigRouteRoute) []string { return v.GroupBies }).(pulumi.StringArrayOutput)
@@ -5605,14 +5808,23 @@ func (o ObservabilityInstanceAlertConfigRouteRouteOutput) GroupWait() pulumi.Str
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigRouteRoute) *string { return v.GroupWait }).(pulumi.StringPtrOutput)
 }
 
-// A set of equality matchers an alert has to fulfill to match the node.
+// A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+//
+// Deprecated: Use `matchers` in the `routes` instead.
 func (o ObservabilityInstanceAlertConfigRouteRouteOutput) Match() pulumi.StringMapOutput {
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigRouteRoute) map[string]string { return v.Match }).(pulumi.StringMapOutput)
 }
 
-// A set of regex-matchers an alert has to fulfill to match the node.
+// A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+//
+// Deprecated: Use `matchers` in the `routes` instead.
 func (o ObservabilityInstanceAlertConfigRouteRouteOutput) MatchRegex() pulumi.StringMapOutput {
 	return o.ApplyT(func(v ObservabilityInstanceAlertConfigRouteRoute) map[string]string { return v.MatchRegex }).(pulumi.StringMapOutput)
+}
+
+// A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+func (o ObservabilityInstanceAlertConfigRouteRouteOutput) Matchers() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v ObservabilityInstanceAlertConfigRouteRoute) []string { return v.Matchers }).(pulumi.StringArrayOutput)
 }
 
 // The name of the receiver to route the alerts to.
@@ -11227,6 +11439,143 @@ func (o VolumeSourcePtrOutput) Type() pulumi.StringPtrOutput {
 	}).(pulumi.StringPtrOutput)
 }
 
+type GetCdnCustomDomainCertificate struct {
+	// A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+	Version int `pulumi:"version"`
+}
+
+// GetCdnCustomDomainCertificateInput is an input type that accepts GetCdnCustomDomainCertificateArgs and GetCdnCustomDomainCertificateOutput values.
+// You can construct a concrete instance of `GetCdnCustomDomainCertificateInput` via:
+//
+//	GetCdnCustomDomainCertificateArgs{...}
+type GetCdnCustomDomainCertificateInput interface {
+	pulumi.Input
+
+	ToGetCdnCustomDomainCertificateOutput() GetCdnCustomDomainCertificateOutput
+	ToGetCdnCustomDomainCertificateOutputWithContext(context.Context) GetCdnCustomDomainCertificateOutput
+}
+
+type GetCdnCustomDomainCertificateArgs struct {
+	// A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+	Version pulumi.IntInput `pulumi:"version"`
+}
+
+func (GetCdnCustomDomainCertificateArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetCdnCustomDomainCertificate)(nil)).Elem()
+}
+
+func (i GetCdnCustomDomainCertificateArgs) ToGetCdnCustomDomainCertificateOutput() GetCdnCustomDomainCertificateOutput {
+	return i.ToGetCdnCustomDomainCertificateOutputWithContext(context.Background())
+}
+
+func (i GetCdnCustomDomainCertificateArgs) ToGetCdnCustomDomainCertificateOutputWithContext(ctx context.Context) GetCdnCustomDomainCertificateOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetCdnCustomDomainCertificateOutput)
+}
+
+func (i GetCdnCustomDomainCertificateArgs) ToGetCdnCustomDomainCertificatePtrOutput() GetCdnCustomDomainCertificatePtrOutput {
+	return i.ToGetCdnCustomDomainCertificatePtrOutputWithContext(context.Background())
+}
+
+func (i GetCdnCustomDomainCertificateArgs) ToGetCdnCustomDomainCertificatePtrOutputWithContext(ctx context.Context) GetCdnCustomDomainCertificatePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetCdnCustomDomainCertificateOutput).ToGetCdnCustomDomainCertificatePtrOutputWithContext(ctx)
+}
+
+// GetCdnCustomDomainCertificatePtrInput is an input type that accepts GetCdnCustomDomainCertificateArgs, GetCdnCustomDomainCertificatePtr and GetCdnCustomDomainCertificatePtrOutput values.
+// You can construct a concrete instance of `GetCdnCustomDomainCertificatePtrInput` via:
+//
+//	        GetCdnCustomDomainCertificateArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetCdnCustomDomainCertificatePtrInput interface {
+	pulumi.Input
+
+	ToGetCdnCustomDomainCertificatePtrOutput() GetCdnCustomDomainCertificatePtrOutput
+	ToGetCdnCustomDomainCertificatePtrOutputWithContext(context.Context) GetCdnCustomDomainCertificatePtrOutput
+}
+
+type getCdnCustomDomainCertificatePtrType GetCdnCustomDomainCertificateArgs
+
+func GetCdnCustomDomainCertificatePtr(v *GetCdnCustomDomainCertificateArgs) GetCdnCustomDomainCertificatePtrInput {
+	return (*getCdnCustomDomainCertificatePtrType)(v)
+}
+
+func (*getCdnCustomDomainCertificatePtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetCdnCustomDomainCertificate)(nil)).Elem()
+}
+
+func (i *getCdnCustomDomainCertificatePtrType) ToGetCdnCustomDomainCertificatePtrOutput() GetCdnCustomDomainCertificatePtrOutput {
+	return i.ToGetCdnCustomDomainCertificatePtrOutputWithContext(context.Background())
+}
+
+func (i *getCdnCustomDomainCertificatePtrType) ToGetCdnCustomDomainCertificatePtrOutputWithContext(ctx context.Context) GetCdnCustomDomainCertificatePtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetCdnCustomDomainCertificatePtrOutput)
+}
+
+type GetCdnCustomDomainCertificateOutput struct{ *pulumi.OutputState }
+
+func (GetCdnCustomDomainCertificateOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetCdnCustomDomainCertificate)(nil)).Elem()
+}
+
+func (o GetCdnCustomDomainCertificateOutput) ToGetCdnCustomDomainCertificateOutput() GetCdnCustomDomainCertificateOutput {
+	return o
+}
+
+func (o GetCdnCustomDomainCertificateOutput) ToGetCdnCustomDomainCertificateOutputWithContext(ctx context.Context) GetCdnCustomDomainCertificateOutput {
+	return o
+}
+
+func (o GetCdnCustomDomainCertificateOutput) ToGetCdnCustomDomainCertificatePtrOutput() GetCdnCustomDomainCertificatePtrOutput {
+	return o.ToGetCdnCustomDomainCertificatePtrOutputWithContext(context.Background())
+}
+
+func (o GetCdnCustomDomainCertificateOutput) ToGetCdnCustomDomainCertificatePtrOutputWithContext(ctx context.Context) GetCdnCustomDomainCertificatePtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetCdnCustomDomainCertificate) *GetCdnCustomDomainCertificate {
+		return &v
+	}).(GetCdnCustomDomainCertificatePtrOutput)
+}
+
+// A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+func (o GetCdnCustomDomainCertificateOutput) Version() pulumi.IntOutput {
+	return o.ApplyT(func(v GetCdnCustomDomainCertificate) int { return v.Version }).(pulumi.IntOutput)
+}
+
+type GetCdnCustomDomainCertificatePtrOutput struct{ *pulumi.OutputState }
+
+func (GetCdnCustomDomainCertificatePtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetCdnCustomDomainCertificate)(nil)).Elem()
+}
+
+func (o GetCdnCustomDomainCertificatePtrOutput) ToGetCdnCustomDomainCertificatePtrOutput() GetCdnCustomDomainCertificatePtrOutput {
+	return o
+}
+
+func (o GetCdnCustomDomainCertificatePtrOutput) ToGetCdnCustomDomainCertificatePtrOutputWithContext(ctx context.Context) GetCdnCustomDomainCertificatePtrOutput {
+	return o
+}
+
+func (o GetCdnCustomDomainCertificatePtrOutput) Elem() GetCdnCustomDomainCertificateOutput {
+	return o.ApplyT(func(v *GetCdnCustomDomainCertificate) GetCdnCustomDomainCertificate {
+		if v != nil {
+			return *v
+		}
+		var ret GetCdnCustomDomainCertificate
+		return ret
+	}).(GetCdnCustomDomainCertificateOutput)
+}
+
+// A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+func (o GetCdnCustomDomainCertificatePtrOutput) Version() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *GetCdnCustomDomainCertificate) *int {
+		if v == nil {
+			return nil
+		}
+		return &v.Version
+	}).(pulumi.IntPtrOutput)
+}
+
 type GetCdnDistributionConfig struct {
 	// The configured backend for the distribution
 	Backend GetCdnDistributionConfigBackend `pulumi:"backend"`
@@ -11768,6 +12117,440 @@ func (o GetImageConfigOutput) VideoModel() pulumi.StringOutput {
 // Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
 func (o GetImageConfigOutput) VirtioScsi() pulumi.BoolOutput {
 	return o.ApplyT(func(v GetImageConfig) bool { return v.VirtioScsi }).(pulumi.BoolOutput)
+}
+
+type GetImageV2Checksum struct {
+	// Algorithm for the checksum of the image data.
+	Algorithm string `pulumi:"algorithm"`
+	// Hexdigest of the checksum of the image data.
+	Digest string `pulumi:"digest"`
+}
+
+// GetImageV2ChecksumInput is an input type that accepts GetImageV2ChecksumArgs and GetImageV2ChecksumOutput values.
+// You can construct a concrete instance of `GetImageV2ChecksumInput` via:
+//
+//	GetImageV2ChecksumArgs{...}
+type GetImageV2ChecksumInput interface {
+	pulumi.Input
+
+	ToGetImageV2ChecksumOutput() GetImageV2ChecksumOutput
+	ToGetImageV2ChecksumOutputWithContext(context.Context) GetImageV2ChecksumOutput
+}
+
+type GetImageV2ChecksumArgs struct {
+	// Algorithm for the checksum of the image data.
+	Algorithm pulumi.StringInput `pulumi:"algorithm"`
+	// Hexdigest of the checksum of the image data.
+	Digest pulumi.StringInput `pulumi:"digest"`
+}
+
+func (GetImageV2ChecksumArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageV2Checksum)(nil)).Elem()
+}
+
+func (i GetImageV2ChecksumArgs) ToGetImageV2ChecksumOutput() GetImageV2ChecksumOutput {
+	return i.ToGetImageV2ChecksumOutputWithContext(context.Background())
+}
+
+func (i GetImageV2ChecksumArgs) ToGetImageV2ChecksumOutputWithContext(ctx context.Context) GetImageV2ChecksumOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageV2ChecksumOutput)
+}
+
+type GetImageV2ChecksumOutput struct{ *pulumi.OutputState }
+
+func (GetImageV2ChecksumOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageV2Checksum)(nil)).Elem()
+}
+
+func (o GetImageV2ChecksumOutput) ToGetImageV2ChecksumOutput() GetImageV2ChecksumOutput {
+	return o
+}
+
+func (o GetImageV2ChecksumOutput) ToGetImageV2ChecksumOutputWithContext(ctx context.Context) GetImageV2ChecksumOutput {
+	return o
+}
+
+// Algorithm for the checksum of the image data.
+func (o GetImageV2ChecksumOutput) Algorithm() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Checksum) string { return v.Algorithm }).(pulumi.StringOutput)
+}
+
+// Hexdigest of the checksum of the image data.
+func (o GetImageV2ChecksumOutput) Digest() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Checksum) string { return v.Digest }).(pulumi.StringOutput)
+}
+
+type GetImageV2Config struct {
+	// Enables the BIOS bootmenu.
+	BootMenu bool `pulumi:"bootMenu"`
+	// Sets CDROM bus controller type.
+	CdromBus string `pulumi:"cdromBus"`
+	// Sets Disk bus controller type.
+	DiskBus string `pulumi:"diskBus"`
+	// Sets virtual network interface model.
+	NicModel string `pulumi:"nicModel"`
+	// Enables operating system specific optimizations.
+	OperatingSystem string `pulumi:"operatingSystem"`
+	// Operating system distribution.
+	OperatingSystemDistro string `pulumi:"operatingSystemDistro"`
+	// Version of the operating system.
+	OperatingSystemVersion string `pulumi:"operatingSystemVersion"`
+	// Sets the device bus when the image is used as a rescue image.
+	RescueBus string `pulumi:"rescueBus"`
+	// Sets the device when the image is used as a rescue image.
+	RescueDevice string `pulumi:"rescueDevice"`
+	// Enables Secure Boot.
+	SecureBoot bool `pulumi:"secureBoot"`
+	// Enables UEFI boot.
+	Uefi bool `pulumi:"uefi"`
+	// Sets Graphic device model.
+	VideoModel string `pulumi:"videoModel"`
+	// Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
+	VirtioScsi bool `pulumi:"virtioScsi"`
+}
+
+// GetImageV2ConfigInput is an input type that accepts GetImageV2ConfigArgs and GetImageV2ConfigOutput values.
+// You can construct a concrete instance of `GetImageV2ConfigInput` via:
+//
+//	GetImageV2ConfigArgs{...}
+type GetImageV2ConfigInput interface {
+	pulumi.Input
+
+	ToGetImageV2ConfigOutput() GetImageV2ConfigOutput
+	ToGetImageV2ConfigOutputWithContext(context.Context) GetImageV2ConfigOutput
+}
+
+type GetImageV2ConfigArgs struct {
+	// Enables the BIOS bootmenu.
+	BootMenu pulumi.BoolInput `pulumi:"bootMenu"`
+	// Sets CDROM bus controller type.
+	CdromBus pulumi.StringInput `pulumi:"cdromBus"`
+	// Sets Disk bus controller type.
+	DiskBus pulumi.StringInput `pulumi:"diskBus"`
+	// Sets virtual network interface model.
+	NicModel pulumi.StringInput `pulumi:"nicModel"`
+	// Enables operating system specific optimizations.
+	OperatingSystem pulumi.StringInput `pulumi:"operatingSystem"`
+	// Operating system distribution.
+	OperatingSystemDistro pulumi.StringInput `pulumi:"operatingSystemDistro"`
+	// Version of the operating system.
+	OperatingSystemVersion pulumi.StringInput `pulumi:"operatingSystemVersion"`
+	// Sets the device bus when the image is used as a rescue image.
+	RescueBus pulumi.StringInput `pulumi:"rescueBus"`
+	// Sets the device when the image is used as a rescue image.
+	RescueDevice pulumi.StringInput `pulumi:"rescueDevice"`
+	// Enables Secure Boot.
+	SecureBoot pulumi.BoolInput `pulumi:"secureBoot"`
+	// Enables UEFI boot.
+	Uefi pulumi.BoolInput `pulumi:"uefi"`
+	// Sets Graphic device model.
+	VideoModel pulumi.StringInput `pulumi:"videoModel"`
+	// Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
+	VirtioScsi pulumi.BoolInput `pulumi:"virtioScsi"`
+}
+
+func (GetImageV2ConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageV2Config)(nil)).Elem()
+}
+
+func (i GetImageV2ConfigArgs) ToGetImageV2ConfigOutput() GetImageV2ConfigOutput {
+	return i.ToGetImageV2ConfigOutputWithContext(context.Background())
+}
+
+func (i GetImageV2ConfigArgs) ToGetImageV2ConfigOutputWithContext(ctx context.Context) GetImageV2ConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageV2ConfigOutput)
+}
+
+type GetImageV2ConfigOutput struct{ *pulumi.OutputState }
+
+func (GetImageV2ConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageV2Config)(nil)).Elem()
+}
+
+func (o GetImageV2ConfigOutput) ToGetImageV2ConfigOutput() GetImageV2ConfigOutput {
+	return o
+}
+
+func (o GetImageV2ConfigOutput) ToGetImageV2ConfigOutputWithContext(ctx context.Context) GetImageV2ConfigOutput {
+	return o
+}
+
+// Enables the BIOS bootmenu.
+func (o GetImageV2ConfigOutput) BootMenu() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetImageV2Config) bool { return v.BootMenu }).(pulumi.BoolOutput)
+}
+
+// Sets CDROM bus controller type.
+func (o GetImageV2ConfigOutput) CdromBus() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.CdromBus }).(pulumi.StringOutput)
+}
+
+// Sets Disk bus controller type.
+func (o GetImageV2ConfigOutput) DiskBus() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.DiskBus }).(pulumi.StringOutput)
+}
+
+// Sets virtual network interface model.
+func (o GetImageV2ConfigOutput) NicModel() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.NicModel }).(pulumi.StringOutput)
+}
+
+// Enables operating system specific optimizations.
+func (o GetImageV2ConfigOutput) OperatingSystem() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.OperatingSystem }).(pulumi.StringOutput)
+}
+
+// Operating system distribution.
+func (o GetImageV2ConfigOutput) OperatingSystemDistro() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.OperatingSystemDistro }).(pulumi.StringOutput)
+}
+
+// Version of the operating system.
+func (o GetImageV2ConfigOutput) OperatingSystemVersion() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.OperatingSystemVersion }).(pulumi.StringOutput)
+}
+
+// Sets the device bus when the image is used as a rescue image.
+func (o GetImageV2ConfigOutput) RescueBus() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.RescueBus }).(pulumi.StringOutput)
+}
+
+// Sets the device when the image is used as a rescue image.
+func (o GetImageV2ConfigOutput) RescueDevice() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.RescueDevice }).(pulumi.StringOutput)
+}
+
+// Enables Secure Boot.
+func (o GetImageV2ConfigOutput) SecureBoot() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetImageV2Config) bool { return v.SecureBoot }).(pulumi.BoolOutput)
+}
+
+// Enables UEFI boot.
+func (o GetImageV2ConfigOutput) Uefi() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetImageV2Config) bool { return v.Uefi }).(pulumi.BoolOutput)
+}
+
+// Sets Graphic device model.
+func (o GetImageV2ConfigOutput) VideoModel() pulumi.StringOutput {
+	return o.ApplyT(func(v GetImageV2Config) string { return v.VideoModel }).(pulumi.StringOutput)
+}
+
+// Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
+func (o GetImageV2ConfigOutput) VirtioScsi() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetImageV2Config) bool { return v.VirtioScsi }).(pulumi.BoolOutput)
+}
+
+type GetImageV2Filter struct {
+	// Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+	Distro *string `pulumi:"distro"`
+	// Filter images by operating system type, such as `linux` or `windows`.
+	Os *string `pulumi:"os"`
+	// Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+	SecureBoot *bool `pulumi:"secureBoot"`
+	// Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+	Uefi *bool `pulumi:"uefi"`
+	// Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+	Version *string `pulumi:"version"`
+}
+
+// GetImageV2FilterInput is an input type that accepts GetImageV2FilterArgs and GetImageV2FilterOutput values.
+// You can construct a concrete instance of `GetImageV2FilterInput` via:
+//
+//	GetImageV2FilterArgs{...}
+type GetImageV2FilterInput interface {
+	pulumi.Input
+
+	ToGetImageV2FilterOutput() GetImageV2FilterOutput
+	ToGetImageV2FilterOutputWithContext(context.Context) GetImageV2FilterOutput
+}
+
+type GetImageV2FilterArgs struct {
+	// Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+	Distro pulumi.StringPtrInput `pulumi:"distro"`
+	// Filter images by operating system type, such as `linux` or `windows`.
+	Os pulumi.StringPtrInput `pulumi:"os"`
+	// Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+	SecureBoot pulumi.BoolPtrInput `pulumi:"secureBoot"`
+	// Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+	Uefi pulumi.BoolPtrInput `pulumi:"uefi"`
+	// Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+	Version pulumi.StringPtrInput `pulumi:"version"`
+}
+
+func (GetImageV2FilterArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageV2Filter)(nil)).Elem()
+}
+
+func (i GetImageV2FilterArgs) ToGetImageV2FilterOutput() GetImageV2FilterOutput {
+	return i.ToGetImageV2FilterOutputWithContext(context.Background())
+}
+
+func (i GetImageV2FilterArgs) ToGetImageV2FilterOutputWithContext(ctx context.Context) GetImageV2FilterOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageV2FilterOutput)
+}
+
+func (i GetImageV2FilterArgs) ToGetImageV2FilterPtrOutput() GetImageV2FilterPtrOutput {
+	return i.ToGetImageV2FilterPtrOutputWithContext(context.Background())
+}
+
+func (i GetImageV2FilterArgs) ToGetImageV2FilterPtrOutputWithContext(ctx context.Context) GetImageV2FilterPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageV2FilterOutput).ToGetImageV2FilterPtrOutputWithContext(ctx)
+}
+
+// GetImageV2FilterPtrInput is an input type that accepts GetImageV2FilterArgs, GetImageV2FilterPtr and GetImageV2FilterPtrOutput values.
+// You can construct a concrete instance of `GetImageV2FilterPtrInput` via:
+//
+//	        GetImageV2FilterArgs{...}
+//
+//	or:
+//
+//	        nil
+type GetImageV2FilterPtrInput interface {
+	pulumi.Input
+
+	ToGetImageV2FilterPtrOutput() GetImageV2FilterPtrOutput
+	ToGetImageV2FilterPtrOutputWithContext(context.Context) GetImageV2FilterPtrOutput
+}
+
+type getImageV2FilterPtrType GetImageV2FilterArgs
+
+func GetImageV2FilterPtr(v *GetImageV2FilterArgs) GetImageV2FilterPtrInput {
+	return (*getImageV2FilterPtrType)(v)
+}
+
+func (*getImageV2FilterPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetImageV2Filter)(nil)).Elem()
+}
+
+func (i *getImageV2FilterPtrType) ToGetImageV2FilterPtrOutput() GetImageV2FilterPtrOutput {
+	return i.ToGetImageV2FilterPtrOutputWithContext(context.Background())
+}
+
+func (i *getImageV2FilterPtrType) ToGetImageV2FilterPtrOutputWithContext(ctx context.Context) GetImageV2FilterPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(GetImageV2FilterPtrOutput)
+}
+
+type GetImageV2FilterOutput struct{ *pulumi.OutputState }
+
+func (GetImageV2FilterOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*GetImageV2Filter)(nil)).Elem()
+}
+
+func (o GetImageV2FilterOutput) ToGetImageV2FilterOutput() GetImageV2FilterOutput {
+	return o
+}
+
+func (o GetImageV2FilterOutput) ToGetImageV2FilterOutputWithContext(ctx context.Context) GetImageV2FilterOutput {
+	return o
+}
+
+func (o GetImageV2FilterOutput) ToGetImageV2FilterPtrOutput() GetImageV2FilterPtrOutput {
+	return o.ToGetImageV2FilterPtrOutputWithContext(context.Background())
+}
+
+func (o GetImageV2FilterOutput) ToGetImageV2FilterPtrOutputWithContext(ctx context.Context) GetImageV2FilterPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v GetImageV2Filter) *GetImageV2Filter {
+		return &v
+	}).(GetImageV2FilterPtrOutput)
+}
+
+// Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+func (o GetImageV2FilterOutput) Distro() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImageV2Filter) *string { return v.Distro }).(pulumi.StringPtrOutput)
+}
+
+// Filter images by operating system type, such as `linux` or `windows`.
+func (o GetImageV2FilterOutput) Os() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImageV2Filter) *string { return v.Os }).(pulumi.StringPtrOutput)
+}
+
+// Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+func (o GetImageV2FilterOutput) SecureBoot() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GetImageV2Filter) *bool { return v.SecureBoot }).(pulumi.BoolPtrOutput)
+}
+
+// Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+func (o GetImageV2FilterOutput) Uefi() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GetImageV2Filter) *bool { return v.Uefi }).(pulumi.BoolPtrOutput)
+}
+
+// Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+func (o GetImageV2FilterOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetImageV2Filter) *string { return v.Version }).(pulumi.StringPtrOutput)
+}
+
+type GetImageV2FilterPtrOutput struct{ *pulumi.OutputState }
+
+func (GetImageV2FilterPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**GetImageV2Filter)(nil)).Elem()
+}
+
+func (o GetImageV2FilterPtrOutput) ToGetImageV2FilterPtrOutput() GetImageV2FilterPtrOutput {
+	return o
+}
+
+func (o GetImageV2FilterPtrOutput) ToGetImageV2FilterPtrOutputWithContext(ctx context.Context) GetImageV2FilterPtrOutput {
+	return o
+}
+
+func (o GetImageV2FilterPtrOutput) Elem() GetImageV2FilterOutput {
+	return o.ApplyT(func(v *GetImageV2Filter) GetImageV2Filter {
+		if v != nil {
+			return *v
+		}
+		var ret GetImageV2Filter
+		return ret
+	}).(GetImageV2FilterOutput)
+}
+
+// Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+func (o GetImageV2FilterPtrOutput) Distro() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetImageV2Filter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Distro
+	}).(pulumi.StringPtrOutput)
+}
+
+// Filter images by operating system type, such as `linux` or `windows`.
+func (o GetImageV2FilterPtrOutput) Os() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetImageV2Filter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Os
+	}).(pulumi.StringPtrOutput)
+}
+
+// Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+func (o GetImageV2FilterPtrOutput) SecureBoot() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GetImageV2Filter) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.SecureBoot
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+func (o GetImageV2FilterPtrOutput) Uefi() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v *GetImageV2Filter) *bool {
+		if v == nil {
+			return nil
+		}
+		return v.Uefi
+	}).(pulumi.BoolPtrOutput)
+}
+
+// Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+func (o GetImageV2FilterPtrOutput) Version() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *GetImageV2Filter) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Version
+	}).(pulumi.StringPtrOutput)
 }
 
 type GetLoadbalancerListener struct {
@@ -13926,6 +14709,8 @@ type GetObservabilityInstanceAlertConfigReceiverEmailConfig struct {
 	AuthUsername string `pulumi:"authUsername"`
 	// The sender email address. Must be a valid email address
 	From string `pulumi:"from"`
+	// Whether to notify about resolved alerts.
+	SendResolved bool `pulumi:"sendResolved"`
 	// The SMTP host through which emails are sent.
 	SmartHost string `pulumi:"smartHost"`
 	// The email address to send notifications to. Must be a valid email address
@@ -13952,6 +14737,8 @@ type GetObservabilityInstanceAlertConfigReceiverEmailConfigArgs struct {
 	AuthUsername pulumi.StringInput `pulumi:"authUsername"`
 	// The sender email address. Must be a valid email address
 	From pulumi.StringInput `pulumi:"from"`
+	// Whether to notify about resolved alerts.
+	SendResolved pulumi.BoolInput `pulumi:"sendResolved"`
 	// The SMTP host through which emails are sent.
 	SmartHost pulumi.StringInput `pulumi:"smartHost"`
 	// The email address to send notifications to. Must be a valid email address
@@ -14029,6 +14816,11 @@ func (o GetObservabilityInstanceAlertConfigReceiverEmailConfigOutput) From() pul
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverEmailConfig) string { return v.From }).(pulumi.StringOutput)
 }
 
+// Whether to notify about resolved alerts.
+func (o GetObservabilityInstanceAlertConfigReceiverEmailConfigOutput) SendResolved() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverEmailConfig) bool { return v.SendResolved }).(pulumi.BoolOutput)
+}
+
 // The SMTP host through which emails are sent.
 func (o GetObservabilityInstanceAlertConfigReceiverEmailConfigOutput) SmartHost() pulumi.StringOutput {
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverEmailConfig) string { return v.SmartHost }).(pulumi.StringOutput)
@@ -14064,6 +14856,10 @@ type GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig struct {
 	ApiKey string `pulumi:"apiKey"`
 	// The host to send OpsGenie API requests to. Must be a valid URL
 	ApiUrl string `pulumi:"apiUrl"`
+	// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+	Priority string `pulumi:"priority"`
+	// Whether to notify about resolved alerts.
+	SendResolved bool `pulumi:"sendResolved"`
 	// Comma separated list of tags attached to the notifications.
 	Tags string `pulumi:"tags"`
 }
@@ -14084,6 +14880,10 @@ type GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs struct {
 	ApiKey pulumi.StringInput `pulumi:"apiKey"`
 	// The host to send OpsGenie API requests to. Must be a valid URL
 	ApiUrl pulumi.StringInput `pulumi:"apiUrl"`
+	// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+	Priority pulumi.StringInput `pulumi:"priority"`
+	// Whether to notify about resolved alerts.
+	SendResolved pulumi.BoolInput `pulumi:"sendResolved"`
 	// Comma separated list of tags attached to the notifications.
 	Tags pulumi.StringInput `pulumi:"tags"`
 }
@@ -14149,6 +14949,16 @@ func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) ApiUrl(
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig) string { return v.ApiUrl }).(pulumi.StringOutput)
 }
 
+// Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) Priority() pulumi.StringOutput {
+	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig) string { return v.Priority }).(pulumi.StringOutput)
+}
+
+// Whether to notify about resolved alerts.
+func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) SendResolved() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig) bool { return v.SendResolved }).(pulumi.BoolOutput)
+}
+
 // Comma separated list of tags attached to the notifications.
 func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigOutput) Tags() pulumi.StringOutput {
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig) string { return v.Tags }).(pulumi.StringOutput)
@@ -14175,8 +14985,12 @@ func (o GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigArrayOutput) In
 }
 
 type GetObservabilityInstanceAlertConfigReceiverWebhooksConfig struct {
+	// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+	GoogleChat bool `pulumi:"googleChat"`
 	// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 	MsTeams bool `pulumi:"msTeams"`
+	// Whether to notify about resolved alerts.
+	SendResolved bool `pulumi:"sendResolved"`
 	// The endpoint to send HTTP POST requests to. Must be a valid URL
 	Url string `pulumi:"url"`
 }
@@ -14193,8 +15007,12 @@ type GetObservabilityInstanceAlertConfigReceiverWebhooksConfigInput interface {
 }
 
 type GetObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs struct {
+	// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+	GoogleChat pulumi.BoolInput `pulumi:"googleChat"`
 	// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 	MsTeams pulumi.BoolInput `pulumi:"msTeams"`
+	// Whether to notify about resolved alerts.
+	SendResolved pulumi.BoolInput `pulumi:"sendResolved"`
 	// The endpoint to send HTTP POST requests to. Must be a valid URL
 	Url pulumi.StringInput `pulumi:"url"`
 }
@@ -14250,9 +15068,19 @@ func (o GetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) ToGetOb
 	return o
 }
 
+// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+func (o GetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) GoogleChat() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverWebhooksConfig) bool { return v.GoogleChat }).(pulumi.BoolOutput)
+}
+
 // Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
 func (o GetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) MsTeams() pulumi.BoolOutput {
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverWebhooksConfig) bool { return v.MsTeams }).(pulumi.BoolOutput)
+}
+
+// Whether to notify about resolved alerts.
+func (o GetObservabilityInstanceAlertConfigReceiverWebhooksConfigOutput) SendResolved() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigReceiverWebhooksConfig) bool { return v.SendResolved }).(pulumi.BoolOutput)
 }
 
 // The endpoint to send HTTP POST requests to. Must be a valid URL
@@ -14287,10 +15115,6 @@ type GetObservabilityInstanceAlertConfigRoute struct {
 	GroupInterval string `pulumi:"groupInterval"`
 	// How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.) .
 	GroupWait string `pulumi:"groupWait"`
-	// A set of equality matchers an alert has to fulfill to match the node.
-	Match map[string]string `pulumi:"match"`
-	// A set of regex-matchers an alert has to fulfill to match the node.
-	MatchRegex map[string]string `pulumi:"matchRegex"`
 	// The name of the receiver to route the alerts to.
 	Receiver string `pulumi:"receiver"`
 	// How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
@@ -14317,10 +15141,6 @@ type GetObservabilityInstanceAlertConfigRouteArgs struct {
 	GroupInterval pulumi.StringInput `pulumi:"groupInterval"`
 	// How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.) .
 	GroupWait pulumi.StringInput `pulumi:"groupWait"`
-	// A set of equality matchers an alert has to fulfill to match the node.
-	Match pulumi.StringMapInput `pulumi:"match"`
-	// A set of regex-matchers an alert has to fulfill to match the node.
-	MatchRegex pulumi.StringMapInput `pulumi:"matchRegex"`
 	// The name of the receiver to route the alerts to.
 	Receiver pulumi.StringInput `pulumi:"receiver"`
 	// How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
@@ -14370,16 +15190,6 @@ func (o GetObservabilityInstanceAlertConfigRouteOutput) GroupWait() pulumi.Strin
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigRoute) string { return v.GroupWait }).(pulumi.StringOutput)
 }
 
-// A set of equality matchers an alert has to fulfill to match the node.
-func (o GetObservabilityInstanceAlertConfigRouteOutput) Match() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigRoute) map[string]string { return v.Match }).(pulumi.StringMapOutput)
-}
-
-// A set of regex-matchers an alert has to fulfill to match the node.
-func (o GetObservabilityInstanceAlertConfigRouteOutput) MatchRegex() pulumi.StringMapOutput {
-	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigRoute) map[string]string { return v.MatchRegex }).(pulumi.StringMapOutput)
-}
-
 // The name of the receiver to route the alerts to.
 func (o GetObservabilityInstanceAlertConfigRouteOutput) Receiver() pulumi.StringOutput {
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigRoute) string { return v.Receiver }).(pulumi.StringOutput)
@@ -14398,16 +15208,24 @@ func (o GetObservabilityInstanceAlertConfigRouteOutput) Routes() GetObservabilit
 }
 
 type GetObservabilityInstanceAlertConfigRouteRoute struct {
+	// Whether an alert should continue matching subsequent sibling nodes.
+	Continue bool `pulumi:"continue"`
 	// The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
 	GroupBies []string `pulumi:"groupBies"`
 	// How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
 	GroupInterval string `pulumi:"groupInterval"`
 	// How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
 	GroupWait string `pulumi:"groupWait"`
-	// A set of equality matchers an alert has to fulfill to match the node.
+	// A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+	//
+	// Deprecated: Use `matchers` in the `routes` instead.
 	Match map[string]string `pulumi:"match"`
-	// A set of regex-matchers an alert has to fulfill to match the node.
+	// A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+	//
+	// Deprecated: Use `matchers` in the `routes` instead.
 	MatchRegex map[string]string `pulumi:"matchRegex"`
+	// A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+	Matchers []string `pulumi:"matchers"`
 	// The name of the receiver to route the alerts to.
 	Receiver string `pulumi:"receiver"`
 	// How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
@@ -14426,16 +15244,24 @@ type GetObservabilityInstanceAlertConfigRouteRouteInput interface {
 }
 
 type GetObservabilityInstanceAlertConfigRouteRouteArgs struct {
+	// Whether an alert should continue matching subsequent sibling nodes.
+	Continue pulumi.BoolInput `pulumi:"continue"`
 	// The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
 	GroupBies pulumi.StringArrayInput `pulumi:"groupBies"`
 	// How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
 	GroupInterval pulumi.StringInput `pulumi:"groupInterval"`
 	// How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
 	GroupWait pulumi.StringInput `pulumi:"groupWait"`
-	// A set of equality matchers an alert has to fulfill to match the node.
+	// A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+	//
+	// Deprecated: Use `matchers` in the `routes` instead.
 	Match pulumi.StringMapInput `pulumi:"match"`
-	// A set of regex-matchers an alert has to fulfill to match the node.
+	// A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+	//
+	// Deprecated: Use `matchers` in the `routes` instead.
 	MatchRegex pulumi.StringMapInput `pulumi:"matchRegex"`
+	// A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+	Matchers pulumi.StringArrayInput `pulumi:"matchers"`
 	// The name of the receiver to route the alerts to.
 	Receiver pulumi.StringInput `pulumi:"receiver"`
 	// How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
@@ -14493,6 +15319,11 @@ func (o GetObservabilityInstanceAlertConfigRouteRouteOutput) ToGetObservabilityI
 	return o
 }
 
+// Whether an alert should continue matching subsequent sibling nodes.
+func (o GetObservabilityInstanceAlertConfigRouteRouteOutput) Continue() pulumi.BoolOutput {
+	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigRouteRoute) bool { return v.Continue }).(pulumi.BoolOutput)
+}
+
 // The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
 func (o GetObservabilityInstanceAlertConfigRouteRouteOutput) GroupBies() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigRouteRoute) []string { return v.GroupBies }).(pulumi.StringArrayOutput)
@@ -14508,14 +15339,23 @@ func (o GetObservabilityInstanceAlertConfigRouteRouteOutput) GroupWait() pulumi.
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigRouteRoute) string { return v.GroupWait }).(pulumi.StringOutput)
 }
 
-// A set of equality matchers an alert has to fulfill to match the node.
+// A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+//
+// Deprecated: Use `matchers` in the `routes` instead.
 func (o GetObservabilityInstanceAlertConfigRouteRouteOutput) Match() pulumi.StringMapOutput {
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigRouteRoute) map[string]string { return v.Match }).(pulumi.StringMapOutput)
 }
 
-// A set of regex-matchers an alert has to fulfill to match the node.
+// A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+//
+// Deprecated: Use `matchers` in the `routes` instead.
 func (o GetObservabilityInstanceAlertConfigRouteRouteOutput) MatchRegex() pulumi.StringMapOutput {
 	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigRouteRoute) map[string]string { return v.MatchRegex }).(pulumi.StringMapOutput)
+}
+
+// A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+func (o GetObservabilityInstanceAlertConfigRouteRouteOutput) Matchers() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetObservabilityInstanceAlertConfigRouteRoute) []string { return v.Matchers }).(pulumi.StringArrayOutput)
 }
 
 // The name of the receiver to route the alerts to.
@@ -18033,6 +18873,8 @@ func (o GetVolumeSourceOutput) Type() pulumi.StringOutput {
 }
 
 func init() {
+	pulumi.RegisterInputType(reflect.TypeOf((*CdnCustomDomainCertificateInput)(nil)).Elem(), CdnCustomDomainCertificateArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*CdnCustomDomainCertificatePtrInput)(nil)).Elem(), CdnCustomDomainCertificateArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CdnDistributionConfigInput)(nil)).Elem(), CdnDistributionConfigArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CdnDistributionConfigPtrInput)(nil)).Elem(), CdnDistributionConfigArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*CdnDistributionConfigBackendInput)(nil)).Elem(), CdnDistributionConfigBackendArgs{})
@@ -18157,6 +18999,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*SqlserverflexInstanceStoragePtrInput)(nil)).Elem(), SqlserverflexInstanceStorageArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSourceInput)(nil)).Elem(), VolumeSourceArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*VolumeSourcePtrInput)(nil)).Elem(), VolumeSourceArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetCdnCustomDomainCertificateInput)(nil)).Elem(), GetCdnCustomDomainCertificateArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetCdnCustomDomainCertificatePtrInput)(nil)).Elem(), GetCdnCustomDomainCertificateArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetCdnDistributionConfigInput)(nil)).Elem(), GetCdnDistributionConfigArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetCdnDistributionConfigBackendInput)(nil)).Elem(), GetCdnDistributionConfigBackendArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetCdnDistributionConfigOptimizerInput)(nil)).Elem(), GetCdnDistributionConfigOptimizerArgs{})
@@ -18164,6 +19008,10 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetCdnDistributionDomainArrayInput)(nil)).Elem(), GetCdnDistributionDomainArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetImageChecksumInput)(nil)).Elem(), GetImageChecksumArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetImageConfigInput)(nil)).Elem(), GetImageConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageV2ChecksumInput)(nil)).Elem(), GetImageV2ChecksumArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageV2ConfigInput)(nil)).Elem(), GetImageV2ConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageV2FilterInput)(nil)).Elem(), GetImageV2FilterArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*GetImageV2FilterPtrInput)(nil)).Elem(), GetImageV2FilterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLoadbalancerListenerInput)(nil)).Elem(), GetLoadbalancerListenerArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLoadbalancerListenerArrayInput)(nil)).Elem(), GetLoadbalancerListenerArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetLoadbalancerListenerServerNameIndicatorInput)(nil)).Elem(), GetLoadbalancerListenerServerNameIndicatorArgs{})
@@ -18251,6 +19099,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSqlserverflexInstanceOptionsInput)(nil)).Elem(), GetSqlserverflexInstanceOptionsArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetSqlserverflexInstanceStorageInput)(nil)).Elem(), GetSqlserverflexInstanceStorageArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*GetVolumeSourceInput)(nil)).Elem(), GetVolumeSourceArgs{})
+	pulumi.RegisterOutputType(CdnCustomDomainCertificateOutput{})
+	pulumi.RegisterOutputType(CdnCustomDomainCertificatePtrOutput{})
 	pulumi.RegisterOutputType(CdnDistributionConfigOutput{})
 	pulumi.RegisterOutputType(CdnDistributionConfigPtrOutput{})
 	pulumi.RegisterOutputType(CdnDistributionConfigBackendOutput{})
@@ -18375,6 +19225,8 @@ func init() {
 	pulumi.RegisterOutputType(SqlserverflexInstanceStoragePtrOutput{})
 	pulumi.RegisterOutputType(VolumeSourceOutput{})
 	pulumi.RegisterOutputType(VolumeSourcePtrOutput{})
+	pulumi.RegisterOutputType(GetCdnCustomDomainCertificateOutput{})
+	pulumi.RegisterOutputType(GetCdnCustomDomainCertificatePtrOutput{})
 	pulumi.RegisterOutputType(GetCdnDistributionConfigOutput{})
 	pulumi.RegisterOutputType(GetCdnDistributionConfigBackendOutput{})
 	pulumi.RegisterOutputType(GetCdnDistributionConfigOptimizerOutput{})
@@ -18382,6 +19234,10 @@ func init() {
 	pulumi.RegisterOutputType(GetCdnDistributionDomainArrayOutput{})
 	pulumi.RegisterOutputType(GetImageChecksumOutput{})
 	pulumi.RegisterOutputType(GetImageConfigOutput{})
+	pulumi.RegisterOutputType(GetImageV2ChecksumOutput{})
+	pulumi.RegisterOutputType(GetImageV2ConfigOutput{})
+	pulumi.RegisterOutputType(GetImageV2FilterOutput{})
+	pulumi.RegisterOutputType(GetImageV2FilterPtrOutput{})
 	pulumi.RegisterOutputType(GetLoadbalancerListenerOutput{})
 	pulumi.RegisterOutputType(GetLoadbalancerListenerArrayOutput{})
 	pulumi.RegisterOutputType(GetLoadbalancerListenerServerNameIndicatorOutput{})

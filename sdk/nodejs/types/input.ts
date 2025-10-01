@@ -5,6 +5,21 @@ import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
+export interface CdnCustomDomainCertificate {
+    /**
+     * The PEM-encoded TLS certificate. Required for custom certificates.
+     */
+    certificate?: pulumi.Input<string>;
+    /**
+     * The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+     */
+    privateKey?: pulumi.Input<string>;
+    /**
+     * A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+     */
+    version?: pulumi.Input<number>;
+}
+
 export interface CdnDistributionConfig {
     /**
      * The configured backend for the distribution
@@ -60,6 +75,66 @@ export interface CdnDistributionDomain {
      * The type of the domain. Each distribution has one domain of type "managed", and domains of type "custom" may be additionally created by the user
      */
     type?: pulumi.Input<string>;
+}
+
+export interface GetCdnCustomDomainCertificate {
+    /**
+     * A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+     */
+    version?: number;
+}
+
+export interface GetCdnCustomDomainCertificateArgs {
+    /**
+     * A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+     */
+    version?: pulumi.Input<number>;
+}
+
+export interface GetImageV2Filter {
+    /**
+     * Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+     */
+    distro?: string;
+    /**
+     * Filter images by operating system type, such as `linux` or `windows`.
+     */
+    os?: string;
+    /**
+     * Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+     */
+    secureBoot?: boolean;
+    /**
+     * Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+     */
+    uefi?: boolean;
+    /**
+     * Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+     */
+    version?: string;
+}
+
+export interface GetImageV2FilterArgs {
+    /**
+     * Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+     */
+    distro?: pulumi.Input<string>;
+    /**
+     * Filter images by operating system type, such as `linux` or `windows`.
+     */
+    os?: pulumi.Input<string>;
+    /**
+     * Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+     */
+    secureBoot?: pulumi.Input<boolean>;
+    /**
+     * Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+     */
+    uefi?: pulumi.Input<boolean>;
+    /**
+     * Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+     */
+    version?: pulumi.Input<string>;
 }
 
 export interface ImageChecksum {
@@ -443,7 +518,7 @@ export interface ObservabilityAlertgroupRule {
 
 export interface ObservabilityInstanceAlertConfig {
     /**
-     * Global configuration for the alerts.
+     * Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
      */
     global?: pulumi.Input<inputs.ObservabilityInstanceAlertConfigGlobal>;
     /**
@@ -528,6 +603,10 @@ export interface ObservabilityInstanceAlertConfigReceiverEmailConfig {
      */
     from?: pulumi.Input<string>;
     /**
+     * Whether to notify about resolved alerts.
+     */
+    sendResolved?: pulumi.Input<boolean>;
+    /**
      * The SMTP host through which emails are sent.
      */
     smartHost?: pulumi.Input<string>;
@@ -547,6 +626,14 @@ export interface ObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
      */
     apiUrl?: pulumi.Input<string>;
     /**
+     * Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+     */
+    priority?: pulumi.Input<string>;
+    /**
+     * Whether to notify about resolved alerts.
+     */
+    sendResolved?: pulumi.Input<boolean>;
+    /**
      * Comma separated list of tags attached to the notifications.
      */
     tags?: pulumi.Input<string>;
@@ -554,9 +641,17 @@ export interface ObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
 
 export interface ObservabilityInstanceAlertConfigReceiverWebhooksConfig {
     /**
+     * Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+     */
+    googleChat?: pulumi.Input<boolean>;
+    /**
      * Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
      */
     msTeams?: pulumi.Input<boolean>;
+    /**
+     * Whether to notify about resolved alerts.
+     */
+    sendResolved?: pulumi.Input<boolean>;
     /**
      * The endpoint to send HTTP POST requests to. Must be a valid URL
      */
@@ -577,14 +672,6 @@ export interface ObservabilityInstanceAlertConfigRoute {
      */
     groupWait?: pulumi.Input<string>;
     /**
-     * A set of equality matchers an alert has to fulfill to match the node.
-     */
-    match?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
-     * A set of regex-matchers an alert has to fulfill to match the node.
-     */
-    matchRegex?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
-    /**
      * The name of the receiver to route the alerts to.
      */
     receiver: pulumi.Input<string>;
@@ -600,6 +687,10 @@ export interface ObservabilityInstanceAlertConfigRoute {
 
 export interface ObservabilityInstanceAlertConfigRouteRoute {
     /**
+     * Whether an alert should continue matching subsequent sibling nodes.
+     */
+    continue?: pulumi.Input<boolean>;
+    /**
      * The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
      */
     groupBies?: pulumi.Input<pulumi.Input<string>[]>;
@@ -612,13 +703,21 @@ export interface ObservabilityInstanceAlertConfigRouteRoute {
      */
     groupWait?: pulumi.Input<string>;
     /**
-     * A set of equality matchers an alert has to fulfill to match the node.
+     * A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+     *
+     * @deprecated Use `matchers` in the `routes` instead.
      */
     match?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
     /**
-     * A set of regex-matchers an alert has to fulfill to match the node.
+     * A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+     *
+     * @deprecated Use `matchers` in the `routes` instead.
      */
     matchRegex?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+    /**
+     * A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+     */
+    matchers?: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * The name of the receiver to route the alerts to.
      */

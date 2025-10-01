@@ -32,8 +32,7 @@ namespace ediri.Stackit
         public Output<string?> CdnCustomEndpoint { get; private set; } = null!;
 
         /// <summary>
-        /// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-        /// value is `~/.stackit/credentials.json`.
+        /// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
         /// </summary>
         [Output("credentialsPath")]
         public Output<string?> CredentialsPath { get; private set; } = null!;
@@ -117,15 +116,13 @@ namespace ediri.Stackit
         public Output<string?> PostgresflexCustomEndpoint { get; private set; } = null!;
 
         /// <summary>
-        /// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-        /// included in the service account key.
+        /// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         /// </summary>
         [Output("privateKey")]
         public Output<string?> PrivateKey { get; private set; } = null!;
 
         /// <summary>
-        /// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-        /// key that is included in the service account key.
+        /// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         /// </summary>
         [Output("privateKeyPath")]
         public Output<string?> PrivateKeyPath { get; private set; } = null!;
@@ -179,8 +176,7 @@ namespace ediri.Stackit
         public Output<string?> ServiceAccountCustomEndpoint { get; private set; } = null!;
 
         /// <summary>
-        /// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-        /// if you want to use the resource manager project resource.
+        /// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
         /// </summary>
         [Output("serviceAccountEmail")]
         public Output<string?> ServiceAccountEmail { get; private set; } = null!;
@@ -192,8 +188,7 @@ namespace ediri.Stackit
         public Output<string?> ServiceAccountKey { get; private set; } = null!;
 
         /// <summary>
-        /// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-        /// operations.
+        /// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
         /// </summary>
         [Output("serviceAccountKeyPath")]
         public Output<string?> ServiceAccountKeyPath { get; private set; } = null!;
@@ -276,8 +271,7 @@ namespace ediri.Stackit
         public Input<string>? CdnCustomEndpoint { get; set; }
 
         /// <summary>
-        /// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-        /// value is `~/.stackit/credentials.json`.
+        /// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
         /// </summary>
         [Input("credentialsPath")]
         public Input<string>? CredentialsPath { get; set; }
@@ -304,8 +298,7 @@ namespace ediri.Stackit
         private InputList<string>? _experiments;
 
         /// <summary>
-        /// Enables experiments. These are unstable features without official support. More information can be found in the README.
-        /// Available Experiments: iam, routing-tables, network
+        /// Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network
         /// </summary>
         public InputList<string> Experiments
         {
@@ -380,15 +373,13 @@ namespace ediri.Stackit
         public Input<string>? PostgresflexCustomEndpoint { get; set; }
 
         /// <summary>
-        /// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-        /// included in the service account key.
+        /// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         /// </summary>
         [Input("privateKey")]
         public Input<string>? PrivateKey { get; set; }
 
         /// <summary>
-        /// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-        /// key that is included in the service account key.
+        /// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         /// </summary>
         [Input("privateKeyPath")]
         public Input<string>? PrivateKeyPath { get; set; }
@@ -442,8 +433,7 @@ namespace ediri.Stackit
         public Input<string>? ServiceAccountCustomEndpoint { get; set; }
 
         /// <summary>
-        /// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-        /// if you want to use the resource manager project resource.
+        /// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
         /// </summary>
         [Input("serviceAccountEmail")]
         public Input<string>? ServiceAccountEmail { get; set; }
@@ -455,8 +445,7 @@ namespace ediri.Stackit
         public Input<string>? ServiceAccountKey { get; set; }
 
         /// <summary>
-        /// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-        /// operations.
+        /// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
         /// </summary>
         [Input("serviceAccountKeyPath")]
         public Input<string>? ServiceAccountKeyPath { get; set; }

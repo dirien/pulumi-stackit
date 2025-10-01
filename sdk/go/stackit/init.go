@@ -105,6 +105,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &RedisCredential{}
 	case "stackit:index/redisInstance:RedisInstance":
 		r = &RedisInstance{}
+	case "stackit:index/resourcemanagerFolder:ResourcemanagerFolder":
+		r = &ResourcemanagerFolder{}
 	case "stackit:index/resourcemanagerProject:ResourcemanagerProject":
 		r = &ResourcemanagerProject{}
 	case "stackit:index/routingTable:RoutingTable":
@@ -386,6 +388,11 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"stackit",
 		"index/redisInstance",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"stackit",
+		"index/resourcemanagerFolder",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(

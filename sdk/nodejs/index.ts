@@ -80,6 +80,11 @@ export const getImage: typeof import("./getImage").getImage = null as any;
 export const getImageOutput: typeof import("./getImage").getImageOutput = null as any;
 utilities.lazyLoad(exports, ["getImage","getImageOutput"], () => require("./getImage"));
 
+export { GetImageV2Args, GetImageV2Result, GetImageV2OutputArgs } from "./getImageV2";
+export const getImageV2: typeof import("./getImageV2").getImageV2 = null as any;
+export const getImageV2Output: typeof import("./getImageV2").getImageV2Output = null as any;
+utilities.lazyLoad(exports, ["getImageV2","getImageV2Output"], () => require("./getImageV2"));
+
 export { GetKeyPairArgs, GetKeyPairResult, GetKeyPairOutputArgs } from "./getKeyPair";
 export const getKeyPair: typeof import("./getKeyPair").getKeyPair = null as any;
 export const getKeyPairOutput: typeof import("./getKeyPair").getKeyPairOutput = null as any;
@@ -99,6 +104,11 @@ export { GetLogmeInstanceArgs, GetLogmeInstanceResult, GetLogmeInstanceOutputArg
 export const getLogmeInstance: typeof import("./getLogmeInstance").getLogmeInstance = null as any;
 export const getLogmeInstanceOutput: typeof import("./getLogmeInstance").getLogmeInstanceOutput = null as any;
 utilities.lazyLoad(exports, ["getLogmeInstance","getLogmeInstanceOutput"], () => require("./getLogmeInstance"));
+
+export { GetMachineTypeArgs, GetMachineTypeResult, GetMachineTypeOutputArgs } from "./getMachineType";
+export const getMachineType: typeof import("./getMachineType").getMachineType = null as any;
+export const getMachineTypeOutput: typeof import("./getMachineType").getMachineTypeOutput = null as any;
+utilities.lazyLoad(exports, ["getMachineType","getMachineTypeOutput"], () => require("./getMachineType"));
 
 export { GetMariadbCredentialArgs, GetMariadbCredentialResult, GetMariadbCredentialOutputArgs } from "./getMariadbCredential";
 export const getMariadbCredential: typeof import("./getMariadbCredential").getMariadbCredential = null as any;
@@ -229,6 +239,11 @@ export { GetRedisInstanceArgs, GetRedisInstanceResult, GetRedisInstanceOutputArg
 export const getRedisInstance: typeof import("./getRedisInstance").getRedisInstance = null as any;
 export const getRedisInstanceOutput: typeof import("./getRedisInstance").getRedisInstanceOutput = null as any;
 utilities.lazyLoad(exports, ["getRedisInstance","getRedisInstanceOutput"], () => require("./getRedisInstance"));
+
+export { GetResourcemanagerFolderArgs, GetResourcemanagerFolderResult, GetResourcemanagerFolderOutputArgs } from "./getResourcemanagerFolder";
+export const getResourcemanagerFolder: typeof import("./getResourcemanagerFolder").getResourcemanagerFolder = null as any;
+export const getResourcemanagerFolderOutput: typeof import("./getResourcemanagerFolder").getResourcemanagerFolderOutput = null as any;
+utilities.lazyLoad(exports, ["getResourcemanagerFolder","getResourcemanagerFolderOutput"], () => require("./getResourcemanagerFolder"));
 
 export { GetResourcemanagerProjectArgs, GetResourcemanagerProjectResult, GetResourcemanagerProjectOutputArgs } from "./getResourcemanagerProject";
 export const getResourcemanagerProject: typeof import("./getResourcemanagerProject").getResourcemanagerProject = null as any;
@@ -503,6 +518,11 @@ export type RedisInstance = import("./redisInstance").RedisInstance;
 export const RedisInstance: typeof import("./redisInstance").RedisInstance = null as any;
 utilities.lazyLoad(exports, ["RedisInstance"], () => require("./redisInstance"));
 
+export { ResourcemanagerFolderArgs, ResourcemanagerFolderState } from "./resourcemanagerFolder";
+export type ResourcemanagerFolder = import("./resourcemanagerFolder").ResourcemanagerFolder;
+export const ResourcemanagerFolder: typeof import("./resourcemanagerFolder").ResourcemanagerFolder = null as any;
+utilities.lazyLoad(exports, ["ResourcemanagerFolder"], () => require("./resourcemanagerFolder"));
+
 export { ResourcemanagerProjectArgs, ResourcemanagerProjectState } from "./resourcemanagerProject";
 export type ResourcemanagerProject = import("./resourcemanagerProject").ResourcemanagerProject;
 export const ResourcemanagerProject: typeof import("./resourcemanagerProject").ResourcemanagerProject = null as any;
@@ -706,6 +726,8 @@ const _module = {
                 return new RedisCredential(name, <any>undefined, { urn })
             case "stackit:index/redisInstance:RedisInstance":
                 return new RedisInstance(name, <any>undefined, { urn })
+            case "stackit:index/resourcemanagerFolder:ResourcemanagerFolder":
+                return new ResourcemanagerFolder(name, <any>undefined, { urn })
             case "stackit:index/resourcemanagerProject:ResourcemanagerProject":
                 return new ResourcemanagerProject(name, <any>undefined, { urn })
             case "stackit:index/routingTable:RoutingTable":
@@ -795,6 +817,7 @@ pulumi.runtime.registerResourceModule("stackit", "index/rabbitmqCredential", _mo
 pulumi.runtime.registerResourceModule("stackit", "index/rabbitmqInstance", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/redisCredential", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/redisInstance", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/resourcemanagerFolder", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/resourcemanagerProject", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/routingTable", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/routingTableRoute", _module)
