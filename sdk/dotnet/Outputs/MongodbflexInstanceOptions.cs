@@ -27,7 +27,7 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly int PointInTimeWindowHours;
         /// <summary>
-        /// The number of days that continuous backups (controlled via the `backup_schedule`) will be retained.
+        /// The number of days that continuous backups (controlled via the `BackupSchedule`) will be retained.
         /// </summary>
         public readonly int? SnapshotRetentionDays;
         /// <summary>

@@ -25,13 +25,10 @@ class ResourcemanagerProjectArgs:
                  name: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a ResourcemanagerProject resource.
-        :param pulumi.Input[_builtins.str] owner_email: Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-               have no effect.
+        :param pulumi.Input[_builtins.str] owner_email: Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
         :param pulumi.Input[_builtins.str] parent_container_id: Parent resource identifier. Both container ID (user-friendly) and UUID are supported
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-               [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-               project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-               changed after project creation.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.  
+               To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
         :param pulumi.Input[_builtins.str] name: Project name.
         """
         pulumi.set(__self__, "owner_email", owner_email)
@@ -45,8 +42,7 @@ class ResourcemanagerProjectArgs:
     @pulumi.getter(name="ownerEmail")
     def owner_email(self) -> pulumi.Input[_builtins.str]:
         """
-        Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-        have no effect.
+        Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
         """
         return pulumi.get(self, "owner_email")
 
@@ -70,10 +66,8 @@ class ResourcemanagerProjectArgs:
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-        [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-        project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-        changed after project creation.
+        Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.  
+        To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
         """
         return pulumi.get(self, "labels")
 
@@ -98,26 +92,29 @@ class ResourcemanagerProjectArgs:
 class _ResourcemanagerProjectState:
     def __init__(__self__, *,
                  container_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 creation_time: Optional[pulumi.Input[_builtins.str]] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  owner_email: Optional[pulumi.Input[_builtins.str]] = None,
                  parent_container_id: Optional[pulumi.Input[_builtins.str]] = None,
-                 project_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 update_time: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering ResourcemanagerProject resources.
         :param pulumi.Input[_builtins.str] container_id: Project container ID. Globally unique, user-friendly identifier.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-               [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-               project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-               changed after project creation.
+        :param pulumi.Input[_builtins.str] creation_time: Date-time at which the project was created.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.  
+               To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
         :param pulumi.Input[_builtins.str] name: Project name.
-        :param pulumi.Input[_builtins.str] owner_email: Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-               have no effect.
+        :param pulumi.Input[_builtins.str] owner_email: Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
         :param pulumi.Input[_builtins.str] parent_container_id: Parent resource identifier. Both container ID (user-friendly) and UUID are supported
         :param pulumi.Input[_builtins.str] project_id: Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project.
+        :param pulumi.Input[_builtins.str] update_time: Date-time at which the project was last modified.
         """
         if container_id is not None:
             pulumi.set(__self__, "container_id", container_id)
+        if creation_time is not None:
+            pulumi.set(__self__, "creation_time", creation_time)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
         if name is not None:
@@ -128,6 +125,8 @@ class _ResourcemanagerProjectState:
             pulumi.set(__self__, "parent_container_id", parent_container_id)
         if project_id is not None:
             pulumi.set(__self__, "project_id", project_id)
+        if update_time is not None:
+            pulumi.set(__self__, "update_time", update_time)
 
     @_builtins.property
     @pulumi.getter(name="containerId")
@@ -142,13 +141,23 @@ class _ResourcemanagerProjectState:
         pulumi.set(self, "container_id", value)
 
     @_builtins.property
+    @pulumi.getter(name="creationTime")
+    def creation_time(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Date-time at which the project was created.
+        """
+        return pulumi.get(self, "creation_time")
+
+    @creation_time.setter
+    def creation_time(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "creation_time", value)
+
+    @_builtins.property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-        [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-        project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-        changed after project creation.
+        Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.  
+        To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
         """
         return pulumi.get(self, "labels")
 
@@ -172,8 +181,7 @@ class _ResourcemanagerProjectState:
     @pulumi.getter(name="ownerEmail")
     def owner_email(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-        have no effect.
+        Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
         """
         return pulumi.get(self, "owner_email")
 
@@ -205,6 +213,18 @@ class _ResourcemanagerProjectState:
     def project_id(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "project_id", value)
 
+    @_builtins.property
+    @pulumi.getter(name="updateTime")
+    def update_time(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Date-time at which the project was last modified.
+        """
+        return pulumi.get(self, "update_time")
+
+    @update_time.setter
+    def update_time(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "update_time", value)
+
 
 @pulumi.type_token("stackit:index/resourcemanagerProject:ResourcemanagerProject")
 class ResourcemanagerProject(pulumi.CustomResource):
@@ -222,13 +242,10 @@ class ResourcemanagerProject(pulumi.CustomResource):
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-               [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-               project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-               changed after project creation.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.  
+               To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
         :param pulumi.Input[_builtins.str] name: Project name.
-        :param pulumi.Input[_builtins.str] owner_email: Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-               have no effect.
+        :param pulumi.Input[_builtins.str] owner_email: Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
         :param pulumi.Input[_builtins.str] parent_container_id: Parent resource identifier. Both container ID (user-friendly) and UUID are supported
         """
         ...
@@ -277,7 +294,9 @@ class ResourcemanagerProject(pulumi.CustomResource):
                 raise TypeError("Missing required property 'parent_container_id'")
             __props__.__dict__["parent_container_id"] = parent_container_id
             __props__.__dict__["container_id"] = None
+            __props__.__dict__["creation_time"] = None
             __props__.__dict__["project_id"] = None
+            __props__.__dict__["update_time"] = None
         super(ResourcemanagerProject, __self__).__init__(
             'stackit:index/resourcemanagerProject:ResourcemanagerProject',
             resource_name,
@@ -289,11 +308,13 @@ class ResourcemanagerProject(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             container_id: Optional[pulumi.Input[_builtins.str]] = None,
+            creation_time: Optional[pulumi.Input[_builtins.str]] = None,
             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
             owner_email: Optional[pulumi.Input[_builtins.str]] = None,
             parent_container_id: Optional[pulumi.Input[_builtins.str]] = None,
-            project_id: Optional[pulumi.Input[_builtins.str]] = None) -> 'ResourcemanagerProject':
+            project_id: Optional[pulumi.Input[_builtins.str]] = None,
+            update_time: Optional[pulumi.Input[_builtins.str]] = None) -> 'ResourcemanagerProject':
         """
         Get an existing ResourcemanagerProject resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -302,26 +323,27 @@ class ResourcemanagerProject(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] container_id: Project container ID. Globally unique, user-friendly identifier.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-               [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-               project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-               changed after project creation.
+        :param pulumi.Input[_builtins.str] creation_time: Date-time at which the project was created.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.  
+               To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
         :param pulumi.Input[_builtins.str] name: Project name.
-        :param pulumi.Input[_builtins.str] owner_email: Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-               have no effect.
+        :param pulumi.Input[_builtins.str] owner_email: Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
         :param pulumi.Input[_builtins.str] parent_container_id: Parent resource identifier. Both container ID (user-friendly) and UUID are supported
         :param pulumi.Input[_builtins.str] project_id: Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project.
+        :param pulumi.Input[_builtins.str] update_time: Date-time at which the project was last modified.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
         __props__ = _ResourcemanagerProjectState.__new__(_ResourcemanagerProjectState)
 
         __props__.__dict__["container_id"] = container_id
+        __props__.__dict__["creation_time"] = creation_time
         __props__.__dict__["labels"] = labels
         __props__.__dict__["name"] = name
         __props__.__dict__["owner_email"] = owner_email
         __props__.__dict__["parent_container_id"] = parent_container_id
         __props__.__dict__["project_id"] = project_id
+        __props__.__dict__["update_time"] = update_time
         return ResourcemanagerProject(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
@@ -333,13 +355,19 @@ class ResourcemanagerProject(pulumi.CustomResource):
         return pulumi.get(self, "container_id")
 
     @_builtins.property
+    @pulumi.getter(name="creationTime")
+    def creation_time(self) -> pulumi.Output[_builtins.str]:
+        """
+        Date-time at which the project was created.
+        """
+        return pulumi.get(self, "creation_time")
+
+    @_builtins.property
     @pulumi.getter
     def labels(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
         """
-        Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-        [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-        project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-        changed after project creation.
+        Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.  
+        To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
         """
         return pulumi.get(self, "labels")
 
@@ -355,8 +383,7 @@ class ResourcemanagerProject(pulumi.CustomResource):
     @pulumi.getter(name="ownerEmail")
     def owner_email(self) -> pulumi.Output[_builtins.str]:
         """
-        Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-        have no effect.
+        Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
         """
         return pulumi.get(self, "owner_email")
 
@@ -375,4 +402,12 @@ class ResourcemanagerProject(pulumi.CustomResource):
         Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project.
         """
         return pulumi.get(self, "project_id")
+
+    @_builtins.property
+    @pulumi.getter(name="updateTime")
+    def update_time(self) -> pulumi.Output[_builtins.str]:
+        """
+        Date-time at which the project was last modified.
+        """
+        return pulumi.get(self, "update_time")
 

@@ -57,7 +57,7 @@ namespace ediri.Stackit
         public Output<string> CreatedAt { get; private set; } = null!;
 
         /// <summary>
-        /// The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+        /// The desired status of the server resource. Supported values are: `Active`, `Inactive`, `Deallocated`.
         /// </summary>
         [Output("desiredStatus")]
         public Output<string?> DesiredStatus { get; private set; } = null!;
@@ -194,7 +194,7 @@ namespace ediri.Stackit
         public Input<Inputs.ServerBootVolumeArgs>? BootVolume { get; set; }
 
         /// <summary>
-        /// The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+        /// The desired status of the server resource. Supported values are: `Active`, `Inactive`, `Deallocated`.
         /// </summary>
         [Input("desiredStatus")]
         public Input<string>? DesiredStatus { get; set; }
@@ -292,7 +292,7 @@ namespace ediri.Stackit
         public Input<string>? CreatedAt { get; set; }
 
         /// <summary>
-        /// The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+        /// The desired status of the server resource. Supported values are: `Active`, `Inactive`, `Deallocated`.
         /// </summary>
         [Input("desiredStatus")]
         public Input<string>? DesiredStatus { get; set; }

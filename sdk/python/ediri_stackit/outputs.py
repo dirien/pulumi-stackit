@@ -16,6 +16,7 @@ from . import _utilities
 from . import outputs
 
 __all__ = [
+    'CdnCustomDomainCertificate',
     'CdnDistributionConfig',
     'CdnDistributionConfigBackend',
     'CdnDistributionConfigOptimizer',
@@ -24,6 +25,8 @@ __all__ = [
     'ImageConfig',
     'LoadbalancerListener',
     'LoadbalancerListenerServerNameIndicator',
+    'LoadbalancerListenerTcp',
+    'LoadbalancerListenerUdp',
     'LoadbalancerNetwork',
     'LoadbalancerOptions',
     'LoadbalancerOptionsObservability',
@@ -78,14 +81,20 @@ __all__ = [
     'SqlserverflexInstanceOptions',
     'SqlserverflexInstanceStorage',
     'VolumeSource',
+    'GetCdnCustomDomainCertificateResult',
     'GetCdnDistributionConfigResult',
     'GetCdnDistributionConfigBackendResult',
     'GetCdnDistributionConfigOptimizerResult',
     'GetCdnDistributionDomainResult',
     'GetImageChecksumResult',
     'GetImageConfigResult',
+    'GetImageV2ChecksumResult',
+    'GetImageV2ConfigResult',
+    'GetImageV2FilterResult',
     'GetLoadbalancerListenerResult',
     'GetLoadbalancerListenerServerNameIndicatorResult',
+    'GetLoadbalancerListenerTcpResult',
+    'GetLoadbalancerListenerUdpResult',
     'GetLoadbalancerNetworkResult',
     'GetLoadbalancerOptionsResult',
     'GetLoadbalancerOptionsObservabilityResult',
@@ -149,6 +158,66 @@ __all__ = [
     'GetSqlserverflexInstanceStorageResult',
     'GetVolumeSourceResult',
 ]
+
+@pulumi.output_type
+class CdnCustomDomainCertificate(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "privateKey":
+            suggest = "private_key"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in CdnCustomDomainCertificate. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        CdnCustomDomainCertificate.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        CdnCustomDomainCertificate.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 certificate: Optional[_builtins.str] = None,
+                 private_key: Optional[_builtins.str] = None,
+                 version: Optional[_builtins.int] = None):
+        """
+        :param _builtins.str certificate: The PEM-encoded TLS certificate. Required for custom certificates.
+        :param _builtins.str private_key: The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        :param _builtins.int version: A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        if certificate is not None:
+            pulumi.set(__self__, "certificate", certificate)
+        if private_key is not None:
+            pulumi.set(__self__, "private_key", private_key)
+        if version is not None:
+            pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def certificate(self) -> Optional[_builtins.str]:
+        """
+        The PEM-encoded TLS certificate. Required for custom certificates.
+        """
+        return pulumi.get(self, "certificate")
+
+    @_builtins.property
+    @pulumi.getter(name="privateKey")
+    def private_key(self) -> Optional[_builtins.str]:
+        """
+        The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        return pulumi.get(self, "private_key")
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> Optional[_builtins.int]:
+        """
+        A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        return pulumi.get(self, "version")
+
 
 @pulumi.output_type
 class CdnDistributionConfig(dict):
@@ -244,14 +313,18 @@ class CdnDistributionConfigBackend(dict):
     def __init__(__self__, *,
                  origin_url: _builtins.str,
                  type: _builtins.str,
+                 geofencing: Optional[Mapping[str, Sequence[_builtins.str]]] = None,
                  origin_request_headers: Optional[Mapping[str, _builtins.str]] = None):
         """
         :param _builtins.str origin_url: The configured backend type for the distribution
         :param _builtins.str type: The configured backend type. Supported values are: `http`.
+        :param Mapping[str, Sequence[_builtins.str]] geofencing: A map of URLs to a list of countries where content is allowed.
         :param Mapping[str, _builtins.str] origin_request_headers: The configured origin request headers for the backend
         """
         pulumi.set(__self__, "origin_url", origin_url)
         pulumi.set(__self__, "type", type)
+        if geofencing is not None:
+            pulumi.set(__self__, "geofencing", geofencing)
         if origin_request_headers is not None:
             pulumi.set(__self__, "origin_request_headers", origin_request_headers)
 
@@ -270,6 +343,14 @@ class CdnDistributionConfigBackend(dict):
         The configured backend type. Supported values are: `http`.
         """
         return pulumi.get(self, "type")
+
+    @_builtins.property
+    @pulumi.getter
+    def geofencing(self) -> Optional[Mapping[str, Sequence[_builtins.str]]]:
+        """
+        A map of URLs to a list of countries where content is allowed.
+        """
+        return pulumi.get(self, "geofencing")
 
     @_builtins.property
     @pulumi.getter(name="originRequestHeaders")
@@ -609,12 +690,16 @@ class LoadbalancerListener(dict):
                  protocol: _builtins.str,
                  target_pool: _builtins.str,
                  display_name: Optional[_builtins.str] = None,
-                 server_name_indicators: Optional[Sequence['outputs.LoadbalancerListenerServerNameIndicator']] = None):
+                 server_name_indicators: Optional[Sequence['outputs.LoadbalancerListenerServerNameIndicator']] = None,
+                 tcp: Optional['outputs.LoadbalancerListenerTcp'] = None,
+                 udp: Optional['outputs.LoadbalancerListenerUdp'] = None):
         """
         :param _builtins.int port: Port number where we listen for traffic.
         :param _builtins.str protocol: Protocol is the highest network protocol we understand to load balance. Supported values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
         :param _builtins.str target_pool: Reference target pool by target pool name.
         :param Sequence['LoadbalancerListenerServerNameIndicatorArgs'] server_name_indicators: A list of domain names to match in order to pass TLS traffic to the target pool in the current listener
+        :param 'LoadbalancerListenerTcpArgs' tcp: Options that are specific to the TCP protocol.
+        :param 'LoadbalancerListenerUdpArgs' udp: Options that are specific to the UDP protocol.
         """
         pulumi.set(__self__, "port", port)
         pulumi.set(__self__, "protocol", protocol)
@@ -623,6 +708,10 @@ class LoadbalancerListener(dict):
             pulumi.set(__self__, "display_name", display_name)
         if server_name_indicators is not None:
             pulumi.set(__self__, "server_name_indicators", server_name_indicators)
+        if tcp is not None:
+            pulumi.set(__self__, "tcp", tcp)
+        if udp is not None:
+            pulumi.set(__self__, "udp", udp)
 
     @_builtins.property
     @pulumi.getter
@@ -661,6 +750,22 @@ class LoadbalancerListener(dict):
         """
         return pulumi.get(self, "server_name_indicators")
 
+    @_builtins.property
+    @pulumi.getter
+    def tcp(self) -> Optional['outputs.LoadbalancerListenerTcp']:
+        """
+        Options that are specific to the TCP protocol.
+        """
+        return pulumi.get(self, "tcp")
+
+    @_builtins.property
+    @pulumi.getter
+    def udp(self) -> Optional['outputs.LoadbalancerListenerUdp']:
+        """
+        Options that are specific to the UDP protocol.
+        """
+        return pulumi.get(self, "udp")
+
 
 @pulumi.output_type
 class LoadbalancerListenerServerNameIndicator(dict):
@@ -679,6 +784,78 @@ class LoadbalancerListenerServerNameIndicator(dict):
         A domain name to match in order to pass TLS traffic to the target pool in the current listener
         """
         return pulumi.get(self, "name")
+
+
+@pulumi.output_type
+class LoadbalancerListenerTcp(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "idleTimeout":
+            suggest = "idle_timeout"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in LoadbalancerListenerTcp. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        LoadbalancerListenerTcp.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        LoadbalancerListenerTcp.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 idle_timeout: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str idle_timeout: Time after which an idle connection is closed. The default value is set to 300 seconds, and the maximum value is 3600 seconds. The format is a duration and the unit must be seconds. Example: 30s
+        """
+        if idle_timeout is not None:
+            pulumi.set(__self__, "idle_timeout", idle_timeout)
+
+    @_builtins.property
+    @pulumi.getter(name="idleTimeout")
+    def idle_timeout(self) -> Optional[_builtins.str]:
+        """
+        Time after which an idle connection is closed. The default value is set to 300 seconds, and the maximum value is 3600 seconds. The format is a duration and the unit must be seconds. Example: 30s
+        """
+        return pulumi.get(self, "idle_timeout")
+
+
+@pulumi.output_type
+class LoadbalancerListenerUdp(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "idleTimeout":
+            suggest = "idle_timeout"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in LoadbalancerListenerUdp. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        LoadbalancerListenerUdp.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        LoadbalancerListenerUdp.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 idle_timeout: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str idle_timeout: Time after which an idle session is closed. The default value is set to 1 minute, and the maximum value is 2 minutes. The format is a duration and the unit must be seconds. Example: 30s
+        """
+        if idle_timeout is not None:
+            pulumi.set(__self__, "idle_timeout", idle_timeout)
+
+    @_builtins.property
+    @pulumi.getter(name="idleTimeout")
+    def idle_timeout(self) -> Optional[_builtins.str]:
+        """
+        Time after which an idle session is closed. The default value is set to 1 minute, and the maximum value is 2 minutes. The format is a duration and the unit must be seconds. Example: 30s
+        """
+        return pulumi.get(self, "idle_timeout")
 
 
 @pulumi.output_type
@@ -1909,7 +2086,7 @@ class ObservabilityInstanceAlertConfig(dict):
         """
         :param Sequence['ObservabilityInstanceAlertConfigReceiverArgs'] receivers: List of alert receivers.
         :param 'ObservabilityInstanceAlertConfigRouteArgs' route: Route configuration for the alerts.
-        :param 'ObservabilityInstanceAlertConfigGlobalArgs' global_: Global configuration for the alerts.
+        :param 'ObservabilityInstanceAlertConfigGlobalArgs' global_: Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
         """
         pulumi.set(__self__, "receivers", receivers)
         pulumi.set(__self__, "route", route)
@@ -1936,7 +2113,7 @@ class ObservabilityInstanceAlertConfig(dict):
     @pulumi.getter(name="global")
     def global_(self) -> Optional['outputs.ObservabilityInstanceAlertConfigGlobal']:
         """
-        Global configuration for the alerts.
+        Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
         """
         return pulumi.get(self, "global_")
 
@@ -2163,6 +2340,8 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfig(dict):
             suggest = "auth_username"
         elif key == "from":
             suggest = "from_"
+        elif key == "sendResolved":
+            suggest = "send_resolved"
         elif key == "smartHost":
             suggest = "smart_host"
 
@@ -2182,6 +2361,7 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfig(dict):
                  auth_password: Optional[_builtins.str] = None,
                  auth_username: Optional[_builtins.str] = None,
                  from_: Optional[_builtins.str] = None,
+                 send_resolved: Optional[_builtins.bool] = None,
                  smart_host: Optional[_builtins.str] = None,
                  to: Optional[_builtins.str] = None):
         """
@@ -2189,6 +2369,7 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfig(dict):
         :param _builtins.str auth_password: SMTP authentication password.
         :param _builtins.str auth_username: SMTP authentication username.
         :param _builtins.str from_: The sender email address. Must be a valid email address
+        :param _builtins.bool send_resolved: Whether to notify about resolved alerts.
         :param _builtins.str smart_host: The SMTP host through which emails are sent.
         :param _builtins.str to: The email address to send notifications to. Must be a valid email address
         """
@@ -2200,6 +2381,8 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfig(dict):
             pulumi.set(__self__, "auth_username", auth_username)
         if from_ is not None:
             pulumi.set(__self__, "from_", from_)
+        if send_resolved is not None:
+            pulumi.set(__self__, "send_resolved", send_resolved)
         if smart_host is not None:
             pulumi.set(__self__, "smart_host", smart_host)
         if to is not None:
@@ -2238,6 +2421,14 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfig(dict):
         return pulumi.get(self, "from_")
 
     @_builtins.property
+    @pulumi.getter(name="sendResolved")
+    def send_resolved(self) -> Optional[_builtins.bool]:
+        """
+        Whether to notify about resolved alerts.
+        """
+        return pulumi.get(self, "send_resolved")
+
+    @_builtins.property
     @pulumi.getter(name="smartHost")
     def smart_host(self) -> Optional[_builtins.str]:
         """
@@ -2263,6 +2454,8 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfig(dict):
             suggest = "api_key"
         elif key == "apiUrl":
             suggest = "api_url"
+        elif key == "sendResolved":
+            suggest = "send_resolved"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in ObservabilityInstanceAlertConfigReceiverOpsgenieConfig. Access the value via the '{suggest}' property getter instead.")
@@ -2278,16 +2471,24 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfig(dict):
     def __init__(__self__, *,
                  api_key: Optional[_builtins.str] = None,
                  api_url: Optional[_builtins.str] = None,
+                 priority: Optional[_builtins.str] = None,
+                 send_resolved: Optional[_builtins.bool] = None,
                  tags: Optional[_builtins.str] = None):
         """
         :param _builtins.str api_key: The API key for OpsGenie.
         :param _builtins.str api_url: The host to send OpsGenie API requests to. Must be a valid URL
+        :param _builtins.str priority: Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        :param _builtins.bool send_resolved: Whether to notify about resolved alerts.
         :param _builtins.str tags: Comma separated list of tags attached to the notifications.
         """
         if api_key is not None:
             pulumi.set(__self__, "api_key", api_key)
         if api_url is not None:
             pulumi.set(__self__, "api_url", api_url)
+        if priority is not None:
+            pulumi.set(__self__, "priority", priority)
+        if send_resolved is not None:
+            pulumi.set(__self__, "send_resolved", send_resolved)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
 
@@ -2309,6 +2510,22 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfig(dict):
 
     @_builtins.property
     @pulumi.getter
+    def priority(self) -> Optional[_builtins.str]:
+        """
+        Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        """
+        return pulumi.get(self, "priority")
+
+    @_builtins.property
+    @pulumi.getter(name="sendResolved")
+    def send_resolved(self) -> Optional[_builtins.bool]:
+        """
+        Whether to notify about resolved alerts.
+        """
+        return pulumi.get(self, "send_resolved")
+
+    @_builtins.property
+    @pulumi.getter
     def tags(self) -> Optional[_builtins.str]:
         """
         Comma separated list of tags attached to the notifications.
@@ -2321,8 +2538,12 @@ class ObservabilityInstanceAlertConfigReceiverWebhooksConfig(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "msTeams":
+        if key == "googleChat":
+            suggest = "google_chat"
+        elif key == "msTeams":
             suggest = "ms_teams"
+        elif key == "sendResolved":
+            suggest = "send_resolved"
 
         if suggest:
             pulumi.log.warn(f"Key '{key}' not found in ObservabilityInstanceAlertConfigReceiverWebhooksConfig. Access the value via the '{suggest}' property getter instead.")
@@ -2336,16 +2557,32 @@ class ObservabilityInstanceAlertConfigReceiverWebhooksConfig(dict):
         return super().get(key, default)
 
     def __init__(__self__, *,
+                 google_chat: Optional[_builtins.bool] = None,
                  ms_teams: Optional[_builtins.bool] = None,
+                 send_resolved: Optional[_builtins.bool] = None,
                  url: Optional[_builtins.str] = None):
         """
+        :param _builtins.bool google_chat: Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
         :param _builtins.bool ms_teams: Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
+        :param _builtins.bool send_resolved: Whether to notify about resolved alerts.
         :param _builtins.str url: The endpoint to send HTTP POST requests to. Must be a valid URL
         """
+        if google_chat is not None:
+            pulumi.set(__self__, "google_chat", google_chat)
         if ms_teams is not None:
             pulumi.set(__self__, "ms_teams", ms_teams)
+        if send_resolved is not None:
+            pulumi.set(__self__, "send_resolved", send_resolved)
         if url is not None:
             pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter(name="googleChat")
+    def google_chat(self) -> Optional[_builtins.bool]:
+        """
+        Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        """
+        return pulumi.get(self, "google_chat")
 
     @_builtins.property
     @pulumi.getter(name="msTeams")
@@ -2354,6 +2591,14 @@ class ObservabilityInstanceAlertConfigReceiverWebhooksConfig(dict):
         Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
         """
         return pulumi.get(self, "ms_teams")
+
+    @_builtins.property
+    @pulumi.getter(name="sendResolved")
+    def send_resolved(self) -> Optional[_builtins.bool]:
+        """
+        Whether to notify about resolved alerts.
+        """
+        return pulumi.get(self, "send_resolved")
 
     @_builtins.property
     @pulumi.getter
@@ -2375,8 +2620,6 @@ class ObservabilityInstanceAlertConfigRoute(dict):
             suggest = "group_interval"
         elif key == "groupWait":
             suggest = "group_wait"
-        elif key == "matchRegex":
-            suggest = "match_regex"
         elif key == "repeatInterval":
             suggest = "repeat_interval"
 
@@ -2396,8 +2639,6 @@ class ObservabilityInstanceAlertConfigRoute(dict):
                  group_bies: Optional[Sequence[_builtins.str]] = None,
                  group_interval: Optional[_builtins.str] = None,
                  group_wait: Optional[_builtins.str] = None,
-                 match: Optional[Mapping[str, _builtins.str]] = None,
-                 match_regex: Optional[Mapping[str, _builtins.str]] = None,
                  repeat_interval: Optional[_builtins.str] = None,
                  routes: Optional[Sequence['outputs.ObservabilityInstanceAlertConfigRouteRoute']] = None):
         """
@@ -2405,8 +2646,6 @@ class ObservabilityInstanceAlertConfigRoute(dict):
         :param Sequence[_builtins.str] group_bies: The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
         :param _builtins.str group_interval: How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
         :param _builtins.str group_wait: How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
-        :param Mapping[str, _builtins.str] match: A set of equality matchers an alert has to fulfill to match the node.
-        :param Mapping[str, _builtins.str] match_regex: A set of regex-matchers an alert has to fulfill to match the node.
         :param _builtins.str repeat_interval: How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
         :param Sequence['ObservabilityInstanceAlertConfigRouteRouteArgs'] routes: List of child routes.
         """
@@ -2417,10 +2656,6 @@ class ObservabilityInstanceAlertConfigRoute(dict):
             pulumi.set(__self__, "group_interval", group_interval)
         if group_wait is not None:
             pulumi.set(__self__, "group_wait", group_wait)
-        if match is not None:
-            pulumi.set(__self__, "match", match)
-        if match_regex is not None:
-            pulumi.set(__self__, "match_regex", match_regex)
         if repeat_interval is not None:
             pulumi.set(__self__, "repeat_interval", repeat_interval)
         if routes is not None:
@@ -2459,22 +2694,6 @@ class ObservabilityInstanceAlertConfigRoute(dict):
         return pulumi.get(self, "group_wait")
 
     @_builtins.property
-    @pulumi.getter
-    def match(self) -> Optional[Mapping[str, _builtins.str]]:
-        """
-        A set of equality matchers an alert has to fulfill to match the node.
-        """
-        return pulumi.get(self, "match")
-
-    @_builtins.property
-    @pulumi.getter(name="matchRegex")
-    def match_regex(self) -> Optional[Mapping[str, _builtins.str]]:
-        """
-        A set of regex-matchers an alert has to fulfill to match the node.
-        """
-        return pulumi.get(self, "match_regex")
-
-    @_builtins.property
     @pulumi.getter(name="repeatInterval")
     def repeat_interval(self) -> Optional[_builtins.str]:
         """
@@ -2496,7 +2715,9 @@ class ObservabilityInstanceAlertConfigRouteRoute(dict):
     @staticmethod
     def __key_warning(key: str):
         suggest = None
-        if key == "groupBies":
+        if key == "continue":
+            suggest = "continue_"
+        elif key == "groupBies":
             suggest = "group_bies"
         elif key == "groupInterval":
             suggest = "group_interval"
@@ -2520,22 +2741,28 @@ class ObservabilityInstanceAlertConfigRouteRoute(dict):
 
     def __init__(__self__, *,
                  receiver: _builtins.str,
+                 continue_: Optional[_builtins.bool] = None,
                  group_bies: Optional[Sequence[_builtins.str]] = None,
                  group_interval: Optional[_builtins.str] = None,
                  group_wait: Optional[_builtins.str] = None,
                  match: Optional[Mapping[str, _builtins.str]] = None,
                  match_regex: Optional[Mapping[str, _builtins.str]] = None,
+                 matchers: Optional[Sequence[_builtins.str]] = None,
                  repeat_interval: Optional[_builtins.str] = None):
         """
         :param _builtins.str receiver: The name of the receiver to route the alerts to.
+        :param _builtins.bool continue_: Whether an alert should continue matching subsequent sibling nodes.
         :param Sequence[_builtins.str] group_bies: The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
         :param _builtins.str group_interval: How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
         :param _builtins.str group_wait: How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
-        :param Mapping[str, _builtins.str] match: A set of equality matchers an alert has to fulfill to match the node.
-        :param Mapping[str, _builtins.str] match_regex: A set of regex-matchers an alert has to fulfill to match the node.
+        :param Mapping[str, _builtins.str] match: A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+        :param Mapping[str, _builtins.str] match_regex: A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+        :param Sequence[_builtins.str] matchers: A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
         :param _builtins.str repeat_interval: How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
         """
         pulumi.set(__self__, "receiver", receiver)
+        if continue_ is not None:
+            pulumi.set(__self__, "continue_", continue_)
         if group_bies is not None:
             pulumi.set(__self__, "group_bies", group_bies)
         if group_interval is not None:
@@ -2546,6 +2773,8 @@ class ObservabilityInstanceAlertConfigRouteRoute(dict):
             pulumi.set(__self__, "match", match)
         if match_regex is not None:
             pulumi.set(__self__, "match_regex", match_regex)
+        if matchers is not None:
+            pulumi.set(__self__, "matchers", matchers)
         if repeat_interval is not None:
             pulumi.set(__self__, "repeat_interval", repeat_interval)
 
@@ -2556,6 +2785,14 @@ class ObservabilityInstanceAlertConfigRouteRoute(dict):
         The name of the receiver to route the alerts to.
         """
         return pulumi.get(self, "receiver")
+
+    @_builtins.property
+    @pulumi.getter(name="continue")
+    def continue_(self) -> Optional[_builtins.bool]:
+        """
+        Whether an alert should continue matching subsequent sibling nodes.
+        """
+        return pulumi.get(self, "continue_")
 
     @_builtins.property
     @pulumi.getter(name="groupBies")
@@ -2583,19 +2820,29 @@ class ObservabilityInstanceAlertConfigRouteRoute(dict):
 
     @_builtins.property
     @pulumi.getter
+    @_utilities.deprecated("""Use `matchers` in the `routes` instead.""")
     def match(self) -> Optional[Mapping[str, _builtins.str]]:
         """
-        A set of equality matchers an alert has to fulfill to match the node.
+        A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
         """
         return pulumi.get(self, "match")
 
     @_builtins.property
     @pulumi.getter(name="matchRegex")
+    @_utilities.deprecated("""Use `matchers` in the `routes` instead.""")
     def match_regex(self) -> Optional[Mapping[str, _builtins.str]]:
         """
-        A set of regex-matchers an alert has to fulfill to match the node.
+        A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
         """
         return pulumi.get(self, "match_regex")
+
+    @_builtins.property
+    @pulumi.getter
+    def matchers(self) -> Optional[Sequence[_builtins.str]]:
+        """
+        A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+        """
+        return pulumi.get(self, "matchers")
 
     @_builtins.property
     @pulumi.getter(name="repeatInterval")
@@ -3619,7 +3866,7 @@ class RoutingTableRouteNextHop(dict):
                  type: _builtins.str,
                  value: Optional[_builtins.str] = None):
         """
-        :param _builtins.str type: Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        :param _builtins.str type: Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
         :param _builtins.str value: Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
         """
         pulumi.set(__self__, "type", type)
@@ -3630,7 +3877,7 @@ class RoutingTableRouteNextHop(dict):
     @pulumi.getter
     def type(self) -> _builtins.str:
         """
-        Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
         """
         return pulumi.get(self, "type")
 
@@ -4662,6 +4909,24 @@ class VolumeSource(dict):
 
 
 @pulumi.output_type
+class GetCdnCustomDomainCertificateResult(dict):
+    def __init__(__self__, *,
+                 version: _builtins.int):
+        """
+        :param _builtins.int version: A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> _builtins.int:
+        """
+        A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        return pulumi.get(self, "version")
+
+
+@pulumi.output_type
 class GetCdnDistributionConfigResult(dict):
     def __init__(__self__, *,
                  backend: 'outputs.GetCdnDistributionConfigBackendResult',
@@ -4716,17 +4981,28 @@ class GetCdnDistributionConfigResult(dict):
 @pulumi.output_type
 class GetCdnDistributionConfigBackendResult(dict):
     def __init__(__self__, *,
+                 geofencing: Mapping[str, Sequence[_builtins.str]],
                  origin_request_headers: Mapping[str, _builtins.str],
                  origin_url: _builtins.str,
                  type: _builtins.str):
         """
+        :param Mapping[str, Sequence[_builtins.str]] geofencing: A map of URLs to a list of countries where content is allowed.
         :param Mapping[str, _builtins.str] origin_request_headers: The configured origin request headers for the backend
         :param _builtins.str origin_url: The configured backend type for the distribution
         :param _builtins.str type: The configured backend type. Supported values are: `http`.
         """
+        pulumi.set(__self__, "geofencing", geofencing)
         pulumi.set(__self__, "origin_request_headers", origin_request_headers)
         pulumi.set(__self__, "origin_url", origin_url)
         pulumi.set(__self__, "type", type)
+
+    @_builtins.property
+    @pulumi.getter
+    def geofencing(self) -> Mapping[str, Sequence[_builtins.str]]:
+        """
+        A map of URLs to a list of countries where content is allowed.
+        """
+        return pulumi.get(self, "geofencing")
 
     @_builtins.property
     @pulumi.getter(name="originRequestHeaders")
@@ -4996,23 +5272,275 @@ class GetImageConfigResult(dict):
 
 
 @pulumi.output_type
+class GetImageV2ChecksumResult(dict):
+    def __init__(__self__, *,
+                 algorithm: _builtins.str,
+                 digest: _builtins.str):
+        """
+        :param _builtins.str algorithm: Algorithm for the checksum of the image data.
+        :param _builtins.str digest: Hexdigest of the checksum of the image data.
+        """
+        pulumi.set(__self__, "algorithm", algorithm)
+        pulumi.set(__self__, "digest", digest)
+
+    @_builtins.property
+    @pulumi.getter
+    def algorithm(self) -> _builtins.str:
+        """
+        Algorithm for the checksum of the image data.
+        """
+        return pulumi.get(self, "algorithm")
+
+    @_builtins.property
+    @pulumi.getter
+    def digest(self) -> _builtins.str:
+        """
+        Hexdigest of the checksum of the image data.
+        """
+        return pulumi.get(self, "digest")
+
+
+@pulumi.output_type
+class GetImageV2ConfigResult(dict):
+    def __init__(__self__, *,
+                 boot_menu: _builtins.bool,
+                 cdrom_bus: _builtins.str,
+                 disk_bus: _builtins.str,
+                 nic_model: _builtins.str,
+                 operating_system: _builtins.str,
+                 operating_system_distro: _builtins.str,
+                 operating_system_version: _builtins.str,
+                 rescue_bus: _builtins.str,
+                 rescue_device: _builtins.str,
+                 secure_boot: _builtins.bool,
+                 uefi: _builtins.bool,
+                 video_model: _builtins.str,
+                 virtio_scsi: _builtins.bool):
+        """
+        :param _builtins.bool boot_menu: Enables the BIOS bootmenu.
+        :param _builtins.str cdrom_bus: Sets CDROM bus controller type.
+        :param _builtins.str disk_bus: Sets Disk bus controller type.
+        :param _builtins.str nic_model: Sets virtual network interface model.
+        :param _builtins.str operating_system: Enables operating system specific optimizations.
+        :param _builtins.str operating_system_distro: Operating system distribution.
+        :param _builtins.str operating_system_version: Version of the operating system.
+        :param _builtins.str rescue_bus: Sets the device bus when the image is used as a rescue image.
+        :param _builtins.str rescue_device: Sets the device when the image is used as a rescue image.
+        :param _builtins.bool secure_boot: Enables Secure Boot.
+        :param _builtins.bool uefi: Enables UEFI boot.
+        :param _builtins.str video_model: Sets Graphic device model.
+        :param _builtins.bool virtio_scsi: Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
+        """
+        pulumi.set(__self__, "boot_menu", boot_menu)
+        pulumi.set(__self__, "cdrom_bus", cdrom_bus)
+        pulumi.set(__self__, "disk_bus", disk_bus)
+        pulumi.set(__self__, "nic_model", nic_model)
+        pulumi.set(__self__, "operating_system", operating_system)
+        pulumi.set(__self__, "operating_system_distro", operating_system_distro)
+        pulumi.set(__self__, "operating_system_version", operating_system_version)
+        pulumi.set(__self__, "rescue_bus", rescue_bus)
+        pulumi.set(__self__, "rescue_device", rescue_device)
+        pulumi.set(__self__, "secure_boot", secure_boot)
+        pulumi.set(__self__, "uefi", uefi)
+        pulumi.set(__self__, "video_model", video_model)
+        pulumi.set(__self__, "virtio_scsi", virtio_scsi)
+
+    @_builtins.property
+    @pulumi.getter(name="bootMenu")
+    def boot_menu(self) -> _builtins.bool:
+        """
+        Enables the BIOS bootmenu.
+        """
+        return pulumi.get(self, "boot_menu")
+
+    @_builtins.property
+    @pulumi.getter(name="cdromBus")
+    def cdrom_bus(self) -> _builtins.str:
+        """
+        Sets CDROM bus controller type.
+        """
+        return pulumi.get(self, "cdrom_bus")
+
+    @_builtins.property
+    @pulumi.getter(name="diskBus")
+    def disk_bus(self) -> _builtins.str:
+        """
+        Sets Disk bus controller type.
+        """
+        return pulumi.get(self, "disk_bus")
+
+    @_builtins.property
+    @pulumi.getter(name="nicModel")
+    def nic_model(self) -> _builtins.str:
+        """
+        Sets virtual network interface model.
+        """
+        return pulumi.get(self, "nic_model")
+
+    @_builtins.property
+    @pulumi.getter(name="operatingSystem")
+    def operating_system(self) -> _builtins.str:
+        """
+        Enables operating system specific optimizations.
+        """
+        return pulumi.get(self, "operating_system")
+
+    @_builtins.property
+    @pulumi.getter(name="operatingSystemDistro")
+    def operating_system_distro(self) -> _builtins.str:
+        """
+        Operating system distribution.
+        """
+        return pulumi.get(self, "operating_system_distro")
+
+    @_builtins.property
+    @pulumi.getter(name="operatingSystemVersion")
+    def operating_system_version(self) -> _builtins.str:
+        """
+        Version of the operating system.
+        """
+        return pulumi.get(self, "operating_system_version")
+
+    @_builtins.property
+    @pulumi.getter(name="rescueBus")
+    def rescue_bus(self) -> _builtins.str:
+        """
+        Sets the device bus when the image is used as a rescue image.
+        """
+        return pulumi.get(self, "rescue_bus")
+
+    @_builtins.property
+    @pulumi.getter(name="rescueDevice")
+    def rescue_device(self) -> _builtins.str:
+        """
+        Sets the device when the image is used as a rescue image.
+        """
+        return pulumi.get(self, "rescue_device")
+
+    @_builtins.property
+    @pulumi.getter(name="secureBoot")
+    def secure_boot(self) -> _builtins.bool:
+        """
+        Enables Secure Boot.
+        """
+        return pulumi.get(self, "secure_boot")
+
+    @_builtins.property
+    @pulumi.getter
+    def uefi(self) -> _builtins.bool:
+        """
+        Enables UEFI boot.
+        """
+        return pulumi.get(self, "uefi")
+
+    @_builtins.property
+    @pulumi.getter(name="videoModel")
+    def video_model(self) -> _builtins.str:
+        """
+        Sets Graphic device model.
+        """
+        return pulumi.get(self, "video_model")
+
+    @_builtins.property
+    @pulumi.getter(name="virtioScsi")
+    def virtio_scsi(self) -> _builtins.bool:
+        """
+        Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
+        """
+        return pulumi.get(self, "virtio_scsi")
+
+
+@pulumi.output_type
+class GetImageV2FilterResult(dict):
+    def __init__(__self__, *,
+                 distro: Optional[_builtins.str] = None,
+                 os: Optional[_builtins.str] = None,
+                 secure_boot: Optional[_builtins.bool] = None,
+                 uefi: Optional[_builtins.bool] = None,
+                 version: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str distro: Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+        :param _builtins.str os: Filter images by operating system type, such as `linux` or `windows`.
+        :param _builtins.bool secure_boot: Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+        :param _builtins.bool uefi: Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+        :param _builtins.str version: Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+        """
+        if distro is not None:
+            pulumi.set(__self__, "distro", distro)
+        if os is not None:
+            pulumi.set(__self__, "os", os)
+        if secure_boot is not None:
+            pulumi.set(__self__, "secure_boot", secure_boot)
+        if uefi is not None:
+            pulumi.set(__self__, "uefi", uefi)
+        if version is not None:
+            pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def distro(self) -> Optional[_builtins.str]:
+        """
+        Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+        """
+        return pulumi.get(self, "distro")
+
+    @_builtins.property
+    @pulumi.getter
+    def os(self) -> Optional[_builtins.str]:
+        """
+        Filter images by operating system type, such as `linux` or `windows`.
+        """
+        return pulumi.get(self, "os")
+
+    @_builtins.property
+    @pulumi.getter(name="secureBoot")
+    def secure_boot(self) -> Optional[_builtins.bool]:
+        """
+        Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+        """
+        return pulumi.get(self, "secure_boot")
+
+    @_builtins.property
+    @pulumi.getter
+    def uefi(self) -> Optional[_builtins.bool]:
+        """
+        Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+        """
+        return pulumi.get(self, "uefi")
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> Optional[_builtins.str]:
+        """
+        Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+        """
+        return pulumi.get(self, "version")
+
+
+@pulumi.output_type
 class GetLoadbalancerListenerResult(dict):
     def __init__(__self__, *,
                  display_name: _builtins.str,
                  port: _builtins.int,
                  protocol: _builtins.str,
                  target_pool: _builtins.str,
+                 tcp: 'outputs.GetLoadbalancerListenerTcpResult',
+                 udp: 'outputs.GetLoadbalancerListenerUdpResult',
                  server_name_indicators: Optional[Sequence['outputs.GetLoadbalancerListenerServerNameIndicatorResult']] = None):
         """
         :param _builtins.int port: Port number where we listen for traffic.
         :param _builtins.str protocol: Protocol is the highest network protocol we understand to load balance.
         :param _builtins.str target_pool: Reference target pool by target pool name.
+        :param 'GetLoadbalancerListenerTcpArgs' tcp: Options that are specific to the TCP protocol.
+        :param 'GetLoadbalancerListenerUdpArgs' udp: Options that are specific to the UDP protocol.
         :param Sequence['GetLoadbalancerListenerServerNameIndicatorArgs'] server_name_indicators: A list of domain names to match in order to pass TLS traffic to the target pool in the current listener
         """
         pulumi.set(__self__, "display_name", display_name)
         pulumi.set(__self__, "port", port)
         pulumi.set(__self__, "protocol", protocol)
         pulumi.set(__self__, "target_pool", target_pool)
+        pulumi.set(__self__, "tcp", tcp)
+        pulumi.set(__self__, "udp", udp)
         if server_name_indicators is not None:
             pulumi.set(__self__, "server_name_indicators", server_name_indicators)
 
@@ -5046,6 +5574,22 @@ class GetLoadbalancerListenerResult(dict):
         return pulumi.get(self, "target_pool")
 
     @_builtins.property
+    @pulumi.getter
+    def tcp(self) -> 'outputs.GetLoadbalancerListenerTcpResult':
+        """
+        Options that are specific to the TCP protocol.
+        """
+        return pulumi.get(self, "tcp")
+
+    @_builtins.property
+    @pulumi.getter
+    def udp(self) -> 'outputs.GetLoadbalancerListenerUdpResult':
+        """
+        Options that are specific to the UDP protocol.
+        """
+        return pulumi.get(self, "udp")
+
+    @_builtins.property
     @pulumi.getter(name="serverNameIndicators")
     def server_name_indicators(self) -> Optional[Sequence['outputs.GetLoadbalancerListenerServerNameIndicatorResult']]:
         """
@@ -5071,6 +5615,42 @@ class GetLoadbalancerListenerServerNameIndicatorResult(dict):
         A domain name to match in order to pass TLS traffic to the target pool in the current listener
         """
         return pulumi.get(self, "name")
+
+
+@pulumi.output_type
+class GetLoadbalancerListenerTcpResult(dict):
+    def __init__(__self__, *,
+                 idle_timeout: _builtins.str):
+        """
+        :param _builtins.str idle_timeout: Time after which an idle connection is closed. The default value is set to 5 minutes, and the maximum value is one hour.
+        """
+        pulumi.set(__self__, "idle_timeout", idle_timeout)
+
+    @_builtins.property
+    @pulumi.getter(name="idleTimeout")
+    def idle_timeout(self) -> _builtins.str:
+        """
+        Time after which an idle connection is closed. The default value is set to 5 minutes, and the maximum value is one hour.
+        """
+        return pulumi.get(self, "idle_timeout")
+
+
+@pulumi.output_type
+class GetLoadbalancerListenerUdpResult(dict):
+    def __init__(__self__, *,
+                 idle_timeout: _builtins.str):
+        """
+        :param _builtins.str idle_timeout: Time after which an idle session is closed. The default value is set to 1 minute, and the maximum value is 2 minutes.
+        """
+        pulumi.set(__self__, "idle_timeout", idle_timeout)
+
+    @_builtins.property
+    @pulumi.getter(name="idleTimeout")
+    def idle_timeout(self) -> _builtins.str:
+        """
+        Time after which an idle session is closed. The default value is set to 1 minute, and the maximum value is 2 minutes.
+        """
+        return pulumi.get(self, "idle_timeout")
 
 
 @pulumi.output_type
@@ -6097,6 +6677,7 @@ class GetObservabilityInstanceAlertConfigReceiverEmailConfigResult(dict):
                  auth_password: _builtins.str,
                  auth_username: _builtins.str,
                  from_: _builtins.str,
+                 send_resolved: _builtins.bool,
                  smart_host: _builtins.str,
                  to: _builtins.str):
         """
@@ -6104,6 +6685,7 @@ class GetObservabilityInstanceAlertConfigReceiverEmailConfigResult(dict):
         :param _builtins.str auth_password: SMTP authentication password.
         :param _builtins.str auth_username: SMTP authentication username.
         :param _builtins.str from_: The sender email address. Must be a valid email address
+        :param _builtins.bool send_resolved: Whether to notify about resolved alerts.
         :param _builtins.str smart_host: The SMTP host through which emails are sent.
         :param _builtins.str to: The email address to send notifications to. Must be a valid email address
         """
@@ -6111,6 +6693,7 @@ class GetObservabilityInstanceAlertConfigReceiverEmailConfigResult(dict):
         pulumi.set(__self__, "auth_password", auth_password)
         pulumi.set(__self__, "auth_username", auth_username)
         pulumi.set(__self__, "from_", from_)
+        pulumi.set(__self__, "send_resolved", send_resolved)
         pulumi.set(__self__, "smart_host", smart_host)
         pulumi.set(__self__, "to", to)
 
@@ -6147,6 +6730,14 @@ class GetObservabilityInstanceAlertConfigReceiverEmailConfigResult(dict):
         return pulumi.get(self, "from_")
 
     @_builtins.property
+    @pulumi.getter(name="sendResolved")
+    def send_resolved(self) -> _builtins.bool:
+        """
+        Whether to notify about resolved alerts.
+        """
+        return pulumi.get(self, "send_resolved")
+
+    @_builtins.property
     @pulumi.getter(name="smartHost")
     def smart_host(self) -> _builtins.str:
         """
@@ -6168,14 +6759,20 @@ class GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigResult(dict):
     def __init__(__self__, *,
                  api_key: _builtins.str,
                  api_url: _builtins.str,
+                 priority: _builtins.str,
+                 send_resolved: _builtins.bool,
                  tags: _builtins.str):
         """
         :param _builtins.str api_key: The API key for OpsGenie.
         :param _builtins.str api_url: The host to send OpsGenie API requests to. Must be a valid URL
+        :param _builtins.str priority: Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        :param _builtins.bool send_resolved: Whether to notify about resolved alerts.
         :param _builtins.str tags: Comma separated list of tags attached to the notifications.
         """
         pulumi.set(__self__, "api_key", api_key)
         pulumi.set(__self__, "api_url", api_url)
+        pulumi.set(__self__, "priority", priority)
+        pulumi.set(__self__, "send_resolved", send_resolved)
         pulumi.set(__self__, "tags", tags)
 
     @_builtins.property
@@ -6196,6 +6793,22 @@ class GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigResult(dict):
 
     @_builtins.property
     @pulumi.getter
+    def priority(self) -> _builtins.str:
+        """
+        Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        """
+        return pulumi.get(self, "priority")
+
+    @_builtins.property
+    @pulumi.getter(name="sendResolved")
+    def send_resolved(self) -> _builtins.bool:
+        """
+        Whether to notify about resolved alerts.
+        """
+        return pulumi.get(self, "send_resolved")
+
+    @_builtins.property
+    @pulumi.getter
     def tags(self) -> _builtins.str:
         """
         Comma separated list of tags attached to the notifications.
@@ -6206,14 +6819,28 @@ class GetObservabilityInstanceAlertConfigReceiverOpsgenieConfigResult(dict):
 @pulumi.output_type
 class GetObservabilityInstanceAlertConfigReceiverWebhooksConfigResult(dict):
     def __init__(__self__, *,
+                 google_chat: _builtins.bool,
                  ms_teams: _builtins.bool,
+                 send_resolved: _builtins.bool,
                  url: _builtins.str):
         """
+        :param _builtins.bool google_chat: Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
         :param _builtins.bool ms_teams: Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
+        :param _builtins.bool send_resolved: Whether to notify about resolved alerts.
         :param _builtins.str url: The endpoint to send HTTP POST requests to. Must be a valid URL
         """
+        pulumi.set(__self__, "google_chat", google_chat)
         pulumi.set(__self__, "ms_teams", ms_teams)
+        pulumi.set(__self__, "send_resolved", send_resolved)
         pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter(name="googleChat")
+    def google_chat(self) -> _builtins.bool:
+        """
+        Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        """
+        return pulumi.get(self, "google_chat")
 
     @_builtins.property
     @pulumi.getter(name="msTeams")
@@ -6222,6 +6849,14 @@ class GetObservabilityInstanceAlertConfigReceiverWebhooksConfigResult(dict):
         Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
         """
         return pulumi.get(self, "ms_teams")
+
+    @_builtins.property
+    @pulumi.getter(name="sendResolved")
+    def send_resolved(self) -> _builtins.bool:
+        """
+        Whether to notify about resolved alerts.
+        """
+        return pulumi.get(self, "send_resolved")
 
     @_builtins.property
     @pulumi.getter
@@ -6238,8 +6873,6 @@ class GetObservabilityInstanceAlertConfigRouteResult(dict):
                  group_bies: Sequence[_builtins.str],
                  group_interval: _builtins.str,
                  group_wait: _builtins.str,
-                 match: Mapping[str, _builtins.str],
-                 match_regex: Mapping[str, _builtins.str],
                  receiver: _builtins.str,
                  repeat_interval: _builtins.str,
                  routes: Sequence['outputs.GetObservabilityInstanceAlertConfigRouteRouteResult']):
@@ -6247,8 +6880,6 @@ class GetObservabilityInstanceAlertConfigRouteResult(dict):
         :param Sequence[_builtins.str] group_bies: The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
         :param _builtins.str group_interval: How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
         :param _builtins.str group_wait: How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.) .
-        :param Mapping[str, _builtins.str] match: A set of equality matchers an alert has to fulfill to match the node.
-        :param Mapping[str, _builtins.str] match_regex: A set of regex-matchers an alert has to fulfill to match the node.
         :param _builtins.str receiver: The name of the receiver to route the alerts to.
         :param _builtins.str repeat_interval: How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
         :param Sequence['GetObservabilityInstanceAlertConfigRouteRouteArgs'] routes: List of child routes.
@@ -6256,8 +6887,6 @@ class GetObservabilityInstanceAlertConfigRouteResult(dict):
         pulumi.set(__self__, "group_bies", group_bies)
         pulumi.set(__self__, "group_interval", group_interval)
         pulumi.set(__self__, "group_wait", group_wait)
-        pulumi.set(__self__, "match", match)
-        pulumi.set(__self__, "match_regex", match_regex)
         pulumi.set(__self__, "receiver", receiver)
         pulumi.set(__self__, "repeat_interval", repeat_interval)
         pulumi.set(__self__, "routes", routes)
@@ -6288,22 +6917,6 @@ class GetObservabilityInstanceAlertConfigRouteResult(dict):
 
     @_builtins.property
     @pulumi.getter
-    def match(self) -> Mapping[str, _builtins.str]:
-        """
-        A set of equality matchers an alert has to fulfill to match the node.
-        """
-        return pulumi.get(self, "match")
-
-    @_builtins.property
-    @pulumi.getter(name="matchRegex")
-    def match_regex(self) -> Mapping[str, _builtins.str]:
-        """
-        A set of regex-matchers an alert has to fulfill to match the node.
-        """
-        return pulumi.get(self, "match_regex")
-
-    @_builtins.property
-    @pulumi.getter
     def receiver(self) -> _builtins.str:
         """
         The name of the receiver to route the alerts to.
@@ -6330,29 +6943,43 @@ class GetObservabilityInstanceAlertConfigRouteResult(dict):
 @pulumi.output_type
 class GetObservabilityInstanceAlertConfigRouteRouteResult(dict):
     def __init__(__self__, *,
+                 continue_: _builtins.bool,
                  group_bies: Sequence[_builtins.str],
                  group_interval: _builtins.str,
                  group_wait: _builtins.str,
                  match: Mapping[str, _builtins.str],
                  match_regex: Mapping[str, _builtins.str],
+                 matchers: Sequence[_builtins.str],
                  receiver: _builtins.str,
                  repeat_interval: _builtins.str):
         """
+        :param _builtins.bool continue_: Whether an alert should continue matching subsequent sibling nodes.
         :param Sequence[_builtins.str] group_bies: The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
         :param _builtins.str group_interval: How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
         :param _builtins.str group_wait: How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
-        :param Mapping[str, _builtins.str] match: A set of equality matchers an alert has to fulfill to match the node.
-        :param Mapping[str, _builtins.str] match_regex: A set of regex-matchers an alert has to fulfill to match the node.
+        :param Mapping[str, _builtins.str] match: A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+        :param Mapping[str, _builtins.str] match_regex: A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+        :param Sequence[_builtins.str] matchers: A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
         :param _builtins.str receiver: The name of the receiver to route the alerts to.
         :param _builtins.str repeat_interval: How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
         """
+        pulumi.set(__self__, "continue_", continue_)
         pulumi.set(__self__, "group_bies", group_bies)
         pulumi.set(__self__, "group_interval", group_interval)
         pulumi.set(__self__, "group_wait", group_wait)
         pulumi.set(__self__, "match", match)
         pulumi.set(__self__, "match_regex", match_regex)
+        pulumi.set(__self__, "matchers", matchers)
         pulumi.set(__self__, "receiver", receiver)
         pulumi.set(__self__, "repeat_interval", repeat_interval)
+
+    @_builtins.property
+    @pulumi.getter(name="continue")
+    def continue_(self) -> _builtins.bool:
+        """
+        Whether an alert should continue matching subsequent sibling nodes.
+        """
+        return pulumi.get(self, "continue_")
 
     @_builtins.property
     @pulumi.getter(name="groupBies")
@@ -6380,19 +7007,29 @@ class GetObservabilityInstanceAlertConfigRouteRouteResult(dict):
 
     @_builtins.property
     @pulumi.getter
+    @_utilities.deprecated("""Use `matchers` in the `routes` instead.""")
     def match(self) -> Mapping[str, _builtins.str]:
         """
-        A set of equality matchers an alert has to fulfill to match the node.
+        A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
         """
         return pulumi.get(self, "match")
 
     @_builtins.property
     @pulumi.getter(name="matchRegex")
+    @_utilities.deprecated("""Use `matchers` in the `routes` instead.""")
     def match_regex(self) -> Mapping[str, _builtins.str]:
         """
-        A set of regex-matchers an alert has to fulfill to match the node.
+        A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
         """
         return pulumi.get(self, "match_regex")
+
+    @_builtins.property
+    @pulumi.getter
+    def matchers(self) -> Sequence[_builtins.str]:
+        """
+        A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+        """
+        return pulumi.get(self, "matchers")
 
     @_builtins.property
     @pulumi.getter
@@ -7214,7 +7851,7 @@ class GetRoutingTableRouteNextHopResult(dict):
                  type: _builtins.str,
                  value: _builtins.str):
         """
-        :param _builtins.str type: Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        :param _builtins.str type: Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
         :param _builtins.str value: Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
         """
         pulumi.set(__self__, "type", type)
@@ -7224,7 +7861,7 @@ class GetRoutingTableRouteNextHopResult(dict):
     @pulumi.getter
     def type(self) -> _builtins.str:
         """
-        Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
         """
         return pulumi.get(self, "type")
 
@@ -7345,7 +7982,7 @@ class GetRoutingTableRoutesRouteNextHopResult(dict):
                  type: _builtins.str,
                  value: _builtins.str):
         """
-        :param _builtins.str type: Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        :param _builtins.str type: Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
         :param _builtins.str value: Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
         """
         pulumi.set(__self__, "type", type)
@@ -7355,7 +7992,7 @@ class GetRoutingTableRoutesRouteNextHopResult(dict):
     @pulumi.getter
     def type(self) -> _builtins.str:
         """
-        Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
         """
         return pulumi.get(self, "type")
 
