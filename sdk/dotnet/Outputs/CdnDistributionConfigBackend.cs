@@ -15,6 +15,10 @@ namespace ediri.Stackit.Outputs
     public sealed class CdnDistributionConfigBackend
     {
         /// <summary>
+        /// A map of URLs to a list of countries where content is allowed.
+        /// </summary>
+        public readonly ImmutableDictionary<string, ImmutableArray<string>>? Geofencing;
+        /// <summary>
         /// The configured origin request headers for the backend
         /// </summary>
         public readonly ImmutableDictionary<string, string>? OriginRequestHeaders;
@@ -23,18 +27,21 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly string OriginUrl;
         /// <summary>
-        /// The configured backend type. Supported values are: `http`.
+        /// The configured backend type. Supported values are: `Http`.
         /// </summary>
         public readonly string Type;
 
         [OutputConstructor]
         private CdnDistributionConfigBackend(
+            ImmutableDictionary<string, ImmutableArray<string>>? geofencing,
+
             ImmutableDictionary<string, string>? originRequestHeaders,
 
             string originUrl,
 
             string type)
         {
+            Geofencing = geofencing;
             OriginRequestHeaders = originRequestHeaders;
             OriginUrl = originUrl;
             Type = type;

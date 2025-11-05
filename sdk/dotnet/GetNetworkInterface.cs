@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetNetworkInterface
     {
         /// <summary>
-        /// Network interface datasource schema. Must have a `region` specified in the provider configuration.
+        /// Network interface datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -29,7 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetNetworkInterfaceResult>("stackit:index/getNetworkInterface:getNetworkInterface", args ?? new GetNetworkInterfaceArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Network interface datasource schema. Must have a `region` specified in the provider configuration.
+        /// Network interface datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -45,7 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetNetworkInterfaceResult>("stackit:index/getNetworkInterface:getNetworkInterface", args ?? new GetNetworkInterfaceInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Network interface datasource schema. Must have a `region` specified in the provider configuration.
+        /// Network interface datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -164,7 +164,7 @@ namespace ediri.Stackit
         /// </summary>
         public readonly ImmutableArray<string> SecurityGroupIds;
         /// <summary>
-        /// Type of network interface. Some of the possible values are: Supported values are: `server`, `metadata`, `gateway`.
+        /// Type of network interface. Some of the possible values are: Supported values are: `Server`, `Metadata`, `Gateway`.
         /// </summary>
         public readonly string Type;
 

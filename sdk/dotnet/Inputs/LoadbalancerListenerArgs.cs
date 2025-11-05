@@ -46,6 +46,18 @@ namespace ediri.Stackit.Inputs
         [Input("targetPool", required: true)]
         public Input<string> TargetPool { get; set; } = null!;
 
+        /// <summary>
+        /// Options that are specific to the TCP protocol.
+        /// </summary>
+        [Input("tcp")]
+        public Input<Inputs.LoadbalancerListenerTcpArgs>? Tcp { get; set; }
+
+        /// <summary>
+        /// Options that are specific to the UDP protocol.
+        /// </summary>
+        [Input("udp")]
+        public Input<Inputs.LoadbalancerListenerUdpArgs>? Udp { get; set; }
+
         public LoadbalancerListenerArgs()
         {
         }

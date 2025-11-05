@@ -31,6 +31,14 @@ namespace ediri.Stackit.Outputs
         /// Reference target pool by target pool name.
         /// </summary>
         public readonly string TargetPool;
+        /// <summary>
+        /// Options that are specific to the TCP protocol.
+        /// </summary>
+        public readonly Outputs.LoadbalancerListenerTcp? Tcp;
+        /// <summary>
+        /// Options that are specific to the UDP protocol.
+        /// </summary>
+        public readonly Outputs.LoadbalancerListenerUdp? Udp;
 
         [OutputConstructor]
         private LoadbalancerListener(
@@ -42,13 +50,19 @@ namespace ediri.Stackit.Outputs
 
             ImmutableArray<Outputs.LoadbalancerListenerServerNameIndicator> serverNameIndicators,
 
-            string targetPool)
+            string targetPool,
+
+            Outputs.LoadbalancerListenerTcp? tcp,
+
+            Outputs.LoadbalancerListenerUdp? udp)
         {
             DisplayName = displayName;
             Port = port;
             Protocol = protocol;
             ServerNameIndicators = serverNameIndicators;
             TargetPool = targetPool;
+            Tcp = tcp;
+            Udp = udp;
         }
     }
 }
