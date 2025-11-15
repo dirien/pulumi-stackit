@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Observability log alert group resource schema. Used to create alerts based on logs (Loki). Must have a `region` specified in the provider configuration.
+    /// Observability log alert group resource schema. Used to create alerts based on logs (Loki). Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>

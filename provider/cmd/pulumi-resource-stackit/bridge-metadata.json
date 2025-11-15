@@ -28,6 +28,15 @@
                 "fields": {
                     "config": {
                         "fields": {
+                            "backend": {
+                                "fields": {
+                                    "geofencing": {
+                                        "elem": {
+                                            "maxItemsOne": false
+                                        }
+                                    }
+                                }
+                            },
                             "blocked_countries": {
                                 "maxItemsOne": false
                             },
@@ -80,6 +89,9 @@
             },
             "stackit_key_pair": {
                 "current": "stackit:index/keyPair:KeyPair"
+            },
+            "stackit_kms_keyring": {
+                "current": "stackit:index/kmsKeyring:KmsKeyring"
             },
             "stackit_loadbalancer": {
                 "current": "stackit:index/loadbalancer:Loadbalancer",
@@ -282,6 +294,9 @@
                                             "fields": {
                                                 "group_by": {
                                                     "maxItemsOne": false
+                                                },
+                                                "matchers": {
+                                                    "maxItemsOne": false
                                                 }
                                             }
                                         }
@@ -427,6 +442,9 @@
                     }
                 }
             },
+            "stackit_resourcemanager_folder": {
+                "current": "stackit:index/resourcemanagerFolder:ResourcemanagerFolder"
+            },
             "stackit_resourcemanager_project": {
                 "current": "stackit:index/resourcemanagerProject:ResourcemanagerProject"
             },
@@ -435,6 +453,12 @@
             },
             "stackit_routing_table_route": {
                 "current": "stackit:index/routingTableRoute:RoutingTableRoute"
+            },
+            "stackit_scf_organization": {
+                "current": "stackit:index/scfOrganization:ScfOrganization"
+            },
+            "stackit_scf_organization_manager": {
+                "current": "stackit:index/scfOrganizationManager:ScfOrganizationManager"
             },
             "stackit_secretsmanager_instance": {
                 "current": "stackit:index/secretsmanagerInstance:SecretsmanagerInstance",
@@ -584,6 +608,15 @@
                 "fields": {
                     "config": {
                         "fields": {
+                            "backend": {
+                                "fields": {
+                                    "geofencing": {
+                                        "elem": {
+                                            "maxItemsOne": false
+                                        }
+                                    }
+                                }
+                            },
                             "blocked_countries": {
                                 "maxItemsOne": false
                             },
@@ -637,8 +670,14 @@
             "stackit_image": {
                 "current": "stackit:index/getImage:getImage"
             },
+            "stackit_image_v2": {
+                "current": "stackit:index/getImageV2:getImageV2"
+            },
             "stackit_key_pair": {
                 "current": "stackit:index/getKeyPair:getKeyPair"
+            },
+            "stackit_kms_keyring": {
+                "current": "stackit:index/getKmsKeyring:getKmsKeyring"
             },
             "stackit_loadbalancer": {
                 "current": "stackit:index/getLoadbalancer:getLoadbalancer",
@@ -695,6 +734,9 @@
                         }
                     }
                 }
+            },
+            "stackit_machine_type": {
+                "current": "stackit:index/getMachineType:getMachineType"
             },
             "stackit_mariadb_credential": {
                 "current": "stackit:index/getMariadbCredential:getMariadbCredential",
@@ -832,6 +874,9 @@
                                             "fields": {
                                                 "group_by": {
                                                     "maxItemsOne": false
+                                                },
+                                                "matchers": {
+                                                    "maxItemsOne": false
                                                 }
                                             }
                                         }
@@ -916,6 +961,9 @@
             "stackit_public_ip_ranges": {
                 "current": "stackit:index/getPublicIpRanges:getPublicIpRanges",
                 "fields": {
+                    "cidr_list": {
+                        "maxItemsOne": false
+                    },
                     "public_ip_ranges": {
                         "maxItemsOne": false
                     }
@@ -979,6 +1027,9 @@
                     }
                 }
             },
+            "stackit_resourcemanager_folder": {
+                "current": "stackit:index/getResourcemanagerFolder:getResourcemanagerFolder"
+            },
             "stackit_resourcemanager_project": {
                 "current": "stackit:index/getResourcemanagerProject:getResourcemanagerProject"
             },
@@ -1003,6 +1054,15 @@
                         "maxItemsOne": false
                     }
                 }
+            },
+            "stackit_scf_organization": {
+                "current": "stackit:index/getScfOrganization:getScfOrganization"
+            },
+            "stackit_scf_organization_manager": {
+                "current": "stackit:index/getScfOrganizationManager:getScfOrganizationManager"
+            },
+            "stackit_scf_platform": {
+                "current": "stackit:index/getScfPlatform:getScfPlatform"
             },
             "stackit_secretsmanager_instance": {
                 "current": "stackit:index/getSecretsmanagerInstance:getSecretsmanagerInstance",

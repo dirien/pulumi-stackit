@@ -15,7 +15,7 @@ namespace ediri.Stackit.Outputs
     public sealed class GetRoutingTableRoutesRouteNextHopResult
     {
         /// <summary>
-        /// Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        /// Type of the next hop. Possible values are: `Blackhole`, `Internet`, `Ipv4`, `Ipv6`.
         /// </summary>
         public readonly string Type;
         /// <summary>
