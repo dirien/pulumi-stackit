@@ -15,9 +15,17 @@ namespace ediri.Stackit.Outputs
     public sealed class ObservabilityInstanceAlertConfigReceiverWebhooksConfig
     {
         /// <summary>
+        /// Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        /// </summary>
+        public readonly bool? GoogleChat;
+        /// <summary>
         /// Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
         /// </summary>
         public readonly bool? MsTeams;
+        /// <summary>
+        /// Whether to notify about resolved alerts.
+        /// </summary>
+        public readonly bool? SendResolved;
         /// <summary>
         /// The endpoint to send HTTP POST requests to. Must be a valid URL
         /// </summary>
@@ -25,11 +33,17 @@ namespace ediri.Stackit.Outputs
 
         [OutputConstructor]
         private ObservabilityInstanceAlertConfigReceiverWebhooksConfig(
+            bool? googleChat,
+
             bool? msTeams,
+
+            bool? sendResolved,
 
             string? url)
         {
+            GoogleChat = googleChat;
             MsTeams = msTeams;
+            SendResolved = sendResolved;
             Url = url;
         }
     }

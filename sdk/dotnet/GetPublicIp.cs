@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetPublicIp
     {
         /// <summary>
-        /// Public IP resource schema. Must have a `region` specified in the provider configuration.
+        /// Public IP resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetPublicIpResult>("stackit:index/getPublicIp:getPublicIp", args ?? new GetPublicIpArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Public IP resource schema. Must have a `region` specified in the provider configuration.
+        /// Public IP resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetPublicIpResult>("stackit:index/getPublicIp:getPublicIp", args ?? new GetPublicIpInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Public IP resource schema. Must have a `region` specified in the provider configuration.
+        /// Public IP resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 

@@ -33,6 +33,8 @@ type SkeKubeconfig struct {
 	ProjectId pulumi.StringOutput `pulumi:"projectId"`
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh pulumi.BoolPtrOutput `pulumi:"refresh"`
+	// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+	RefreshBefore pulumi.IntPtrOutput `pulumi:"refreshBefore"`
 	// The resource region. If not defined, the provider region is used.
 	Region pulumi.StringOutput `pulumi:"region"`
 }
@@ -92,6 +94,8 @@ type skeKubeconfigState struct {
 	ProjectId *string `pulumi:"projectId"`
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh *bool `pulumi:"refresh"`
+	// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+	RefreshBefore *int `pulumi:"refreshBefore"`
 	// The resource region. If not defined, the provider region is used.
 	Region *string `pulumi:"region"`
 }
@@ -112,6 +116,8 @@ type SkeKubeconfigState struct {
 	ProjectId pulumi.StringPtrInput
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh pulumi.BoolPtrInput
+	// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+	RefreshBefore pulumi.IntPtrInput
 	// The resource region. If not defined, the provider region is used.
 	Region pulumi.StringPtrInput
 }
@@ -129,6 +135,8 @@ type skeKubeconfigArgs struct {
 	ProjectId string `pulumi:"projectId"`
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh *bool `pulumi:"refresh"`
+	// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+	RefreshBefore *int `pulumi:"refreshBefore"`
 	// The resource region. If not defined, the provider region is used.
 	Region *string `pulumi:"region"`
 }
@@ -143,6 +151,8 @@ type SkeKubeconfigArgs struct {
 	ProjectId pulumi.StringInput
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh pulumi.BoolPtrInput
+	// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+	RefreshBefore pulumi.IntPtrInput
 	// The resource region. If not defined, the provider region is used.
 	Region pulumi.StringPtrInput
 }
@@ -271,6 +281,11 @@ func (o SkeKubeconfigOutput) ProjectId() pulumi.StringOutput {
 // If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 func (o SkeKubeconfigOutput) Refresh() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *SkeKubeconfig) pulumi.BoolPtrOutput { return v.Refresh }).(pulumi.BoolPtrOutput)
+}
+
+// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+func (o SkeKubeconfigOutput) RefreshBefore() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SkeKubeconfig) pulumi.IntPtrOutput { return v.RefreshBefore }).(pulumi.IntPtrOutput)
 }
 
 // The resource region. If not defined, the provider region is used.
