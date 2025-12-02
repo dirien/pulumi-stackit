@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetSecurityGroup
     {
         /// <summary>
-        /// Security group datasource schema. Must have a `region` specified in the provider configuration.
+        /// Security group datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetSecurityGroupResult>("stackit:index/getSecurityGroup:getSecurityGroup", args ?? new GetSecurityGroupArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Security group datasource schema. Must have a `region` specified in the provider configuration.
+        /// Security group datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetSecurityGroupResult>("stackit:index/getSecurityGroup:getSecurityGroup", args ?? new GetSecurityGroupInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Security group datasource schema. Must have a `region` specified in the provider configuration.
+        /// Security group datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 

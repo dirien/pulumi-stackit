@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetNetworkArea
     {
         /// <summary>
-        /// Network area datasource schema. Must have a `region` specified in the provider configuration.
+        /// Network area datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetNetworkAreaResult>("stackit:index/getNetworkArea:getNetworkArea", args ?? new GetNetworkAreaArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Network area datasource schema. Must have a `region` specified in the provider configuration.
+        /// Network area datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetNetworkAreaResult>("stackit:index/getNetworkArea:getNetworkArea", args ?? new GetNetworkAreaInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Network area datasource schema. Must have a `region` specified in the provider configuration.
+        /// Network area datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
