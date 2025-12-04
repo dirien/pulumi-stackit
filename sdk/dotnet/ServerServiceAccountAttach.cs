@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Service account attachment resource schema. Attaches a service account to a server. Must have a `region` specified in the provider configuration.
+    /// Service account attachment resource schema. Attaches a service account to a server. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>

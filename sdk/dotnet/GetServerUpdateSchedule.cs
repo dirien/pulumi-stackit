@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetServerUpdateSchedule
     {
         /// <summary>
-        /// Server update schedule datasource schema. Must have a `region` specified in the provider configuration.
+        /// Server update schedule datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// &gt; This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
         /// 
@@ -31,7 +31,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetServerUpdateScheduleResult>("stackit:index/getServerUpdateSchedule:getServerUpdateSchedule", args ?? new GetServerUpdateScheduleArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Server update schedule datasource schema. Must have a `region` specified in the provider configuration.
+        /// Server update schedule datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// &gt; This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
         /// 
@@ -49,7 +49,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetServerUpdateScheduleResult>("stackit:index/getServerUpdateSchedule:getServerUpdateSchedule", args ?? new GetServerUpdateScheduleInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Server update schedule datasource schema. Must have a `region` specified in the provider configuration.
+        /// Server update schedule datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// &gt; This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
         /// 
@@ -158,7 +158,7 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string? Region;
         /// <summary>
-        /// Update schedule described in `rrule` (recurrence rule) format.
+        /// Update schedule described in `Rrule` (recurrence rule) format.
         /// </summary>
         public readonly string Rrule;
         /// <summary>

@@ -80,10 +80,30 @@ export const getImage: typeof import("./getImage").getImage = null as any;
 export const getImageOutput: typeof import("./getImage").getImageOutput = null as any;
 utilities.lazyLoad(exports, ["getImage","getImageOutput"], () => require("./getImage"));
 
+export { GetImageV2Args, GetImageV2Result, GetImageV2OutputArgs } from "./getImageV2";
+export const getImageV2: typeof import("./getImageV2").getImageV2 = null as any;
+export const getImageV2Output: typeof import("./getImageV2").getImageV2Output = null as any;
+utilities.lazyLoad(exports, ["getImageV2","getImageV2Output"], () => require("./getImageV2"));
+
 export { GetKeyPairArgs, GetKeyPairResult, GetKeyPairOutputArgs } from "./getKeyPair";
 export const getKeyPair: typeof import("./getKeyPair").getKeyPair = null as any;
 export const getKeyPairOutput: typeof import("./getKeyPair").getKeyPairOutput = null as any;
 utilities.lazyLoad(exports, ["getKeyPair","getKeyPairOutput"], () => require("./getKeyPair"));
+
+export { GetKmsKeyArgs, GetKmsKeyResult, GetKmsKeyOutputArgs } from "./getKmsKey";
+export const getKmsKey: typeof import("./getKmsKey").getKmsKey = null as any;
+export const getKmsKeyOutput: typeof import("./getKmsKey").getKmsKeyOutput = null as any;
+utilities.lazyLoad(exports, ["getKmsKey","getKmsKeyOutput"], () => require("./getKmsKey"));
+
+export { GetKmsKeyringArgs, GetKmsKeyringResult, GetKmsKeyringOutputArgs } from "./getKmsKeyring";
+export const getKmsKeyring: typeof import("./getKmsKeyring").getKmsKeyring = null as any;
+export const getKmsKeyringOutput: typeof import("./getKmsKeyring").getKmsKeyringOutput = null as any;
+utilities.lazyLoad(exports, ["getKmsKeyring","getKmsKeyringOutput"], () => require("./getKmsKeyring"));
+
+export { GetKmsWrappingKeyArgs, GetKmsWrappingKeyResult, GetKmsWrappingKeyOutputArgs } from "./getKmsWrappingKey";
+export const getKmsWrappingKey: typeof import("./getKmsWrappingKey").getKmsWrappingKey = null as any;
+export const getKmsWrappingKeyOutput: typeof import("./getKmsWrappingKey").getKmsWrappingKeyOutput = null as any;
+utilities.lazyLoad(exports, ["getKmsWrappingKey","getKmsWrappingKeyOutput"], () => require("./getKmsWrappingKey"));
 
 export { GetLoadbalancerArgs, GetLoadbalancerResult, GetLoadbalancerOutputArgs } from "./getLoadbalancer";
 export const getLoadbalancer: typeof import("./getLoadbalancer").getLoadbalancer = null as any;
@@ -99,6 +119,11 @@ export { GetLogmeInstanceArgs, GetLogmeInstanceResult, GetLogmeInstanceOutputArg
 export const getLogmeInstance: typeof import("./getLogmeInstance").getLogmeInstance = null as any;
 export const getLogmeInstanceOutput: typeof import("./getLogmeInstance").getLogmeInstanceOutput = null as any;
 utilities.lazyLoad(exports, ["getLogmeInstance","getLogmeInstanceOutput"], () => require("./getLogmeInstance"));
+
+export { GetMachineTypeArgs, GetMachineTypeResult, GetMachineTypeOutputArgs } from "./getMachineType";
+export const getMachineType: typeof import("./getMachineType").getMachineType = null as any;
+export const getMachineTypeOutput: typeof import("./getMachineType").getMachineTypeOutput = null as any;
+utilities.lazyLoad(exports, ["getMachineType","getMachineTypeOutput"], () => require("./getMachineType"));
 
 export { GetMariadbCredentialArgs, GetMariadbCredentialResult, GetMariadbCredentialOutputArgs } from "./getMariadbCredential";
 export const getMariadbCredential: typeof import("./getMariadbCredential").getMariadbCredential = null as any;
@@ -230,6 +255,11 @@ export const getRedisInstance: typeof import("./getRedisInstance").getRedisInsta
 export const getRedisInstanceOutput: typeof import("./getRedisInstance").getRedisInstanceOutput = null as any;
 utilities.lazyLoad(exports, ["getRedisInstance","getRedisInstanceOutput"], () => require("./getRedisInstance"));
 
+export { GetResourcemanagerFolderArgs, GetResourcemanagerFolderResult, GetResourcemanagerFolderOutputArgs } from "./getResourcemanagerFolder";
+export const getResourcemanagerFolder: typeof import("./getResourcemanagerFolder").getResourcemanagerFolder = null as any;
+export const getResourcemanagerFolderOutput: typeof import("./getResourcemanagerFolder").getResourcemanagerFolderOutput = null as any;
+utilities.lazyLoad(exports, ["getResourcemanagerFolder","getResourcemanagerFolderOutput"], () => require("./getResourcemanagerFolder"));
+
 export { GetResourcemanagerProjectArgs, GetResourcemanagerProjectResult, GetResourcemanagerProjectOutputArgs } from "./getResourcemanagerProject";
 export const getResourcemanagerProject: typeof import("./getResourcemanagerProject").getResourcemanagerProject = null as any;
 export const getResourcemanagerProjectOutput: typeof import("./getResourcemanagerProject").getResourcemanagerProjectOutput = null as any;
@@ -254,6 +284,21 @@ export { GetRoutingTablesArgs, GetRoutingTablesResult, GetRoutingTablesOutputArg
 export const getRoutingTables: typeof import("./getRoutingTables").getRoutingTables = null as any;
 export const getRoutingTablesOutput: typeof import("./getRoutingTables").getRoutingTablesOutput = null as any;
 utilities.lazyLoad(exports, ["getRoutingTables","getRoutingTablesOutput"], () => require("./getRoutingTables"));
+
+export { GetScfOrganizationArgs, GetScfOrganizationResult, GetScfOrganizationOutputArgs } from "./getScfOrganization";
+export const getScfOrganization: typeof import("./getScfOrganization").getScfOrganization = null as any;
+export const getScfOrganizationOutput: typeof import("./getScfOrganization").getScfOrganizationOutput = null as any;
+utilities.lazyLoad(exports, ["getScfOrganization","getScfOrganizationOutput"], () => require("./getScfOrganization"));
+
+export { GetScfOrganizationManagerArgs, GetScfOrganizationManagerResult, GetScfOrganizationManagerOutputArgs } from "./getScfOrganizationManager";
+export const getScfOrganizationManager: typeof import("./getScfOrganizationManager").getScfOrganizationManager = null as any;
+export const getScfOrganizationManagerOutput: typeof import("./getScfOrganizationManager").getScfOrganizationManagerOutput = null as any;
+utilities.lazyLoad(exports, ["getScfOrganizationManager","getScfOrganizationManagerOutput"], () => require("./getScfOrganizationManager"));
+
+export { GetScfPlatformArgs, GetScfPlatformResult, GetScfPlatformOutputArgs } from "./getScfPlatform";
+export const getScfPlatform: typeof import("./getScfPlatform").getScfPlatform = null as any;
+export const getScfPlatformOutput: typeof import("./getScfPlatform").getScfPlatformOutput = null as any;
+utilities.lazyLoad(exports, ["getScfPlatform","getScfPlatformOutput"], () => require("./getScfPlatform"));
 
 export { GetSecretsmanagerInstanceArgs, GetSecretsmanagerInstanceResult, GetSecretsmanagerInstanceOutputArgs } from "./getSecretsmanagerInstance";
 export const getSecretsmanagerInstance: typeof import("./getSecretsmanagerInstance").getSecretsmanagerInstance = null as any;
@@ -339,6 +384,21 @@ export { KeyPairArgs, KeyPairState } from "./keyPair";
 export type KeyPair = import("./keyPair").KeyPair;
 export const KeyPair: typeof import("./keyPair").KeyPair = null as any;
 utilities.lazyLoad(exports, ["KeyPair"], () => require("./keyPair"));
+
+export { KmsKeyArgs, KmsKeyState } from "./kmsKey";
+export type KmsKey = import("./kmsKey").KmsKey;
+export const KmsKey: typeof import("./kmsKey").KmsKey = null as any;
+utilities.lazyLoad(exports, ["KmsKey"], () => require("./kmsKey"));
+
+export { KmsKeyringArgs, KmsKeyringState } from "./kmsKeyring";
+export type KmsKeyring = import("./kmsKeyring").KmsKeyring;
+export const KmsKeyring: typeof import("./kmsKeyring").KmsKeyring = null as any;
+utilities.lazyLoad(exports, ["KmsKeyring"], () => require("./kmsKeyring"));
+
+export { KmsWrappingKeyArgs, KmsWrappingKeyState } from "./kmsWrappingKey";
+export type KmsWrappingKey = import("./kmsWrappingKey").KmsWrappingKey;
+export const KmsWrappingKey: typeof import("./kmsWrappingKey").KmsWrappingKey = null as any;
+utilities.lazyLoad(exports, ["KmsWrappingKey"], () => require("./kmsWrappingKey"));
 
 export { LoadbalancerArgs, LoadbalancerState } from "./loadbalancer";
 export type Loadbalancer = import("./loadbalancer").Loadbalancer;
@@ -503,6 +563,11 @@ export type RedisInstance = import("./redisInstance").RedisInstance;
 export const RedisInstance: typeof import("./redisInstance").RedisInstance = null as any;
 utilities.lazyLoad(exports, ["RedisInstance"], () => require("./redisInstance"));
 
+export { ResourcemanagerFolderArgs, ResourcemanagerFolderState } from "./resourcemanagerFolder";
+export type ResourcemanagerFolder = import("./resourcemanagerFolder").ResourcemanagerFolder;
+export const ResourcemanagerFolder: typeof import("./resourcemanagerFolder").ResourcemanagerFolder = null as any;
+utilities.lazyLoad(exports, ["ResourcemanagerFolder"], () => require("./resourcemanagerFolder"));
+
 export { ResourcemanagerProjectArgs, ResourcemanagerProjectState } from "./resourcemanagerProject";
 export type ResourcemanagerProject = import("./resourcemanagerProject").ResourcemanagerProject;
 export const ResourcemanagerProject: typeof import("./resourcemanagerProject").ResourcemanagerProject = null as any;
@@ -517,6 +582,16 @@ export { RoutingTableRouteArgs, RoutingTableRouteState } from "./routingTableRou
 export type RoutingTableRoute = import("./routingTableRoute").RoutingTableRoute;
 export const RoutingTableRoute: typeof import("./routingTableRoute").RoutingTableRoute = null as any;
 utilities.lazyLoad(exports, ["RoutingTableRoute"], () => require("./routingTableRoute"));
+
+export { ScfOrganizationArgs, ScfOrganizationState } from "./scfOrganization";
+export type ScfOrganization = import("./scfOrganization").ScfOrganization;
+export const ScfOrganization: typeof import("./scfOrganization").ScfOrganization = null as any;
+utilities.lazyLoad(exports, ["ScfOrganization"], () => require("./scfOrganization"));
+
+export { ScfOrganizationManagerArgs, ScfOrganizationManagerState } from "./scfOrganizationManager";
+export type ScfOrganizationManager = import("./scfOrganizationManager").ScfOrganizationManager;
+export const ScfOrganizationManager: typeof import("./scfOrganizationManager").ScfOrganizationManager = null as any;
+utilities.lazyLoad(exports, ["ScfOrganizationManager"], () => require("./scfOrganizationManager"));
 
 export { SecretsmanagerInstanceArgs, SecretsmanagerInstanceState } from "./secretsmanagerInstance";
 export type SecretsmanagerInstance = import("./secretsmanagerInstance").SecretsmanagerInstance;
@@ -642,6 +717,12 @@ const _module = {
                 return new Image(name, <any>undefined, { urn })
             case "stackit:index/keyPair:KeyPair":
                 return new KeyPair(name, <any>undefined, { urn })
+            case "stackit:index/kmsKey:KmsKey":
+                return new KmsKey(name, <any>undefined, { urn })
+            case "stackit:index/kmsKeyring:KmsKeyring":
+                return new KmsKeyring(name, <any>undefined, { urn })
+            case "stackit:index/kmsWrappingKey:KmsWrappingKey":
+                return new KmsWrappingKey(name, <any>undefined, { urn })
             case "stackit:index/loadbalancer:Loadbalancer":
                 return new Loadbalancer(name, <any>undefined, { urn })
             case "stackit:index/loadbalancerObservabilityCredential:LoadbalancerObservabilityCredential":
@@ -706,12 +787,18 @@ const _module = {
                 return new RedisCredential(name, <any>undefined, { urn })
             case "stackit:index/redisInstance:RedisInstance":
                 return new RedisInstance(name, <any>undefined, { urn })
+            case "stackit:index/resourcemanagerFolder:ResourcemanagerFolder":
+                return new ResourcemanagerFolder(name, <any>undefined, { urn })
             case "stackit:index/resourcemanagerProject:ResourcemanagerProject":
                 return new ResourcemanagerProject(name, <any>undefined, { urn })
             case "stackit:index/routingTable:RoutingTable":
                 return new RoutingTable(name, <any>undefined, { urn })
             case "stackit:index/routingTableRoute:RoutingTableRoute":
                 return new RoutingTableRoute(name, <any>undefined, { urn })
+            case "stackit:index/scfOrganization:ScfOrganization":
+                return new ScfOrganization(name, <any>undefined, { urn })
+            case "stackit:index/scfOrganizationManager:ScfOrganizationManager":
+                return new ScfOrganizationManager(name, <any>undefined, { urn })
             case "stackit:index/secretsmanagerInstance:SecretsmanagerInstance":
                 return new SecretsmanagerInstance(name, <any>undefined, { urn })
             case "stackit:index/secretsmanagerUser:SecretsmanagerUser":
@@ -763,6 +850,9 @@ pulumi.runtime.registerResourceModule("stackit", "index/dnsZone", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/git", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/image", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/keyPair", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/kmsKey", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/kmsKeyring", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/kmsWrappingKey", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/loadbalancer", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/loadbalancerObservabilityCredential", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/logmeCredential", _module)
@@ -795,9 +885,12 @@ pulumi.runtime.registerResourceModule("stackit", "index/rabbitmqCredential", _mo
 pulumi.runtime.registerResourceModule("stackit", "index/rabbitmqInstance", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/redisCredential", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/redisInstance", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/resourcemanagerFolder", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/resourcemanagerProject", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/routingTable", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/routingTableRoute", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/scfOrganization", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/scfOrganizationManager", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/secretsmanagerInstance", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/secretsmanagerUser", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/securityGroup", _module)
