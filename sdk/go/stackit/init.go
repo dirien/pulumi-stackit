@@ -41,6 +41,12 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &Image{}
 	case "stackit:index/keyPair:KeyPair":
 		r = &KeyPair{}
+	case "stackit:index/kmsKey:KmsKey":
+		r = &KmsKey{}
+	case "stackit:index/kmsKeyring:KmsKeyring":
+		r = &KmsKeyring{}
+	case "stackit:index/kmsWrappingKey:KmsWrappingKey":
+		r = &KmsWrappingKey{}
 	case "stackit:index/loadbalancer:Loadbalancer":
 		r = &Loadbalancer{}
 	case "stackit:index/loadbalancerObservabilityCredential:LoadbalancerObservabilityCredential":
@@ -63,6 +69,8 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &Network{}
 	case "stackit:index/networkArea:NetworkArea":
 		r = &NetworkArea{}
+	case "stackit:index/networkAreaRegion:NetworkAreaRegion":
+		r = &NetworkAreaRegion{}
 	case "stackit:index/networkAreaRoute:NetworkAreaRoute":
 		r = &NetworkAreaRoute{}
 	case "stackit:index/networkInterface:NetworkInterface":
@@ -105,12 +113,18 @@ func (m *module) Construct(ctx *pulumi.Context, name, typ, urn string) (r pulumi
 		r = &RedisCredential{}
 	case "stackit:index/redisInstance:RedisInstance":
 		r = &RedisInstance{}
+	case "stackit:index/resourcemanagerFolder:ResourcemanagerFolder":
+		r = &ResourcemanagerFolder{}
 	case "stackit:index/resourcemanagerProject:ResourcemanagerProject":
 		r = &ResourcemanagerProject{}
 	case "stackit:index/routingTable:RoutingTable":
 		r = &RoutingTable{}
 	case "stackit:index/routingTableRoute:RoutingTableRoute":
 		r = &RoutingTableRoute{}
+	case "stackit:index/scfOrganization:ScfOrganization":
+		r = &ScfOrganization{}
+	case "stackit:index/scfOrganizationManager:ScfOrganizationManager":
+		r = &ScfOrganizationManager{}
 	case "stackit:index/secretsmanagerInstance:SecretsmanagerInstance":
 		r = &SecretsmanagerInstance{}
 	case "stackit:index/secretsmanagerUser:SecretsmanagerUser":
@@ -230,6 +244,21 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"stackit",
+		"index/kmsKey",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"stackit",
+		"index/kmsKeyring",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"stackit",
+		"index/kmsWrappingKey",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"stackit",
 		"index/loadbalancer",
 		&module{version},
 	)
@@ -281,6 +310,11 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"stackit",
 		"index/networkArea",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"stackit",
+		"index/networkAreaRegion",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(
@@ -390,6 +424,11 @@ func init() {
 	)
 	pulumi.RegisterResourceModule(
 		"stackit",
+		"index/resourcemanagerFolder",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"stackit",
 		"index/resourcemanagerProject",
 		&module{version},
 	)
@@ -401,6 +440,16 @@ func init() {
 	pulumi.RegisterResourceModule(
 		"stackit",
 		"index/routingTableRoute",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"stackit",
+		"index/scfOrganization",
+		&module{version},
+	)
+	pulumi.RegisterResourceModule(
+		"stackit",
+		"index/scfOrganizationManager",
 		&module{version},
 	)
 	pulumi.RegisterResourceModule(

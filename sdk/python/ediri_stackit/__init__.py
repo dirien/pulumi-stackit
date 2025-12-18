@@ -21,16 +21,22 @@ from .get_dns_zone import *
 from .get_git import *
 from .get_iaas_project import *
 from .get_image import *
+from .get_image_v2 import *
 from .get_key_pair import *
+from .get_kms_key import *
+from .get_kms_keyring import *
+from .get_kms_wrapping_key import *
 from .get_loadbalancer import *
 from .get_logme_credential import *
 from .get_logme_instance import *
+from .get_machine_type import *
 from .get_mariadb_credential import *
 from .get_mariadb_instance import *
 from .get_mongodbflex_instance import *
 from .get_mongodbflex_user import *
 from .get_network import *
 from .get_network_area import *
+from .get_network_area_region import *
 from .get_network_area_route import *
 from .get_network_interface import *
 from .get_objectstorage_bucket import *
@@ -51,11 +57,15 @@ from .get_rabbitmq_credential import *
 from .get_rabbitmq_instance import *
 from .get_redis_credential import *
 from .get_redis_instance import *
+from .get_resourcemanager_folder import *
 from .get_resourcemanager_project import *
 from .get_routing_table import *
 from .get_routing_table_route import *
 from .get_routing_table_routes import *
 from .get_routing_tables import *
+from .get_scf_organization import *
+from .get_scf_organization_manager import *
+from .get_scf_platform import *
 from .get_secretsmanager_instance import *
 from .get_secretsmanager_user import *
 from .get_security_group import *
@@ -73,6 +83,9 @@ from .get_volume import *
 from .git import *
 from .image import *
 from .key_pair import *
+from .kms_key import *
+from .kms_keyring import *
+from .kms_wrapping_key import *
 from .loadbalancer import *
 from .loadbalancer_observability_credential import *
 from .logme_credential import *
@@ -84,6 +97,7 @@ from .mongodbflex_instance import *
 from .mongodbflex_user import *
 from .network import *
 from .network_area import *
+from .network_area_region import *
 from .network_area_route import *
 from .network_interface import *
 from .objectstorage_bucket import *
@@ -106,9 +120,12 @@ from .rabbitmq_credential import *
 from .rabbitmq_instance import *
 from .redis_credential import *
 from .redis_instance import *
+from .resourcemanager_folder import *
 from .resourcemanager_project import *
 from .routing_table import *
 from .routing_table_route import *
+from .scf_organization import *
+from .scf_organization_manager import *
 from .secretsmanager_instance import *
 from .secretsmanager_user import *
 from .security_group import *
@@ -222,6 +239,30 @@ _utilities.register(
  },
  {
   "pkg": "stackit",
+  "mod": "index/kmsKey",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/kmsKey:KmsKey": "KmsKey"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/kmsKeyring",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/kmsKeyring:KmsKeyring": "KmsKeyring"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/kmsWrappingKey",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/kmsWrappingKey:KmsWrappingKey": "KmsWrappingKey"
+  }
+ },
+ {
+  "pkg": "stackit",
   "mod": "index/loadbalancer",
   "fqn": "ediri_stackit",
   "classes": {
@@ -306,6 +347,14 @@ _utilities.register(
   "fqn": "ediri_stackit",
   "classes": {
    "stackit:index/networkArea:NetworkArea": "NetworkArea"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/networkAreaRegion",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/networkAreaRegion:NetworkAreaRegion": "NetworkAreaRegion"
   }
  },
  {
@@ -478,6 +527,14 @@ _utilities.register(
  },
  {
   "pkg": "stackit",
+  "mod": "index/resourcemanagerFolder",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/resourcemanagerFolder:ResourcemanagerFolder": "ResourcemanagerFolder"
+  }
+ },
+ {
+  "pkg": "stackit",
   "mod": "index/resourcemanagerProject",
   "fqn": "ediri_stackit",
   "classes": {
@@ -498,6 +555,22 @@ _utilities.register(
   "fqn": "ediri_stackit",
   "classes": {
    "stackit:index/routingTableRoute:RoutingTableRoute": "RoutingTableRoute"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/scfOrganization",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/scfOrganization:ScfOrganization": "ScfOrganization"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/scfOrganizationManager",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/scfOrganizationManager:ScfOrganizationManager": "ScfOrganizationManager"
   }
  },
  {
