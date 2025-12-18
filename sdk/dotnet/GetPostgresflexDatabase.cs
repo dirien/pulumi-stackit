@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetPostgresflexDatabase
     {
         /// <summary>
-        /// Postgres Flex database resource schema. Must have a `region` specified in the provider configuration.
+        /// Postgres Flex database resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -29,7 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetPostgresflexDatabaseResult>("stackit:index/getPostgresflexDatabase:getPostgresflexDatabase", args ?? new GetPostgresflexDatabaseArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Postgres Flex database resource schema. Must have a `region` specified in the provider configuration.
+        /// Postgres Flex database resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -45,7 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetPostgresflexDatabaseResult>("stackit:index/getPostgresflexDatabase:getPostgresflexDatabase", args ?? new GetPostgresflexDatabaseInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Postgres Flex database resource schema. Must have a `region` specified in the provider configuration.
+        /// Postgres Flex database resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 

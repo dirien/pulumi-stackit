@@ -15,7 +15,7 @@ namespace ediri.Stackit.Outputs
     public sealed class ObservabilityScrapeconfigSaml2
     {
         /// <summary>
-        /// Specifies if URL parameters are enabled. Defaults to `true`
+        /// Specifies if URL parameters are enabled. Defaults to `True`
         /// </summary>
         public readonly bool? EnableUrlParameters;
 

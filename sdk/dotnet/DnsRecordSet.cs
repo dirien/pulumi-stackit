@@ -19,7 +19,7 @@ namespace ediri.Stackit
     public partial class DnsRecordSet : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// Specifies if the record set is active or not. Defaults to `true`
+        /// Specifies if the record set is active or not. Defaults to `True`
         /// </summary>
         [Output("active")]
         public Output<bool> Active { get; private set; } = null!;
@@ -138,7 +138,7 @@ namespace ediri.Stackit
     public sealed class DnsRecordSetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Specifies if the record set is active or not. Defaults to `true`
+        /// Specifies if the record set is active or not. Defaults to `True`
         /// </summary>
         [Input("active")]
         public Input<bool>? Active { get; set; }
@@ -200,7 +200,7 @@ namespace ediri.Stackit
     public sealed class DnsRecordSetState : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Specifies if the record set is active or not. Defaults to `true`
+        /// Specifies if the record set is active or not. Defaults to `True`
         /// </summary>
         [Input("active")]
         public Input<bool>? Active { get; set; }

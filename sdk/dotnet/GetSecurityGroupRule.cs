@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetSecurityGroupRule
     {
         /// <summary>
-        /// Security group datasource schema. Must have a `region` specified in the provider configuration.
+        /// Security group datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -29,7 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetSecurityGroupRuleResult>("stackit:index/getSecurityGroupRule:getSecurityGroupRule", args ?? new GetSecurityGroupRuleArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Security group datasource schema. Must have a `region` specified in the provider configuration.
+        /// Security group datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -45,7 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetSecurityGroupRuleResult>("stackit:index/getSecurityGroupRule:getSecurityGroupRule", args ?? new GetSecurityGroupRuleInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Security group datasource schema. Must have a `region` specified in the provider configuration.
+        /// Security group datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -69,6 +69,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("projectId", required: true)]
         public string ProjectId { get; set; } = null!;
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public string? Region { get; set; }
 
         /// <summary>
         /// The security group ID.
@@ -97,6 +103,12 @@ namespace ediri.Stackit
         public Input<string> ProjectId { get; set; } = null!;
 
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
+
+        /// <summary>
         /// The security group ID.
         /// </summary>
         [Input("securityGroupId", required: true)]
@@ -123,7 +135,7 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string Description;
         /// <summary>
-        /// The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+        /// The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `Ingress`, `Egress`.
         /// </summary>
         public readonly string Direction;
         /// <summary>
@@ -151,6 +163,10 @@ namespace ediri.Stackit
         /// The internet protocol which the rule should match.
         /// </summary>
         public readonly Outputs.GetSecurityGroupRuleProtocolResult Protocol;
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        public readonly string? Region;
         /// <summary>
         /// The remote security group which the rule should match.
         /// </summary>
@@ -184,6 +200,8 @@ namespace ediri.Stackit
 
             Outputs.GetSecurityGroupRuleProtocolResult protocol,
 
+            string? region,
+
             string remoteSecurityGroupId,
 
             string securityGroupId,
@@ -199,6 +217,7 @@ namespace ediri.Stackit
             PortRange = portRange;
             ProjectId = projectId;
             Protocol = protocol;
+            Region = region;
             RemoteSecurityGroupId = remoteSecurityGroupId;
             SecurityGroupId = securityGroupId;
             SecurityGroupRuleId = securityGroupRuleId;

@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// MongoDB Flex user resource schema. Must have a `region` specified in the provider configuration.
+    /// MongoDB Flex user resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -49,7 +49,7 @@ namespace ediri.Stackit
         public Output<string> Region { get; private set; } = null!;
 
         /// <summary>
-        /// Database access levels for the user. Some of the possible values are: [`read`, `readWrite`, `readWriteAnyDatabase`]
+        /// Database access levels for the user. Some of the possible values are: [`Read`, `readWrite`, `readWriteAnyDatabase`]
         /// </summary>
         [Output("roles")]
         public Output<ImmutableArray<string>> Roles { get; private set; } = null!;
@@ -143,7 +143,7 @@ namespace ediri.Stackit
         private InputList<string>? _roles;
 
         /// <summary>
-        /// Database access levels for the user. Some of the possible values are: [`read`, `readWrite`, `readWriteAnyDatabase`]
+        /// Database access levels for the user. Some of the possible values are: [`Read`, `readWrite`, `readWriteAnyDatabase`]
         /// </summary>
         public InputList<string> Roles
         {
@@ -205,7 +205,7 @@ namespace ediri.Stackit
         private InputList<string>? _roles;
 
         /// <summary>
-        /// Database access levels for the user. Some of the possible values are: [`read`, `readWrite`, `readWriteAnyDatabase`]
+        /// Database access levels for the user. Some of the possible values are: [`Read`, `readWrite`, `readWriteAnyDatabase`]
         /// </summary>
         public InputList<string> Roles
         {
