@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetImage
     {
         /// <summary>
-        /// Image datasource schema. Must have a `region` specified in the provider configuration.
+        /// Image datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetImageResult>("stackit:index/getImage:getImage", args ?? new GetImageArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Image datasource schema. Must have a `region` specified in the provider configuration.
+        /// Image datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetImageResult>("stackit:index/getImage:getImage", args ?? new GetImageInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Image datasource schema. Must have a `region` specified in the provider configuration.
+        /// Image datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -73,6 +73,12 @@ namespace ediri.Stackit
         [Input("projectId", required: true)]
         public string ProjectId { get; set; } = null!;
 
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public string? Region { get; set; }
+
         public GetImageArgs()
         {
         }
@@ -92,6 +98,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("projectId", required: true)]
         public Input<string> ProjectId { get; set; } = null!;
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
 
         public GetImageInvokeArgs()
         {
@@ -145,6 +157,10 @@ namespace ediri.Stackit
         /// </summary>
         public readonly bool Protected;
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        public readonly string? Region;
+        /// <summary>
         /// The scope of the image.
         /// </summary>
         public readonly string Scope;
@@ -173,6 +189,8 @@ namespace ediri.Stackit
 
             bool @protected,
 
+            string? region,
+
             string scope)
         {
             Checksum = checksum;
@@ -186,6 +204,7 @@ namespace ediri.Stackit
             Name = name;
             ProjectId = projectId;
             Protected = @protected;
+            Region = region;
             Scope = scope;
         }
     }

@@ -31,6 +31,10 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly string From;
         /// <summary>
+        /// Whether to notify about resolved alerts.
+        /// </summary>
+        public readonly bool SendResolved;
+        /// <summary>
         /// The SMTP host through which emails are sent.
         /// </summary>
         public readonly string SmartHost;
@@ -49,6 +53,8 @@ namespace ediri.Stackit.Outputs
 
             string from,
 
+            bool sendResolved,
+
             string smartHost,
 
             string to)
@@ -57,6 +63,7 @@ namespace ediri.Stackit.Outputs
             AuthPassword = authPassword;
             AuthUsername = authUsername;
             From = from;
+            SendResolved = sendResolved;
             SmartHost = smartHost;
             To = to;
         }
