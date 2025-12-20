@@ -28,7 +28,7 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly string Name;
         /// <summary>
-        /// Backup schedule described in `rrule` (recurrence rule) format.
+        /// Backup schedule described in `Rrule` (recurrence rule) format.
         /// </summary>
         public readonly string Rrule;
 

@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetRedisCredential
     {
         /// <summary>
-        /// Redis credential data source schema. Must have a `region` specified in the provider configuration.
+        /// Redis credential data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -29,7 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetRedisCredentialResult>("stackit:index/getRedisCredential:getRedisCredential", args ?? new GetRedisCredentialArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Redis credential data source schema. Must have a `region` specified in the provider configuration.
+        /// Redis credential data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -45,7 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetRedisCredentialResult>("stackit:index/getRedisCredential:getRedisCredential", args ?? new GetRedisCredentialInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Redis credential data source schema. Must have a `region` specified in the provider configuration.
+        /// Redis credential data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 

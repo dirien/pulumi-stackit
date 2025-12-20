@@ -15,6 +15,8 @@ else:
 from . import _utilities
 
 __all__ = [
+    'CdnCustomDomainCertificateArgs',
+    'CdnCustomDomainCertificateArgsDict',
     'CdnDistributionConfigArgs',
     'CdnDistributionConfigArgsDict',
     'CdnDistributionConfigBackendArgs',
@@ -31,6 +33,10 @@ __all__ = [
     'LoadbalancerListenerArgsDict',
     'LoadbalancerListenerServerNameIndicatorArgs',
     'LoadbalancerListenerServerNameIndicatorArgsDict',
+    'LoadbalancerListenerTcpArgs',
+    'LoadbalancerListenerTcpArgsDict',
+    'LoadbalancerListenerUdpArgs',
+    'LoadbalancerListenerUdpArgsDict',
     'LoadbalancerNetworkArgs',
     'LoadbalancerNetworkArgsDict',
     'LoadbalancerOptionsArgs',
@@ -61,6 +67,14 @@ __all__ = [
     'MongodbflexInstanceStorageArgsDict',
     'NetworkAreaNetworkRangeArgs',
     'NetworkAreaNetworkRangeArgsDict',
+    'NetworkAreaRegionIpv4Args',
+    'NetworkAreaRegionIpv4ArgsDict',
+    'NetworkAreaRegionIpv4NetworkRangeArgs',
+    'NetworkAreaRegionIpv4NetworkRangeArgsDict',
+    'NetworkAreaRouteDestinationArgs',
+    'NetworkAreaRouteDestinationArgsDict',
+    'NetworkAreaRouteNextHopArgs',
+    'NetworkAreaRouteNextHopArgsDict',
     'ObservabilityAlertgroupRuleArgs',
     'ObservabilityAlertgroupRuleArgsDict',
     'ObservabilityInstanceAlertConfigArgs',
@@ -111,6 +125,8 @@ __all__ = [
     'ServerBackupScheduleBackupPropertiesArgsDict',
     'ServerBootVolumeArgs',
     'ServerBootVolumeArgsDict',
+    'SfsExportPolicyRuleArgs',
+    'SfsExportPolicyRuleArgsDict',
     'SkeClusterExtensionsArgs',
     'SkeClusterExtensionsArgsDict',
     'SkeClusterExtensionsAclArgs',
@@ -139,9 +155,85 @@ __all__ = [
     'SqlserverflexInstanceStorageArgsDict',
     'VolumeSourceArgs',
     'VolumeSourceArgsDict',
+    'GetCdnCustomDomainCertificateArgs',
+    'GetCdnCustomDomainCertificateArgsDict',
+    'GetImageV2FilterArgs',
+    'GetImageV2FilterArgsDict',
 ]
 
 MYPY = False
+
+if not MYPY:
+    class CdnCustomDomainCertificateArgsDict(TypedDict):
+        certificate: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        The PEM-encoded TLS certificate. Required for custom certificates.
+        """
+        private_key: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        version: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+elif False:
+    CdnCustomDomainCertificateArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class CdnCustomDomainCertificateArgs:
+    def __init__(__self__, *,
+                 certificate: Optional[pulumi.Input[_builtins.str]] = None,
+                 private_key: Optional[pulumi.Input[_builtins.str]] = None,
+                 version: Optional[pulumi.Input[_builtins.int]] = None):
+        """
+        :param pulumi.Input[_builtins.str] certificate: The PEM-encoded TLS certificate. Required for custom certificates.
+        :param pulumi.Input[_builtins.str] private_key: The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        :param pulumi.Input[_builtins.int] version: A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        if certificate is not None:
+            pulumi.set(__self__, "certificate", certificate)
+        if private_key is not None:
+            pulumi.set(__self__, "private_key", private_key)
+        if version is not None:
+            pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def certificate(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The PEM-encoded TLS certificate. Required for custom certificates.
+        """
+        return pulumi.get(self, "certificate")
+
+    @certificate.setter
+    def certificate(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "certificate", value)
+
+    @_builtins.property
+    @pulumi.getter(name="privateKey")
+    def private_key(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        return pulumi.get(self, "private_key")
+
+    @private_key.setter
+    def private_key(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "private_key", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        return pulumi.get(self, "version")
+
+    @version.setter
+    def version(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "version", value)
+
 
 if not MYPY:
     class CdnDistributionConfigArgsDict(TypedDict):
@@ -241,7 +333,11 @@ if not MYPY:
         """
         type: pulumi.Input[_builtins.str]
         """
-        The configured backend type. Supported values are: `http`.
+        The configured backend type. Possible values are: `http`.
+        """
+        geofencing: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]]]
+        """
+        A map of URLs to a list of countries where content is allowed.
         """
         origin_request_headers: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
@@ -255,14 +351,18 @@ class CdnDistributionConfigBackendArgs:
     def __init__(__self__, *,
                  origin_url: pulumi.Input[_builtins.str],
                  type: pulumi.Input[_builtins.str],
+                 geofencing: Optional[pulumi.Input[Mapping[str, pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]]] = None,
                  origin_request_headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
         """
         :param pulumi.Input[_builtins.str] origin_url: The configured backend type for the distribution
-        :param pulumi.Input[_builtins.str] type: The configured backend type. Supported values are: `http`.
+        :param pulumi.Input[_builtins.str] type: The configured backend type. Possible values are: `http`.
+        :param pulumi.Input[Mapping[str, pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]] geofencing: A map of URLs to a list of countries where content is allowed.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] origin_request_headers: The configured origin request headers for the backend
         """
         pulumi.set(__self__, "origin_url", origin_url)
         pulumi.set(__self__, "type", type)
+        if geofencing is not None:
+            pulumi.set(__self__, "geofencing", geofencing)
         if origin_request_headers is not None:
             pulumi.set(__self__, "origin_request_headers", origin_request_headers)
 
@@ -282,13 +382,25 @@ class CdnDistributionConfigBackendArgs:
     @pulumi.getter
     def type(self) -> pulumi.Input[_builtins.str]:
         """
-        The configured backend type. Supported values are: `http`.
+        The configured backend type. Possible values are: `http`.
         """
         return pulumi.get(self, "type")
 
     @type.setter
     def type(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "type", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def geofencing(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]]]:
+        """
+        A map of URLs to a list of countries where content is allowed.
+        """
+        return pulumi.get(self, "geofencing")
+
+    @geofencing.setter
+    def geofencing(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]]]):
+        pulumi.set(self, "geofencing", value)
 
     @_builtins.property
     @pulumi.getter(name="originRequestHeaders")
@@ -750,7 +862,7 @@ if not MYPY:
         """
         protocol: pulumi.Input[_builtins.str]
         """
-        Protocol is the highest network protocol we understand to load balance. Supported values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
+        Protocol is the highest network protocol we understand to load balance. Possible values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
         """
         target_pool: pulumi.Input[_builtins.str]
         """
@@ -760,6 +872,14 @@ if not MYPY:
         server_name_indicators: NotRequired[pulumi.Input[Sequence[pulumi.Input['LoadbalancerListenerServerNameIndicatorArgsDict']]]]
         """
         A list of domain names to match in order to pass TLS traffic to the target pool in the current listener
+        """
+        tcp: NotRequired[pulumi.Input['LoadbalancerListenerTcpArgsDict']]
+        """
+        Options that are specific to the TCP protocol.
+        """
+        udp: NotRequired[pulumi.Input['LoadbalancerListenerUdpArgsDict']]
+        """
+        Options that are specific to the UDP protocol.
         """
 elif False:
     LoadbalancerListenerArgsDict: TypeAlias = Mapping[str, Any]
@@ -771,12 +891,16 @@ class LoadbalancerListenerArgs:
                  protocol: pulumi.Input[_builtins.str],
                  target_pool: pulumi.Input[_builtins.str],
                  display_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 server_name_indicators: Optional[pulumi.Input[Sequence[pulumi.Input['LoadbalancerListenerServerNameIndicatorArgs']]]] = None):
+                 server_name_indicators: Optional[pulumi.Input[Sequence[pulumi.Input['LoadbalancerListenerServerNameIndicatorArgs']]]] = None,
+                 tcp: Optional[pulumi.Input['LoadbalancerListenerTcpArgs']] = None,
+                 udp: Optional[pulumi.Input['LoadbalancerListenerUdpArgs']] = None):
         """
         :param pulumi.Input[_builtins.int] port: Port number where we listen for traffic.
-        :param pulumi.Input[_builtins.str] protocol: Protocol is the highest network protocol we understand to load balance. Supported values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
+        :param pulumi.Input[_builtins.str] protocol: Protocol is the highest network protocol we understand to load balance. Possible values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
         :param pulumi.Input[_builtins.str] target_pool: Reference target pool by target pool name.
         :param pulumi.Input[Sequence[pulumi.Input['LoadbalancerListenerServerNameIndicatorArgs']]] server_name_indicators: A list of domain names to match in order to pass TLS traffic to the target pool in the current listener
+        :param pulumi.Input['LoadbalancerListenerTcpArgs'] tcp: Options that are specific to the TCP protocol.
+        :param pulumi.Input['LoadbalancerListenerUdpArgs'] udp: Options that are specific to the UDP protocol.
         """
         pulumi.set(__self__, "port", port)
         pulumi.set(__self__, "protocol", protocol)
@@ -785,6 +909,10 @@ class LoadbalancerListenerArgs:
             pulumi.set(__self__, "display_name", display_name)
         if server_name_indicators is not None:
             pulumi.set(__self__, "server_name_indicators", server_name_indicators)
+        if tcp is not None:
+            pulumi.set(__self__, "tcp", tcp)
+        if udp is not None:
+            pulumi.set(__self__, "udp", udp)
 
     @_builtins.property
     @pulumi.getter
@@ -802,7 +930,7 @@ class LoadbalancerListenerArgs:
     @pulumi.getter
     def protocol(self) -> pulumi.Input[_builtins.str]:
         """
-        Protocol is the highest network protocol we understand to load balance. Supported values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
+        Protocol is the highest network protocol we understand to load balance. Possible values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
         """
         return pulumi.get(self, "protocol")
 
@@ -843,6 +971,30 @@ class LoadbalancerListenerArgs:
     def server_name_indicators(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['LoadbalancerListenerServerNameIndicatorArgs']]]]):
         pulumi.set(self, "server_name_indicators", value)
 
+    @_builtins.property
+    @pulumi.getter
+    def tcp(self) -> Optional[pulumi.Input['LoadbalancerListenerTcpArgs']]:
+        """
+        Options that are specific to the TCP protocol.
+        """
+        return pulumi.get(self, "tcp")
+
+    @tcp.setter
+    def tcp(self, value: Optional[pulumi.Input['LoadbalancerListenerTcpArgs']]):
+        pulumi.set(self, "tcp", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def udp(self) -> Optional[pulumi.Input['LoadbalancerListenerUdpArgs']]:
+        """
+        Options that are specific to the UDP protocol.
+        """
+        return pulumi.get(self, "udp")
+
+    @udp.setter
+    def udp(self, value: Optional[pulumi.Input['LoadbalancerListenerUdpArgs']]):
+        pulumi.set(self, "udp", value)
+
 
 if not MYPY:
     class LoadbalancerListenerServerNameIndicatorArgsDict(TypedDict):
@@ -877,6 +1029,70 @@ class LoadbalancerListenerServerNameIndicatorArgs:
 
 
 if not MYPY:
+    class LoadbalancerListenerTcpArgsDict(TypedDict):
+        idle_timeout: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Time after which an idle connection is closed. The default value is set to 300 seconds, and the maximum value is 3600 seconds. The format is a duration and the unit must be seconds. Example: 30s
+        """
+elif False:
+    LoadbalancerListenerTcpArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class LoadbalancerListenerTcpArgs:
+    def __init__(__self__, *,
+                 idle_timeout: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] idle_timeout: Time after which an idle connection is closed. The default value is set to 300 seconds, and the maximum value is 3600 seconds. The format is a duration and the unit must be seconds. Example: 30s
+        """
+        if idle_timeout is not None:
+            pulumi.set(__self__, "idle_timeout", idle_timeout)
+
+    @_builtins.property
+    @pulumi.getter(name="idleTimeout")
+    def idle_timeout(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Time after which an idle connection is closed. The default value is set to 300 seconds, and the maximum value is 3600 seconds. The format is a duration and the unit must be seconds. Example: 30s
+        """
+        return pulumi.get(self, "idle_timeout")
+
+    @idle_timeout.setter
+    def idle_timeout(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "idle_timeout", value)
+
+
+if not MYPY:
+    class LoadbalancerListenerUdpArgsDict(TypedDict):
+        idle_timeout: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Time after which an idle session is closed. The default value is set to 1 minute, and the maximum value is 2 minutes. The format is a duration and the unit must be seconds. Example: 30s
+        """
+elif False:
+    LoadbalancerListenerUdpArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class LoadbalancerListenerUdpArgs:
+    def __init__(__self__, *,
+                 idle_timeout: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] idle_timeout: Time after which an idle session is closed. The default value is set to 1 minute, and the maximum value is 2 minutes. The format is a duration and the unit must be seconds. Example: 30s
+        """
+        if idle_timeout is not None:
+            pulumi.set(__self__, "idle_timeout", idle_timeout)
+
+    @_builtins.property
+    @pulumi.getter(name="idleTimeout")
+    def idle_timeout(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Time after which an idle session is closed. The default value is set to 1 minute, and the maximum value is 2 minutes. The format is a duration and the unit must be seconds. Example: 30s
+        """
+        return pulumi.get(self, "idle_timeout")
+
+    @idle_timeout.setter
+    def idle_timeout(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "idle_timeout", value)
+
+
+if not MYPY:
     class LoadbalancerNetworkArgsDict(TypedDict):
         network_id: pulumi.Input[_builtins.str]
         """
@@ -884,7 +1100,7 @@ if not MYPY:
         """
         role: pulumi.Input[_builtins.str]
         """
-        The role defines how the load balancer is using the network. Supported values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
+        The role defines how the load balancer is using the network. Possible values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
         """
 elif False:
     LoadbalancerNetworkArgsDict: TypeAlias = Mapping[str, Any]
@@ -896,7 +1112,7 @@ class LoadbalancerNetworkArgs:
                  role: pulumi.Input[_builtins.str]):
         """
         :param pulumi.Input[_builtins.str] network_id: Openstack network ID.
-        :param pulumi.Input[_builtins.str] role: The role defines how the load balancer is using the network. Supported values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
+        :param pulumi.Input[_builtins.str] role: The role defines how the load balancer is using the network. Possible values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
         """
         pulumi.set(__self__, "network_id", network_id)
         pulumi.set(__self__, "role", role)
@@ -917,7 +1133,7 @@ class LoadbalancerNetworkArgs:
     @pulumi.getter
     def role(self) -> pulumi.Input[_builtins.str]:
         """
-        The role defines how the load balancer is using the network. Supported values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
+        The role defines how the load balancer is using the network. Possible values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
         """
         return pulumi.get(self, "role")
 
@@ -2072,7 +2288,7 @@ if not MYPY:
         """
         type: pulumi.Input[_builtins.str]
         """
-        Type of the MongoDB Flex instance. Supported values are: `Replica`, `Sharded`, `Single`.
+        Type of the MongoDB Flex instance. Possible values are: `Replica`, `Sharded`, `Single`.
         """
         daily_snapshot_retention_days: NotRequired[pulumi.Input[_builtins.int]]
         """
@@ -2104,7 +2320,7 @@ class MongodbflexInstanceOptionsArgs:
                  weekly_snapshot_retention_weeks: Optional[pulumi.Input[_builtins.int]] = None):
         """
         :param pulumi.Input[_builtins.int] point_in_time_window_hours: The number of hours back in time the point-in-time recovery feature will be able to recover.
-        :param pulumi.Input[_builtins.str] type: Type of the MongoDB Flex instance. Supported values are: `Replica`, `Sharded`, `Single`.
+        :param pulumi.Input[_builtins.str] type: Type of the MongoDB Flex instance. Possible values are: `Replica`, `Sharded`, `Single`.
         :param pulumi.Input[_builtins.int] daily_snapshot_retention_days: The number of days that daily backups will be retained.
         :param pulumi.Input[_builtins.int] monthly_snapshot_retention_months: The number of months that monthly backups will be retained.
         :param pulumi.Input[_builtins.int] snapshot_retention_days: The number of days that continuous backups (controlled via the `backup_schedule`) will be retained.
@@ -2137,7 +2353,7 @@ class MongodbflexInstanceOptionsArgs:
     @pulumi.getter
     def type(self) -> pulumi.Input[_builtins.str]:
         """
-        Type of the MongoDB Flex instance. Supported values are: `Replica`, `Sharded`, `Single`.
+        Type of the MongoDB Flex instance. Possible values are: `Replica`, `Sharded`, `Single`.
         """
         return pulumi.get(self, "type")
 
@@ -2246,6 +2462,188 @@ class NetworkAreaNetworkRangeArgs:
         """
         :param pulumi.Input[_builtins.str] prefix: Classless Inter-Domain Routing (CIDR).
         """
+        if prefix is not None:
+            warnings.warn("""Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `NetworkAreaRegion` resource instead.""", DeprecationWarning)
+            pulumi.log.warn("""prefix is deprecated: Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `NetworkAreaRegion` resource instead.""")
+        pulumi.set(__self__, "prefix", prefix)
+        if network_range_id is not None:
+            warnings.warn("""Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `NetworkAreaRegion` resource instead.""", DeprecationWarning)
+            pulumi.log.warn("""network_range_id is deprecated: Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `NetworkAreaRegion` resource instead.""")
+        if network_range_id is not None:
+            pulumi.set(__self__, "network_range_id", network_range_id)
+
+    @_builtins.property
+    @pulumi.getter
+    @_utilities.deprecated("""Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `NetworkAreaRegion` resource instead.""")
+    def prefix(self) -> pulumi.Input[_builtins.str]:
+        """
+        Classless Inter-Domain Routing (CIDR).
+        """
+        return pulumi.get(self, "prefix")
+
+    @prefix.setter
+    def prefix(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "prefix", value)
+
+    @_builtins.property
+    @pulumi.getter(name="networkRangeId")
+    @_utilities.deprecated("""Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `NetworkAreaRegion` resource instead.""")
+    def network_range_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+        return pulumi.get(self, "network_range_id")
+
+    @network_range_id.setter
+    def network_range_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "network_range_id", value)
+
+
+if not MYPY:
+    class NetworkAreaRegionIpv4ArgsDict(TypedDict):
+        network_ranges: pulumi.Input[Sequence[pulumi.Input['NetworkAreaRegionIpv4NetworkRangeArgsDict']]]
+        """
+        List of Network ranges.
+        """
+        transfer_network: pulumi.Input[_builtins.str]
+        """
+        IPv4 Classless Inter-Domain Routing (CIDR).
+        """
+        default_nameservers: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+        """
+        List of DNS Servers/Nameservers.
+        """
+        default_prefix_length: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        The default prefix length for networks in the network area.
+        """
+        max_prefix_length: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        The maximal prefix length for networks in the network area.
+        """
+        min_prefix_length: NotRequired[pulumi.Input[_builtins.int]]
+        """
+        The minimal prefix length for networks in the network area.
+        """
+elif False:
+    NetworkAreaRegionIpv4ArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class NetworkAreaRegionIpv4Args:
+    def __init__(__self__, *,
+                 network_ranges: pulumi.Input[Sequence[pulumi.Input['NetworkAreaRegionIpv4NetworkRangeArgs']]],
+                 transfer_network: pulumi.Input[_builtins.str],
+                 default_nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 default_prefix_length: Optional[pulumi.Input[_builtins.int]] = None,
+                 max_prefix_length: Optional[pulumi.Input[_builtins.int]] = None,
+                 min_prefix_length: Optional[pulumi.Input[_builtins.int]] = None):
+        """
+        :param pulumi.Input[Sequence[pulumi.Input['NetworkAreaRegionIpv4NetworkRangeArgs']]] network_ranges: List of Network ranges.
+        :param pulumi.Input[_builtins.str] transfer_network: IPv4 Classless Inter-Domain Routing (CIDR).
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] default_nameservers: List of DNS Servers/Nameservers.
+        :param pulumi.Input[_builtins.int] default_prefix_length: The default prefix length for networks in the network area.
+        :param pulumi.Input[_builtins.int] max_prefix_length: The maximal prefix length for networks in the network area.
+        :param pulumi.Input[_builtins.int] min_prefix_length: The minimal prefix length for networks in the network area.
+        """
+        pulumi.set(__self__, "network_ranges", network_ranges)
+        pulumi.set(__self__, "transfer_network", transfer_network)
+        if default_nameservers is not None:
+            pulumi.set(__self__, "default_nameservers", default_nameservers)
+        if default_prefix_length is not None:
+            pulumi.set(__self__, "default_prefix_length", default_prefix_length)
+        if max_prefix_length is not None:
+            pulumi.set(__self__, "max_prefix_length", max_prefix_length)
+        if min_prefix_length is not None:
+            pulumi.set(__self__, "min_prefix_length", min_prefix_length)
+
+    @_builtins.property
+    @pulumi.getter(name="networkRanges")
+    def network_ranges(self) -> pulumi.Input[Sequence[pulumi.Input['NetworkAreaRegionIpv4NetworkRangeArgs']]]:
+        """
+        List of Network ranges.
+        """
+        return pulumi.get(self, "network_ranges")
+
+    @network_ranges.setter
+    def network_ranges(self, value: pulumi.Input[Sequence[pulumi.Input['NetworkAreaRegionIpv4NetworkRangeArgs']]]):
+        pulumi.set(self, "network_ranges", value)
+
+    @_builtins.property
+    @pulumi.getter(name="transferNetwork")
+    def transfer_network(self) -> pulumi.Input[_builtins.str]:
+        """
+        IPv4 Classless Inter-Domain Routing (CIDR).
+        """
+        return pulumi.get(self, "transfer_network")
+
+    @transfer_network.setter
+    def transfer_network(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "transfer_network", value)
+
+    @_builtins.property
+    @pulumi.getter(name="defaultNameservers")
+    def default_nameservers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        List of DNS Servers/Nameservers.
+        """
+        return pulumi.get(self, "default_nameservers")
+
+    @default_nameservers.setter
+    def default_nameservers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "default_nameservers", value)
+
+    @_builtins.property
+    @pulumi.getter(name="defaultPrefixLength")
+    def default_prefix_length(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        The default prefix length for networks in the network area.
+        """
+        return pulumi.get(self, "default_prefix_length")
+
+    @default_prefix_length.setter
+    def default_prefix_length(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "default_prefix_length", value)
+
+    @_builtins.property
+    @pulumi.getter(name="maxPrefixLength")
+    def max_prefix_length(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        The maximal prefix length for networks in the network area.
+        """
+        return pulumi.get(self, "max_prefix_length")
+
+    @max_prefix_length.setter
+    def max_prefix_length(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "max_prefix_length", value)
+
+    @_builtins.property
+    @pulumi.getter(name="minPrefixLength")
+    def min_prefix_length(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        The minimal prefix length for networks in the network area.
+        """
+        return pulumi.get(self, "min_prefix_length")
+
+    @min_prefix_length.setter
+    def min_prefix_length(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "min_prefix_length", value)
+
+
+if not MYPY:
+    class NetworkAreaRegionIpv4NetworkRangeArgsDict(TypedDict):
+        prefix: pulumi.Input[_builtins.str]
+        """
+        Classless Inter-Domain Routing (CIDR).
+        """
+        network_range_id: NotRequired[pulumi.Input[_builtins.str]]
+elif False:
+    NetworkAreaRegionIpv4NetworkRangeArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class NetworkAreaRegionIpv4NetworkRangeArgs:
+    def __init__(__self__, *,
+                 prefix: pulumi.Input[_builtins.str],
+                 network_range_id: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] prefix: Classless Inter-Domain Routing (CIDR).
+        """
         pulumi.set(__self__, "prefix", prefix)
         if network_range_id is not None:
             pulumi.set(__self__, "network_range_id", network_range_id)
@@ -2270,6 +2668,107 @@ class NetworkAreaNetworkRangeArgs:
     @network_range_id.setter
     def network_range_id(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "network_range_id", value)
+
+
+if not MYPY:
+    class NetworkAreaRouteDestinationArgsDict(TypedDict):
+        type: pulumi.Input[_builtins.str]
+        """
+        CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported currently.
+        """
+        value: pulumi.Input[_builtins.str]
+        """
+        An CIDR string.
+        """
+elif False:
+    NetworkAreaRouteDestinationArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class NetworkAreaRouteDestinationArgs:
+    def __init__(__self__, *,
+                 type: pulumi.Input[_builtins.str],
+                 value: pulumi.Input[_builtins.str]):
+        """
+        :param pulumi.Input[_builtins.str] type: CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported currently.
+        :param pulumi.Input[_builtins.str] value: An CIDR string.
+        """
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[_builtins.str]:
+        """
+        CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported currently.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "type", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[_builtins.str]:
+        """
+        An CIDR string.
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "value", value)
+
+
+if not MYPY:
+    class NetworkAreaRouteNextHopArgsDict(TypedDict):
+        type: pulumi.Input[_builtins.str]
+        """
+        Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `ipv4` supported currently.
+        """
+        value: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported currently.
+        """
+elif False:
+    NetworkAreaRouteNextHopArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class NetworkAreaRouteNextHopArgs:
+    def __init__(__self__, *,
+                 type: pulumi.Input[_builtins.str],
+                 value: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] type: Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `ipv4` supported currently.
+        :param pulumi.Input[_builtins.str] value: Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported currently.
+        """
+        pulumi.set(__self__, "type", type)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[_builtins.str]:
+        """
+        Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `ipv4` supported currently.
+        """
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "type", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported currently.
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "value", value)
 
 
 if not MYPY:
@@ -2394,7 +2893,7 @@ if not MYPY:
         """
         global_: NotRequired[pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgsDict']]
         """
-        Global configuration for the alerts.
+        Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
         """
 elif False:
     ObservabilityInstanceAlertConfigArgsDict: TypeAlias = Mapping[str, Any]
@@ -2408,7 +2907,7 @@ class ObservabilityInstanceAlertConfigArgs:
         """
         :param pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigReceiverArgs']]] receivers: List of alert receivers.
         :param pulumi.Input['ObservabilityInstanceAlertConfigRouteArgs'] route: Route configuration for the alerts.
-        :param pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgs'] global_: Global configuration for the alerts.
+        :param pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgs'] global_: Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
         """
         pulumi.set(__self__, "receivers", receivers)
         pulumi.set(__self__, "route", route)
@@ -2443,7 +2942,7 @@ class ObservabilityInstanceAlertConfigArgs:
     @pulumi.getter(name="global")
     def global_(self) -> Optional[pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgs']]:
         """
-        Global configuration for the alerts.
+        Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
         """
         return pulumi.get(self, "global_")
 
@@ -2733,6 +3232,10 @@ if not MYPY:
         """
         The sender email address. Must be a valid email address
         """
+        send_resolved: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Whether to notify about resolved alerts.
+        """
         smart_host: NotRequired[pulumi.Input[_builtins.str]]
         """
         The SMTP host through which emails are sent.
@@ -2751,6 +3254,7 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfigArgs:
                  auth_password: Optional[pulumi.Input[_builtins.str]] = None,
                  auth_username: Optional[pulumi.Input[_builtins.str]] = None,
                  from_: Optional[pulumi.Input[_builtins.str]] = None,
+                 send_resolved: Optional[pulumi.Input[_builtins.bool]] = None,
                  smart_host: Optional[pulumi.Input[_builtins.str]] = None,
                  to: Optional[pulumi.Input[_builtins.str]] = None):
         """
@@ -2758,6 +3262,7 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfigArgs:
         :param pulumi.Input[_builtins.str] auth_password: SMTP authentication password.
         :param pulumi.Input[_builtins.str] auth_username: SMTP authentication username.
         :param pulumi.Input[_builtins.str] from_: The sender email address. Must be a valid email address
+        :param pulumi.Input[_builtins.bool] send_resolved: Whether to notify about resolved alerts.
         :param pulumi.Input[_builtins.str] smart_host: The SMTP host through which emails are sent.
         :param pulumi.Input[_builtins.str] to: The email address to send notifications to. Must be a valid email address
         """
@@ -2769,6 +3274,8 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfigArgs:
             pulumi.set(__self__, "auth_username", auth_username)
         if from_ is not None:
             pulumi.set(__self__, "from_", from_)
+        if send_resolved is not None:
+            pulumi.set(__self__, "send_resolved", send_resolved)
         if smart_host is not None:
             pulumi.set(__self__, "smart_host", smart_host)
         if to is not None:
@@ -2823,6 +3330,18 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfigArgs:
         pulumi.set(self, "from_", value)
 
     @_builtins.property
+    @pulumi.getter(name="sendResolved")
+    def send_resolved(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether to notify about resolved alerts.
+        """
+        return pulumi.get(self, "send_resolved")
+
+    @send_resolved.setter
+    def send_resolved(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "send_resolved", value)
+
+    @_builtins.property
     @pulumi.getter(name="smartHost")
     def smart_host(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -2857,6 +3376,14 @@ if not MYPY:
         """
         The host to send OpsGenie API requests to. Must be a valid URL
         """
+        priority: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        """
+        send_resolved: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Whether to notify about resolved alerts.
+        """
         tags: NotRequired[pulumi.Input[_builtins.str]]
         """
         Comma separated list of tags attached to the notifications.
@@ -2869,16 +3396,24 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs:
     def __init__(__self__, *,
                  api_key: Optional[pulumi.Input[_builtins.str]] = None,
                  api_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 priority: Optional[pulumi.Input[_builtins.str]] = None,
+                 send_resolved: Optional[pulumi.Input[_builtins.bool]] = None,
                  tags: Optional[pulumi.Input[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] api_key: The API key for OpsGenie.
         :param pulumi.Input[_builtins.str] api_url: The host to send OpsGenie API requests to. Must be a valid URL
+        :param pulumi.Input[_builtins.str] priority: Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        :param pulumi.Input[_builtins.bool] send_resolved: Whether to notify about resolved alerts.
         :param pulumi.Input[_builtins.str] tags: Comma separated list of tags attached to the notifications.
         """
         if api_key is not None:
             pulumi.set(__self__, "api_key", api_key)
         if api_url is not None:
             pulumi.set(__self__, "api_url", api_url)
+        if priority is not None:
+            pulumi.set(__self__, "priority", priority)
+        if send_resolved is not None:
+            pulumi.set(__self__, "send_resolved", send_resolved)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
 
@@ -2908,6 +3443,30 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs:
 
     @_builtins.property
     @pulumi.getter
+    def priority(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        """
+        return pulumi.get(self, "priority")
+
+    @priority.setter
+    def priority(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "priority", value)
+
+    @_builtins.property
+    @pulumi.getter(name="sendResolved")
+    def send_resolved(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether to notify about resolved alerts.
+        """
+        return pulumi.get(self, "send_resolved")
+
+    @send_resolved.setter
+    def send_resolved(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "send_resolved", value)
+
+    @_builtins.property
+    @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         Comma separated list of tags attached to the notifications.
@@ -2921,9 +3480,17 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs:
 
 if not MYPY:
     class ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgsDict(TypedDict):
+        google_chat: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        """
         ms_teams: NotRequired[pulumi.Input[_builtins.bool]]
         """
         Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
+        """
+        send_resolved: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Whether to notify about resolved alerts.
         """
         url: NotRequired[pulumi.Input[_builtins.str]]
         """
@@ -2935,16 +3502,36 @@ elif False:
 @pulumi.input_type
 class ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs:
     def __init__(__self__, *,
+                 google_chat: Optional[pulumi.Input[_builtins.bool]] = None,
                  ms_teams: Optional[pulumi.Input[_builtins.bool]] = None,
+                 send_resolved: Optional[pulumi.Input[_builtins.bool]] = None,
                  url: Optional[pulumi.Input[_builtins.str]] = None):
         """
+        :param pulumi.Input[_builtins.bool] google_chat: Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
         :param pulumi.Input[_builtins.bool] ms_teams: Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
+        :param pulumi.Input[_builtins.bool] send_resolved: Whether to notify about resolved alerts.
         :param pulumi.Input[_builtins.str] url: The endpoint to send HTTP POST requests to. Must be a valid URL
         """
+        if google_chat is not None:
+            pulumi.set(__self__, "google_chat", google_chat)
         if ms_teams is not None:
             pulumi.set(__self__, "ms_teams", ms_teams)
+        if send_resolved is not None:
+            pulumi.set(__self__, "send_resolved", send_resolved)
         if url is not None:
             pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter(name="googleChat")
+    def google_chat(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        """
+        return pulumi.get(self, "google_chat")
+
+    @google_chat.setter
+    def google_chat(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "google_chat", value)
 
     @_builtins.property
     @pulumi.getter(name="msTeams")
@@ -2957,6 +3544,18 @@ class ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs:
     @ms_teams.setter
     def ms_teams(self, value: Optional[pulumi.Input[_builtins.bool]]):
         pulumi.set(self, "ms_teams", value)
+
+    @_builtins.property
+    @pulumi.getter(name="sendResolved")
+    def send_resolved(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether to notify about resolved alerts.
+        """
+        return pulumi.get(self, "send_resolved")
+
+    @send_resolved.setter
+    def send_resolved(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "send_resolved", value)
 
     @_builtins.property
     @pulumi.getter
@@ -2989,14 +3588,6 @@ if not MYPY:
         """
         How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
         """
-        match: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        A set of equality matchers an alert has to fulfill to match the node.
-        """
-        match_regex: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        A set of regex-matchers an alert has to fulfill to match the node.
-        """
         repeat_interval: NotRequired[pulumi.Input[_builtins.str]]
         """
         How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
@@ -3015,8 +3606,6 @@ class ObservabilityInstanceAlertConfigRouteArgs:
                  group_bies: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  group_interval: Optional[pulumi.Input[_builtins.str]] = None,
                  group_wait: Optional[pulumi.Input[_builtins.str]] = None,
-                 match: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 match_regex: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  repeat_interval: Optional[pulumi.Input[_builtins.str]] = None,
                  routes: Optional[pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigRouteRouteArgs']]]] = None):
         """
@@ -3024,8 +3613,6 @@ class ObservabilityInstanceAlertConfigRouteArgs:
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] group_bies: The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
         :param pulumi.Input[_builtins.str] group_interval: How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
         :param pulumi.Input[_builtins.str] group_wait: How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] match: A set of equality matchers an alert has to fulfill to match the node.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] match_regex: A set of regex-matchers an alert has to fulfill to match the node.
         :param pulumi.Input[_builtins.str] repeat_interval: How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
         :param pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigRouteRouteArgs']]] routes: List of child routes.
         """
@@ -3036,10 +3623,6 @@ class ObservabilityInstanceAlertConfigRouteArgs:
             pulumi.set(__self__, "group_interval", group_interval)
         if group_wait is not None:
             pulumi.set(__self__, "group_wait", group_wait)
-        if match is not None:
-            pulumi.set(__self__, "match", match)
-        if match_regex is not None:
-            pulumi.set(__self__, "match_regex", match_regex)
         if repeat_interval is not None:
             pulumi.set(__self__, "repeat_interval", repeat_interval)
         if routes is not None:
@@ -3094,30 +3677,6 @@ class ObservabilityInstanceAlertConfigRouteArgs:
         pulumi.set(self, "group_wait", value)
 
     @_builtins.property
-    @pulumi.getter
-    def match(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
-        """
-        A set of equality matchers an alert has to fulfill to match the node.
-        """
-        return pulumi.get(self, "match")
-
-    @match.setter
-    def match(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "match", value)
-
-    @_builtins.property
-    @pulumi.getter(name="matchRegex")
-    def match_regex(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
-        """
-        A set of regex-matchers an alert has to fulfill to match the node.
-        """
-        return pulumi.get(self, "match_regex")
-
-    @match_regex.setter
-    def match_regex(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "match_regex", value)
-
-    @_builtins.property
     @pulumi.getter(name="repeatInterval")
     def repeat_interval(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -3148,6 +3707,10 @@ if not MYPY:
         """
         The name of the receiver to route the alerts to.
         """
+        continue_: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Whether an alert should continue matching subsequent sibling nodes.
+        """
         group_bies: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
         """
         The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
@@ -3162,11 +3725,15 @@ if not MYPY:
         """
         match: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
-        A set of equality matchers an alert has to fulfill to match the node.
+        A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
         """
         match_regex: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
         """
-        A set of regex-matchers an alert has to fulfill to match the node.
+        A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+        """
+        matchers: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+        """
+        A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
         """
         repeat_interval: NotRequired[pulumi.Input[_builtins.str]]
         """
@@ -3179,22 +3746,28 @@ elif False:
 class ObservabilityInstanceAlertConfigRouteRouteArgs:
     def __init__(__self__, *,
                  receiver: pulumi.Input[_builtins.str],
+                 continue_: Optional[pulumi.Input[_builtins.bool]] = None,
                  group_bies: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  group_interval: Optional[pulumi.Input[_builtins.str]] = None,
                  group_wait: Optional[pulumi.Input[_builtins.str]] = None,
                  match: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  match_regex: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 matchers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  repeat_interval: Optional[pulumi.Input[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] receiver: The name of the receiver to route the alerts to.
+        :param pulumi.Input[_builtins.bool] continue_: Whether an alert should continue matching subsequent sibling nodes.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] group_bies: The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
         :param pulumi.Input[_builtins.str] group_interval: How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
         :param pulumi.Input[_builtins.str] group_wait: How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] match: A set of equality matchers an alert has to fulfill to match the node.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] match_regex: A set of regex-matchers an alert has to fulfill to match the node.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] match: A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] match_regex: A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] matchers: A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
         :param pulumi.Input[_builtins.str] repeat_interval: How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
         """
         pulumi.set(__self__, "receiver", receiver)
+        if continue_ is not None:
+            pulumi.set(__self__, "continue_", continue_)
         if group_bies is not None:
             pulumi.set(__self__, "group_bies", group_bies)
         if group_interval is not None:
@@ -3202,9 +3775,17 @@ class ObservabilityInstanceAlertConfigRouteRouteArgs:
         if group_wait is not None:
             pulumi.set(__self__, "group_wait", group_wait)
         if match is not None:
+            warnings.warn("""Use `matchers` in the `routes` instead.""", DeprecationWarning)
+            pulumi.log.warn("""match is deprecated: Use `matchers` in the `routes` instead.""")
+        if match is not None:
             pulumi.set(__self__, "match", match)
         if match_regex is not None:
+            warnings.warn("""Use `matchers` in the `routes` instead.""", DeprecationWarning)
+            pulumi.log.warn("""match_regex is deprecated: Use `matchers` in the `routes` instead.""")
+        if match_regex is not None:
             pulumi.set(__self__, "match_regex", match_regex)
+        if matchers is not None:
+            pulumi.set(__self__, "matchers", matchers)
         if repeat_interval is not None:
             pulumi.set(__self__, "repeat_interval", repeat_interval)
 
@@ -3219,6 +3800,18 @@ class ObservabilityInstanceAlertConfigRouteRouteArgs:
     @receiver.setter
     def receiver(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "receiver", value)
+
+    @_builtins.property
+    @pulumi.getter(name="continue")
+    def continue_(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether an alert should continue matching subsequent sibling nodes.
+        """
+        return pulumi.get(self, "continue_")
+
+    @continue_.setter
+    def continue_(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "continue_", value)
 
     @_builtins.property
     @pulumi.getter(name="groupBies")
@@ -3258,9 +3851,10 @@ class ObservabilityInstanceAlertConfigRouteRouteArgs:
 
     @_builtins.property
     @pulumi.getter
+    @_utilities.deprecated("""Use `matchers` in the `routes` instead.""")
     def match(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        A set of equality matchers an alert has to fulfill to match the node.
+        A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
         """
         return pulumi.get(self, "match")
 
@@ -3270,15 +3864,28 @@ class ObservabilityInstanceAlertConfigRouteRouteArgs:
 
     @_builtins.property
     @pulumi.getter(name="matchRegex")
+    @_utilities.deprecated("""Use `matchers` in the `routes` instead.""")
     def match_regex(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        A set of regex-matchers an alert has to fulfill to match the node.
+        A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
         """
         return pulumi.get(self, "match_regex")
 
     @match_regex.setter
     def match_regex(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "match_regex", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def matchers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+        """
+        return pulumi.get(self, "matchers")
+
+    @matchers.setter
+    def matchers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "matchers", value)
 
     @_builtins.property
     @pulumi.getter(name="repeatInterval")
@@ -4700,7 +5307,7 @@ if not MYPY:
     class RoutingTableRouteNextHopArgsDict(TypedDict):
         type: pulumi.Input[_builtins.str]
         """
-        Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
         """
         value: NotRequired[pulumi.Input[_builtins.str]]
         """
@@ -4715,7 +5322,7 @@ class RoutingTableRouteNextHopArgs:
                  type: pulumi.Input[_builtins.str],
                  value: Optional[pulumi.Input[_builtins.str]] = None):
         """
-        :param pulumi.Input[_builtins.str] type: Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        :param pulumi.Input[_builtins.str] type: Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
         :param pulumi.Input[_builtins.str] value: Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
         """
         pulumi.set(__self__, "type", type)
@@ -4726,7 +5333,7 @@ class RoutingTableRouteNextHopArgs:
     @pulumi.getter
     def type(self) -> pulumi.Input[_builtins.str]:
         """
-        Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
         """
         return pulumi.get(self, "type")
 
@@ -4954,7 +5561,7 @@ if not MYPY:
         """
         source_type: pulumi.Input[_builtins.str]
         """
-        The type of the source. Supported values are: `volume`, `image`.
+        The type of the source. Possible values are: `volume`, `image`.
         """
         delete_on_termination: NotRequired[pulumi.Input[_builtins.bool]]
         """
@@ -4986,7 +5593,7 @@ class ServerBootVolumeArgs:
                  size: Optional[pulumi.Input[_builtins.int]] = None):
         """
         :param pulumi.Input[_builtins.str] source_id: The ID of the source, either image ID or volume ID
-        :param pulumi.Input[_builtins.str] source_type: The type of the source. Supported values are: `volume`, `image`.
+        :param pulumi.Input[_builtins.str] source_type: The type of the source. Possible values are: `volume`, `image`.
         :param pulumi.Input[_builtins.bool] delete_on_termination: Delete the volume during the termination of the server. Only allowed when `source_type` is `image`.
         :param pulumi.Input[_builtins.str] id: The ID of the boot volume
         :param pulumi.Input[_builtins.str] performance_class: The performance class of the server.
@@ -5019,7 +5626,7 @@ class ServerBootVolumeArgs:
     @pulumi.getter(name="sourceType")
     def source_type(self) -> pulumi.Input[_builtins.str]:
         """
-        The type of the source. Supported values are: `volume`, `image`.
+        The type of the source. Possible values are: `volume`, `image`.
         """
         return pulumi.get(self, "source_type")
 
@@ -5074,6 +5681,136 @@ class ServerBootVolumeArgs:
     @size.setter
     def size(self, value: Optional[pulumi.Input[_builtins.int]]):
         pulumi.set(self, "size", value)
+
+
+if not MYPY:
+    class SfsExportPolicyRuleArgsDict(TypedDict):
+        ip_acls: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+        """
+        IP access control list; IPs must have a subnet mask (e.g. "172.16.0.0/24" for a range of IPs, or "172.16.0.250/32" for a specific IP).
+        """
+        order: pulumi.Input[_builtins.int]
+        """
+        Order of the rule within a Share Export Policy. The order is used so that when a client IP matches multiple rules, the first rule is applied
+        """
+        description: NotRequired[pulumi.Input[_builtins.str]]
+        """
+        Description of the Rule
+        """
+        read_only: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Flag to indicate if client IPs matching this rule can only mount the share in read only mode
+        """
+        set_uuid: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Flag to honor set UUID
+        """
+        super_user: NotRequired[pulumi.Input[_builtins.bool]]
+        """
+        Flag to indicate if client IPs matching this rule have root access on the Share
+        """
+elif False:
+    SfsExportPolicyRuleArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class SfsExportPolicyRuleArgs:
+    def __init__(__self__, *,
+                 ip_acls: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]],
+                 order: pulumi.Input[_builtins.int],
+                 description: Optional[pulumi.Input[_builtins.str]] = None,
+                 read_only: Optional[pulumi.Input[_builtins.bool]] = None,
+                 set_uuid: Optional[pulumi.Input[_builtins.bool]] = None,
+                 super_user: Optional[pulumi.Input[_builtins.bool]] = None):
+        """
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ip_acls: IP access control list; IPs must have a subnet mask (e.g. "172.16.0.0/24" for a range of IPs, or "172.16.0.250/32" for a specific IP).
+        :param pulumi.Input[_builtins.int] order: Order of the rule within a Share Export Policy. The order is used so that when a client IP matches multiple rules, the first rule is applied
+        :param pulumi.Input[_builtins.str] description: Description of the Rule
+        :param pulumi.Input[_builtins.bool] read_only: Flag to indicate if client IPs matching this rule can only mount the share in read only mode
+        :param pulumi.Input[_builtins.bool] set_uuid: Flag to honor set UUID
+        :param pulumi.Input[_builtins.bool] super_user: Flag to indicate if client IPs matching this rule have root access on the Share
+        """
+        pulumi.set(__self__, "ip_acls", ip_acls)
+        pulumi.set(__self__, "order", order)
+        if description is not None:
+            pulumi.set(__self__, "description", description)
+        if read_only is not None:
+            pulumi.set(__self__, "read_only", read_only)
+        if set_uuid is not None:
+            pulumi.set(__self__, "set_uuid", set_uuid)
+        if super_user is not None:
+            pulumi.set(__self__, "super_user", super_user)
+
+    @_builtins.property
+    @pulumi.getter(name="ipAcls")
+    def ip_acls(self) -> pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]:
+        """
+        IP access control list; IPs must have a subnet mask (e.g. "172.16.0.0/24" for a range of IPs, or "172.16.0.250/32" for a specific IP).
+        """
+        return pulumi.get(self, "ip_acls")
+
+    @ip_acls.setter
+    def ip_acls(self, value: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]):
+        pulumi.set(self, "ip_acls", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def order(self) -> pulumi.Input[_builtins.int]:
+        """
+        Order of the rule within a Share Export Policy. The order is used so that when a client IP matches multiple rules, the first rule is applied
+        """
+        return pulumi.get(self, "order")
+
+    @order.setter
+    def order(self, value: pulumi.Input[_builtins.int]):
+        pulumi.set(self, "order", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Description of the Rule
+        """
+        return pulumi.get(self, "description")
+
+    @description.setter
+    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "description", value)
+
+    @_builtins.property
+    @pulumi.getter(name="readOnly")
+    def read_only(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Flag to indicate if client IPs matching this rule can only mount the share in read only mode
+        """
+        return pulumi.get(self, "read_only")
+
+    @read_only.setter
+    def read_only(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "read_only", value)
+
+    @_builtins.property
+    @pulumi.getter(name="setUuid")
+    def set_uuid(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Flag to honor set UUID
+        """
+        return pulumi.get(self, "set_uuid")
+
+    @set_uuid.setter
+    def set_uuid(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "set_uuid", value)
+
+    @_builtins.property
+    @pulumi.getter(name="superUser")
+    def super_user(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Flag to indicate if client IPs matching this rule have root access on the Share
+        """
+        return pulumi.get(self, "super_user")
+
+    @super_user.setter
+    def super_user(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "super_user", value)
 
 
 if not MYPY:
@@ -5457,11 +6194,11 @@ if not MYPY:
         """
         enable_kubernetes_version_updates: NotRequired[pulumi.Input[_builtins.bool]]
         """
-        Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
         enable_machine_image_version_updates: NotRequired[pulumi.Input[_builtins.bool]]
         """
-        Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
 elif False:
     SkeClusterMaintenanceArgsDict: TypeAlias = Mapping[str, Any]
@@ -5476,8 +6213,8 @@ class SkeClusterMaintenanceArgs:
         """
         :param pulumi.Input[_builtins.str] end: Time for maintenance window end. E.g. `01:23:45Z`, `05:00:00+02:00`.
         :param pulumi.Input[_builtins.str] start: Time for maintenance window start. E.g. `01:23:45Z`, `05:00:00+02:00`.
-        :param pulumi.Input[_builtins.bool] enable_kubernetes_version_updates: Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
-        :param pulumi.Input[_builtins.bool] enable_machine_image_version_updates: Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        :param pulumi.Input[_builtins.bool] enable_kubernetes_version_updates: Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
+        :param pulumi.Input[_builtins.bool] enable_machine_image_version_updates: Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
         pulumi.set(__self__, "end", end)
         pulumi.set(__self__, "start", start)
@@ -5514,7 +6251,7 @@ class SkeClusterMaintenanceArgs:
     @pulumi.getter(name="enableKubernetesVersionUpdates")
     def enable_kubernetes_version_updates(self) -> Optional[pulumi.Input[_builtins.bool]]:
         """
-        Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
         return pulumi.get(self, "enable_kubernetes_version_updates")
 
@@ -5526,7 +6263,7 @@ class SkeClusterMaintenanceArgs:
     @pulumi.getter(name="enableMachineImageVersionUpdates")
     def enable_machine_image_version_updates(self) -> Optional[pulumi.Input[_builtins.bool]]:
         """
-        Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
         return pulumi.get(self, "enable_machine_image_version_updates")
 
@@ -5619,11 +6356,11 @@ if not MYPY:
         """
         os_version_min: NotRequired[pulumi.Input[_builtins.str]]
         """
-        The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current OS image version being used for the node pool, use the read-only `os_version_used` field.
+        The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current OS image version being used for the node pool, use the read-only `os_version_used` field.
         """
         os_version_used: NotRequired[pulumi.Input[_builtins.str]]
         """
-        Full OS image version used. For example, if 3815.2 was set in `os_version_min`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        Full OS image version used. For example, if 3815.2 was set in `os_version_min`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
         taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolTaintArgsDict']]]]
         """
@@ -5673,8 +6410,8 @@ class SkeClusterNodePoolArgs:
         :param pulumi.Input[_builtins.int] max_unavailable: Maximum number of VMs that that can be unavailable during an update. If set (larger than 0), then it must be at least the amount of zones configured for the nodepool. The `max_surge` and `max_unavailable` fields cannot both be unset at the same time.
         :param pulumi.Input[_builtins.str] os_name: The name of the OS image. Defaults to `flatcar`.
         :param pulumi.Input[_builtins.str] os_version: This field is deprecated, use `os_version_min` to configure the version and `os_version_used` to get the currently used version instead.
-        :param pulumi.Input[_builtins.str] os_version_min: The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current OS image version being used for the node pool, use the read-only `os_version_used` field.
-        :param pulumi.Input[_builtins.str] os_version_used: Full OS image version used. For example, if 3815.2 was set in `os_version_min`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        :param pulumi.Input[_builtins.str] os_version_min: The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current OS image version being used for the node pool, use the read-only `os_version_used` field.
+        :param pulumi.Input[_builtins.str] os_version_used: Full OS image version used. For example, if 3815.2 was set in `os_version_min`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         :param pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolTaintArgs']]] taints: Specifies a taint list as defined below.
         :param pulumi.Input[_builtins.int] volume_size: The volume size in GB. Defaults to `20`
         :param pulumi.Input[_builtins.str] volume_type: Specifies the volume type. Defaults to `storage_premium_perf1`.
@@ -5861,7 +6598,7 @@ class SkeClusterNodePoolArgs:
     @pulumi.getter(name="osVersionMin")
     def os_version_min(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current OS image version being used for the node pool, use the read-only `os_version_used` field.
+        The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current OS image version being used for the node pool, use the read-only `os_version_used` field.
         """
         return pulumi.get(self, "os_version_min")
 
@@ -5873,7 +6610,7 @@ class SkeClusterNodePoolArgs:
     @pulumi.getter(name="osVersionUsed")
     def os_version_used(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Full OS image version used. For example, if 3815.2 was set in `os_version_min`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        Full OS image version used. For example, if 3815.2 was set in `os_version_min`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
         return pulumi.get(self, "os_version_used")
 
@@ -6128,7 +6865,7 @@ if not MYPY:
         """
         type: pulumi.Input[_builtins.str]
         """
-        The type of the source. Supported values are: `volume`, `image`, `snapshot`, `backup`.
+        The type of the source. Possible values are: `volume`, `image`, `snapshot`, `backup`.
         """
 elif False:
     VolumeSourceArgsDict: TypeAlias = Mapping[str, Any]
@@ -6140,7 +6877,7 @@ class VolumeSourceArgs:
                  type: pulumi.Input[_builtins.str]):
         """
         :param pulumi.Input[_builtins.str] id: The ID of the source, e.g. image ID
-        :param pulumi.Input[_builtins.str] type: The type of the source. Supported values are: `volume`, `image`, `snapshot`, `backup`.
+        :param pulumi.Input[_builtins.str] type: The type of the source. Possible values are: `volume`, `image`, `snapshot`, `backup`.
         """
         pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "type", type)
@@ -6161,12 +6898,155 @@ class VolumeSourceArgs:
     @pulumi.getter
     def type(self) -> pulumi.Input[_builtins.str]:
         """
-        The type of the source. Supported values are: `volume`, `image`, `snapshot`, `backup`.
+        The type of the source. Possible values are: `volume`, `image`, `snapshot`, `backup`.
         """
         return pulumi.get(self, "type")
 
     @type.setter
     def type(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "type", value)
+
+
+if not MYPY:
+    class GetCdnCustomDomainCertificateArgsDict(TypedDict):
+        version: _builtins.int
+        """
+        A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+elif False:
+    GetCdnCustomDomainCertificateArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class GetCdnCustomDomainCertificateArgs:
+    def __init__(__self__, *,
+                 version: _builtins.int):
+        """
+        :param _builtins.int version: A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> _builtins.int:
+        """
+        A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        return pulumi.get(self, "version")
+
+    @version.setter
+    def version(self, value: _builtins.int):
+        pulumi.set(self, "version", value)
+
+
+if not MYPY:
+    class GetImageV2FilterArgsDict(TypedDict):
+        distro: NotRequired[_builtins.str]
+        """
+        Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+        """
+        os: NotRequired[_builtins.str]
+        """
+        Filter images by operating system type, such as `linux` or `windows`.
+        """
+        secure_boot: NotRequired[_builtins.bool]
+        """
+        Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+        """
+        uefi: NotRequired[_builtins.bool]
+        """
+        Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+        """
+        version: NotRequired[_builtins.str]
+        """
+        Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+        """
+elif False:
+    GetImageV2FilterArgsDict: TypeAlias = Mapping[str, Any]
+
+@pulumi.input_type
+class GetImageV2FilterArgs:
+    def __init__(__self__, *,
+                 distro: Optional[_builtins.str] = None,
+                 os: Optional[_builtins.str] = None,
+                 secure_boot: Optional[_builtins.bool] = None,
+                 uefi: Optional[_builtins.bool] = None,
+                 version: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str distro: Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+        :param _builtins.str os: Filter images by operating system type, such as `linux` or `windows`.
+        :param _builtins.bool secure_boot: Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+        :param _builtins.bool uefi: Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+        :param _builtins.str version: Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+        """
+        if distro is not None:
+            pulumi.set(__self__, "distro", distro)
+        if os is not None:
+            pulumi.set(__self__, "os", os)
+        if secure_boot is not None:
+            pulumi.set(__self__, "secure_boot", secure_boot)
+        if uefi is not None:
+            pulumi.set(__self__, "uefi", uefi)
+        if version is not None:
+            pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def distro(self) -> Optional[_builtins.str]:
+        """
+        Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+        """
+        return pulumi.get(self, "distro")
+
+    @distro.setter
+    def distro(self, value: Optional[_builtins.str]):
+        pulumi.set(self, "distro", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def os(self) -> Optional[_builtins.str]:
+        """
+        Filter images by operating system type, such as `linux` or `windows`.
+        """
+        return pulumi.get(self, "os")
+
+    @os.setter
+    def os(self, value: Optional[_builtins.str]):
+        pulumi.set(self, "os", value)
+
+    @_builtins.property
+    @pulumi.getter(name="secureBoot")
+    def secure_boot(self) -> Optional[_builtins.bool]:
+        """
+        Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+        """
+        return pulumi.get(self, "secure_boot")
+
+    @secure_boot.setter
+    def secure_boot(self, value: Optional[_builtins.bool]):
+        pulumi.set(self, "secure_boot", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def uefi(self) -> Optional[_builtins.bool]:
+        """
+        Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+        """
+        return pulumi.get(self, "uefi")
+
+    @uefi.setter
+    def uefi(self, value: Optional[_builtins.bool]):
+        pulumi.set(self, "uefi", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> Optional[_builtins.str]:
+        """
+        Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+        """
+        return pulumi.get(self, "version")
+
+    @version.setter
+    def version(self, value: Optional[_builtins.str]):
+        pulumi.set(self, "version", value)
 
 
