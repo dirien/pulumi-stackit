@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetNetworkInterface
     {
         /// <summary>
-        /// Network interface datasource schema. Must have a `region` specified in the provider configuration.
+        /// Network interface datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -29,7 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetNetworkInterfaceResult>("stackit:index/getNetworkInterface:getNetworkInterface", args ?? new GetNetworkInterfaceArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Network interface datasource schema. Must have a `region` specified in the provider configuration.
+        /// Network interface datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -45,7 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetNetworkInterfaceResult>("stackit:index/getNetworkInterface:getNetworkInterface", args ?? new GetNetworkInterfaceInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Network interface datasource schema. Must have a `region` specified in the provider configuration.
+        /// Network interface datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -82,6 +82,12 @@ namespace ediri.Stackit
         [Input("projectId", required: true)]
         public string ProjectId { get; set; } = null!;
 
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public string? Region { get; set; }
+
         public GetNetworkInterfaceArgs()
         {
         }
@@ -107,6 +113,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("projectId", required: true)]
         public Input<string> ProjectId { get; set; } = null!;
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
 
         public GetNetworkInterfaceInvokeArgs()
         {
@@ -156,6 +168,10 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string ProjectId;
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        public readonly string? Region;
+        /// <summary>
         /// The Network Interface Security. If set to false, then no security groups will apply to this network interface.
         /// </summary>
         public readonly bool Security;
@@ -164,7 +180,7 @@ namespace ediri.Stackit
         /// </summary>
         public readonly ImmutableArray<string> SecurityGroupIds;
         /// <summary>
-        /// Type of network interface. Some of the possible values are: Supported values are: `server`, `metadata`, `gateway`.
+        /// Type of network interface. Some of the possible values are: Possible values are: `Server`, `Metadata`, `Gateway`.
         /// </summary>
         public readonly string Type;
 
@@ -190,6 +206,8 @@ namespace ediri.Stackit
 
             string projectId,
 
+            string? region,
+
             bool security,
 
             ImmutableArray<string> securityGroupIds,
@@ -206,6 +224,7 @@ namespace ediri.Stackit
             NetworkId = networkId;
             NetworkInterfaceId = networkInterfaceId;
             ProjectId = projectId;
+            Region = region;
             Security = security;
             SecurityGroupIds = securityGroupIds;
             Type = type;

@@ -27,13 +27,16 @@ class GetVolumeResult:
     """
     A collection of values returned by getVolume.
     """
-    def __init__(__self__, availability_zone=None, description=None, id=None, labels=None, name=None, performance_class=None, project_id=None, server_id=None, size=None, source=None, volume_id=None):
+    def __init__(__self__, availability_zone=None, description=None, encrypted=None, id=None, labels=None, name=None, performance_class=None, project_id=None, region=None, server_id=None, size=None, source=None, volume_id=None):
         if availability_zone and not isinstance(availability_zone, str):
             raise TypeError("Expected argument 'availability_zone' to be a str")
         pulumi.set(__self__, "availability_zone", availability_zone)
         if description and not isinstance(description, str):
             raise TypeError("Expected argument 'description' to be a str")
         pulumi.set(__self__, "description", description)
+        if encrypted and not isinstance(encrypted, bool):
+            raise TypeError("Expected argument 'encrypted' to be a bool")
+        pulumi.set(__self__, "encrypted", encrypted)
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
@@ -49,6 +52,9 @@ class GetVolumeResult:
         if project_id and not isinstance(project_id, str):
             raise TypeError("Expected argument 'project_id' to be a str")
         pulumi.set(__self__, "project_id", project_id)
+        if region and not isinstance(region, str):
+            raise TypeError("Expected argument 'region' to be a str")
+        pulumi.set(__self__, "region", region)
         if server_id and not isinstance(server_id, str):
             raise TypeError("Expected argument 'server_id' to be a str")
         pulumi.set(__self__, "server_id", server_id)
@@ -80,6 +86,14 @@ class GetVolumeResult:
 
     @_builtins.property
     @pulumi.getter
+    def encrypted(self) -> _builtins.bool:
+        """
+        Indicates if the volume is encrypted.
+        """
+        return pulumi.get(self, "encrypted")
+
+    @_builtins.property
+    @pulumi.getter
     def id(self) -> _builtins.str:
         return pulumi.get(self, "id")
 
@@ -103,7 +117,7 @@ class GetVolumeResult:
     @pulumi.getter(name="performanceClass")
     def performance_class(self) -> _builtins.str:
         """
-        The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+        The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
         """
         return pulumi.get(self, "performance_class")
 
@@ -114,6 +128,14 @@ class GetVolumeResult:
         STACKIT project ID to which the volume is associated.
         """
         return pulumi.get(self, "project_id")
+
+    @_builtins.property
+    @pulumi.getter
+    def region(self) -> Optional[_builtins.str]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
 
     @_builtins.property
     @pulumi.getter(name="serverId")
@@ -156,11 +178,13 @@ class AwaitableGetVolumeResult(GetVolumeResult):
         return GetVolumeResult(
             availability_zone=self.availability_zone,
             description=self.description,
+            encrypted=self.encrypted,
             id=self.id,
             labels=self.labels,
             name=self.name,
             performance_class=self.performance_class,
             project_id=self.project_id,
+            region=self.region,
             server_id=self.server_id,
             size=self.size,
             source=self.source,
@@ -168,6 +192,7 @@ class AwaitableGetVolumeResult(GetVolumeResult):
 
 
 def get_volume(project_id: Optional[_builtins.str] = None,
+               region: Optional[_builtins.str] = None,
                volume_id: Optional[_builtins.str] = None,
                opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetVolumeResult:
     """
@@ -177,10 +202,12 @@ def get_volume(project_id: Optional[_builtins.str] = None,
 
 
     :param _builtins.str project_id: STACKIT project ID to which the volume is associated.
+    :param _builtins.str region: The resource region. If not defined, the provider region is used.
     :param _builtins.str volume_id: The volume ID.
     """
     __args__ = dict()
     __args__['projectId'] = project_id
+    __args__['region'] = region
     __args__['volumeId'] = volume_id
     opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke('stackit:index/getVolume:getVolume', __args__, opts=opts, typ=GetVolumeResult).value
@@ -188,16 +215,19 @@ def get_volume(project_id: Optional[_builtins.str] = None,
     return AwaitableGetVolumeResult(
         availability_zone=pulumi.get(__ret__, 'availability_zone'),
         description=pulumi.get(__ret__, 'description'),
+        encrypted=pulumi.get(__ret__, 'encrypted'),
         id=pulumi.get(__ret__, 'id'),
         labels=pulumi.get(__ret__, 'labels'),
         name=pulumi.get(__ret__, 'name'),
         performance_class=pulumi.get(__ret__, 'performance_class'),
         project_id=pulumi.get(__ret__, 'project_id'),
+        region=pulumi.get(__ret__, 'region'),
         server_id=pulumi.get(__ret__, 'server_id'),
         size=pulumi.get(__ret__, 'size'),
         source=pulumi.get(__ret__, 'source'),
         volume_id=pulumi.get(__ret__, 'volume_id'))
 def get_volume_output(project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                      region: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
                       volume_id: Optional[pulumi.Input[_builtins.str]] = None,
                       opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetVolumeResult]:
     """
@@ -207,21 +237,25 @@ def get_volume_output(project_id: Optional[pulumi.Input[_builtins.str]] = None,
 
 
     :param _builtins.str project_id: STACKIT project ID to which the volume is associated.
+    :param _builtins.str region: The resource region. If not defined, the provider region is used.
     :param _builtins.str volume_id: The volume ID.
     """
     __args__ = dict()
     __args__['projectId'] = project_id
+    __args__['region'] = region
     __args__['volumeId'] = volume_id
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke_output('stackit:index/getVolume:getVolume', __args__, opts=opts, typ=GetVolumeResult)
     return __ret__.apply(lambda __response__: GetVolumeResult(
         availability_zone=pulumi.get(__response__, 'availability_zone'),
         description=pulumi.get(__response__, 'description'),
+        encrypted=pulumi.get(__response__, 'encrypted'),
         id=pulumi.get(__response__, 'id'),
         labels=pulumi.get(__response__, 'labels'),
         name=pulumi.get(__response__, 'name'),
         performance_class=pulumi.get(__response__, 'performance_class'),
         project_id=pulumi.get(__response__, 'project_id'),
+        region=pulumi.get(__response__, 'region'),
         server_id=pulumi.get(__response__, 'server_id'),
         size=pulumi.get(__response__, 'size'),
         source=pulumi.get(__response__, 'source'),
