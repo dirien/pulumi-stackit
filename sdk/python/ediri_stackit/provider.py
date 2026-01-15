@@ -24,10 +24,12 @@ class ProviderArgs:
                  credentials_path: Optional[pulumi.Input[_builtins.str]] = None,
                  default_region: Optional[pulumi.Input[_builtins.str]] = None,
                  dns_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
+                 edgecloud_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  enable_beta_resources: Optional[pulumi.Input[_builtins.bool]] = None,
                  experiments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  git_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  iaas_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
+                 kms_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  loadbalancer_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  logme_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  mariadb_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
@@ -43,6 +45,7 @@ class ProviderArgs:
                  redis_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
                  resourcemanager_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
+                 scf_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  secretsmanager_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  server_backup_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  server_update_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
@@ -52,6 +55,7 @@ class ProviderArgs:
                  service_account_key_path: Optional[pulumi.Input[_builtins.str]] = None,
                  service_account_token: Optional[pulumi.Input[_builtins.str]] = None,
                  service_enablement_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
+                 sfs_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  ske_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  sqlserverflex_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  token_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None):
@@ -59,15 +63,15 @@ class ProviderArgs:
         The set of arguments for constructing a Provider resource.
         :param pulumi.Input[_builtins.str] authorization_custom_endpoint: Custom endpoint for the Membership service
         :param pulumi.Input[_builtins.str] cdn_custom_endpoint: Custom endpoint for the CDN service
-        :param pulumi.Input[_builtins.str] credentials_path: Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-               value is `~/.stackit/credentials.json`.
+        :param pulumi.Input[_builtins.str] credentials_path: Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
         :param pulumi.Input[_builtins.str] default_region: Region will be used as the default location for regional services. Not all services require a region, some are global
         :param pulumi.Input[_builtins.str] dns_custom_endpoint: Custom endpoint for the DNS service
+        :param pulumi.Input[_builtins.str] edgecloud_custom_endpoint: Custom endpoint for the Edge Cloud service
         :param pulumi.Input[_builtins.bool] enable_beta_resources: Enable beta resources. Default is false.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] experiments: Enables experiments. These are unstable features without official support. More information can be found in the README.
-               Available Experiments: iam, routing-tables, network
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] experiments: Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network
         :param pulumi.Input[_builtins.str] git_custom_endpoint: Custom endpoint for the Git service
         :param pulumi.Input[_builtins.str] iaas_custom_endpoint: Custom endpoint for the IaaS service
+        :param pulumi.Input[_builtins.str] kms_custom_endpoint: Custom endpoint for the KMS service
         :param pulumi.Input[_builtins.str] loadbalancer_custom_endpoint: Custom endpoint for the Load Balancer service
         :param pulumi.Input[_builtins.str] logme_custom_endpoint: Custom endpoint for the LogMe service
         :param pulumi.Input[_builtins.str] mariadb_custom_endpoint: Custom endpoint for the MariaDB service
@@ -77,25 +81,23 @@ class ProviderArgs:
         :param pulumi.Input[_builtins.str] observability_custom_endpoint: Custom endpoint for the Observability service
         :param pulumi.Input[_builtins.str] opensearch_custom_endpoint: Custom endpoint for the OpenSearch service
         :param pulumi.Input[_builtins.str] postgresflex_custom_endpoint: Custom endpoint for the PostgresFlex service
-        :param pulumi.Input[_builtins.str] private_key: Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-               included in the service account key.
-        :param pulumi.Input[_builtins.str] private_key_path: Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-               key that is included in the service account key.
+        :param pulumi.Input[_builtins.str] private_key: Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
+        :param pulumi.Input[_builtins.str] private_key_path: Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         :param pulumi.Input[_builtins.str] rabbitmq_custom_endpoint: Custom endpoint for the RabbitMQ service
         :param pulumi.Input[_builtins.str] redis_custom_endpoint: Custom endpoint for the Redis service
         :param pulumi.Input[_builtins.str] region: Region will be used as the default location for regional services. Not all services require a region, some are global
         :param pulumi.Input[_builtins.str] resourcemanager_custom_endpoint: Custom endpoint for the Resource Manager service
+        :param pulumi.Input[_builtins.str] scf_custom_endpoint: Custom endpoint for the Cloud Foundry (SCF) service
         :param pulumi.Input[_builtins.str] secretsmanager_custom_endpoint: Custom endpoint for the Secrets Manager service
         :param pulumi.Input[_builtins.str] server_backup_custom_endpoint: Custom endpoint for the Server Backup service
         :param pulumi.Input[_builtins.str] server_update_custom_endpoint: Custom endpoint for the Server Update service
         :param pulumi.Input[_builtins.str] service_account_custom_endpoint: Custom endpoint for the Service Account service
-        :param pulumi.Input[_builtins.str] service_account_email: Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-               if you want to use the resource manager project resource.
+        :param pulumi.Input[_builtins.str] service_account_email: Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
         :param pulumi.Input[_builtins.str] service_account_key: Service account key used for authentication. If set, the key flow will be used to authenticate all operations.
-        :param pulumi.Input[_builtins.str] service_account_key_path: Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-               operations.
+        :param pulumi.Input[_builtins.str] service_account_key_path: Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
         :param pulumi.Input[_builtins.str] service_account_token: Token used for authentication. If set, the token flow will be used to authenticate all operations.
         :param pulumi.Input[_builtins.str] service_enablement_custom_endpoint: Custom endpoint for the Service Enablement API
+        :param pulumi.Input[_builtins.str] sfs_custom_endpoint: Custom endpoint for the Stackit Filestorage API
         :param pulumi.Input[_builtins.str] ske_custom_endpoint: Custom endpoint for the Kubernetes Engine (SKE) service
         :param pulumi.Input[_builtins.str] sqlserverflex_custom_endpoint: Custom endpoint for the SQL Server Flex service
         :param pulumi.Input[_builtins.str] token_custom_endpoint: Custom endpoint for the token API, which is used to request access tokens when using the key flow
@@ -110,6 +112,8 @@ class ProviderArgs:
             pulumi.set(__self__, "default_region", default_region)
         if dns_custom_endpoint is not None:
             pulumi.set(__self__, "dns_custom_endpoint", dns_custom_endpoint)
+        if edgecloud_custom_endpoint is not None:
+            pulumi.set(__self__, "edgecloud_custom_endpoint", edgecloud_custom_endpoint)
         if enable_beta_resources is not None:
             pulumi.set(__self__, "enable_beta_resources", enable_beta_resources)
         if experiments is not None:
@@ -118,6 +122,8 @@ class ProviderArgs:
             pulumi.set(__self__, "git_custom_endpoint", git_custom_endpoint)
         if iaas_custom_endpoint is not None:
             pulumi.set(__self__, "iaas_custom_endpoint", iaas_custom_endpoint)
+        if kms_custom_endpoint is not None:
+            pulumi.set(__self__, "kms_custom_endpoint", kms_custom_endpoint)
         if loadbalancer_custom_endpoint is not None:
             pulumi.set(__self__, "loadbalancer_custom_endpoint", loadbalancer_custom_endpoint)
         if logme_custom_endpoint is not None:
@@ -151,6 +157,8 @@ class ProviderArgs:
             pulumi.set(__self__, "region", region)
         if resourcemanager_custom_endpoint is not None:
             pulumi.set(__self__, "resourcemanager_custom_endpoint", resourcemanager_custom_endpoint)
+        if scf_custom_endpoint is not None:
+            pulumi.set(__self__, "scf_custom_endpoint", scf_custom_endpoint)
         if secretsmanager_custom_endpoint is not None:
             pulumi.set(__self__, "secretsmanager_custom_endpoint", secretsmanager_custom_endpoint)
         if server_backup_custom_endpoint is not None:
@@ -169,12 +177,14 @@ class ProviderArgs:
         if service_account_key_path is not None:
             pulumi.set(__self__, "service_account_key_path", service_account_key_path)
         if service_account_token is not None:
-            warnings.warn("""Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html""", DeprecationWarning)
-            pulumi.log.warn("""service_account_token is deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html""")
+            warnings.warn("""Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/platform/access-and-identity/service-accounts/migrate-flows/""", DeprecationWarning)
+            pulumi.log.warn("""service_account_token is deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/platform/access-and-identity/service-accounts/migrate-flows/""")
         if service_account_token is not None:
             pulumi.set(__self__, "service_account_token", service_account_token)
         if service_enablement_custom_endpoint is not None:
             pulumi.set(__self__, "service_enablement_custom_endpoint", service_enablement_custom_endpoint)
+        if sfs_custom_endpoint is not None:
+            pulumi.set(__self__, "sfs_custom_endpoint", sfs_custom_endpoint)
         if ske_custom_endpoint is not None:
             pulumi.set(__self__, "ske_custom_endpoint", ske_custom_endpoint)
         if sqlserverflex_custom_endpoint is not None:
@@ -210,8 +220,7 @@ class ProviderArgs:
     @pulumi.getter(name="credentialsPath")
     def credentials_path(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-        value is `~/.stackit/credentials.json`.
+        Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
         """
         return pulumi.get(self, "credentials_path")
 
@@ -244,6 +253,18 @@ class ProviderArgs:
         pulumi.set(self, "dns_custom_endpoint", value)
 
     @_builtins.property
+    @pulumi.getter(name="edgecloudCustomEndpoint")
+    def edgecloud_custom_endpoint(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Custom endpoint for the Edge Cloud service
+        """
+        return pulumi.get(self, "edgecloud_custom_endpoint")
+
+    @edgecloud_custom_endpoint.setter
+    def edgecloud_custom_endpoint(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "edgecloud_custom_endpoint", value)
+
+    @_builtins.property
     @pulumi.getter(name="enableBetaResources")
     def enable_beta_resources(self) -> Optional[pulumi.Input[_builtins.bool]]:
         """
@@ -259,8 +280,7 @@ class ProviderArgs:
     @pulumi.getter
     def experiments(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
         """
-        Enables experiments. These are unstable features without official support. More information can be found in the README.
-        Available Experiments: iam, routing-tables, network
+        Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network
         """
         return pulumi.get(self, "experiments")
 
@@ -291,6 +311,18 @@ class ProviderArgs:
     @iaas_custom_endpoint.setter
     def iaas_custom_endpoint(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "iaas_custom_endpoint", value)
+
+    @_builtins.property
+    @pulumi.getter(name="kmsCustomEndpoint")
+    def kms_custom_endpoint(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Custom endpoint for the KMS service
+        """
+        return pulumi.get(self, "kms_custom_endpoint")
+
+    @kms_custom_endpoint.setter
+    def kms_custom_endpoint(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "kms_custom_endpoint", value)
 
     @_builtins.property
     @pulumi.getter(name="loadbalancerCustomEndpoint")
@@ -404,8 +436,7 @@ class ProviderArgs:
     @pulumi.getter(name="privateKey")
     def private_key(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-        included in the service account key.
+        Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         """
         return pulumi.get(self, "private_key")
 
@@ -417,8 +448,7 @@ class ProviderArgs:
     @pulumi.getter(name="privateKeyPath")
     def private_key_path(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-        key that is included in the service account key.
+        Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         """
         return pulumi.get(self, "private_key_path")
 
@@ -476,6 +506,18 @@ class ProviderArgs:
         pulumi.set(self, "resourcemanager_custom_endpoint", value)
 
     @_builtins.property
+    @pulumi.getter(name="scfCustomEndpoint")
+    def scf_custom_endpoint(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Custom endpoint for the Cloud Foundry (SCF) service
+        """
+        return pulumi.get(self, "scf_custom_endpoint")
+
+    @scf_custom_endpoint.setter
+    def scf_custom_endpoint(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "scf_custom_endpoint", value)
+
+    @_builtins.property
     @pulumi.getter(name="secretsmanagerCustomEndpoint")
     def secretsmanager_custom_endpoint(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -528,8 +570,7 @@ class ProviderArgs:
     @_utilities.deprecated("""The `service_account_email` field has been deprecated because it is not required. Will be removed after June 12th 2025.""")
     def service_account_email(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-        if you want to use the resource manager project resource.
+        Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
         """
         return pulumi.get(self, "service_account_email")
 
@@ -553,8 +594,7 @@ class ProviderArgs:
     @pulumi.getter(name="serviceAccountKeyPath")
     def service_account_key_path(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-        operations.
+        Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
         """
         return pulumi.get(self, "service_account_key_path")
 
@@ -564,7 +604,7 @@ class ProviderArgs:
 
     @_builtins.property
     @pulumi.getter(name="serviceAccountToken")
-    @_utilities.deprecated("""Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html""")
+    @_utilities.deprecated("""Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/platform/access-and-identity/service-accounts/migrate-flows/""")
     def service_account_token(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         Token used for authentication. If set, the token flow will be used to authenticate all operations.
@@ -586,6 +626,18 @@ class ProviderArgs:
     @service_enablement_custom_endpoint.setter
     def service_enablement_custom_endpoint(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "service_enablement_custom_endpoint", value)
+
+    @_builtins.property
+    @pulumi.getter(name="sfsCustomEndpoint")
+    def sfs_custom_endpoint(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Custom endpoint for the Stackit Filestorage API
+        """
+        return pulumi.get(self, "sfs_custom_endpoint")
+
+    @sfs_custom_endpoint.setter
+    def sfs_custom_endpoint(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "sfs_custom_endpoint", value)
 
     @_builtins.property
     @pulumi.getter(name="skeCustomEndpoint")
@@ -635,10 +687,12 @@ class Provider(pulumi.ProviderResource):
                  credentials_path: Optional[pulumi.Input[_builtins.str]] = None,
                  default_region: Optional[pulumi.Input[_builtins.str]] = None,
                  dns_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
+                 edgecloud_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  enable_beta_resources: Optional[pulumi.Input[_builtins.bool]] = None,
                  experiments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  git_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  iaas_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
+                 kms_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  loadbalancer_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  logme_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  mariadb_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
@@ -654,6 +708,7 @@ class Provider(pulumi.ProviderResource):
                  redis_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
                  resourcemanager_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
+                 scf_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  secretsmanager_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  server_backup_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  server_update_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
@@ -663,6 +718,7 @@ class Provider(pulumi.ProviderResource):
                  service_account_key_path: Optional[pulumi.Input[_builtins.str]] = None,
                  service_account_token: Optional[pulumi.Input[_builtins.str]] = None,
                  service_enablement_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
+                 sfs_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  ske_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  sqlserverflex_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  token_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
@@ -677,15 +733,15 @@ class Provider(pulumi.ProviderResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] authorization_custom_endpoint: Custom endpoint for the Membership service
         :param pulumi.Input[_builtins.str] cdn_custom_endpoint: Custom endpoint for the CDN service
-        :param pulumi.Input[_builtins.str] credentials_path: Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-               value is `~/.stackit/credentials.json`.
+        :param pulumi.Input[_builtins.str] credentials_path: Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
         :param pulumi.Input[_builtins.str] default_region: Region will be used as the default location for regional services. Not all services require a region, some are global
         :param pulumi.Input[_builtins.str] dns_custom_endpoint: Custom endpoint for the DNS service
+        :param pulumi.Input[_builtins.str] edgecloud_custom_endpoint: Custom endpoint for the Edge Cloud service
         :param pulumi.Input[_builtins.bool] enable_beta_resources: Enable beta resources. Default is false.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] experiments: Enables experiments. These are unstable features without official support. More information can be found in the README.
-               Available Experiments: iam, routing-tables, network
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] experiments: Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network
         :param pulumi.Input[_builtins.str] git_custom_endpoint: Custom endpoint for the Git service
         :param pulumi.Input[_builtins.str] iaas_custom_endpoint: Custom endpoint for the IaaS service
+        :param pulumi.Input[_builtins.str] kms_custom_endpoint: Custom endpoint for the KMS service
         :param pulumi.Input[_builtins.str] loadbalancer_custom_endpoint: Custom endpoint for the Load Balancer service
         :param pulumi.Input[_builtins.str] logme_custom_endpoint: Custom endpoint for the LogMe service
         :param pulumi.Input[_builtins.str] mariadb_custom_endpoint: Custom endpoint for the MariaDB service
@@ -695,25 +751,23 @@ class Provider(pulumi.ProviderResource):
         :param pulumi.Input[_builtins.str] observability_custom_endpoint: Custom endpoint for the Observability service
         :param pulumi.Input[_builtins.str] opensearch_custom_endpoint: Custom endpoint for the OpenSearch service
         :param pulumi.Input[_builtins.str] postgresflex_custom_endpoint: Custom endpoint for the PostgresFlex service
-        :param pulumi.Input[_builtins.str] private_key: Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-               included in the service account key.
-        :param pulumi.Input[_builtins.str] private_key_path: Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-               key that is included in the service account key.
+        :param pulumi.Input[_builtins.str] private_key: Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
+        :param pulumi.Input[_builtins.str] private_key_path: Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         :param pulumi.Input[_builtins.str] rabbitmq_custom_endpoint: Custom endpoint for the RabbitMQ service
         :param pulumi.Input[_builtins.str] redis_custom_endpoint: Custom endpoint for the Redis service
         :param pulumi.Input[_builtins.str] region: Region will be used as the default location for regional services. Not all services require a region, some are global
         :param pulumi.Input[_builtins.str] resourcemanager_custom_endpoint: Custom endpoint for the Resource Manager service
+        :param pulumi.Input[_builtins.str] scf_custom_endpoint: Custom endpoint for the Cloud Foundry (SCF) service
         :param pulumi.Input[_builtins.str] secretsmanager_custom_endpoint: Custom endpoint for the Secrets Manager service
         :param pulumi.Input[_builtins.str] server_backup_custom_endpoint: Custom endpoint for the Server Backup service
         :param pulumi.Input[_builtins.str] server_update_custom_endpoint: Custom endpoint for the Server Update service
         :param pulumi.Input[_builtins.str] service_account_custom_endpoint: Custom endpoint for the Service Account service
-        :param pulumi.Input[_builtins.str] service_account_email: Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-               if you want to use the resource manager project resource.
+        :param pulumi.Input[_builtins.str] service_account_email: Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
         :param pulumi.Input[_builtins.str] service_account_key: Service account key used for authentication. If set, the key flow will be used to authenticate all operations.
-        :param pulumi.Input[_builtins.str] service_account_key_path: Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-               operations.
+        :param pulumi.Input[_builtins.str] service_account_key_path: Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
         :param pulumi.Input[_builtins.str] service_account_token: Token used for authentication. If set, the token flow will be used to authenticate all operations.
         :param pulumi.Input[_builtins.str] service_enablement_custom_endpoint: Custom endpoint for the Service Enablement API
+        :param pulumi.Input[_builtins.str] sfs_custom_endpoint: Custom endpoint for the Stackit Filestorage API
         :param pulumi.Input[_builtins.str] ske_custom_endpoint: Custom endpoint for the Kubernetes Engine (SKE) service
         :param pulumi.Input[_builtins.str] sqlserverflex_custom_endpoint: Custom endpoint for the SQL Server Flex service
         :param pulumi.Input[_builtins.str] token_custom_endpoint: Custom endpoint for the token API, which is used to request access tokens when using the key flow
@@ -750,10 +804,12 @@ class Provider(pulumi.ProviderResource):
                  credentials_path: Optional[pulumi.Input[_builtins.str]] = None,
                  default_region: Optional[pulumi.Input[_builtins.str]] = None,
                  dns_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
+                 edgecloud_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  enable_beta_resources: Optional[pulumi.Input[_builtins.bool]] = None,
                  experiments: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  git_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  iaas_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
+                 kms_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  loadbalancer_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  logme_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  mariadb_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
@@ -769,6 +825,7 @@ class Provider(pulumi.ProviderResource):
                  redis_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
                  resourcemanager_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
+                 scf_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  secretsmanager_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  server_backup_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  server_update_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
@@ -778,6 +835,7 @@ class Provider(pulumi.ProviderResource):
                  service_account_key_path: Optional[pulumi.Input[_builtins.str]] = None,
                  service_account_token: Optional[pulumi.Input[_builtins.str]] = None,
                  service_enablement_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
+                 sfs_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  ske_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  sqlserverflex_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
                  token_custom_endpoint: Optional[pulumi.Input[_builtins.str]] = None,
@@ -795,10 +853,12 @@ class Provider(pulumi.ProviderResource):
             __props__.__dict__["credentials_path"] = credentials_path
             __props__.__dict__["default_region"] = default_region
             __props__.__dict__["dns_custom_endpoint"] = dns_custom_endpoint
+            __props__.__dict__["edgecloud_custom_endpoint"] = edgecloud_custom_endpoint
             __props__.__dict__["enable_beta_resources"] = pulumi.Output.from_input(enable_beta_resources).apply(pulumi.runtime.to_json) if enable_beta_resources is not None else None
             __props__.__dict__["experiments"] = pulumi.Output.from_input(experiments).apply(pulumi.runtime.to_json) if experiments is not None else None
             __props__.__dict__["git_custom_endpoint"] = git_custom_endpoint
             __props__.__dict__["iaas_custom_endpoint"] = iaas_custom_endpoint
+            __props__.__dict__["kms_custom_endpoint"] = kms_custom_endpoint
             __props__.__dict__["loadbalancer_custom_endpoint"] = loadbalancer_custom_endpoint
             __props__.__dict__["logme_custom_endpoint"] = logme_custom_endpoint
             __props__.__dict__["mariadb_custom_endpoint"] = mariadb_custom_endpoint
@@ -814,6 +874,7 @@ class Provider(pulumi.ProviderResource):
             __props__.__dict__["redis_custom_endpoint"] = redis_custom_endpoint
             __props__.__dict__["region"] = region
             __props__.__dict__["resourcemanager_custom_endpoint"] = resourcemanager_custom_endpoint
+            __props__.__dict__["scf_custom_endpoint"] = scf_custom_endpoint
             __props__.__dict__["secretsmanager_custom_endpoint"] = secretsmanager_custom_endpoint
             __props__.__dict__["server_backup_custom_endpoint"] = server_backup_custom_endpoint
             __props__.__dict__["server_update_custom_endpoint"] = server_update_custom_endpoint
@@ -823,6 +884,7 @@ class Provider(pulumi.ProviderResource):
             __props__.__dict__["service_account_key_path"] = service_account_key_path
             __props__.__dict__["service_account_token"] = service_account_token
             __props__.__dict__["service_enablement_custom_endpoint"] = service_enablement_custom_endpoint
+            __props__.__dict__["sfs_custom_endpoint"] = sfs_custom_endpoint
             __props__.__dict__["ske_custom_endpoint"] = ske_custom_endpoint
             __props__.__dict__["sqlserverflex_custom_endpoint"] = sqlserverflex_custom_endpoint
             __props__.__dict__["token_custom_endpoint"] = token_custom_endpoint
@@ -852,8 +914,7 @@ class Provider(pulumi.ProviderResource):
     @pulumi.getter(name="credentialsPath")
     def credentials_path(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-        value is `~/.stackit/credentials.json`.
+        Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
         """
         return pulumi.get(self, "credentials_path")
 
@@ -874,6 +935,14 @@ class Provider(pulumi.ProviderResource):
         return pulumi.get(self, "dns_custom_endpoint")
 
     @_builtins.property
+    @pulumi.getter(name="edgecloudCustomEndpoint")
+    def edgecloud_custom_endpoint(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Custom endpoint for the Edge Cloud service
+        """
+        return pulumi.get(self, "edgecloud_custom_endpoint")
+
+    @_builtins.property
     @pulumi.getter(name="gitCustomEndpoint")
     def git_custom_endpoint(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
@@ -888,6 +957,14 @@ class Provider(pulumi.ProviderResource):
         Custom endpoint for the IaaS service
         """
         return pulumi.get(self, "iaas_custom_endpoint")
+
+    @_builtins.property
+    @pulumi.getter(name="kmsCustomEndpoint")
+    def kms_custom_endpoint(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Custom endpoint for the KMS service
+        """
+        return pulumi.get(self, "kms_custom_endpoint")
 
     @_builtins.property
     @pulumi.getter(name="loadbalancerCustomEndpoint")
@@ -965,8 +1042,7 @@ class Provider(pulumi.ProviderResource):
     @pulumi.getter(name="privateKey")
     def private_key(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-        included in the service account key.
+        Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         """
         return pulumi.get(self, "private_key")
 
@@ -974,8 +1050,7 @@ class Provider(pulumi.ProviderResource):
     @pulumi.getter(name="privateKeyPath")
     def private_key_path(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-        key that is included in the service account key.
+        Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         """
         return pulumi.get(self, "private_key_path")
 
@@ -1011,6 +1086,14 @@ class Provider(pulumi.ProviderResource):
         Custom endpoint for the Resource Manager service
         """
         return pulumi.get(self, "resourcemanager_custom_endpoint")
+
+    @_builtins.property
+    @pulumi.getter(name="scfCustomEndpoint")
+    def scf_custom_endpoint(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Custom endpoint for the Cloud Foundry (SCF) service
+        """
+        return pulumi.get(self, "scf_custom_endpoint")
 
     @_builtins.property
     @pulumi.getter(name="secretsmanagerCustomEndpoint")
@@ -1049,8 +1132,7 @@ class Provider(pulumi.ProviderResource):
     @_utilities.deprecated("""The `service_account_email` field has been deprecated because it is not required. Will be removed after June 12th 2025.""")
     def service_account_email(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-        if you want to use the resource manager project resource.
+        Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
         """
         return pulumi.get(self, "service_account_email")
 
@@ -1066,14 +1148,13 @@ class Provider(pulumi.ProviderResource):
     @pulumi.getter(name="serviceAccountKeyPath")
     def service_account_key_path(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-        operations.
+        Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
         """
         return pulumi.get(self, "service_account_key_path")
 
     @_builtins.property
     @pulumi.getter(name="serviceAccountToken")
-    @_utilities.deprecated("""Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html""")
+    @_utilities.deprecated("""Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `service_account_key` or `service_account_key_path` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/platform/access-and-identity/service-accounts/migrate-flows/""")
     def service_account_token(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
         Token used for authentication. If set, the token flow will be used to authenticate all operations.
@@ -1087,6 +1168,14 @@ class Provider(pulumi.ProviderResource):
         Custom endpoint for the Service Enablement API
         """
         return pulumi.get(self, "service_enablement_custom_endpoint")
+
+    @_builtins.property
+    @pulumi.getter(name="sfsCustomEndpoint")
+    def sfs_custom_endpoint(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        Custom endpoint for the Stackit Filestorage API
+        """
+        return pulumi.get(self, "sfs_custom_endpoint")
 
     @_builtins.property
     @pulumi.getter(name="skeCustomEndpoint")

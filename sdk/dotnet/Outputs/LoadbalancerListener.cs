@@ -20,7 +20,7 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly int Port;
         /// <summary>
-        /// Protocol is the highest network protocol we understand to load balance. Supported values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
+        /// Protocol is the highest network protocol we understand to load balance. Possible values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
         /// </summary>
         public readonly string Protocol;
         /// <summary>
@@ -31,6 +31,14 @@ namespace ediri.Stackit.Outputs
         /// Reference target pool by target pool name.
         /// </summary>
         public readonly string TargetPool;
+        /// <summary>
+        /// Options that are specific to the TCP protocol.
+        /// </summary>
+        public readonly Outputs.LoadbalancerListenerTcp? Tcp;
+        /// <summary>
+        /// Options that are specific to the UDP protocol.
+        /// </summary>
+        public readonly Outputs.LoadbalancerListenerUdp? Udp;
 
         [OutputConstructor]
         private LoadbalancerListener(
@@ -42,13 +50,19 @@ namespace ediri.Stackit.Outputs
 
             ImmutableArray<Outputs.LoadbalancerListenerServerNameIndicator> serverNameIndicators,
 
-            string targetPool)
+            string targetPool,
+
+            Outputs.LoadbalancerListenerTcp? tcp,
+
+            Outputs.LoadbalancerListenerUdp? udp)
         {
             DisplayName = displayName;
             Port = port;
             Protocol = protocol;
             ServerNameIndicators = serverNameIndicators;
             TargetPool = targetPool;
+            Tcp = tcp;
+            Udp = udp;
         }
     }
 }
