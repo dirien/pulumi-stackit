@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetSecurityGroup
     {
         /// <summary>
-        /// Security group datasource schema. Must have a `region` specified in the provider configuration.
+        /// Security group datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetSecurityGroupResult>("stackit:index/getSecurityGroup:getSecurityGroup", args ?? new GetSecurityGroupArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Security group datasource schema. Must have a `region` specified in the provider configuration.
+        /// Security group datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetSecurityGroupResult>("stackit:index/getSecurityGroup:getSecurityGroup", args ?? new GetSecurityGroupInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Security group datasource schema. Must have a `region` specified in the provider configuration.
+        /// Security group datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -68,6 +68,12 @@ namespace ediri.Stackit
         public string ProjectId { get; set; } = null!;
 
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public string? Region { get; set; }
+
+        /// <summary>
         /// The security group ID.
         /// </summary>
         [Input("securityGroupId", required: true)]
@@ -86,6 +92,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("projectId", required: true)]
         public Input<string> ProjectId { get; set; } = null!;
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
 
         /// <summary>
         /// The security group ID.
@@ -121,6 +133,10 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string ProjectId;
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        public readonly string? Region;
+        /// <summary>
         /// The security group ID.
         /// </summary>
         public readonly string SecurityGroupId;
@@ -141,6 +157,8 @@ namespace ediri.Stackit
 
             string projectId,
 
+            string? region,
+
             string securityGroupId,
 
             bool stateful)
@@ -150,6 +168,7 @@ namespace ediri.Stackit
             Labels = labels;
             Name = name;
             ProjectId = projectId;
+            Region = region;
             SecurityGroupId = securityGroupId;
             Stateful = stateful;
         }

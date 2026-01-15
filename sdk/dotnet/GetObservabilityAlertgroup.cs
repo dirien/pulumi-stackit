@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetObservabilityAlertgroup
     {
         /// <summary>
-        /// Observability alert group datasource schema. Used to create alerts based on metrics (Thanos). Must have a `region` specified in the provider configuration.
+        /// Observability alert group datasource schema. Used to create alerts based on metrics (Thanos). Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -29,7 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetObservabilityAlertgroupResult>("stackit:index/getObservabilityAlertgroup:getObservabilityAlertgroup", args ?? new GetObservabilityAlertgroupArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Observability alert group datasource schema. Used to create alerts based on metrics (Thanos). Must have a `region` specified in the provider configuration.
+        /// Observability alert group datasource schema. Used to create alerts based on metrics (Thanos). Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -45,7 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetObservabilityAlertgroupResult>("stackit:index/getObservabilityAlertgroup:getObservabilityAlertgroup", args ?? new GetObservabilityAlertgroupInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Observability alert group datasource schema. Used to create alerts based on metrics (Thanos). Must have a `region` specified in the provider configuration.
+        /// Observability alert group datasource schema. Used to create alerts based on metrics (Thanos). Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 

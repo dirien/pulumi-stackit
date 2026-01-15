@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Public IP resource schema. Must have a `region` specified in the provider configuration.
+    /// Public IP resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -44,6 +44,12 @@ namespace ediri.Stackit
         /// </summary>
         [Output("publicIpId")]
         public Output<string> PublicIpId { get; private set; } = null!;
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Output("region")]
+        public Output<string> Region { get; private set; } = null!;
 
 
         /// <summary>
@@ -113,6 +119,12 @@ namespace ediri.Stackit
         [Input("projectId", required: true)]
         public Input<string> ProjectId { get; set; } = null!;
 
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
+
         public PublicIpArgs()
         {
         }
@@ -153,6 +165,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("publicIpId")]
         public Input<string>? PublicIpId { get; set; }
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
 
         public PublicIpState()
         {

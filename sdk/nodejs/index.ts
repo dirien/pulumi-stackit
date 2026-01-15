@@ -40,6 +40,21 @@ export type DnsZone = import("./dnsZone").DnsZone;
 export const DnsZone: typeof import("./dnsZone").DnsZone = null as any;
 utilities.lazyLoad(exports, ["DnsZone"], () => require("./dnsZone"));
 
+export { EdgecloudInstanceArgs, EdgecloudInstanceState } from "./edgecloudInstance";
+export type EdgecloudInstance = import("./edgecloudInstance").EdgecloudInstance;
+export const EdgecloudInstance: typeof import("./edgecloudInstance").EdgecloudInstance = null as any;
+utilities.lazyLoad(exports, ["EdgecloudInstance"], () => require("./edgecloudInstance"));
+
+export { EdgecloudKubeconfigArgs, EdgecloudKubeconfigState } from "./edgecloudKubeconfig";
+export type EdgecloudKubeconfig = import("./edgecloudKubeconfig").EdgecloudKubeconfig;
+export const EdgecloudKubeconfig: typeof import("./edgecloudKubeconfig").EdgecloudKubeconfig = null as any;
+utilities.lazyLoad(exports, ["EdgecloudKubeconfig"], () => require("./edgecloudKubeconfig"));
+
+export { EdgecloudTokenArgs, EdgecloudTokenState } from "./edgecloudToken";
+export type EdgecloudToken = import("./edgecloudToken").EdgecloudToken;
+export const EdgecloudToken: typeof import("./edgecloudToken").EdgecloudToken = null as any;
+utilities.lazyLoad(exports, ["EdgecloudToken"], () => require("./edgecloudToken"));
+
 export { GetAffinityGroupArgs, GetAffinityGroupResult, GetAffinityGroupOutputArgs } from "./getAffinityGroup";
 export const getAffinityGroup: typeof import("./getAffinityGroup").getAffinityGroup = null as any;
 export const getAffinityGroupOutput: typeof import("./getAffinityGroup").getAffinityGroupOutput = null as any;
@@ -65,6 +80,16 @@ export const getDnsZone: typeof import("./getDnsZone").getDnsZone = null as any;
 export const getDnsZoneOutput: typeof import("./getDnsZone").getDnsZoneOutput = null as any;
 utilities.lazyLoad(exports, ["getDnsZone","getDnsZoneOutput"], () => require("./getDnsZone"));
 
+export { GetEdgecloudInstancesArgs, GetEdgecloudInstancesResult, GetEdgecloudInstancesOutputArgs } from "./getEdgecloudInstances";
+export const getEdgecloudInstances: typeof import("./getEdgecloudInstances").getEdgecloudInstances = null as any;
+export const getEdgecloudInstancesOutput: typeof import("./getEdgecloudInstances").getEdgecloudInstancesOutput = null as any;
+utilities.lazyLoad(exports, ["getEdgecloudInstances","getEdgecloudInstancesOutput"], () => require("./getEdgecloudInstances"));
+
+export { GetEdgecloudPlansArgs, GetEdgecloudPlansResult, GetEdgecloudPlansOutputArgs } from "./getEdgecloudPlans";
+export const getEdgecloudPlans: typeof import("./getEdgecloudPlans").getEdgecloudPlans = null as any;
+export const getEdgecloudPlansOutput: typeof import("./getEdgecloudPlans").getEdgecloudPlansOutput = null as any;
+utilities.lazyLoad(exports, ["getEdgecloudPlans","getEdgecloudPlansOutput"], () => require("./getEdgecloudPlans"));
+
 export { GetGitArgs, GetGitResult, GetGitOutputArgs } from "./getGit";
 export const getGit: typeof import("./getGit").getGit = null as any;
 export const getGitOutput: typeof import("./getGit").getGitOutput = null as any;
@@ -80,10 +105,30 @@ export const getImage: typeof import("./getImage").getImage = null as any;
 export const getImageOutput: typeof import("./getImage").getImageOutput = null as any;
 utilities.lazyLoad(exports, ["getImage","getImageOutput"], () => require("./getImage"));
 
+export { GetImageV2Args, GetImageV2Result, GetImageV2OutputArgs } from "./getImageV2";
+export const getImageV2: typeof import("./getImageV2").getImageV2 = null as any;
+export const getImageV2Output: typeof import("./getImageV2").getImageV2Output = null as any;
+utilities.lazyLoad(exports, ["getImageV2","getImageV2Output"], () => require("./getImageV2"));
+
 export { GetKeyPairArgs, GetKeyPairResult, GetKeyPairOutputArgs } from "./getKeyPair";
 export const getKeyPair: typeof import("./getKeyPair").getKeyPair = null as any;
 export const getKeyPairOutput: typeof import("./getKeyPair").getKeyPairOutput = null as any;
 utilities.lazyLoad(exports, ["getKeyPair","getKeyPairOutput"], () => require("./getKeyPair"));
+
+export { GetKmsKeyArgs, GetKmsKeyResult, GetKmsKeyOutputArgs } from "./getKmsKey";
+export const getKmsKey: typeof import("./getKmsKey").getKmsKey = null as any;
+export const getKmsKeyOutput: typeof import("./getKmsKey").getKmsKeyOutput = null as any;
+utilities.lazyLoad(exports, ["getKmsKey","getKmsKeyOutput"], () => require("./getKmsKey"));
+
+export { GetKmsKeyringArgs, GetKmsKeyringResult, GetKmsKeyringOutputArgs } from "./getKmsKeyring";
+export const getKmsKeyring: typeof import("./getKmsKeyring").getKmsKeyring = null as any;
+export const getKmsKeyringOutput: typeof import("./getKmsKeyring").getKmsKeyringOutput = null as any;
+utilities.lazyLoad(exports, ["getKmsKeyring","getKmsKeyringOutput"], () => require("./getKmsKeyring"));
+
+export { GetKmsWrappingKeyArgs, GetKmsWrappingKeyResult, GetKmsWrappingKeyOutputArgs } from "./getKmsWrappingKey";
+export const getKmsWrappingKey: typeof import("./getKmsWrappingKey").getKmsWrappingKey = null as any;
+export const getKmsWrappingKeyOutput: typeof import("./getKmsWrappingKey").getKmsWrappingKeyOutput = null as any;
+utilities.lazyLoad(exports, ["getKmsWrappingKey","getKmsWrappingKeyOutput"], () => require("./getKmsWrappingKey"));
 
 export { GetLoadbalancerArgs, GetLoadbalancerResult, GetLoadbalancerOutputArgs } from "./getLoadbalancer";
 export const getLoadbalancer: typeof import("./getLoadbalancer").getLoadbalancer = null as any;
@@ -99,6 +144,11 @@ export { GetLogmeInstanceArgs, GetLogmeInstanceResult, GetLogmeInstanceOutputArg
 export const getLogmeInstance: typeof import("./getLogmeInstance").getLogmeInstance = null as any;
 export const getLogmeInstanceOutput: typeof import("./getLogmeInstance").getLogmeInstanceOutput = null as any;
 utilities.lazyLoad(exports, ["getLogmeInstance","getLogmeInstanceOutput"], () => require("./getLogmeInstance"));
+
+export { GetMachineTypeArgs, GetMachineTypeResult, GetMachineTypeOutputArgs } from "./getMachineType";
+export const getMachineType: typeof import("./getMachineType").getMachineType = null as any;
+export const getMachineTypeOutput: typeof import("./getMachineType").getMachineTypeOutput = null as any;
+utilities.lazyLoad(exports, ["getMachineType","getMachineTypeOutput"], () => require("./getMachineType"));
 
 export { GetMariadbCredentialArgs, GetMariadbCredentialResult, GetMariadbCredentialOutputArgs } from "./getMariadbCredential";
 export const getMariadbCredential: typeof import("./getMariadbCredential").getMariadbCredential = null as any;
@@ -129,6 +179,11 @@ export { GetNetworkAreaArgs, GetNetworkAreaResult, GetNetworkAreaOutputArgs } fr
 export const getNetworkArea: typeof import("./getNetworkArea").getNetworkArea = null as any;
 export const getNetworkAreaOutput: typeof import("./getNetworkArea").getNetworkAreaOutput = null as any;
 utilities.lazyLoad(exports, ["getNetworkArea","getNetworkAreaOutput"], () => require("./getNetworkArea"));
+
+export { GetNetworkAreaRegionArgs, GetNetworkAreaRegionResult, GetNetworkAreaRegionOutputArgs } from "./getNetworkAreaRegion";
+export const getNetworkAreaRegion: typeof import("./getNetworkAreaRegion").getNetworkAreaRegion = null as any;
+export const getNetworkAreaRegionOutput: typeof import("./getNetworkAreaRegion").getNetworkAreaRegionOutput = null as any;
+utilities.lazyLoad(exports, ["getNetworkAreaRegion","getNetworkAreaRegionOutput"], () => require("./getNetworkAreaRegion"));
 
 export { GetNetworkAreaRouteArgs, GetNetworkAreaRouteResult, GetNetworkAreaRouteOutputArgs } from "./getNetworkAreaRoute";
 export const getNetworkAreaRoute: typeof import("./getNetworkAreaRoute").getNetworkAreaRoute = null as any;
@@ -230,6 +285,11 @@ export const getRedisInstance: typeof import("./getRedisInstance").getRedisInsta
 export const getRedisInstanceOutput: typeof import("./getRedisInstance").getRedisInstanceOutput = null as any;
 utilities.lazyLoad(exports, ["getRedisInstance","getRedisInstanceOutput"], () => require("./getRedisInstance"));
 
+export { GetResourcemanagerFolderArgs, GetResourcemanagerFolderResult, GetResourcemanagerFolderOutputArgs } from "./getResourcemanagerFolder";
+export const getResourcemanagerFolder: typeof import("./getResourcemanagerFolder").getResourcemanagerFolder = null as any;
+export const getResourcemanagerFolderOutput: typeof import("./getResourcemanagerFolder").getResourcemanagerFolderOutput = null as any;
+utilities.lazyLoad(exports, ["getResourcemanagerFolder","getResourcemanagerFolderOutput"], () => require("./getResourcemanagerFolder"));
+
 export { GetResourcemanagerProjectArgs, GetResourcemanagerProjectResult, GetResourcemanagerProjectOutputArgs } from "./getResourcemanagerProject";
 export const getResourcemanagerProject: typeof import("./getResourcemanagerProject").getResourcemanagerProject = null as any;
 export const getResourcemanagerProjectOutput: typeof import("./getResourcemanagerProject").getResourcemanagerProjectOutput = null as any;
@@ -254,6 +314,21 @@ export { GetRoutingTablesArgs, GetRoutingTablesResult, GetRoutingTablesOutputArg
 export const getRoutingTables: typeof import("./getRoutingTables").getRoutingTables = null as any;
 export const getRoutingTablesOutput: typeof import("./getRoutingTables").getRoutingTablesOutput = null as any;
 utilities.lazyLoad(exports, ["getRoutingTables","getRoutingTablesOutput"], () => require("./getRoutingTables"));
+
+export { GetScfOrganizationArgs, GetScfOrganizationResult, GetScfOrganizationOutputArgs } from "./getScfOrganization";
+export const getScfOrganization: typeof import("./getScfOrganization").getScfOrganization = null as any;
+export const getScfOrganizationOutput: typeof import("./getScfOrganization").getScfOrganizationOutput = null as any;
+utilities.lazyLoad(exports, ["getScfOrganization","getScfOrganizationOutput"], () => require("./getScfOrganization"));
+
+export { GetScfOrganizationManagerArgs, GetScfOrganizationManagerResult, GetScfOrganizationManagerOutputArgs } from "./getScfOrganizationManager";
+export const getScfOrganizationManager: typeof import("./getScfOrganizationManager").getScfOrganizationManager = null as any;
+export const getScfOrganizationManagerOutput: typeof import("./getScfOrganizationManager").getScfOrganizationManagerOutput = null as any;
+utilities.lazyLoad(exports, ["getScfOrganizationManager","getScfOrganizationManagerOutput"], () => require("./getScfOrganizationManager"));
+
+export { GetScfPlatformArgs, GetScfPlatformResult, GetScfPlatformOutputArgs } from "./getScfPlatform";
+export const getScfPlatform: typeof import("./getScfPlatform").getScfPlatform = null as any;
+export const getScfPlatformOutput: typeof import("./getScfPlatform").getScfPlatformOutput = null as any;
+utilities.lazyLoad(exports, ["getScfPlatform","getScfPlatformOutput"], () => require("./getScfPlatform"));
 
 export { GetSecretsmanagerInstanceArgs, GetSecretsmanagerInstanceResult, GetSecretsmanagerInstanceOutputArgs } from "./getSecretsmanagerInstance";
 export const getSecretsmanagerInstance: typeof import("./getSecretsmanagerInstance").getSecretsmanagerInstance = null as any;
@@ -305,6 +380,26 @@ export const getServiceAccount: typeof import("./getServiceAccount").getServiceA
 export const getServiceAccountOutput: typeof import("./getServiceAccount").getServiceAccountOutput = null as any;
 utilities.lazyLoad(exports, ["getServiceAccount","getServiceAccountOutput"], () => require("./getServiceAccount"));
 
+export { GetSfsExportPolicyArgs, GetSfsExportPolicyResult, GetSfsExportPolicyOutputArgs } from "./getSfsExportPolicy";
+export const getSfsExportPolicy: typeof import("./getSfsExportPolicy").getSfsExportPolicy = null as any;
+export const getSfsExportPolicyOutput: typeof import("./getSfsExportPolicy").getSfsExportPolicyOutput = null as any;
+utilities.lazyLoad(exports, ["getSfsExportPolicy","getSfsExportPolicyOutput"], () => require("./getSfsExportPolicy"));
+
+export { GetSfsResourcePoolArgs, GetSfsResourcePoolResult, GetSfsResourcePoolOutputArgs } from "./getSfsResourcePool";
+export const getSfsResourcePool: typeof import("./getSfsResourcePool").getSfsResourcePool = null as any;
+export const getSfsResourcePoolOutput: typeof import("./getSfsResourcePool").getSfsResourcePoolOutput = null as any;
+utilities.lazyLoad(exports, ["getSfsResourcePool","getSfsResourcePoolOutput"], () => require("./getSfsResourcePool"));
+
+export { GetSfsResourcePoolSnapshotArgs, GetSfsResourcePoolSnapshotResult, GetSfsResourcePoolSnapshotOutputArgs } from "./getSfsResourcePoolSnapshot";
+export const getSfsResourcePoolSnapshot: typeof import("./getSfsResourcePoolSnapshot").getSfsResourcePoolSnapshot = null as any;
+export const getSfsResourcePoolSnapshotOutput: typeof import("./getSfsResourcePoolSnapshot").getSfsResourcePoolSnapshotOutput = null as any;
+utilities.lazyLoad(exports, ["getSfsResourcePoolSnapshot","getSfsResourcePoolSnapshotOutput"], () => require("./getSfsResourcePoolSnapshot"));
+
+export { GetSfsShareArgs, GetSfsShareResult, GetSfsShareOutputArgs } from "./getSfsShare";
+export const getSfsShare: typeof import("./getSfsShare").getSfsShare = null as any;
+export const getSfsShareOutput: typeof import("./getSfsShare").getSfsShareOutput = null as any;
+utilities.lazyLoad(exports, ["getSfsShare","getSfsShareOutput"], () => require("./getSfsShare"));
+
 export { GetSkeClusterArgs, GetSkeClusterResult, GetSkeClusterOutputArgs } from "./getSkeCluster";
 export const getSkeCluster: typeof import("./getSkeCluster").getSkeCluster = null as any;
 export const getSkeClusterOutput: typeof import("./getSkeCluster").getSkeClusterOutput = null as any;
@@ -339,6 +434,21 @@ export { KeyPairArgs, KeyPairState } from "./keyPair";
 export type KeyPair = import("./keyPair").KeyPair;
 export const KeyPair: typeof import("./keyPair").KeyPair = null as any;
 utilities.lazyLoad(exports, ["KeyPair"], () => require("./keyPair"));
+
+export { KmsKeyArgs, KmsKeyState } from "./kmsKey";
+export type KmsKey = import("./kmsKey").KmsKey;
+export const KmsKey: typeof import("./kmsKey").KmsKey = null as any;
+utilities.lazyLoad(exports, ["KmsKey"], () => require("./kmsKey"));
+
+export { KmsKeyringArgs, KmsKeyringState } from "./kmsKeyring";
+export type KmsKeyring = import("./kmsKeyring").KmsKeyring;
+export const KmsKeyring: typeof import("./kmsKeyring").KmsKeyring = null as any;
+utilities.lazyLoad(exports, ["KmsKeyring"], () => require("./kmsKeyring"));
+
+export { KmsWrappingKeyArgs, KmsWrappingKeyState } from "./kmsWrappingKey";
+export type KmsWrappingKey = import("./kmsWrappingKey").KmsWrappingKey;
+export const KmsWrappingKey: typeof import("./kmsWrappingKey").KmsWrappingKey = null as any;
+utilities.lazyLoad(exports, ["KmsWrappingKey"], () => require("./kmsWrappingKey"));
 
 export { LoadbalancerArgs, LoadbalancerState } from "./loadbalancer";
 export type Loadbalancer = import("./loadbalancer").Loadbalancer;
@@ -394,6 +504,11 @@ export { NetworkAreaArgs, NetworkAreaState } from "./networkArea";
 export type NetworkArea = import("./networkArea").NetworkArea;
 export const NetworkArea: typeof import("./networkArea").NetworkArea = null as any;
 utilities.lazyLoad(exports, ["NetworkArea"], () => require("./networkArea"));
+
+export { NetworkAreaRegionArgs, NetworkAreaRegionState } from "./networkAreaRegion";
+export type NetworkAreaRegion = import("./networkAreaRegion").NetworkAreaRegion;
+export const NetworkAreaRegion: typeof import("./networkAreaRegion").NetworkAreaRegion = null as any;
+utilities.lazyLoad(exports, ["NetworkAreaRegion"], () => require("./networkAreaRegion"));
 
 export { NetworkAreaRouteArgs, NetworkAreaRouteState } from "./networkAreaRoute";
 export type NetworkAreaRoute = import("./networkAreaRoute").NetworkAreaRoute;
@@ -503,6 +618,11 @@ export type RedisInstance = import("./redisInstance").RedisInstance;
 export const RedisInstance: typeof import("./redisInstance").RedisInstance = null as any;
 utilities.lazyLoad(exports, ["RedisInstance"], () => require("./redisInstance"));
 
+export { ResourcemanagerFolderArgs, ResourcemanagerFolderState } from "./resourcemanagerFolder";
+export type ResourcemanagerFolder = import("./resourcemanagerFolder").ResourcemanagerFolder;
+export const ResourcemanagerFolder: typeof import("./resourcemanagerFolder").ResourcemanagerFolder = null as any;
+utilities.lazyLoad(exports, ["ResourcemanagerFolder"], () => require("./resourcemanagerFolder"));
+
 export { ResourcemanagerProjectArgs, ResourcemanagerProjectState } from "./resourcemanagerProject";
 export type ResourcemanagerProject = import("./resourcemanagerProject").ResourcemanagerProject;
 export const ResourcemanagerProject: typeof import("./resourcemanagerProject").ResourcemanagerProject = null as any;
@@ -517,6 +637,16 @@ export { RoutingTableRouteArgs, RoutingTableRouteState } from "./routingTableRou
 export type RoutingTableRoute = import("./routingTableRoute").RoutingTableRoute;
 export const RoutingTableRoute: typeof import("./routingTableRoute").RoutingTableRoute = null as any;
 utilities.lazyLoad(exports, ["RoutingTableRoute"], () => require("./routingTableRoute"));
+
+export { ScfOrganizationArgs, ScfOrganizationState } from "./scfOrganization";
+export type ScfOrganization = import("./scfOrganization").ScfOrganization;
+export const ScfOrganization: typeof import("./scfOrganization").ScfOrganization = null as any;
+utilities.lazyLoad(exports, ["ScfOrganization"], () => require("./scfOrganization"));
+
+export { ScfOrganizationManagerArgs, ScfOrganizationManagerState } from "./scfOrganizationManager";
+export type ScfOrganizationManager = import("./scfOrganizationManager").ScfOrganizationManager;
+export const ScfOrganizationManager: typeof import("./scfOrganizationManager").ScfOrganizationManager = null as any;
+utilities.lazyLoad(exports, ["ScfOrganizationManager"], () => require("./scfOrganizationManager"));
 
 export { SecretsmanagerInstanceArgs, SecretsmanagerInstanceState } from "./secretsmanagerInstance";
 export type SecretsmanagerInstance = import("./secretsmanagerInstance").SecretsmanagerInstance;
@@ -583,6 +713,21 @@ export type ServiceAccountKey = import("./serviceAccountKey").ServiceAccountKey;
 export const ServiceAccountKey: typeof import("./serviceAccountKey").ServiceAccountKey = null as any;
 utilities.lazyLoad(exports, ["ServiceAccountKey"], () => require("./serviceAccountKey"));
 
+export { SfsExportPolicyArgs, SfsExportPolicyState } from "./sfsExportPolicy";
+export type SfsExportPolicy = import("./sfsExportPolicy").SfsExportPolicy;
+export const SfsExportPolicy: typeof import("./sfsExportPolicy").SfsExportPolicy = null as any;
+utilities.lazyLoad(exports, ["SfsExportPolicy"], () => require("./sfsExportPolicy"));
+
+export { SfsResourcePoolArgs, SfsResourcePoolState } from "./sfsResourcePool";
+export type SfsResourcePool = import("./sfsResourcePool").SfsResourcePool;
+export const SfsResourcePool: typeof import("./sfsResourcePool").SfsResourcePool = null as any;
+utilities.lazyLoad(exports, ["SfsResourcePool"], () => require("./sfsResourcePool"));
+
+export { SfsShareArgs, SfsShareState } from "./sfsShare";
+export type SfsShare = import("./sfsShare").SfsShare;
+export const SfsShare: typeof import("./sfsShare").SfsShare = null as any;
+utilities.lazyLoad(exports, ["SfsShare"], () => require("./sfsShare"));
+
 export { SkeClusterArgs, SkeClusterState } from "./skeCluster";
 export type SkeCluster = import("./skeCluster").SkeCluster;
 export const SkeCluster: typeof import("./skeCluster").SkeCluster = null as any;
@@ -636,12 +781,24 @@ const _module = {
                 return new DnsRecordSet(name, <any>undefined, { urn })
             case "stackit:index/dnsZone:DnsZone":
                 return new DnsZone(name, <any>undefined, { urn })
+            case "stackit:index/edgecloudInstance:EdgecloudInstance":
+                return new EdgecloudInstance(name, <any>undefined, { urn })
+            case "stackit:index/edgecloudKubeconfig:EdgecloudKubeconfig":
+                return new EdgecloudKubeconfig(name, <any>undefined, { urn })
+            case "stackit:index/edgecloudToken:EdgecloudToken":
+                return new EdgecloudToken(name, <any>undefined, { urn })
             case "stackit:index/git:Git":
                 return new Git(name, <any>undefined, { urn })
             case "stackit:index/image:Image":
                 return new Image(name, <any>undefined, { urn })
             case "stackit:index/keyPair:KeyPair":
                 return new KeyPair(name, <any>undefined, { urn })
+            case "stackit:index/kmsKey:KmsKey":
+                return new KmsKey(name, <any>undefined, { urn })
+            case "stackit:index/kmsKeyring:KmsKeyring":
+                return new KmsKeyring(name, <any>undefined, { urn })
+            case "stackit:index/kmsWrappingKey:KmsWrappingKey":
+                return new KmsWrappingKey(name, <any>undefined, { urn })
             case "stackit:index/loadbalancer:Loadbalancer":
                 return new Loadbalancer(name, <any>undefined, { urn })
             case "stackit:index/loadbalancerObservabilityCredential:LoadbalancerObservabilityCredential":
@@ -664,6 +821,8 @@ const _module = {
                 return new Network(name, <any>undefined, { urn })
             case "stackit:index/networkArea:NetworkArea":
                 return new NetworkArea(name, <any>undefined, { urn })
+            case "stackit:index/networkAreaRegion:NetworkAreaRegion":
+                return new NetworkAreaRegion(name, <any>undefined, { urn })
             case "stackit:index/networkAreaRoute:NetworkAreaRoute":
                 return new NetworkAreaRoute(name, <any>undefined, { urn })
             case "stackit:index/networkInterface:NetworkInterface":
@@ -706,12 +865,18 @@ const _module = {
                 return new RedisCredential(name, <any>undefined, { urn })
             case "stackit:index/redisInstance:RedisInstance":
                 return new RedisInstance(name, <any>undefined, { urn })
+            case "stackit:index/resourcemanagerFolder:ResourcemanagerFolder":
+                return new ResourcemanagerFolder(name, <any>undefined, { urn })
             case "stackit:index/resourcemanagerProject:ResourcemanagerProject":
                 return new ResourcemanagerProject(name, <any>undefined, { urn })
             case "stackit:index/routingTable:RoutingTable":
                 return new RoutingTable(name, <any>undefined, { urn })
             case "stackit:index/routingTableRoute:RoutingTableRoute":
                 return new RoutingTableRoute(name, <any>undefined, { urn })
+            case "stackit:index/scfOrganization:ScfOrganization":
+                return new ScfOrganization(name, <any>undefined, { urn })
+            case "stackit:index/scfOrganizationManager:ScfOrganizationManager":
+                return new ScfOrganizationManager(name, <any>undefined, { urn })
             case "stackit:index/secretsmanagerInstance:SecretsmanagerInstance":
                 return new SecretsmanagerInstance(name, <any>undefined, { urn })
             case "stackit:index/secretsmanagerUser:SecretsmanagerUser":
@@ -738,6 +903,12 @@ const _module = {
                 return new ServiceAccountAccessToken(name, <any>undefined, { urn })
             case "stackit:index/serviceAccountKey:ServiceAccountKey":
                 return new ServiceAccountKey(name, <any>undefined, { urn })
+            case "stackit:index/sfsExportPolicy:SfsExportPolicy":
+                return new SfsExportPolicy(name, <any>undefined, { urn })
+            case "stackit:index/sfsResourcePool:SfsResourcePool":
+                return new SfsResourcePool(name, <any>undefined, { urn })
+            case "stackit:index/sfsShare:SfsShare":
+                return new SfsShare(name, <any>undefined, { urn })
             case "stackit:index/skeCluster:SkeCluster":
                 return new SkeCluster(name, <any>undefined, { urn })
             case "stackit:index/skeKubeconfig:SkeKubeconfig":
@@ -760,9 +931,15 @@ pulumi.runtime.registerResourceModule("stackit", "index/cdnCustomDomain", _modul
 pulumi.runtime.registerResourceModule("stackit", "index/cdnDistribution", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/dnsRecordSet", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/dnsZone", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/edgecloudInstance", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/edgecloudKubeconfig", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/edgecloudToken", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/git", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/image", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/keyPair", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/kmsKey", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/kmsKeyring", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/kmsWrappingKey", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/loadbalancer", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/loadbalancerObservabilityCredential", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/logmeCredential", _module)
@@ -774,6 +951,7 @@ pulumi.runtime.registerResourceModule("stackit", "index/mongodbflexInstance", _m
 pulumi.runtime.registerResourceModule("stackit", "index/mongodbflexUser", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/network", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/networkArea", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/networkAreaRegion", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/networkAreaRoute", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/networkInterface", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/objectstorageBucket", _module)
@@ -795,9 +973,12 @@ pulumi.runtime.registerResourceModule("stackit", "index/rabbitmqCredential", _mo
 pulumi.runtime.registerResourceModule("stackit", "index/rabbitmqInstance", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/redisCredential", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/redisInstance", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/resourcemanagerFolder", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/resourcemanagerProject", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/routingTable", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/routingTableRoute", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/scfOrganization", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/scfOrganizationManager", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/secretsmanagerInstance", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/secretsmanagerUser", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/securityGroup", _module)
@@ -811,6 +992,9 @@ pulumi.runtime.registerResourceModule("stackit", "index/serverVolumeAttach", _mo
 pulumi.runtime.registerResourceModule("stackit", "index/serviceAccount", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/serviceAccountAccessToken", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/serviceAccountKey", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/sfsExportPolicy", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/sfsResourcePool", _module)
+pulumi.runtime.registerResourceModule("stackit", "index/sfsShare", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/skeCluster", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/skeKubeconfig", _module)
 pulumi.runtime.registerResourceModule("stackit", "index/sqlserverflexInstance", _module)

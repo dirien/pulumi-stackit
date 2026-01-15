@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Observability scrape config resource schema. Must have a `region` specified in the provider configuration.
+    /// Observability scrape config resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -61,7 +61,7 @@ namespace ediri.Stackit
         public Output<int> SampleLimit { get; private set; } = null!;
 
         /// <summary>
-        /// Specifies the http scheme. Defaults to `https`.
+        /// Specifies the http scheme. Defaults to `Https`.
         /// </summary>
         [Output("scheme")]
         public Output<string> Scheme { get; private set; } = null!;
@@ -174,7 +174,7 @@ namespace ediri.Stackit
         public Input<int>? SampleLimit { get; set; }
 
         /// <summary>
-        /// Specifies the http scheme. Defaults to `https`.
+        /// Specifies the http scheme. Defaults to `Https`.
         /// </summary>
         [Input("scheme")]
         public Input<string>? Scheme { get; set; }
@@ -254,7 +254,7 @@ namespace ediri.Stackit
         public Input<int>? SampleLimit { get; set; }
 
         /// <summary>
-        /// Specifies the http scheme. Defaults to `https`.
+        /// Specifies the http scheme. Defaults to `Https`.
         /// </summary>
         [Input("scheme")]
         public Input<string>? Scheme { get; set; }

@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetIaasProject
     {
         /// <summary>
-        /// Project details. Must have a `region` specified in the provider configuration.
+        /// Project details. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -27,7 +27,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetIaasProjectResult>("stackit:index/getIaasProject:getIaasProject", args ?? new GetIaasProjectArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Project details. Must have a `region` specified in the provider configuration.
+        /// Project details. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -41,7 +41,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetIaasProjectResult>("stackit:index/getIaasProject:getIaasProject", args ?? new GetIaasProjectInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Project details. Must have a `region` specified in the provider configuration.
+        /// Project details. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -106,9 +106,13 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string ProjectId;
         /// <summary>
-        /// Specifies the state of the project.
+        /// Specifies the status of the project.
         /// </summary>
         public readonly string State;
+        /// <summary>
+        /// Specifies the status of the project.
+        /// </summary>
+        public readonly string Status;
         /// <summary>
         /// Date-time when the project was last updated.
         /// </summary>
@@ -128,6 +132,8 @@ namespace ediri.Stackit
 
             string state,
 
+            string status,
+
             string updatedAt)
         {
             AreaId = areaId;
@@ -136,6 +142,7 @@ namespace ediri.Stackit
             InternetAccess = internetAccess;
             ProjectId = projectId;
             State = state;
+            Status = status;
             UpdatedAt = updatedAt;
         }
     }
