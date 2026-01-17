@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetObservabilityScrapeconfig
     {
         /// <summary>
-        /// Observability scrape config data source schema. Must have a `region` specified in the provider configuration.
+        /// Observability scrape config data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -29,7 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetObservabilityScrapeconfigResult>("stackit:index/getObservabilityScrapeconfig:getObservabilityScrapeconfig", args ?? new GetObservabilityScrapeconfigArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Observability scrape config data source schema. Must have a `region` specified in the provider configuration.
+        /// Observability scrape config data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -45,7 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetObservabilityScrapeconfigResult>("stackit:index/getObservabilityScrapeconfig:getObservabilityScrapeconfig", args ?? new GetObservabilityScrapeconfigInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Observability scrape config data source schema. Must have a `region` specified in the provider configuration.
+        /// Observability scrape config data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
