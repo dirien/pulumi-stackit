@@ -12,8 +12,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// Volume resource schema. Must have a `region` specified in the provider configuration.
-//
 // ## Example Usage
 type Volume struct {
 	pulumi.CustomResourceState
@@ -22,14 +20,19 @@ type Volume struct {
 	AvailabilityZone pulumi.StringOutput `pulumi:"availabilityZone"`
 	// The description of the volume.
 	Description pulumi.StringOutput `pulumi:"description"`
+	// Indicates if the volume is encrypted.
+	Encrypted            pulumi.BoolOutput                   `pulumi:"encrypted"`
+	EncryptionParameters VolumeEncryptionParametersPtrOutput `pulumi:"encryptionParameters"`
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// The name of the volume.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+	// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
 	PerformanceClass pulumi.StringOutput `pulumi:"performanceClass"`
 	// STACKIT project ID to which the volume is associated.
 	ProjectId pulumi.StringOutput `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringOutput `pulumi:"region"`
 	// The server ID of the server to which the volume is attached to.
 	ServerId pulumi.StringOutput `pulumi:"serverId"`
 	// The size of the volume in GB. It can only be updated to a larger value than the current size. Either `size` or `source` must be provided
@@ -80,14 +83,19 @@ type volumeState struct {
 	AvailabilityZone *string `pulumi:"availabilityZone"`
 	// The description of the volume.
 	Description *string `pulumi:"description"`
+	// Indicates if the volume is encrypted.
+	Encrypted            *bool                       `pulumi:"encrypted"`
+	EncryptionParameters *VolumeEncryptionParameters `pulumi:"encryptionParameters"`
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels map[string]string `pulumi:"labels"`
 	// The name of the volume.
 	Name *string `pulumi:"name"`
-	// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+	// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
 	PerformanceClass *string `pulumi:"performanceClass"`
 	// STACKIT project ID to which the volume is associated.
 	ProjectId *string `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The server ID of the server to which the volume is attached to.
 	ServerId *string `pulumi:"serverId"`
 	// The size of the volume in GB. It can only be updated to a larger value than the current size. Either `size` or `source` must be provided
@@ -103,14 +111,19 @@ type VolumeState struct {
 	AvailabilityZone pulumi.StringPtrInput
 	// The description of the volume.
 	Description pulumi.StringPtrInput
+	// Indicates if the volume is encrypted.
+	Encrypted            pulumi.BoolPtrInput
+	EncryptionParameters VolumeEncryptionParametersPtrInput
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels pulumi.StringMapInput
 	// The name of the volume.
 	Name pulumi.StringPtrInput
-	// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+	// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
 	PerformanceClass pulumi.StringPtrInput
 	// STACKIT project ID to which the volume is associated.
 	ProjectId pulumi.StringPtrInput
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput
 	// The server ID of the server to which the volume is attached to.
 	ServerId pulumi.StringPtrInput
 	// The size of the volume in GB. It can only be updated to a larger value than the current size. Either `size` or `source` must be provided
@@ -129,15 +142,18 @@ type volumeArgs struct {
 	// The availability zone of the volume.
 	AvailabilityZone string `pulumi:"availabilityZone"`
 	// The description of the volume.
-	Description *string `pulumi:"description"`
+	Description          *string                     `pulumi:"description"`
+	EncryptionParameters *VolumeEncryptionParameters `pulumi:"encryptionParameters"`
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels map[string]string `pulumi:"labels"`
 	// The name of the volume.
 	Name *string `pulumi:"name"`
-	// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+	// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
 	PerformanceClass *string `pulumi:"performanceClass"`
 	// STACKIT project ID to which the volume is associated.
 	ProjectId string `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The size of the volume in GB. It can only be updated to a larger value than the current size. Either `size` or `source` must be provided
 	Size *int `pulumi:"size"`
 	// The source of the volume. It can be either a volume, an image, a snapshot or a backup. Either `size` or `source` must be provided
@@ -149,15 +165,18 @@ type VolumeArgs struct {
 	// The availability zone of the volume.
 	AvailabilityZone pulumi.StringInput
 	// The description of the volume.
-	Description pulumi.StringPtrInput
+	Description          pulumi.StringPtrInput
+	EncryptionParameters VolumeEncryptionParametersPtrInput
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels pulumi.StringMapInput
 	// The name of the volume.
 	Name pulumi.StringPtrInput
-	// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+	// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
 	PerformanceClass pulumi.StringPtrInput
 	// STACKIT project ID to which the volume is associated.
 	ProjectId pulumi.StringInput
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput
 	// The size of the volume in GB. It can only be updated to a larger value than the current size. Either `size` or `source` must be provided
 	Size pulumi.IntPtrInput
 	// The source of the volume. It can be either a volume, an image, a snapshot or a backup. Either `size` or `source` must be provided
@@ -261,6 +280,15 @@ func (o VolumeOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v *Volume) pulumi.StringOutput { return v.Description }).(pulumi.StringOutput)
 }
 
+// Indicates if the volume is encrypted.
+func (o VolumeOutput) Encrypted() pulumi.BoolOutput {
+	return o.ApplyT(func(v *Volume) pulumi.BoolOutput { return v.Encrypted }).(pulumi.BoolOutput)
+}
+
+func (o VolumeOutput) EncryptionParameters() VolumeEncryptionParametersPtrOutput {
+	return o.ApplyT(func(v *Volume) VolumeEncryptionParametersPtrOutput { return v.EncryptionParameters }).(VolumeEncryptionParametersPtrOutput)
+}
+
 // Labels are key-value string pairs which can be attached to a resource container
 func (o VolumeOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Volume) pulumi.StringMapOutput { return v.Labels }).(pulumi.StringMapOutput)
@@ -271,7 +299,7 @@ func (o VolumeOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Volume) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
 func (o VolumeOutput) PerformanceClass() pulumi.StringOutput {
 	return o.ApplyT(func(v *Volume) pulumi.StringOutput { return v.PerformanceClass }).(pulumi.StringOutput)
 }
@@ -279,6 +307,11 @@ func (o VolumeOutput) PerformanceClass() pulumi.StringOutput {
 // STACKIT project ID to which the volume is associated.
 func (o VolumeOutput) ProjectId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Volume) pulumi.StringOutput { return v.ProjectId }).(pulumi.StringOutput)
+}
+
+// The resource region. If not defined, the provider region is used.
+func (o VolumeOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v *Volume) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }
 
 // The server ID of the server to which the volume is attached to.

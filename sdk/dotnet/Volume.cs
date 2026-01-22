@@ -11,8 +11,6 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Volume resource schema. Must have a `region` specified in the provider configuration.
-    /// 
     /// ## Example Usage
     /// </summary>
     [StackitResourceType("stackit:index/volume:Volume")]
@@ -31,6 +29,15 @@ namespace ediri.Stackit
         public Output<string> Description { get; private set; } = null!;
 
         /// <summary>
+        /// Indicates if the volume is encrypted.
+        /// </summary>
+        [Output("encrypted")]
+        public Output<bool> Encrypted { get; private set; } = null!;
+
+        [Output("encryptionParameters")]
+        public Output<Outputs.VolumeEncryptionParameters?> EncryptionParameters { get; private set; } = null!;
+
+        /// <summary>
         /// Labels are key-value string pairs which can be attached to a resource container
         /// </summary>
         [Output("labels")]
@@ -43,7 +50,7 @@ namespace ediri.Stackit
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+        /// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
         /// </summary>
         [Output("performanceClass")]
         public Output<string> PerformanceClass { get; private set; } = null!;
@@ -55,19 +62,25 @@ namespace ediri.Stackit
         public Output<string> ProjectId { get; private set; } = null!;
 
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Output("region")]
+        public Output<string> Region { get; private set; } = null!;
+
+        /// <summary>
         /// The server ID of the server to which the volume is attached to.
         /// </summary>
         [Output("serverId")]
         public Output<string> ServerId { get; private set; } = null!;
 
         /// <summary>
-        /// The size of the volume in GB. It can only be updated to a larger value than the current size. Either `size` or `source` must be provided
+        /// The size of the volume in GB. It can only be updated to a larger value than the current size. Either `Size` or `Source` must be provided
         /// </summary>
         [Output("size")]
         public Output<int> Size { get; private set; } = null!;
 
         /// <summary>
-        /// The source of the volume. It can be either a volume, an image, a snapshot or a backup. Either `size` or `source` must be provided
+        /// The source of the volume. It can be either a volume, an image, a snapshot or a backup. Either `Size` or `Source` must be provided
         /// </summary>
         [Output("source")]
         public Output<Outputs.VolumeSource?> Source { get; private set; } = null!;
@@ -137,6 +150,9 @@ namespace ediri.Stackit
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        [Input("encryptionParameters")]
+        public Input<Inputs.VolumeEncryptionParametersArgs>? EncryptionParameters { get; set; }
+
         [Input("labels")]
         private InputMap<string>? _labels;
 
@@ -156,7 +172,7 @@ namespace ediri.Stackit
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+        /// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
         /// </summary>
         [Input("performanceClass")]
         public Input<string>? PerformanceClass { get; set; }
@@ -168,13 +184,19 @@ namespace ediri.Stackit
         public Input<string> ProjectId { get; set; } = null!;
 
         /// <summary>
-        /// The size of the volume in GB. It can only be updated to a larger value than the current size. Either `size` or `source` must be provided
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
+
+        /// <summary>
+        /// The size of the volume in GB. It can only be updated to a larger value than the current size. Either `Size` or `Source` must be provided
         /// </summary>
         [Input("size")]
         public Input<int>? Size { get; set; }
 
         /// <summary>
-        /// The source of the volume. It can be either a volume, an image, a snapshot or a backup. Either `size` or `source` must be provided
+        /// The source of the volume. It can be either a volume, an image, a snapshot or a backup. Either `Size` or `Source` must be provided
         /// </summary>
         [Input("source")]
         public Input<Inputs.VolumeSourceArgs>? Source { get; set; }
@@ -199,6 +221,15 @@ namespace ediri.Stackit
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// Indicates if the volume is encrypted.
+        /// </summary>
+        [Input("encrypted")]
+        public Input<bool>? Encrypted { get; set; }
+
+        [Input("encryptionParameters")]
+        public Input<Inputs.VolumeEncryptionParametersGetArgs>? EncryptionParameters { get; set; }
+
         [Input("labels")]
         private InputMap<string>? _labels;
 
@@ -218,7 +249,7 @@ namespace ediri.Stackit
         public Input<string>? Name { get; set; }
 
         /// <summary>
-        /// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+        /// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
         /// </summary>
         [Input("performanceClass")]
         public Input<string>? PerformanceClass { get; set; }
@@ -230,19 +261,25 @@ namespace ediri.Stackit
         public Input<string>? ProjectId { get; set; }
 
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
+
+        /// <summary>
         /// The server ID of the server to which the volume is attached to.
         /// </summary>
         [Input("serverId")]
         public Input<string>? ServerId { get; set; }
 
         /// <summary>
-        /// The size of the volume in GB. It can only be updated to a larger value than the current size. Either `size` or `source` must be provided
+        /// The size of the volume in GB. It can only be updated to a larger value than the current size. Either `Size` or `Source` must be provided
         /// </summary>
         [Input("size")]
         public Input<int>? Size { get; set; }
 
         /// <summary>
-        /// The source of the volume. It can be either a volume, an image, a snapshot or a backup. Either `size` or `source` must be provided
+        /// The source of the volume. It can be either a volume, an image, a snapshot or a backup. Either `Size` or `Source` must be provided
         /// </summary>
         [Input("source")]
         public Input<Inputs.VolumeSourceGetArgs>? Source { get; set; }

@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetSkeCluster
     {
         /// <summary>
-        /// SKE Cluster data source schema. Must have a `region` specified in the provider configuration.
+        /// SKE Cluster data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetSkeClusterResult>("stackit:index/getSkeCluster:getSkeCluster", args ?? new GetSkeClusterArgs(), options.WithDefaults());
 
         /// <summary>
-        /// SKE Cluster data source schema. Must have a `region` specified in the provider configuration.
+        /// SKE Cluster data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetSkeClusterResult>("stackit:index/getSkeCluster:getSkeCluster", args ?? new GetSkeClusterInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// SKE Cluster data source schema. Must have a `region` specified in the provider configuration.
+        /// SKE Cluster data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -129,7 +129,7 @@ namespace ediri.Stackit
         public readonly ImmutableArray<Outputs.GetSkeClusterHibernationResult> Hibernations;
         public readonly string Id;
         /// <summary>
-        /// The minimum Kubernetes version, this field is always nil. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the `kubernetes_version_used` field.
+        /// The minimum Kubernetes version, this field is always nil. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes &amp; OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current kubernetes version being used for your cluster, use the `KubernetesVersionUsed` field.
         /// </summary>
         public readonly string KubernetesVersionMin;
         /// <summary>
@@ -149,7 +149,7 @@ namespace ediri.Stackit
         /// </summary>
         public readonly Outputs.GetSkeClusterNetworkResult Network;
         /// <summary>
-        /// One or more `node_pool` block as defined below.
+        /// One or more `NodePool` block as defined below.
         /// </summary>
         public readonly ImmutableArray<Outputs.GetSkeClusterNodePoolResult> NodePools;
         /// <summary>
