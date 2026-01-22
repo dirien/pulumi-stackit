@@ -59,15 +59,17 @@ type LookupObservabilityInstanceResult struct {
 	JaegerUiUrl     string `pulumi:"jaegerUiUrl"`
 	// Specifies URL for pushing logs.
 	LogsPushUrl string `pulumi:"logsPushUrl"`
+	// Specifies for how many days the logs are kept. Default is set to `7`.
+	LogsRetentionDays int `pulumi:"logsRetentionDays"`
 	// Specifies Logs URL.
 	LogsUrl string `pulumi:"logsUrl"`
 	// Specifies URL for pushing metrics.
 	MetricsPushUrl string `pulumi:"metricsPushUrl"`
-	// Specifies for how many days the raw metrics are kept.
+	// Specifies for how many days the raw metrics are kept. Default is set to `90`.
 	MetricsRetentionDays int `pulumi:"metricsRetentionDays"`
-	// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+	// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
 	MetricsRetentionDays1hDownsampling int `pulumi:"metricsRetentionDays1hDownsampling"`
-	// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+	// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
 	MetricsRetentionDays5mDownsampling int `pulumi:"metricsRetentionDays5mDownsampling"`
 	// Specifies metrics URL.
 	MetricsUrl string `pulumi:"metricsUrl"`
@@ -83,8 +85,10 @@ type LookupObservabilityInstanceResult struct {
 	// STACKIT project ID to which the instance is associated.
 	ProjectId string `pulumi:"projectId"`
 	// Specifies Targets URL.
-	TargetsUrl     string `pulumi:"targetsUrl"`
-	ZipkinSpansUrl string `pulumi:"zipkinSpansUrl"`
+	TargetsUrl string `pulumi:"targetsUrl"`
+	// Specifies for how many days the traces are kept. Default is set to `7`.
+	TracesRetentionDays int    `pulumi:"tracesRetentionDays"`
+	ZipkinSpansUrl      string `pulumi:"zipkinSpansUrl"`
 }
 
 func LookupObservabilityInstanceOutput(ctx *pulumi.Context, args LookupObservabilityInstanceOutputArgs, opts ...pulumi.InvokeOption) LookupObservabilityInstanceResultOutput {
@@ -190,6 +194,11 @@ func (o LookupObservabilityInstanceResultOutput) LogsPushUrl() pulumi.StringOutp
 	return o.ApplyT(func(v LookupObservabilityInstanceResult) string { return v.LogsPushUrl }).(pulumi.StringOutput)
 }
 
+// Specifies for how many days the logs are kept. Default is set to `7`.
+func (o LookupObservabilityInstanceResultOutput) LogsRetentionDays() pulumi.IntOutput {
+	return o.ApplyT(func(v LookupObservabilityInstanceResult) int { return v.LogsRetentionDays }).(pulumi.IntOutput)
+}
+
 // Specifies Logs URL.
 func (o LookupObservabilityInstanceResultOutput) LogsUrl() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupObservabilityInstanceResult) string { return v.LogsUrl }).(pulumi.StringOutput)
@@ -200,17 +209,17 @@ func (o LookupObservabilityInstanceResultOutput) MetricsPushUrl() pulumi.StringO
 	return o.ApplyT(func(v LookupObservabilityInstanceResult) string { return v.MetricsPushUrl }).(pulumi.StringOutput)
 }
 
-// Specifies for how many days the raw metrics are kept.
+// Specifies for how many days the raw metrics are kept. Default is set to `90`.
 func (o LookupObservabilityInstanceResultOutput) MetricsRetentionDays() pulumi.IntOutput {
 	return o.ApplyT(func(v LookupObservabilityInstanceResult) int { return v.MetricsRetentionDays }).(pulumi.IntOutput)
 }
 
-// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
 func (o LookupObservabilityInstanceResultOutput) MetricsRetentionDays1hDownsampling() pulumi.IntOutput {
 	return o.ApplyT(func(v LookupObservabilityInstanceResult) int { return v.MetricsRetentionDays1hDownsampling }).(pulumi.IntOutput)
 }
 
-// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
 func (o LookupObservabilityInstanceResultOutput) MetricsRetentionDays5mDownsampling() pulumi.IntOutput {
 	return o.ApplyT(func(v LookupObservabilityInstanceResult) int { return v.MetricsRetentionDays5mDownsampling }).(pulumi.IntOutput)
 }
@@ -252,6 +261,11 @@ func (o LookupObservabilityInstanceResultOutput) ProjectId() pulumi.StringOutput
 // Specifies Targets URL.
 func (o LookupObservabilityInstanceResultOutput) TargetsUrl() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupObservabilityInstanceResult) string { return v.TargetsUrl }).(pulumi.StringOutput)
+}
+
+// Specifies for how many days the traces are kept. Default is set to `7`.
+func (o LookupObservabilityInstanceResultOutput) TracesRetentionDays() pulumi.IntOutput {
+	return o.ApplyT(func(v LookupObservabilityInstanceResult) int { return v.TracesRetentionDays }).(pulumi.IntOutput)
 }
 
 func (o LookupObservabilityInstanceResultOutput) ZipkinSpansUrl() pulumi.StringOutput {
