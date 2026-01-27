@@ -28,6 +28,8 @@ func LookupCdnCustomDomain(ctx *pulumi.Context, args *LookupCdnCustomDomainArgs,
 
 // A collection of arguments for invoking getCdnCustomDomain.
 type LookupCdnCustomDomainArgs struct {
+	// The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+	Certificate *GetCdnCustomDomainCertificate `pulumi:"certificate"`
 	// CDN distribution ID
 	DistributionId string `pulumi:"distributionId"`
 	Name           string `pulumi:"name"`
@@ -37,6 +39,8 @@ type LookupCdnCustomDomainArgs struct {
 
 // A collection of values returned by getCdnCustomDomain.
 type LookupCdnCustomDomainResult struct {
+	// The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+	Certificate *GetCdnCustomDomainCertificate `pulumi:"certificate"`
 	// CDN distribution ID
 	DistributionId string `pulumi:"distributionId"`
 	// List of distribution errors
@@ -60,6 +64,8 @@ func LookupCdnCustomDomainOutput(ctx *pulumi.Context, args LookupCdnCustomDomain
 
 // A collection of arguments for invoking getCdnCustomDomain.
 type LookupCdnCustomDomainOutputArgs struct {
+	// The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+	Certificate GetCdnCustomDomainCertificatePtrInput `pulumi:"certificate"`
 	// CDN distribution ID
 	DistributionId pulumi.StringInput `pulumi:"distributionId"`
 	Name           pulumi.StringInput `pulumi:"name"`
@@ -84,6 +90,11 @@ func (o LookupCdnCustomDomainResultOutput) ToLookupCdnCustomDomainResultOutput()
 
 func (o LookupCdnCustomDomainResultOutput) ToLookupCdnCustomDomainResultOutputWithContext(ctx context.Context) LookupCdnCustomDomainResultOutput {
 	return o
+}
+
+// The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+func (o LookupCdnCustomDomainResultOutput) Certificate() GetCdnCustomDomainCertificatePtrOutput {
+	return o.ApplyT(func(v LookupCdnCustomDomainResult) *GetCdnCustomDomainCertificate { return v.Certificate }).(GetCdnCustomDomainCertificatePtrOutput)
 }
 
 // CDN distribution ID

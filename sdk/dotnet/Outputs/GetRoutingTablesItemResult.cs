@@ -27,6 +27,10 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly string Description;
         /// <summary>
+        /// This controls whether dynamic routes are propagated to this routing table
+        /// </summary>
+        public readonly bool DynamicRoutes;
+        /// <summary>
         /// Labels are key-value string pairs which can be attached to a resource container
         /// </summary>
         public readonly ImmutableDictionary<string, string> Labels;
@@ -55,6 +59,8 @@ namespace ediri.Stackit.Outputs
 
             string description,
 
+            bool dynamicRoutes,
+
             ImmutableDictionary<string, string> labels,
 
             string name,
@@ -68,6 +74,7 @@ namespace ediri.Stackit.Outputs
             CreatedAt = createdAt;
             Default = @default;
             Description = description;
+            DynamicRoutes = dynamicRoutes;
             Labels = labels;
             Name = name;
             RoutingTableId = routingTableId;
