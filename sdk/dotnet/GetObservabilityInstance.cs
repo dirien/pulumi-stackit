@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetObservabilityInstance
     {
         /// <summary>
-        /// Observability instance data source schema. Must have a `region` specified in the provider configuration.
+        /// Observability instance data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetObservabilityInstanceResult>("stackit:index/getObservabilityInstance:getObservabilityInstance", args ?? new GetObservabilityInstanceArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Observability instance data source schema. Must have a `region` specified in the provider configuration.
+        /// Observability instance data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetObservabilityInstanceResult>("stackit:index/getObservabilityInstance:getObservabilityInstance", args ?? new GetObservabilityInstanceInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Observability instance data source schema. Must have a `region` specified in the provider configuration.
+        /// Observability instance data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -120,13 +120,9 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string DashboardUrl;
         /// <summary>
-        /// Specifies an initial Grafana admin password.
+        /// If true, a default Grafana server admin user was created.
         /// </summary>
-        public readonly string GrafanaInitialAdminPassword;
-        /// <summary>
-        /// Specifies an initial Grafana admin username.
-        /// </summary>
-        public readonly string GrafanaInitialAdminUser;
+        public readonly bool GrafanaAdminEnabled;
         /// <summary>
         /// If true, anyone can access Grafana dashboards without logging in.
         /// </summary>
@@ -151,6 +147,10 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string LogsPushUrl;
         /// <summary>
+        /// Specifies for how many days the logs are kept. Default is set to `7`.
+        /// </summary>
+        public readonly int LogsRetentionDays;
+        /// <summary>
         /// Specifies Logs URL.
         /// </summary>
         public readonly string LogsUrl;
@@ -159,15 +159,15 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string MetricsPushUrl;
         /// <summary>
-        /// Specifies for how many days the raw metrics are kept.
+        /// Specifies for how many days the raw metrics are kept. Default is set to `90`.
         /// </summary>
         public readonly int MetricsRetentionDays;
         /// <summary>
-        /// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+        /// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
         /// </summary>
         public readonly int MetricsRetentionDays1hDownsampling;
         /// <summary>
-        /// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        /// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         /// </summary>
         public readonly int MetricsRetentionDays5mDownsampling;
         /// <summary>
@@ -199,6 +199,10 @@ namespace ediri.Stackit
         /// Specifies Targets URL.
         /// </summary>
         public readonly string TargetsUrl;
+        /// <summary>
+        /// Specifies for how many days the traces are kept. Default is set to `7`.
+        /// </summary>
+        public readonly int TracesRetentionDays;
         public readonly string ZipkinSpansUrl;
 
         [OutputConstructor]
@@ -211,9 +215,7 @@ namespace ediri.Stackit
 
             string dashboardUrl,
 
-            string grafanaInitialAdminPassword,
-
-            string grafanaInitialAdminUser,
+            bool grafanaAdminEnabled,
 
             bool grafanaPublicReadAccess,
 
@@ -230,6 +232,8 @@ namespace ediri.Stackit
             string jaegerUiUrl,
 
             string logsPushUrl,
+
+            int logsRetentionDays,
 
             string logsUrl,
 
@@ -257,14 +261,15 @@ namespace ediri.Stackit
 
             string targetsUrl,
 
+            int tracesRetentionDays,
+
             string zipkinSpansUrl)
         {
             Acls = acls;
             AlertConfig = alertConfig;
             AlertingUrl = alertingUrl;
             DashboardUrl = dashboardUrl;
-            GrafanaInitialAdminPassword = grafanaInitialAdminPassword;
-            GrafanaInitialAdminUser = grafanaInitialAdminUser;
+            GrafanaAdminEnabled = grafanaAdminEnabled;
             GrafanaPublicReadAccess = grafanaPublicReadAccess;
             GrafanaUrl = grafanaUrl;
             Id = id;
@@ -273,6 +278,7 @@ namespace ediri.Stackit
             JaegerTracesUrl = jaegerTracesUrl;
             JaegerUiUrl = jaegerUiUrl;
             LogsPushUrl = logsPushUrl;
+            LogsRetentionDays = logsRetentionDays;
             LogsUrl = logsUrl;
             MetricsPushUrl = metricsPushUrl;
             MetricsRetentionDays = metricsRetentionDays;
@@ -286,6 +292,7 @@ namespace ediri.Stackit
             PlanName = planName;
             ProjectId = projectId;
             TargetsUrl = targetsUrl;
+            TracesRetentionDays = tracesRetentionDays;
             ZipkinSpansUrl = zipkinSpansUrl;
         }
     }

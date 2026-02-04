@@ -7,30 +7,45 @@ from . import _utilities
 import typing
 # Export this package's modules as members:
 from .affinity_group import *
+from .authorization_folder_role_assignment import *
 from .authorization_organization_role_assignment import *
+from .authorization_project_custom_role import *
 from .authorization_project_role_assignment import *
 from .cdn_custom_domain import *
 from .cdn_distribution import *
 from .dns_record_set import *
 from .dns_zone import *
+from .edgecloud_instance import *
+from .edgecloud_kubeconfig import *
+from .edgecloud_token import *
 from .get_affinity_group import *
+from .get_authorization_project_custom_role import *
 from .get_cdn_custom_domain import *
 from .get_cdn_distribution import *
 from .get_dns_record_set import *
 from .get_dns_zone import *
+from .get_edgecloud_instances import *
+from .get_edgecloud_plans import *
 from .get_git import *
 from .get_iaas_project import *
 from .get_image import *
+from .get_image_v2 import *
 from .get_key_pair import *
+from .get_kms_key import *
+from .get_kms_keyring import *
+from .get_kms_wrapping_key import *
 from .get_loadbalancer import *
 from .get_logme_credential import *
 from .get_logme_instance import *
+from .get_logs_instance import *
+from .get_machine_type import *
 from .get_mariadb_credential import *
 from .get_mariadb_instance import *
 from .get_mongodbflex_instance import *
 from .get_mongodbflex_user import *
 from .get_network import *
 from .get_network_area import *
+from .get_network_area_region import *
 from .get_network_area_route import *
 from .get_network_interface import *
 from .get_objectstorage_bucket import *
@@ -51,11 +66,15 @@ from .get_rabbitmq_credential import *
 from .get_rabbitmq_instance import *
 from .get_redis_credential import *
 from .get_redis_instance import *
+from .get_resourcemanager_folder import *
 from .get_resourcemanager_project import *
 from .get_routing_table import *
 from .get_routing_table_route import *
 from .get_routing_table_routes import *
 from .get_routing_tables import *
+from .get_scf_organization import *
+from .get_scf_organization_manager import *
+from .get_scf_platform import *
 from .get_secretsmanager_instance import *
 from .get_secretsmanager_user import *
 from .get_security_group import *
@@ -66,17 +85,27 @@ from .get_server_backup_schedules import *
 from .get_server_update_schedule import *
 from .get_server_update_schedules import *
 from .get_service_account import *
+from .get_sfs_export_policy import *
+from .get_sfs_resource_pool import *
+from .get_sfs_resource_pool_snapshot import *
+from .get_sfs_share import *
 from .get_ske_cluster import *
+from .get_ske_kubernetes_versions import *
+from .get_ske_machine_image_versions import *
 from .get_sqlserverflex_instance import *
 from .get_sqlserverflex_user import *
 from .get_volume import *
 from .git import *
 from .image import *
 from .key_pair import *
+from .kms_key import *
+from .kms_keyring import *
+from .kms_wrapping_key import *
 from .loadbalancer import *
 from .loadbalancer_observability_credential import *
 from .logme_credential import *
 from .logme_instance import *
+from .logs_instance import *
 from .mariadb_credential import *
 from .mariadb_instance import *
 from .modelserving_token import *
@@ -84,6 +113,7 @@ from .mongodbflex_instance import *
 from .mongodbflex_user import *
 from .network import *
 from .network_area import *
+from .network_area_region import *
 from .network_area_route import *
 from .network_interface import *
 from .objectstorage_bucket import *
@@ -106,9 +136,12 @@ from .rabbitmq_credential import *
 from .rabbitmq_instance import *
 from .redis_credential import *
 from .redis_instance import *
+from .resourcemanager_folder import *
 from .resourcemanager_project import *
 from .routing_table import *
 from .routing_table_route import *
+from .scf_organization import *
+from .scf_organization_manager import *
 from .secretsmanager_instance import *
 from .secretsmanager_user import *
 from .security_group import *
@@ -122,6 +155,9 @@ from .server_volume_attach import *
 from .service_account import *
 from .service_account_access_token import *
 from .service_account_key import *
+from .sfs_export_policy import *
+from .sfs_resource_pool import *
+from .sfs_share import *
 from .ske_cluster import *
 from .ske_kubeconfig import *
 from .sqlserverflex_instance import *
@@ -150,10 +186,26 @@ _utilities.register(
  },
  {
   "pkg": "stackit",
+  "mod": "index/authorizationFolderRoleAssignment",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/authorizationFolderRoleAssignment:AuthorizationFolderRoleAssignment": "AuthorizationFolderRoleAssignment"
+  }
+ },
+ {
+  "pkg": "stackit",
   "mod": "index/authorizationOrganizationRoleAssignment",
   "fqn": "ediri_stackit",
   "classes": {
    "stackit:index/authorizationOrganizationRoleAssignment:AuthorizationOrganizationRoleAssignment": "AuthorizationOrganizationRoleAssignment"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/authorizationProjectCustomRole",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/authorizationProjectCustomRole:AuthorizationProjectCustomRole": "AuthorizationProjectCustomRole"
   }
  },
  {
@@ -198,6 +250,30 @@ _utilities.register(
  },
  {
   "pkg": "stackit",
+  "mod": "index/edgecloudInstance",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/edgecloudInstance:EdgecloudInstance": "EdgecloudInstance"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/edgecloudKubeconfig",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/edgecloudKubeconfig:EdgecloudKubeconfig": "EdgecloudKubeconfig"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/edgecloudToken",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/edgecloudToken:EdgecloudToken": "EdgecloudToken"
+  }
+ },
+ {
+  "pkg": "stackit",
   "mod": "index/git",
   "fqn": "ediri_stackit",
   "classes": {
@@ -218,6 +294,30 @@ _utilities.register(
   "fqn": "ediri_stackit",
   "classes": {
    "stackit:index/keyPair:KeyPair": "KeyPair"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/kmsKey",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/kmsKey:KmsKey": "KmsKey"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/kmsKeyring",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/kmsKeyring:KmsKeyring": "KmsKeyring"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/kmsWrappingKey",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/kmsWrappingKey:KmsWrappingKey": "KmsWrappingKey"
   }
  },
  {
@@ -250,6 +350,14 @@ _utilities.register(
   "fqn": "ediri_stackit",
   "classes": {
    "stackit:index/logmeInstance:LogmeInstance": "LogmeInstance"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/logsInstance",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/logsInstance:LogsInstance": "LogsInstance"
   }
  },
  {
@@ -306,6 +414,14 @@ _utilities.register(
   "fqn": "ediri_stackit",
   "classes": {
    "stackit:index/networkArea:NetworkArea": "NetworkArea"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/networkAreaRegion",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/networkAreaRegion:NetworkAreaRegion": "NetworkAreaRegion"
   }
  },
  {
@@ -478,6 +594,14 @@ _utilities.register(
  },
  {
   "pkg": "stackit",
+  "mod": "index/resourcemanagerFolder",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/resourcemanagerFolder:ResourcemanagerFolder": "ResourcemanagerFolder"
+  }
+ },
+ {
+  "pkg": "stackit",
   "mod": "index/resourcemanagerProject",
   "fqn": "ediri_stackit",
   "classes": {
@@ -498,6 +622,22 @@ _utilities.register(
   "fqn": "ediri_stackit",
   "classes": {
    "stackit:index/routingTableRoute:RoutingTableRoute": "RoutingTableRoute"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/scfOrganization",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/scfOrganization:ScfOrganization": "ScfOrganization"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/scfOrganizationManager",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/scfOrganizationManager:ScfOrganizationManager": "ScfOrganizationManager"
   }
  },
  {
@@ -602,6 +742,30 @@ _utilities.register(
   "fqn": "ediri_stackit",
   "classes": {
    "stackit:index/serviceAccountKey:ServiceAccountKey": "ServiceAccountKey"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/sfsExportPolicy",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/sfsExportPolicy:SfsExportPolicy": "SfsExportPolicy"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/sfsResourcePool",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/sfsResourcePool:SfsResourcePool": "SfsResourcePool"
+  }
+ },
+ {
+  "pkg": "stackit",
+  "mod": "index/sfsShare",
+  "fqn": "ediri_stackit",
+  "classes": {
+   "stackit:index/sfsShare:SfsShare": "SfsShare"
   }
  },
  {

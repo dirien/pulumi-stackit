@@ -19,7 +19,7 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly bool Enabled;
         /// <summary>
-        /// Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+        /// Observability instance ID to choose which Observability instance is used. Required when enabled is set to `True`.
         /// </summary>
         public readonly string InstanceId;
 
