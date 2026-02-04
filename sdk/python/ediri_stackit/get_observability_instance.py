@@ -27,7 +27,7 @@ class GetObservabilityInstanceResult:
     """
     A collection of values returned by getObservabilityInstance.
     """
-    def __init__(__self__, acls=None, alert_config=None, alerting_url=None, dashboard_url=None, grafana_initial_admin_password=None, grafana_initial_admin_user=None, grafana_public_read_access=None, grafana_url=None, id=None, instance_id=None, is_updatable=None, jaeger_traces_url=None, jaeger_ui_url=None, logs_push_url=None, logs_url=None, metrics_push_url=None, metrics_retention_days=None, metrics_retention_days1h_downsampling=None, metrics_retention_days5m_downsampling=None, metrics_url=None, name=None, otlp_traces_url=None, parameters=None, plan_id=None, plan_name=None, project_id=None, targets_url=None, zipkin_spans_url=None):
+    def __init__(__self__, acls=None, alert_config=None, alerting_url=None, dashboard_url=None, grafana_admin_enabled=None, grafana_public_read_access=None, grafana_url=None, id=None, instance_id=None, is_updatable=None, jaeger_traces_url=None, jaeger_ui_url=None, logs_push_url=None, logs_retention_days=None, logs_url=None, metrics_push_url=None, metrics_retention_days=None, metrics_retention_days1h_downsampling=None, metrics_retention_days5m_downsampling=None, metrics_url=None, name=None, otlp_traces_url=None, parameters=None, plan_id=None, plan_name=None, project_id=None, targets_url=None, traces_retention_days=None, zipkin_spans_url=None):
         if acls and not isinstance(acls, list):
             raise TypeError("Expected argument 'acls' to be a list")
         pulumi.set(__self__, "acls", acls)
@@ -40,12 +40,9 @@ class GetObservabilityInstanceResult:
         if dashboard_url and not isinstance(dashboard_url, str):
             raise TypeError("Expected argument 'dashboard_url' to be a str")
         pulumi.set(__self__, "dashboard_url", dashboard_url)
-        if grafana_initial_admin_password and not isinstance(grafana_initial_admin_password, str):
-            raise TypeError("Expected argument 'grafana_initial_admin_password' to be a str")
-        pulumi.set(__self__, "grafana_initial_admin_password", grafana_initial_admin_password)
-        if grafana_initial_admin_user and not isinstance(grafana_initial_admin_user, str):
-            raise TypeError("Expected argument 'grafana_initial_admin_user' to be a str")
-        pulumi.set(__self__, "grafana_initial_admin_user", grafana_initial_admin_user)
+        if grafana_admin_enabled and not isinstance(grafana_admin_enabled, bool):
+            raise TypeError("Expected argument 'grafana_admin_enabled' to be a bool")
+        pulumi.set(__self__, "grafana_admin_enabled", grafana_admin_enabled)
         if grafana_public_read_access and not isinstance(grafana_public_read_access, bool):
             raise TypeError("Expected argument 'grafana_public_read_access' to be a bool")
         pulumi.set(__self__, "grafana_public_read_access", grafana_public_read_access)
@@ -70,6 +67,9 @@ class GetObservabilityInstanceResult:
         if logs_push_url and not isinstance(logs_push_url, str):
             raise TypeError("Expected argument 'logs_push_url' to be a str")
         pulumi.set(__self__, "logs_push_url", logs_push_url)
+        if logs_retention_days and not isinstance(logs_retention_days, int):
+            raise TypeError("Expected argument 'logs_retention_days' to be a int")
+        pulumi.set(__self__, "logs_retention_days", logs_retention_days)
         if logs_url and not isinstance(logs_url, str):
             raise TypeError("Expected argument 'logs_url' to be a str")
         pulumi.set(__self__, "logs_url", logs_url)
@@ -109,6 +109,9 @@ class GetObservabilityInstanceResult:
         if targets_url and not isinstance(targets_url, str):
             raise TypeError("Expected argument 'targets_url' to be a str")
         pulumi.set(__self__, "targets_url", targets_url)
+        if traces_retention_days and not isinstance(traces_retention_days, int):
+            raise TypeError("Expected argument 'traces_retention_days' to be a int")
+        pulumi.set(__self__, "traces_retention_days", traces_retention_days)
         if zipkin_spans_url and not isinstance(zipkin_spans_url, str):
             raise TypeError("Expected argument 'zipkin_spans_url' to be a str")
         pulumi.set(__self__, "zipkin_spans_url", zipkin_spans_url)
@@ -146,20 +149,12 @@ class GetObservabilityInstanceResult:
         return pulumi.get(self, "dashboard_url")
 
     @_builtins.property
-    @pulumi.getter(name="grafanaInitialAdminPassword")
-    def grafana_initial_admin_password(self) -> _builtins.str:
+    @pulumi.getter(name="grafanaAdminEnabled")
+    def grafana_admin_enabled(self) -> _builtins.bool:
         """
-        Specifies an initial Grafana admin password.
+        If true, a default Grafana server admin user was created.
         """
-        return pulumi.get(self, "grafana_initial_admin_password")
-
-    @_builtins.property
-    @pulumi.getter(name="grafanaInitialAdminUser")
-    def grafana_initial_admin_user(self) -> _builtins.str:
-        """
-        Specifies an initial Grafana admin username.
-        """
-        return pulumi.get(self, "grafana_initial_admin_user")
+        return pulumi.get(self, "grafana_admin_enabled")
 
     @_builtins.property
     @pulumi.getter(name="grafanaPublicReadAccess")
@@ -217,6 +212,14 @@ class GetObservabilityInstanceResult:
         return pulumi.get(self, "logs_push_url")
 
     @_builtins.property
+    @pulumi.getter(name="logsRetentionDays")
+    def logs_retention_days(self) -> _builtins.int:
+        """
+        Specifies for how many days the logs are kept. Default is set to `7`.
+        """
+        return pulumi.get(self, "logs_retention_days")
+
+    @_builtins.property
     @pulumi.getter(name="logsUrl")
     def logs_url(self) -> _builtins.str:
         """
@@ -236,7 +239,7 @@ class GetObservabilityInstanceResult:
     @pulumi.getter(name="metricsRetentionDays")
     def metrics_retention_days(self) -> _builtins.int:
         """
-        Specifies for how many days the raw metrics are kept.
+        Specifies for how many days the raw metrics are kept. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days")
 
@@ -244,7 +247,7 @@ class GetObservabilityInstanceResult:
     @pulumi.getter(name="metricsRetentionDays1hDownsampling")
     def metrics_retention_days1h_downsampling(self) -> _builtins.int:
         """
-        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days1h_downsampling")
 
@@ -252,7 +255,7 @@ class GetObservabilityInstanceResult:
     @pulumi.getter(name="metricsRetentionDays5mDownsampling")
     def metrics_retention_days5m_downsampling(self) -> _builtins.int:
         """
-        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days5m_downsampling")
 
@@ -318,6 +321,14 @@ class GetObservabilityInstanceResult:
         return pulumi.get(self, "targets_url")
 
     @_builtins.property
+    @pulumi.getter(name="tracesRetentionDays")
+    def traces_retention_days(self) -> _builtins.int:
+        """
+        Specifies for how many days the traces are kept. Default is set to `7`.
+        """
+        return pulumi.get(self, "traces_retention_days")
+
+    @_builtins.property
     @pulumi.getter(name="zipkinSpansUrl")
     def zipkin_spans_url(self) -> _builtins.str:
         return pulumi.get(self, "zipkin_spans_url")
@@ -333,8 +344,7 @@ class AwaitableGetObservabilityInstanceResult(GetObservabilityInstanceResult):
             alert_config=self.alert_config,
             alerting_url=self.alerting_url,
             dashboard_url=self.dashboard_url,
-            grafana_initial_admin_password=self.grafana_initial_admin_password,
-            grafana_initial_admin_user=self.grafana_initial_admin_user,
+            grafana_admin_enabled=self.grafana_admin_enabled,
             grafana_public_read_access=self.grafana_public_read_access,
             grafana_url=self.grafana_url,
             id=self.id,
@@ -343,6 +353,7 @@ class AwaitableGetObservabilityInstanceResult(GetObservabilityInstanceResult):
             jaeger_traces_url=self.jaeger_traces_url,
             jaeger_ui_url=self.jaeger_ui_url,
             logs_push_url=self.logs_push_url,
+            logs_retention_days=self.logs_retention_days,
             logs_url=self.logs_url,
             metrics_push_url=self.metrics_push_url,
             metrics_retention_days=self.metrics_retention_days,
@@ -356,6 +367,7 @@ class AwaitableGetObservabilityInstanceResult(GetObservabilityInstanceResult):
             plan_name=self.plan_name,
             project_id=self.project_id,
             targets_url=self.targets_url,
+            traces_retention_days=self.traces_retention_days,
             zipkin_spans_url=self.zipkin_spans_url)
 
 
@@ -382,8 +394,7 @@ def get_observability_instance(instance_id: Optional[_builtins.str] = None,
         alert_config=pulumi.get(__ret__, 'alert_config'),
         alerting_url=pulumi.get(__ret__, 'alerting_url'),
         dashboard_url=pulumi.get(__ret__, 'dashboard_url'),
-        grafana_initial_admin_password=pulumi.get(__ret__, 'grafana_initial_admin_password'),
-        grafana_initial_admin_user=pulumi.get(__ret__, 'grafana_initial_admin_user'),
+        grafana_admin_enabled=pulumi.get(__ret__, 'grafana_admin_enabled'),
         grafana_public_read_access=pulumi.get(__ret__, 'grafana_public_read_access'),
         grafana_url=pulumi.get(__ret__, 'grafana_url'),
         id=pulumi.get(__ret__, 'id'),
@@ -392,6 +403,7 @@ def get_observability_instance(instance_id: Optional[_builtins.str] = None,
         jaeger_traces_url=pulumi.get(__ret__, 'jaeger_traces_url'),
         jaeger_ui_url=pulumi.get(__ret__, 'jaeger_ui_url'),
         logs_push_url=pulumi.get(__ret__, 'logs_push_url'),
+        logs_retention_days=pulumi.get(__ret__, 'logs_retention_days'),
         logs_url=pulumi.get(__ret__, 'logs_url'),
         metrics_push_url=pulumi.get(__ret__, 'metrics_push_url'),
         metrics_retention_days=pulumi.get(__ret__, 'metrics_retention_days'),
@@ -405,6 +417,7 @@ def get_observability_instance(instance_id: Optional[_builtins.str] = None,
         plan_name=pulumi.get(__ret__, 'plan_name'),
         project_id=pulumi.get(__ret__, 'project_id'),
         targets_url=pulumi.get(__ret__, 'targets_url'),
+        traces_retention_days=pulumi.get(__ret__, 'traces_retention_days'),
         zipkin_spans_url=pulumi.get(__ret__, 'zipkin_spans_url'))
 def get_observability_instance_output(instance_id: Optional[pulumi.Input[_builtins.str]] = None,
                                       project_id: Optional[pulumi.Input[_builtins.str]] = None,
@@ -428,8 +441,7 @@ def get_observability_instance_output(instance_id: Optional[pulumi.Input[_builti
         alert_config=pulumi.get(__response__, 'alert_config'),
         alerting_url=pulumi.get(__response__, 'alerting_url'),
         dashboard_url=pulumi.get(__response__, 'dashboard_url'),
-        grafana_initial_admin_password=pulumi.get(__response__, 'grafana_initial_admin_password'),
-        grafana_initial_admin_user=pulumi.get(__response__, 'grafana_initial_admin_user'),
+        grafana_admin_enabled=pulumi.get(__response__, 'grafana_admin_enabled'),
         grafana_public_read_access=pulumi.get(__response__, 'grafana_public_read_access'),
         grafana_url=pulumi.get(__response__, 'grafana_url'),
         id=pulumi.get(__response__, 'id'),
@@ -438,6 +450,7 @@ def get_observability_instance_output(instance_id: Optional[pulumi.Input[_builti
         jaeger_traces_url=pulumi.get(__response__, 'jaeger_traces_url'),
         jaeger_ui_url=pulumi.get(__response__, 'jaeger_ui_url'),
         logs_push_url=pulumi.get(__response__, 'logs_push_url'),
+        logs_retention_days=pulumi.get(__response__, 'logs_retention_days'),
         logs_url=pulumi.get(__response__, 'logs_url'),
         metrics_push_url=pulumi.get(__response__, 'metrics_push_url'),
         metrics_retention_days=pulumi.get(__response__, 'metrics_retention_days'),
@@ -451,4 +464,5 @@ def get_observability_instance_output(instance_id: Optional[pulumi.Input[_builti
         plan_name=pulumi.get(__response__, 'plan_name'),
         project_id=pulumi.get(__response__, 'project_id'),
         targets_url=pulumi.get(__response__, 'targets_url'),
+        traces_retention_days=pulumi.get(__response__, 'traces_retention_days'),
         zipkin_spans_url=pulumi.get(__response__, 'zipkin_spans_url')))

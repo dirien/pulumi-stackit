@@ -26,10 +26,8 @@ type ObservabilityInstance struct {
 	AlertingUrl pulumi.StringOutput `pulumi:"alertingUrl"`
 	// Specifies Observability instance dashboard URL.
 	DashboardUrl pulumi.StringOutput `pulumi:"dashboardUrl"`
-	// Specifies an initial Grafana admin password.
-	GrafanaInitialAdminPassword pulumi.StringOutput `pulumi:"grafanaInitialAdminPassword"`
-	// Specifies an initial Grafana admin username.
-	GrafanaInitialAdminUser pulumi.StringOutput `pulumi:"grafanaInitialAdminUser"`
+	// If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+	GrafanaAdminEnabled pulumi.BoolOutput `pulumi:"grafanaAdminEnabled"`
 	// If true, anyone can access Grafana dashboards without logging in.
 	GrafanaPublicReadAccess pulumi.BoolOutput `pulumi:"grafanaPublicReadAccess"`
 	// Specifies Grafana URL.
@@ -42,15 +40,17 @@ type ObservabilityInstance struct {
 	JaegerUiUrl     pulumi.StringOutput `pulumi:"jaegerUiUrl"`
 	// Specifies URL for pushing logs.
 	LogsPushUrl pulumi.StringOutput `pulumi:"logsPushUrl"`
+	// Specifies for how many days the logs are kept. Default is set to `7`.
+	LogsRetentionDays pulumi.IntOutput `pulumi:"logsRetentionDays"`
 	// Specifies Logs URL.
 	LogsUrl pulumi.StringOutput `pulumi:"logsUrl"`
 	// Specifies URL for pushing metrics.
 	MetricsPushUrl pulumi.StringOutput `pulumi:"metricsPushUrl"`
-	// Specifies for how many days the raw metrics are kept.
+	// Specifies for how many days the raw metrics are kept. Default is set to `90`.
 	MetricsRetentionDays pulumi.IntOutput `pulumi:"metricsRetentionDays"`
-	// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+	// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
 	MetricsRetentionDays1hDownsampling pulumi.IntOutput `pulumi:"metricsRetentionDays1hDownsampling"`
-	// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+	// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
 	MetricsRetentionDays5mDownsampling pulumi.IntOutput `pulumi:"metricsRetentionDays5mDownsampling"`
 	// Specifies metrics URL.
 	MetricsUrl pulumi.StringOutput `pulumi:"metricsUrl"`
@@ -66,8 +66,10 @@ type ObservabilityInstance struct {
 	// STACKIT project ID to which the instance is associated.
 	ProjectId pulumi.StringOutput `pulumi:"projectId"`
 	// Specifies Targets URL.
-	TargetsUrl     pulumi.StringOutput `pulumi:"targetsUrl"`
-	ZipkinSpansUrl pulumi.StringOutput `pulumi:"zipkinSpansUrl"`
+	TargetsUrl pulumi.StringOutput `pulumi:"targetsUrl"`
+	// Specifies for how many days the traces are kept. Default is set to `7`.
+	TracesRetentionDays pulumi.IntOutput    `pulumi:"tracesRetentionDays"`
+	ZipkinSpansUrl      pulumi.StringOutput `pulumi:"zipkinSpansUrl"`
 }
 
 // NewObservabilityInstance registers a new resource with the given unique name, arguments, and options.
@@ -83,10 +85,6 @@ func NewObservabilityInstance(ctx *pulumi.Context,
 	if args.ProjectId == nil {
 		return nil, errors.New("invalid value for required argument 'ProjectId'")
 	}
-	secrets := pulumi.AdditionalSecretOutputs([]string{
-		"grafanaInitialAdminPassword",
-	})
-	opts = append(opts, secrets)
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource ObservabilityInstance
 	err := ctx.RegisterResource("stackit:index/observabilityInstance:ObservabilityInstance", name, args, &resource, opts...)
@@ -118,10 +116,8 @@ type observabilityInstanceState struct {
 	AlertingUrl *string `pulumi:"alertingUrl"`
 	// Specifies Observability instance dashboard URL.
 	DashboardUrl *string `pulumi:"dashboardUrl"`
-	// Specifies an initial Grafana admin password.
-	GrafanaInitialAdminPassword *string `pulumi:"grafanaInitialAdminPassword"`
-	// Specifies an initial Grafana admin username.
-	GrafanaInitialAdminUser *string `pulumi:"grafanaInitialAdminUser"`
+	// If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+	GrafanaAdminEnabled *bool `pulumi:"grafanaAdminEnabled"`
 	// If true, anyone can access Grafana dashboards without logging in.
 	GrafanaPublicReadAccess *bool `pulumi:"grafanaPublicReadAccess"`
 	// Specifies Grafana URL.
@@ -134,15 +130,17 @@ type observabilityInstanceState struct {
 	JaegerUiUrl     *string `pulumi:"jaegerUiUrl"`
 	// Specifies URL for pushing logs.
 	LogsPushUrl *string `pulumi:"logsPushUrl"`
+	// Specifies for how many days the logs are kept. Default is set to `7`.
+	LogsRetentionDays *int `pulumi:"logsRetentionDays"`
 	// Specifies Logs URL.
 	LogsUrl *string `pulumi:"logsUrl"`
 	// Specifies URL for pushing metrics.
 	MetricsPushUrl *string `pulumi:"metricsPushUrl"`
-	// Specifies for how many days the raw metrics are kept.
+	// Specifies for how many days the raw metrics are kept. Default is set to `90`.
 	MetricsRetentionDays *int `pulumi:"metricsRetentionDays"`
-	// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+	// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
 	MetricsRetentionDays1hDownsampling *int `pulumi:"metricsRetentionDays1hDownsampling"`
-	// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+	// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
 	MetricsRetentionDays5mDownsampling *int `pulumi:"metricsRetentionDays5mDownsampling"`
 	// Specifies metrics URL.
 	MetricsUrl *string `pulumi:"metricsUrl"`
@@ -158,8 +156,10 @@ type observabilityInstanceState struct {
 	// STACKIT project ID to which the instance is associated.
 	ProjectId *string `pulumi:"projectId"`
 	// Specifies Targets URL.
-	TargetsUrl     *string `pulumi:"targetsUrl"`
-	ZipkinSpansUrl *string `pulumi:"zipkinSpansUrl"`
+	TargetsUrl *string `pulumi:"targetsUrl"`
+	// Specifies for how many days the traces are kept. Default is set to `7`.
+	TracesRetentionDays *int    `pulumi:"tracesRetentionDays"`
+	ZipkinSpansUrl      *string `pulumi:"zipkinSpansUrl"`
 }
 
 type ObservabilityInstanceState struct {
@@ -171,10 +171,8 @@ type ObservabilityInstanceState struct {
 	AlertingUrl pulumi.StringPtrInput
 	// Specifies Observability instance dashboard URL.
 	DashboardUrl pulumi.StringPtrInput
-	// Specifies an initial Grafana admin password.
-	GrafanaInitialAdminPassword pulumi.StringPtrInput
-	// Specifies an initial Grafana admin username.
-	GrafanaInitialAdminUser pulumi.StringPtrInput
+	// If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+	GrafanaAdminEnabled pulumi.BoolPtrInput
 	// If true, anyone can access Grafana dashboards without logging in.
 	GrafanaPublicReadAccess pulumi.BoolPtrInput
 	// Specifies Grafana URL.
@@ -187,15 +185,17 @@ type ObservabilityInstanceState struct {
 	JaegerUiUrl     pulumi.StringPtrInput
 	// Specifies URL for pushing logs.
 	LogsPushUrl pulumi.StringPtrInput
+	// Specifies for how many days the logs are kept. Default is set to `7`.
+	LogsRetentionDays pulumi.IntPtrInput
 	// Specifies Logs URL.
 	LogsUrl pulumi.StringPtrInput
 	// Specifies URL for pushing metrics.
 	MetricsPushUrl pulumi.StringPtrInput
-	// Specifies for how many days the raw metrics are kept.
+	// Specifies for how many days the raw metrics are kept. Default is set to `90`.
 	MetricsRetentionDays pulumi.IntPtrInput
-	// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+	// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
 	MetricsRetentionDays1hDownsampling pulumi.IntPtrInput
-	// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+	// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
 	MetricsRetentionDays5mDownsampling pulumi.IntPtrInput
 	// Specifies metrics URL.
 	MetricsUrl pulumi.StringPtrInput
@@ -211,8 +211,10 @@ type ObservabilityInstanceState struct {
 	// STACKIT project ID to which the instance is associated.
 	ProjectId pulumi.StringPtrInput
 	// Specifies Targets URL.
-	TargetsUrl     pulumi.StringPtrInput
-	ZipkinSpansUrl pulumi.StringPtrInput
+	TargetsUrl pulumi.StringPtrInput
+	// Specifies for how many days the traces are kept. Default is set to `7`.
+	TracesRetentionDays pulumi.IntPtrInput
+	ZipkinSpansUrl      pulumi.StringPtrInput
 }
 
 func (ObservabilityInstanceState) ElementType() reflect.Type {
@@ -224,11 +226,15 @@ type observabilityInstanceArgs struct {
 	Acls []string `pulumi:"acls"`
 	// Alert configuration for the instance.
 	AlertConfig *ObservabilityInstanceAlertConfig `pulumi:"alertConfig"`
-	// Specifies for how many days the raw metrics are kept.
+	// If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+	GrafanaAdminEnabled *bool `pulumi:"grafanaAdminEnabled"`
+	// Specifies for how many days the logs are kept. Default is set to `7`.
+	LogsRetentionDays *int `pulumi:"logsRetentionDays"`
+	// Specifies for how many days the raw metrics are kept. Default is set to `90`.
 	MetricsRetentionDays *int `pulumi:"metricsRetentionDays"`
-	// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+	// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
 	MetricsRetentionDays1hDownsampling *int `pulumi:"metricsRetentionDays1hDownsampling"`
-	// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+	// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
 	MetricsRetentionDays5mDownsampling *int `pulumi:"metricsRetentionDays5mDownsampling"`
 	// The name of the Observability instance.
 	Name *string `pulumi:"name"`
@@ -238,6 +244,8 @@ type observabilityInstanceArgs struct {
 	PlanName string `pulumi:"planName"`
 	// STACKIT project ID to which the instance is associated.
 	ProjectId string `pulumi:"projectId"`
+	// Specifies for how many days the traces are kept. Default is set to `7`.
+	TracesRetentionDays *int `pulumi:"tracesRetentionDays"`
 }
 
 // The set of arguments for constructing a ObservabilityInstance resource.
@@ -246,11 +254,15 @@ type ObservabilityInstanceArgs struct {
 	Acls pulumi.StringArrayInput
 	// Alert configuration for the instance.
 	AlertConfig ObservabilityInstanceAlertConfigPtrInput
-	// Specifies for how many days the raw metrics are kept.
+	// If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+	GrafanaAdminEnabled pulumi.BoolPtrInput
+	// Specifies for how many days the logs are kept. Default is set to `7`.
+	LogsRetentionDays pulumi.IntPtrInput
+	// Specifies for how many days the raw metrics are kept. Default is set to `90`.
 	MetricsRetentionDays pulumi.IntPtrInput
-	// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+	// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
 	MetricsRetentionDays1hDownsampling pulumi.IntPtrInput
-	// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+	// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
 	MetricsRetentionDays5mDownsampling pulumi.IntPtrInput
 	// The name of the Observability instance.
 	Name pulumi.StringPtrInput
@@ -260,6 +272,8 @@ type ObservabilityInstanceArgs struct {
 	PlanName pulumi.StringInput
 	// STACKIT project ID to which the instance is associated.
 	ProjectId pulumi.StringInput
+	// Specifies for how many days the traces are kept. Default is set to `7`.
+	TracesRetentionDays pulumi.IntPtrInput
 }
 
 func (ObservabilityInstanceArgs) ElementType() reflect.Type {
@@ -369,14 +383,9 @@ func (o ObservabilityInstanceOutput) DashboardUrl() pulumi.StringOutput {
 	return o.ApplyT(func(v *ObservabilityInstance) pulumi.StringOutput { return v.DashboardUrl }).(pulumi.StringOutput)
 }
 
-// Specifies an initial Grafana admin password.
-func (o ObservabilityInstanceOutput) GrafanaInitialAdminPassword() pulumi.StringOutput {
-	return o.ApplyT(func(v *ObservabilityInstance) pulumi.StringOutput { return v.GrafanaInitialAdminPassword }).(pulumi.StringOutput)
-}
-
-// Specifies an initial Grafana admin username.
-func (o ObservabilityInstanceOutput) GrafanaInitialAdminUser() pulumi.StringOutput {
-	return o.ApplyT(func(v *ObservabilityInstance) pulumi.StringOutput { return v.GrafanaInitialAdminUser }).(pulumi.StringOutput)
+// If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+func (o ObservabilityInstanceOutput) GrafanaAdminEnabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v *ObservabilityInstance) pulumi.BoolOutput { return v.GrafanaAdminEnabled }).(pulumi.BoolOutput)
 }
 
 // If true, anyone can access Grafana dashboards without logging in.
@@ -412,6 +421,11 @@ func (o ObservabilityInstanceOutput) LogsPushUrl() pulumi.StringOutput {
 	return o.ApplyT(func(v *ObservabilityInstance) pulumi.StringOutput { return v.LogsPushUrl }).(pulumi.StringOutput)
 }
 
+// Specifies for how many days the logs are kept. Default is set to `7`.
+func (o ObservabilityInstanceOutput) LogsRetentionDays() pulumi.IntOutput {
+	return o.ApplyT(func(v *ObservabilityInstance) pulumi.IntOutput { return v.LogsRetentionDays }).(pulumi.IntOutput)
+}
+
 // Specifies Logs URL.
 func (o ObservabilityInstanceOutput) LogsUrl() pulumi.StringOutput {
 	return o.ApplyT(func(v *ObservabilityInstance) pulumi.StringOutput { return v.LogsUrl }).(pulumi.StringOutput)
@@ -422,17 +436,17 @@ func (o ObservabilityInstanceOutput) MetricsPushUrl() pulumi.StringOutput {
 	return o.ApplyT(func(v *ObservabilityInstance) pulumi.StringOutput { return v.MetricsPushUrl }).(pulumi.StringOutput)
 }
 
-// Specifies for how many days the raw metrics are kept.
+// Specifies for how many days the raw metrics are kept. Default is set to `90`.
 func (o ObservabilityInstanceOutput) MetricsRetentionDays() pulumi.IntOutput {
 	return o.ApplyT(func(v *ObservabilityInstance) pulumi.IntOutput { return v.MetricsRetentionDays }).(pulumi.IntOutput)
 }
 
-// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
 func (o ObservabilityInstanceOutput) MetricsRetentionDays1hDownsampling() pulumi.IntOutput {
 	return o.ApplyT(func(v *ObservabilityInstance) pulumi.IntOutput { return v.MetricsRetentionDays1hDownsampling }).(pulumi.IntOutput)
 }
 
-// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
 func (o ObservabilityInstanceOutput) MetricsRetentionDays5mDownsampling() pulumi.IntOutput {
 	return o.ApplyT(func(v *ObservabilityInstance) pulumi.IntOutput { return v.MetricsRetentionDays5mDownsampling }).(pulumi.IntOutput)
 }
@@ -474,6 +488,11 @@ func (o ObservabilityInstanceOutput) ProjectId() pulumi.StringOutput {
 // Specifies Targets URL.
 func (o ObservabilityInstanceOutput) TargetsUrl() pulumi.StringOutput {
 	return o.ApplyT(func(v *ObservabilityInstance) pulumi.StringOutput { return v.TargetsUrl }).(pulumi.StringOutput)
+}
+
+// Specifies for how many days the traces are kept. Default is set to `7`.
+func (o ObservabilityInstanceOutput) TracesRetentionDays() pulumi.IntOutput {
+	return o.ApplyT(func(v *ObservabilityInstance) pulumi.IntOutput { return v.TracesRetentionDays }).(pulumi.IntOutput)
 }
 
 func (o ObservabilityInstanceOutput) ZipkinSpansUrl() pulumi.StringOutput {

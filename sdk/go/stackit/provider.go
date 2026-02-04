@@ -22,21 +22,26 @@ type Provider struct {
 	AuthorizationCustomEndpoint pulumi.StringPtrOutput `pulumi:"authorizationCustomEndpoint"`
 	// Custom endpoint for the CDN service
 	CdnCustomEndpoint pulumi.StringPtrOutput `pulumi:"cdnCustomEndpoint"`
-	// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-	// value is `~/.stackit/credentials.json`.
+	// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
 	CredentialsPath pulumi.StringPtrOutput `pulumi:"credentialsPath"`
 	// Region will be used as the default location for regional services. Not all services require a region, some are global
 	DefaultRegion pulumi.StringPtrOutput `pulumi:"defaultRegion"`
 	// Custom endpoint for the DNS service
 	DnsCustomEndpoint pulumi.StringPtrOutput `pulumi:"dnsCustomEndpoint"`
+	// Custom endpoint for the Edge Cloud service
+	EdgecloudCustomEndpoint pulumi.StringPtrOutput `pulumi:"edgecloudCustomEndpoint"`
 	// Custom endpoint for the Git service
 	GitCustomEndpoint pulumi.StringPtrOutput `pulumi:"gitCustomEndpoint"`
 	// Custom endpoint for the IaaS service
 	IaasCustomEndpoint pulumi.StringPtrOutput `pulumi:"iaasCustomEndpoint"`
+	// Custom endpoint for the KMS service
+	KmsCustomEndpoint pulumi.StringPtrOutput `pulumi:"kmsCustomEndpoint"`
 	// Custom endpoint for the Load Balancer service
 	LoadbalancerCustomEndpoint pulumi.StringPtrOutput `pulumi:"loadbalancerCustomEndpoint"`
 	// Custom endpoint for the LogMe service
 	LogmeCustomEndpoint pulumi.StringPtrOutput `pulumi:"logmeCustomEndpoint"`
+	// Custom endpoint for the Logs service
+	LogsCustomEndpoint pulumi.StringPtrOutput `pulumi:"logsCustomEndpoint"`
 	// Custom endpoint for the MariaDB service
 	MariadbCustomEndpoint pulumi.StringPtrOutput `pulumi:"mariadbCustomEndpoint"`
 	// Custom endpoint for the AI Model Serving service
@@ -51,11 +56,9 @@ type Provider struct {
 	OpensearchCustomEndpoint pulumi.StringPtrOutput `pulumi:"opensearchCustomEndpoint"`
 	// Custom endpoint for the PostgresFlex service
 	PostgresflexCustomEndpoint pulumi.StringPtrOutput `pulumi:"postgresflexCustomEndpoint"`
-	// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-	// included in the service account key.
+	// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 	PrivateKey pulumi.StringPtrOutput `pulumi:"privateKey"`
-	// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-	// key that is included in the service account key.
+	// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 	PrivateKeyPath pulumi.StringPtrOutput `pulumi:"privateKeyPath"`
 	// Custom endpoint for the RabbitMQ service
 	RabbitmqCustomEndpoint pulumi.StringPtrOutput `pulumi:"rabbitmqCustomEndpoint"`
@@ -67,6 +70,8 @@ type Provider struct {
 	Region pulumi.StringPtrOutput `pulumi:"region"`
 	// Custom endpoint for the Resource Manager service
 	ResourcemanagerCustomEndpoint pulumi.StringPtrOutput `pulumi:"resourcemanagerCustomEndpoint"`
+	// Custom endpoint for the Cloud Foundry (SCF) service
+	ScfCustomEndpoint pulumi.StringPtrOutput `pulumi:"scfCustomEndpoint"`
 	// Custom endpoint for the Secrets Manager service
 	SecretsmanagerCustomEndpoint pulumi.StringPtrOutput `pulumi:"secretsmanagerCustomEndpoint"`
 	// Custom endpoint for the Server Backup service
@@ -75,22 +80,22 @@ type Provider struct {
 	ServerUpdateCustomEndpoint pulumi.StringPtrOutput `pulumi:"serverUpdateCustomEndpoint"`
 	// Custom endpoint for the Service Account service
 	ServiceAccountCustomEndpoint pulumi.StringPtrOutput `pulumi:"serviceAccountCustomEndpoint"`
-	// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-	// if you want to use the resource manager project resource.
+	// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
 	//
 	// Deprecated: The `serviceAccountEmail` field has been deprecated because it is not required. Will be removed after June 12th 2025.
 	ServiceAccountEmail pulumi.StringPtrOutput `pulumi:"serviceAccountEmail"`
 	// Service account key used for authentication. If set, the key flow will be used to authenticate all operations.
 	ServiceAccountKey pulumi.StringPtrOutput `pulumi:"serviceAccountKey"`
-	// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-	// operations.
+	// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
 	ServiceAccountKeyPath pulumi.StringPtrOutput `pulumi:"serviceAccountKeyPath"`
 	// Token used for authentication. If set, the token flow will be used to authenticate all operations.
 	//
-	// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html
+	// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/platform/access-and-identity/service-accounts/migrate-flows/
 	ServiceAccountToken pulumi.StringPtrOutput `pulumi:"serviceAccountToken"`
 	// Custom endpoint for the Service Enablement API
 	ServiceEnablementCustomEndpoint pulumi.StringPtrOutput `pulumi:"serviceEnablementCustomEndpoint"`
+	// Custom endpoint for the Stackit Filestorage API
+	SfsCustomEndpoint pulumi.StringPtrOutput `pulumi:"sfsCustomEndpoint"`
 	// Custom endpoint for the Kubernetes Engine (SKE) service
 	SkeCustomEndpoint pulumi.StringPtrOutput `pulumi:"skeCustomEndpoint"`
 	// Custom endpoint for the SQL Server Flex service
@@ -120,26 +125,30 @@ type providerArgs struct {
 	AuthorizationCustomEndpoint *string `pulumi:"authorizationCustomEndpoint"`
 	// Custom endpoint for the CDN service
 	CdnCustomEndpoint *string `pulumi:"cdnCustomEndpoint"`
-	// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-	// value is `~/.stackit/credentials.json`.
+	// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
 	CredentialsPath *string `pulumi:"credentialsPath"`
 	// Region will be used as the default location for regional services. Not all services require a region, some are global
 	DefaultRegion *string `pulumi:"defaultRegion"`
 	// Custom endpoint for the DNS service
 	DnsCustomEndpoint *string `pulumi:"dnsCustomEndpoint"`
+	// Custom endpoint for the Edge Cloud service
+	EdgecloudCustomEndpoint *string `pulumi:"edgecloudCustomEndpoint"`
 	// Enable beta resources. Default is false.
 	EnableBetaResources *bool `pulumi:"enableBetaResources"`
-	// Enables experiments. These are unstable features without official support. More information can be found in the README.
-	// Available Experiments: iam, routing-tables, network
+	// Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network
 	Experiments []string `pulumi:"experiments"`
 	// Custom endpoint for the Git service
 	GitCustomEndpoint *string `pulumi:"gitCustomEndpoint"`
 	// Custom endpoint for the IaaS service
 	IaasCustomEndpoint *string `pulumi:"iaasCustomEndpoint"`
+	// Custom endpoint for the KMS service
+	KmsCustomEndpoint *string `pulumi:"kmsCustomEndpoint"`
 	// Custom endpoint for the Load Balancer service
 	LoadbalancerCustomEndpoint *string `pulumi:"loadbalancerCustomEndpoint"`
 	// Custom endpoint for the LogMe service
 	LogmeCustomEndpoint *string `pulumi:"logmeCustomEndpoint"`
+	// Custom endpoint for the Logs service
+	LogsCustomEndpoint *string `pulumi:"logsCustomEndpoint"`
 	// Custom endpoint for the MariaDB service
 	MariadbCustomEndpoint *string `pulumi:"mariadbCustomEndpoint"`
 	// Custom endpoint for the AI Model Serving service
@@ -154,11 +163,9 @@ type providerArgs struct {
 	OpensearchCustomEndpoint *string `pulumi:"opensearchCustomEndpoint"`
 	// Custom endpoint for the PostgresFlex service
 	PostgresflexCustomEndpoint *string `pulumi:"postgresflexCustomEndpoint"`
-	// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-	// included in the service account key.
+	// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 	PrivateKey *string `pulumi:"privateKey"`
-	// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-	// key that is included in the service account key.
+	// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 	PrivateKeyPath *string `pulumi:"privateKeyPath"`
 	// Custom endpoint for the RabbitMQ service
 	RabbitmqCustomEndpoint *string `pulumi:"rabbitmqCustomEndpoint"`
@@ -170,6 +177,8 @@ type providerArgs struct {
 	Region *string `pulumi:"region"`
 	// Custom endpoint for the Resource Manager service
 	ResourcemanagerCustomEndpoint *string `pulumi:"resourcemanagerCustomEndpoint"`
+	// Custom endpoint for the Cloud Foundry (SCF) service
+	ScfCustomEndpoint *string `pulumi:"scfCustomEndpoint"`
 	// Custom endpoint for the Secrets Manager service
 	SecretsmanagerCustomEndpoint *string `pulumi:"secretsmanagerCustomEndpoint"`
 	// Custom endpoint for the Server Backup service
@@ -178,22 +187,22 @@ type providerArgs struct {
 	ServerUpdateCustomEndpoint *string `pulumi:"serverUpdateCustomEndpoint"`
 	// Custom endpoint for the Service Account service
 	ServiceAccountCustomEndpoint *string `pulumi:"serviceAccountCustomEndpoint"`
-	// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-	// if you want to use the resource manager project resource.
+	// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
 	//
 	// Deprecated: The `serviceAccountEmail` field has been deprecated because it is not required. Will be removed after June 12th 2025.
 	ServiceAccountEmail *string `pulumi:"serviceAccountEmail"`
 	// Service account key used for authentication. If set, the key flow will be used to authenticate all operations.
 	ServiceAccountKey *string `pulumi:"serviceAccountKey"`
-	// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-	// operations.
+	// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
 	ServiceAccountKeyPath *string `pulumi:"serviceAccountKeyPath"`
 	// Token used for authentication. If set, the token flow will be used to authenticate all operations.
 	//
-	// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html
+	// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/platform/access-and-identity/service-accounts/migrate-flows/
 	ServiceAccountToken *string `pulumi:"serviceAccountToken"`
 	// Custom endpoint for the Service Enablement API
 	ServiceEnablementCustomEndpoint *string `pulumi:"serviceEnablementCustomEndpoint"`
+	// Custom endpoint for the Stackit Filestorage API
+	SfsCustomEndpoint *string `pulumi:"sfsCustomEndpoint"`
 	// Custom endpoint for the Kubernetes Engine (SKE) service
 	SkeCustomEndpoint *string `pulumi:"skeCustomEndpoint"`
 	// Custom endpoint for the SQL Server Flex service
@@ -208,26 +217,30 @@ type ProviderArgs struct {
 	AuthorizationCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the CDN service
 	CdnCustomEndpoint pulumi.StringPtrInput
-	// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-	// value is `~/.stackit/credentials.json`.
+	// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
 	CredentialsPath pulumi.StringPtrInput
 	// Region will be used as the default location for regional services. Not all services require a region, some are global
 	DefaultRegion pulumi.StringPtrInput
 	// Custom endpoint for the DNS service
 	DnsCustomEndpoint pulumi.StringPtrInput
+	// Custom endpoint for the Edge Cloud service
+	EdgecloudCustomEndpoint pulumi.StringPtrInput
 	// Enable beta resources. Default is false.
 	EnableBetaResources pulumi.BoolPtrInput
-	// Enables experiments. These are unstable features without official support. More information can be found in the README.
-	// Available Experiments: iam, routing-tables, network
+	// Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network
 	Experiments pulumi.StringArrayInput
 	// Custom endpoint for the Git service
 	GitCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the IaaS service
 	IaasCustomEndpoint pulumi.StringPtrInput
+	// Custom endpoint for the KMS service
+	KmsCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the Load Balancer service
 	LoadbalancerCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the LogMe service
 	LogmeCustomEndpoint pulumi.StringPtrInput
+	// Custom endpoint for the Logs service
+	LogsCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the MariaDB service
 	MariadbCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the AI Model Serving service
@@ -242,11 +255,9 @@ type ProviderArgs struct {
 	OpensearchCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the PostgresFlex service
 	PostgresflexCustomEndpoint pulumi.StringPtrInput
-	// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-	// included in the service account key.
+	// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 	PrivateKey pulumi.StringPtrInput
-	// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-	// key that is included in the service account key.
+	// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 	PrivateKeyPath pulumi.StringPtrInput
 	// Custom endpoint for the RabbitMQ service
 	RabbitmqCustomEndpoint pulumi.StringPtrInput
@@ -258,6 +269,8 @@ type ProviderArgs struct {
 	Region pulumi.StringPtrInput
 	// Custom endpoint for the Resource Manager service
 	ResourcemanagerCustomEndpoint pulumi.StringPtrInput
+	// Custom endpoint for the Cloud Foundry (SCF) service
+	ScfCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the Secrets Manager service
 	SecretsmanagerCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the Server Backup service
@@ -266,22 +279,22 @@ type ProviderArgs struct {
 	ServerUpdateCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the Service Account service
 	ServiceAccountCustomEndpoint pulumi.StringPtrInput
-	// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-	// if you want to use the resource manager project resource.
+	// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
 	//
 	// Deprecated: The `serviceAccountEmail` field has been deprecated because it is not required. Will be removed after June 12th 2025.
 	ServiceAccountEmail pulumi.StringPtrInput
 	// Service account key used for authentication. If set, the key flow will be used to authenticate all operations.
 	ServiceAccountKey pulumi.StringPtrInput
-	// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-	// operations.
+	// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
 	ServiceAccountKeyPath pulumi.StringPtrInput
 	// Token used for authentication. If set, the token flow will be used to authenticate all operations.
 	//
-	// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html
+	// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/platform/access-and-identity/service-accounts/migrate-flows/
 	ServiceAccountToken pulumi.StringPtrInput
 	// Custom endpoint for the Service Enablement API
 	ServiceEnablementCustomEndpoint pulumi.StringPtrInput
+	// Custom endpoint for the Stackit Filestorage API
+	SfsCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the Kubernetes Engine (SKE) service
 	SkeCustomEndpoint pulumi.StringPtrInput
 	// Custom endpoint for the SQL Server Flex service
@@ -360,8 +373,7 @@ func (o ProviderOutput) CdnCustomEndpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.CdnCustomEndpoint }).(pulumi.StringPtrOutput)
 }
 
-// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-// value is `~/.stackit/credentials.json`.
+// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
 func (o ProviderOutput) CredentialsPath() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.CredentialsPath }).(pulumi.StringPtrOutput)
 }
@@ -376,6 +388,11 @@ func (o ProviderOutput) DnsCustomEndpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.DnsCustomEndpoint }).(pulumi.StringPtrOutput)
 }
 
+// Custom endpoint for the Edge Cloud service
+func (o ProviderOutput) EdgecloudCustomEndpoint() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.EdgecloudCustomEndpoint }).(pulumi.StringPtrOutput)
+}
+
 // Custom endpoint for the Git service
 func (o ProviderOutput) GitCustomEndpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.GitCustomEndpoint }).(pulumi.StringPtrOutput)
@@ -386,6 +403,11 @@ func (o ProviderOutput) IaasCustomEndpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.IaasCustomEndpoint }).(pulumi.StringPtrOutput)
 }
 
+// Custom endpoint for the KMS service
+func (o ProviderOutput) KmsCustomEndpoint() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.KmsCustomEndpoint }).(pulumi.StringPtrOutput)
+}
+
 // Custom endpoint for the Load Balancer service
 func (o ProviderOutput) LoadbalancerCustomEndpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.LoadbalancerCustomEndpoint }).(pulumi.StringPtrOutput)
@@ -394,6 +416,11 @@ func (o ProviderOutput) LoadbalancerCustomEndpoint() pulumi.StringPtrOutput {
 // Custom endpoint for the LogMe service
 func (o ProviderOutput) LogmeCustomEndpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.LogmeCustomEndpoint }).(pulumi.StringPtrOutput)
+}
+
+// Custom endpoint for the Logs service
+func (o ProviderOutput) LogsCustomEndpoint() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.LogsCustomEndpoint }).(pulumi.StringPtrOutput)
 }
 
 // Custom endpoint for the MariaDB service
@@ -431,14 +458,12 @@ func (o ProviderOutput) PostgresflexCustomEndpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.PostgresflexCustomEndpoint }).(pulumi.StringPtrOutput)
 }
 
-// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-// included in the service account key.
+// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 func (o ProviderOutput) PrivateKey() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.PrivateKey }).(pulumi.StringPtrOutput)
 }
 
-// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-// key that is included in the service account key.
+// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 func (o ProviderOutput) PrivateKeyPath() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.PrivateKeyPath }).(pulumi.StringPtrOutput)
 }
@@ -465,6 +490,11 @@ func (o ProviderOutput) ResourcemanagerCustomEndpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ResourcemanagerCustomEndpoint }).(pulumi.StringPtrOutput)
 }
 
+// Custom endpoint for the Cloud Foundry (SCF) service
+func (o ProviderOutput) ScfCustomEndpoint() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ScfCustomEndpoint }).(pulumi.StringPtrOutput)
+}
+
 // Custom endpoint for the Secrets Manager service
 func (o ProviderOutput) SecretsmanagerCustomEndpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.SecretsmanagerCustomEndpoint }).(pulumi.StringPtrOutput)
@@ -485,8 +515,7 @@ func (o ProviderOutput) ServiceAccountCustomEndpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ServiceAccountCustomEndpoint }).(pulumi.StringPtrOutput)
 }
 
-// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-// if you want to use the resource manager project resource.
+// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
 //
 // Deprecated: The `serviceAccountEmail` field has been deprecated because it is not required. Will be removed after June 12th 2025.
 func (o ProviderOutput) ServiceAccountEmail() pulumi.StringPtrOutput {
@@ -498,15 +527,14 @@ func (o ProviderOutput) ServiceAccountKey() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ServiceAccountKey }).(pulumi.StringPtrOutput)
 }
 
-// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-// operations.
+// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
 func (o ProviderOutput) ServiceAccountKeyPath() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ServiceAccountKeyPath }).(pulumi.StringPtrOutput)
 }
 
 // Token used for authentication. If set, the token flow will be used to authenticate all operations.
 //
-// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html
+// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/platform/access-and-identity/service-accounts/migrate-flows/
 func (o ProviderOutput) ServiceAccountToken() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ServiceAccountToken }).(pulumi.StringPtrOutput)
 }
@@ -514,6 +542,11 @@ func (o ProviderOutput) ServiceAccountToken() pulumi.StringPtrOutput {
 // Custom endpoint for the Service Enablement API
 func (o ProviderOutput) ServiceEnablementCustomEndpoint() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.ServiceEnablementCustomEndpoint }).(pulumi.StringPtrOutput)
+}
+
+// Custom endpoint for the Stackit Filestorage API
+func (o ProviderOutput) SfsCustomEndpoint() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Provider) pulumi.StringPtrOutput { return v.SfsCustomEndpoint }).(pulumi.StringPtrOutput)
 }
 
 // Custom endpoint for the Kubernetes Engine (SKE) service
