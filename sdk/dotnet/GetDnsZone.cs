@@ -140,6 +140,9 @@ namespace ediri.Stackit
         /// Expire time.
         /// </summary>
         public readonly int ExpireTime;
+        /// <summary>
+        /// Terraform's internal data source. ID. It is structured as "`ProjectId`,`ZoneId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// Specifies, if the zone is a reverse zone or not.

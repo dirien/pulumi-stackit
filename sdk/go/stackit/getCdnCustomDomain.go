@@ -28,6 +28,8 @@ func LookupCdnCustomDomain(ctx *pulumi.Context, args *LookupCdnCustomDomainArgs,
 
 // A collection of arguments for invoking getCdnCustomDomain.
 type LookupCdnCustomDomainArgs struct {
+	// The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+	Certificate *GetCdnCustomDomainCertificate `pulumi:"certificate"`
 	// CDN distribution ID
 	DistributionId string `pulumi:"distributionId"`
 	Name           string `pulumi:"name"`
@@ -37,12 +39,15 @@ type LookupCdnCustomDomainArgs struct {
 
 // A collection of values returned by getCdnCustomDomain.
 type LookupCdnCustomDomainResult struct {
+	// The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+	Certificate *GetCdnCustomDomainCertificate `pulumi:"certificate"`
 	// CDN distribution ID
 	DistributionId string `pulumi:"distributionId"`
 	// List of distribution errors
 	Errors []string `pulumi:"errors"`
-	Id     string   `pulumi:"id"`
-	Name   string   `pulumi:"name"`
+	// Terraform's internal resource identifier. It is structured as "`projectId`,`distributionId`".
+	Id   string `pulumi:"id"`
+	Name string `pulumi:"name"`
 	// STACKIT project ID associated with the distribution
 	ProjectId string `pulumi:"projectId"`
 	// Status of the distribution
@@ -60,6 +65,8 @@ func LookupCdnCustomDomainOutput(ctx *pulumi.Context, args LookupCdnCustomDomain
 
 // A collection of arguments for invoking getCdnCustomDomain.
 type LookupCdnCustomDomainOutputArgs struct {
+	// The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+	Certificate GetCdnCustomDomainCertificatePtrInput `pulumi:"certificate"`
 	// CDN distribution ID
 	DistributionId pulumi.StringInput `pulumi:"distributionId"`
 	Name           pulumi.StringInput `pulumi:"name"`
@@ -86,6 +93,11 @@ func (o LookupCdnCustomDomainResultOutput) ToLookupCdnCustomDomainResultOutputWi
 	return o
 }
 
+// The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+func (o LookupCdnCustomDomainResultOutput) Certificate() GetCdnCustomDomainCertificatePtrOutput {
+	return o.ApplyT(func(v LookupCdnCustomDomainResult) *GetCdnCustomDomainCertificate { return v.Certificate }).(GetCdnCustomDomainCertificatePtrOutput)
+}
+
 // CDN distribution ID
 func (o LookupCdnCustomDomainResultOutput) DistributionId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupCdnCustomDomainResult) string { return v.DistributionId }).(pulumi.StringOutput)
@@ -96,6 +108,7 @@ func (o LookupCdnCustomDomainResultOutput) Errors() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v LookupCdnCustomDomainResult) []string { return v.Errors }).(pulumi.StringArrayOutput)
 }
 
+// Terraform's internal resource identifier. It is structured as "`projectId`,`distributionId`".
 func (o LookupCdnCustomDomainResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupCdnCustomDomainResult) string { return v.Id }).(pulumi.StringOutput)
 }

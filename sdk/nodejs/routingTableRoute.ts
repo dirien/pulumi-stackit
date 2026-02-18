@@ -44,43 +44,43 @@ export class RoutingTableRoute extends pulumi.CustomResource {
     /**
      * Date-time when the route was created.
      */
-    public /*out*/ readonly createdAt!: pulumi.Output<string>;
+    declare public /*out*/ readonly createdAt: pulumi.Output<string>;
     /**
      * Destination of the route.
      */
-    public readonly destination!: pulumi.Output<outputs.RoutingTableRouteDestination>;
+    declare public readonly destination: pulumi.Output<outputs.RoutingTableRouteDestination>;
     /**
      * Labels are key-value string pairs which can be attached to a resource container
      */
-    public readonly labels!: pulumi.Output<{[key: string]: string} | undefined>;
+    declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The network area ID to which the routing table is associated.
      */
-    public readonly networkAreaId!: pulumi.Output<string>;
+    declare public readonly networkAreaId: pulumi.Output<string>;
     /**
      * Next hop destination.
      */
-    public readonly nextHop!: pulumi.Output<outputs.RoutingTableRouteNextHop>;
+    declare public readonly nextHop: pulumi.Output<outputs.RoutingTableRouteNextHop>;
     /**
      * STACKIT organization ID to which the routing table is associated.
      */
-    public readonly organizationId!: pulumi.Output<string>;
+    declare public readonly organizationId: pulumi.Output<string>;
     /**
      * The resource region. If not defined, the provider region is used.
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
     /**
      * The ID of the route.
      */
-    public /*out*/ readonly routeId!: pulumi.Output<string>;
+    declare public /*out*/ readonly routeId: pulumi.Output<string>;
     /**
      * The routing tables ID.
      */
-    public readonly routingTableId!: pulumi.Output<string>;
+    declare public readonly routingTableId: pulumi.Output<string>;
     /**
      * Date-time when the route was updated.
      */
-    public /*out*/ readonly updatedAt!: pulumi.Output<string>;
+    declare public /*out*/ readonly updatedAt: pulumi.Output<string>;
 
     /**
      * Create a RoutingTableRoute resource with the given unique name, arguments, and options.
@@ -95,40 +95,40 @@ export class RoutingTableRoute extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as RoutingTableRouteState | undefined;
-            resourceInputs["createdAt"] = state ? state.createdAt : undefined;
-            resourceInputs["destination"] = state ? state.destination : undefined;
-            resourceInputs["labels"] = state ? state.labels : undefined;
-            resourceInputs["networkAreaId"] = state ? state.networkAreaId : undefined;
-            resourceInputs["nextHop"] = state ? state.nextHop : undefined;
-            resourceInputs["organizationId"] = state ? state.organizationId : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["routeId"] = state ? state.routeId : undefined;
-            resourceInputs["routingTableId"] = state ? state.routingTableId : undefined;
-            resourceInputs["updatedAt"] = state ? state.updatedAt : undefined;
+            resourceInputs["createdAt"] = state?.createdAt;
+            resourceInputs["destination"] = state?.destination;
+            resourceInputs["labels"] = state?.labels;
+            resourceInputs["networkAreaId"] = state?.networkAreaId;
+            resourceInputs["nextHop"] = state?.nextHop;
+            resourceInputs["organizationId"] = state?.organizationId;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["routeId"] = state?.routeId;
+            resourceInputs["routingTableId"] = state?.routingTableId;
+            resourceInputs["updatedAt"] = state?.updatedAt;
         } else {
             const args = argsOrState as RoutingTableRouteArgs | undefined;
-            if ((!args || args.destination === undefined) && !opts.urn) {
+            if (args?.destination === undefined && !opts.urn) {
                 throw new Error("Missing required property 'destination'");
             }
-            if ((!args || args.networkAreaId === undefined) && !opts.urn) {
+            if (args?.networkAreaId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'networkAreaId'");
             }
-            if ((!args || args.nextHop === undefined) && !opts.urn) {
+            if (args?.nextHop === undefined && !opts.urn) {
                 throw new Error("Missing required property 'nextHop'");
             }
-            if ((!args || args.organizationId === undefined) && !opts.urn) {
+            if (args?.organizationId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'organizationId'");
             }
-            if ((!args || args.routingTableId === undefined) && !opts.urn) {
+            if (args?.routingTableId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'routingTableId'");
             }
-            resourceInputs["destination"] = args ? args.destination : undefined;
-            resourceInputs["labels"] = args ? args.labels : undefined;
-            resourceInputs["networkAreaId"] = args ? args.networkAreaId : undefined;
-            resourceInputs["nextHop"] = args ? args.nextHop : undefined;
-            resourceInputs["organizationId"] = args ? args.organizationId : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
-            resourceInputs["routingTableId"] = args ? args.routingTableId : undefined;
+            resourceInputs["destination"] = args?.destination;
+            resourceInputs["labels"] = args?.labels;
+            resourceInputs["networkAreaId"] = args?.networkAreaId;
+            resourceInputs["nextHop"] = args?.nextHop;
+            resourceInputs["organizationId"] = args?.organizationId;
+            resourceInputs["region"] = args?.region;
+            resourceInputs["routingTableId"] = args?.routingTableId;
             resourceInputs["createdAt"] = undefined /*out*/;
             resourceInputs["routeId"] = undefined /*out*/;
             resourceInputs["updatedAt"] = undefined /*out*/;

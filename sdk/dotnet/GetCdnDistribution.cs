@@ -129,6 +129,9 @@ namespace ediri.Stackit
         /// List of distribution errors
         /// </summary>
         public readonly ImmutableArray<string> Errors;
+        /// <summary>
+        /// Terraform's internal resource identifier. It is structured as "`ProjectId`,`DistributionId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// STACKIT project ID associated with the distribution

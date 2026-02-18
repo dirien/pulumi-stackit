@@ -15,7 +15,7 @@ namespace ediri.Stackit.Outputs
     public sealed class ServerBootVolume
     {
         /// <summary>
-        /// Delete the volume during the termination of the server. Only allowed when `source_type` is `image`.
+        /// Delete the volume during the termination of the server. Only allowed when `SourceType` is `Image`.
         /// </summary>
         public readonly bool? DeleteOnTermination;
         /// <summary>
@@ -27,7 +27,7 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly string? PerformanceClass;
         /// <summary>
-        /// The size of the boot volume in GB. Must be provided when `source_type` is `image`.
+        /// The size of the boot volume in GB. Must be provided when `SourceType` is `Image`.
         /// </summary>
         public readonly int? Size;
         /// <summary>
@@ -35,7 +35,7 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly string SourceId;
         /// <summary>
-        /// The type of the source. Supported values are: `volume`, `image`.
+        /// The type of the source. Possible values are: `Volume`, `Image`.
         /// </summary>
         public readonly string SourceType;
 

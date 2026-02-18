@@ -26,8 +26,7 @@ Custom endpoint for the CDN service
 
 credentialsPath: Optional[str]
 """
-Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-value is `~/.stackit/credentials.json`.
+Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
 """
 
 defaultRegion: Optional[str]
@@ -40,6 +39,11 @@ dnsCustomEndpoint: Optional[str]
 Custom endpoint for the DNS service
 """
 
+edgecloudCustomEndpoint: Optional[str]
+"""
+Custom endpoint for the Edge Cloud service
+"""
+
 enableBetaResources: Optional[bool]
 """
 Enable beta resources. Default is false.
@@ -47,8 +51,7 @@ Enable beta resources. Default is false.
 
 experiments: Optional[str]
 """
-Enables experiments. These are unstable features without official support. More information can be found in the README.
-Available Experiments: iam, routing-tables, network
+Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network
 """
 
 gitCustomEndpoint: Optional[str]
@@ -61,6 +64,11 @@ iaasCustomEndpoint: Optional[str]
 Custom endpoint for the IaaS service
 """
 
+kmsCustomEndpoint: Optional[str]
+"""
+Custom endpoint for the KMS service
+"""
+
 loadbalancerCustomEndpoint: Optional[str]
 """
 Custom endpoint for the Load Balancer service
@@ -69,6 +77,11 @@ Custom endpoint for the Load Balancer service
 logmeCustomEndpoint: Optional[str]
 """
 Custom endpoint for the LogMe service
+"""
+
+logsCustomEndpoint: Optional[str]
+"""
+Custom endpoint for the Logs service
 """
 
 mariadbCustomEndpoint: Optional[str]
@@ -108,14 +121,12 @@ Custom endpoint for the PostgresFlex service
 
 privateKey: Optional[str]
 """
-Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-included in the service account key.
+Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 """
 
 privateKeyPath: Optional[str]
 """
-Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-key that is included in the service account key.
+Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 """
 
 rabbitmqCustomEndpoint: Optional[str]
@@ -136,6 +147,11 @@ Region will be used as the default location for regional services. Not all servi
 resourcemanagerCustomEndpoint: Optional[str]
 """
 Custom endpoint for the Resource Manager service
+"""
+
+scfCustomEndpoint: Optional[str]
+"""
+Custom endpoint for the Cloud Foundry (SCF) service
 """
 
 secretsmanagerCustomEndpoint: Optional[str]
@@ -160,8 +176,7 @@ Custom endpoint for the Service Account service
 
 serviceAccountEmail: Optional[str]
 """
-Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-if you want to use the resource manager project resource.
+Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
 """
 
 serviceAccountKey: Optional[str]
@@ -171,8 +186,7 @@ Service account key used for authentication. If set, the key flow will be used t
 
 serviceAccountKeyPath: Optional[str]
 """
-Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-operations.
+Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
 """
 
 serviceAccountToken: Optional[str]
@@ -183,6 +197,11 @@ Token used for authentication. If set, the token flow will be used to authentica
 serviceEnablementCustomEndpoint: Optional[str]
 """
 Custom endpoint for the Service Enablement API
+"""
+
+sfsCustomEndpoint: Optional[str]
+"""
+Custom endpoint for the Stackit Filestorage API
 """
 
 skeCustomEndpoint: Optional[str]
