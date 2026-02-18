@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetServerBackupSchedule
     {
         /// <summary>
-        /// Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.
+        /// Server backup schedule datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// &gt; This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
         /// 
@@ -31,7 +31,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetServerBackupScheduleResult>("stackit:index/getServerBackupSchedule:getServerBackupSchedule", args ?? new GetServerBackupScheduleArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.
+        /// Server backup schedule datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// &gt; This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
         /// 
@@ -49,7 +49,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetServerBackupScheduleResult>("stackit:index/getServerBackupSchedule:getServerBackupSchedule", args ?? new GetServerBackupScheduleInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.
+        /// Server backup schedule datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// &gt; This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
         /// 
@@ -148,6 +148,9 @@ namespace ediri.Stackit
         /// Is the backup schedule enabled or disabled.
         /// </summary>
         public readonly bool Enabled;
+        /// <summary>
+        /// Terraform's internal resource identifier. It is structured as "`ProjectId`,`ServerId`,`BackupScheduleId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// The schedule name.
@@ -162,7 +165,7 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string? Region;
         /// <summary>
-        /// Backup schedule described in `rrule` (recurrence rule) format.
+        /// Backup schedule described in `Rrule` (recurrence rule) format.
         /// </summary>
         public readonly string Rrule;
         /// <summary>

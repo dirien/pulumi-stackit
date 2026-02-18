@@ -32,8 +32,7 @@ namespace ediri.Stackit
         public Output<string?> CdnCustomEndpoint { get; private set; } = null!;
 
         /// <summary>
-        /// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-        /// value is `~/.stackit/credentials.json`.
+        /// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
         /// </summary>
         [Output("credentialsPath")]
         public Output<string?> CredentialsPath { get; private set; } = null!;
@@ -51,6 +50,12 @@ namespace ediri.Stackit
         public Output<string?> DnsCustomEndpoint { get; private set; } = null!;
 
         /// <summary>
+        /// Custom endpoint for the Edge Cloud service
+        /// </summary>
+        [Output("edgecloudCustomEndpoint")]
+        public Output<string?> EdgecloudCustomEndpoint { get; private set; } = null!;
+
+        /// <summary>
         /// Custom endpoint for the Git service
         /// </summary>
         [Output("gitCustomEndpoint")]
@@ -63,6 +68,12 @@ namespace ediri.Stackit
         public Output<string?> IaasCustomEndpoint { get; private set; } = null!;
 
         /// <summary>
+        /// Custom endpoint for the KMS service
+        /// </summary>
+        [Output("kmsCustomEndpoint")]
+        public Output<string?> KmsCustomEndpoint { get; private set; } = null!;
+
+        /// <summary>
         /// Custom endpoint for the Load Balancer service
         /// </summary>
         [Output("loadbalancerCustomEndpoint")]
@@ -73,6 +84,12 @@ namespace ediri.Stackit
         /// </summary>
         [Output("logmeCustomEndpoint")]
         public Output<string?> LogmeCustomEndpoint { get; private set; } = null!;
+
+        /// <summary>
+        /// Custom endpoint for the Logs service
+        /// </summary>
+        [Output("logsCustomEndpoint")]
+        public Output<string?> LogsCustomEndpoint { get; private set; } = null!;
 
         /// <summary>
         /// Custom endpoint for the MariaDB service
@@ -117,15 +134,13 @@ namespace ediri.Stackit
         public Output<string?> PostgresflexCustomEndpoint { get; private set; } = null!;
 
         /// <summary>
-        /// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-        /// included in the service account key.
+        /// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         /// </summary>
         [Output("privateKey")]
         public Output<string?> PrivateKey { get; private set; } = null!;
 
         /// <summary>
-        /// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-        /// key that is included in the service account key.
+        /// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         /// </summary>
         [Output("privateKeyPath")]
         public Output<string?> PrivateKeyPath { get; private set; } = null!;
@@ -155,6 +170,12 @@ namespace ediri.Stackit
         public Output<string?> ResourcemanagerCustomEndpoint { get; private set; } = null!;
 
         /// <summary>
+        /// Custom endpoint for the Cloud Foundry (SCF) service
+        /// </summary>
+        [Output("scfCustomEndpoint")]
+        public Output<string?> ScfCustomEndpoint { get; private set; } = null!;
+
+        /// <summary>
         /// Custom endpoint for the Secrets Manager service
         /// </summary>
         [Output("secretsmanagerCustomEndpoint")]
@@ -179,8 +200,7 @@ namespace ediri.Stackit
         public Output<string?> ServiceAccountCustomEndpoint { get; private set; } = null!;
 
         /// <summary>
-        /// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-        /// if you want to use the resource manager project resource.
+        /// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
         /// </summary>
         [Output("serviceAccountEmail")]
         public Output<string?> ServiceAccountEmail { get; private set; } = null!;
@@ -192,8 +212,7 @@ namespace ediri.Stackit
         public Output<string?> ServiceAccountKey { get; private set; } = null!;
 
         /// <summary>
-        /// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-        /// operations.
+        /// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
         /// </summary>
         [Output("serviceAccountKeyPath")]
         public Output<string?> ServiceAccountKeyPath { get; private set; } = null!;
@@ -209,6 +228,12 @@ namespace ediri.Stackit
         /// </summary>
         [Output("serviceEnablementCustomEndpoint")]
         public Output<string?> ServiceEnablementCustomEndpoint { get; private set; } = null!;
+
+        /// <summary>
+        /// Custom endpoint for the Stackit Filestorage API
+        /// </summary>
+        [Output("sfsCustomEndpoint")]
+        public Output<string?> SfsCustomEndpoint { get; private set; } = null!;
 
         /// <summary>
         /// Custom endpoint for the Kubernetes Engine (SKE) service
@@ -276,8 +301,7 @@ namespace ediri.Stackit
         public Input<string>? CdnCustomEndpoint { get; set; }
 
         /// <summary>
-        /// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-        /// value is `~/.stackit/credentials.json`.
+        /// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
         /// </summary>
         [Input("credentialsPath")]
         public Input<string>? CredentialsPath { get; set; }
@@ -295,6 +319,12 @@ namespace ediri.Stackit
         public Input<string>? DnsCustomEndpoint { get; set; }
 
         /// <summary>
+        /// Custom endpoint for the Edge Cloud service
+        /// </summary>
+        [Input("edgecloudCustomEndpoint")]
+        public Input<string>? EdgecloudCustomEndpoint { get; set; }
+
+        /// <summary>
         /// Enable beta resources. Default is false.
         /// </summary>
         [Input("enableBetaResources", json: true)]
@@ -304,8 +334,7 @@ namespace ediri.Stackit
         private InputList<string>? _experiments;
 
         /// <summary>
-        /// Enables experiments. These are unstable features without official support. More information can be found in the README.
-        /// Available Experiments: iam, routing-tables, network
+        /// Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network
         /// </summary>
         public InputList<string> Experiments
         {
@@ -326,6 +355,12 @@ namespace ediri.Stackit
         public Input<string>? IaasCustomEndpoint { get; set; }
 
         /// <summary>
+        /// Custom endpoint for the KMS service
+        /// </summary>
+        [Input("kmsCustomEndpoint")]
+        public Input<string>? KmsCustomEndpoint { get; set; }
+
+        /// <summary>
         /// Custom endpoint for the Load Balancer service
         /// </summary>
         [Input("loadbalancerCustomEndpoint")]
@@ -336,6 +371,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("logmeCustomEndpoint")]
         public Input<string>? LogmeCustomEndpoint { get; set; }
+
+        /// <summary>
+        /// Custom endpoint for the Logs service
+        /// </summary>
+        [Input("logsCustomEndpoint")]
+        public Input<string>? LogsCustomEndpoint { get; set; }
 
         /// <summary>
         /// Custom endpoint for the MariaDB service
@@ -380,15 +421,13 @@ namespace ediri.Stackit
         public Input<string>? PostgresflexCustomEndpoint { get; set; }
 
         /// <summary>
-        /// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-        /// included in the service account key.
+        /// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         /// </summary>
         [Input("privateKey")]
         public Input<string>? PrivateKey { get; set; }
 
         /// <summary>
-        /// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-        /// key that is included in the service account key.
+        /// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
         /// </summary>
         [Input("privateKeyPath")]
         public Input<string>? PrivateKeyPath { get; set; }
@@ -418,6 +457,12 @@ namespace ediri.Stackit
         public Input<string>? ResourcemanagerCustomEndpoint { get; set; }
 
         /// <summary>
+        /// Custom endpoint for the Cloud Foundry (SCF) service
+        /// </summary>
+        [Input("scfCustomEndpoint")]
+        public Input<string>? ScfCustomEndpoint { get; set; }
+
+        /// <summary>
         /// Custom endpoint for the Secrets Manager service
         /// </summary>
         [Input("secretsmanagerCustomEndpoint")]
@@ -442,8 +487,7 @@ namespace ediri.Stackit
         public Input<string>? ServiceAccountCustomEndpoint { get; set; }
 
         /// <summary>
-        /// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-        /// if you want to use the resource manager project resource.
+        /// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource.
         /// </summary>
         [Input("serviceAccountEmail")]
         public Input<string>? ServiceAccountEmail { get; set; }
@@ -455,8 +499,7 @@ namespace ediri.Stackit
         public Input<string>? ServiceAccountKey { get; set; }
 
         /// <summary>
-        /// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-        /// operations.
+        /// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
         /// </summary>
         [Input("serviceAccountKeyPath")]
         public Input<string>? ServiceAccountKeyPath { get; set; }
@@ -472,6 +515,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("serviceEnablementCustomEndpoint")]
         public Input<string>? ServiceEnablementCustomEndpoint { get; set; }
+
+        /// <summary>
+        /// Custom endpoint for the Stackit Filestorage API
+        /// </summary>
+        [Input("sfsCustomEndpoint")]
+        public Input<string>? SfsCustomEndpoint { get; set; }
 
         /// <summary>
         /// Custom endpoint for the Kubernetes Engine (SKE) service

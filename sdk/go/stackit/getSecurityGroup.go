@@ -28,6 +28,8 @@ func LookupSecurityGroup(ctx *pulumi.Context, args *LookupSecurityGroupArgs, opt
 type LookupSecurityGroupArgs struct {
 	// STACKIT project ID to which the security group is associated.
 	ProjectId string `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The security group ID.
 	SecurityGroupId string `pulumi:"securityGroupId"`
 }
@@ -36,13 +38,16 @@ type LookupSecurityGroupArgs struct {
 type LookupSecurityGroupResult struct {
 	// The description of the security group.
 	Description string `pulumi:"description"`
-	Id          string `pulumi:"id"`
+	// Terraform's internal resource ID. It is structured as "`projectId`,`region`,`securityGroupId`".
+	Id string `pulumi:"id"`
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels map[string]string `pulumi:"labels"`
 	// The name of the security group.
 	Name string `pulumi:"name"`
 	// STACKIT project ID to which the security group is associated.
 	ProjectId string `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The security group ID.
 	SecurityGroupId string `pulumi:"securityGroupId"`
 	// Configures if a security group is stateful or stateless. There can only be one type of security groups per network interface/server.
@@ -62,6 +67,8 @@ func LookupSecurityGroupOutput(ctx *pulumi.Context, args LookupSecurityGroupOutp
 type LookupSecurityGroupOutputArgs struct {
 	// STACKIT project ID to which the security group is associated.
 	ProjectId pulumi.StringInput `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput `pulumi:"region"`
 	// The security group ID.
 	SecurityGroupId pulumi.StringInput `pulumi:"securityGroupId"`
 }
@@ -90,6 +97,7 @@ func (o LookupSecurityGroupResultOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSecurityGroupResult) string { return v.Description }).(pulumi.StringOutput)
 }
 
+// Terraform's internal resource ID. It is structured as "`projectId`,`region`,`securityGroupId`".
 func (o LookupSecurityGroupResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSecurityGroupResult) string { return v.Id }).(pulumi.StringOutput)
 }
@@ -107,6 +115,11 @@ func (o LookupSecurityGroupResultOutput) Name() pulumi.StringOutput {
 // STACKIT project ID to which the security group is associated.
 func (o LookupSecurityGroupResultOutput) ProjectId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSecurityGroupResult) string { return v.ProjectId }).(pulumi.StringOutput)
+}
+
+// The resource region. If not defined, the provider region is used.
+func (o LookupSecurityGroupResultOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v LookupSecurityGroupResult) *string { return v.Region }).(pulumi.StringPtrOutput)
 }
 
 // The security group ID.

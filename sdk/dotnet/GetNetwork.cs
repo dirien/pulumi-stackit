@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetNetwork
     {
         /// <summary>
-        /// Network resource schema. Must have a `region` specified in the provider configuration.
+        /// Network resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetNetworkResult>("stackit:index/getNetwork:getNetwork", args ?? new GetNetworkArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Network resource schema. Must have a `region` specified in the provider configuration.
+        /// Network resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetNetworkResult>("stackit:index/getNetwork:getNetwork", args ?? new GetNetworkInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Network resource schema. Must have a `region` specified in the provider configuration.
+        /// Network resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -74,7 +74,6 @@ namespace ediri.Stackit
         public string ProjectId { get; set; } = null!;
 
         /// <summary>
-        /// Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
         /// The resource region. If not defined, the provider region is used.
         /// </summary>
         [Input("region")]
@@ -101,7 +100,6 @@ namespace ediri.Stackit
         public Input<string> ProjectId { get; set; } = null!;
 
         /// <summary>
-        /// Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
         /// The resource region. If not defined, the provider region is used.
         /// </summary>
         [Input("region")]
@@ -117,6 +115,13 @@ namespace ediri.Stackit
     [OutputType]
     public sealed class GetNetworkResult
     {
+        /// <summary>
+        /// Shows if DHCP is enabled for the network.
+        /// </summary>
+        public readonly bool Dhcp;
+        /// <summary>
+        /// Terraform's internal resource ID. It is structured as "`ProjectId`,`NetworkId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
@@ -167,7 +172,7 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string Name;
         /// <summary>
-        /// The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4_nameservers` to configure the nameservers for IPv4.
+        /// The nameservers of the network. This field is deprecated and will be removed soon, use `Ipv4Nameservers` to configure the nameservers for IPv4.
         /// </summary>
         public readonly ImmutableArray<string> Nameservers;
         /// <summary>
@@ -175,7 +180,7 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string NetworkId;
         /// <summary>
-        /// The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4_prefixes` to read the prefixes of the IPv4 networks.
+        /// The prefixes of the network. This field is deprecated and will be removed soon, use `Ipv4Prefixes` to read the prefixes of the IPv4 networks.
         /// </summary>
         public readonly ImmutableArray<string> Prefixes;
         /// <summary>
@@ -187,7 +192,6 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string PublicIp;
         /// <summary>
-        /// Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
         /// The resource region. If not defined, the provider region is used.
         /// </summary>
         public readonly string? Region;
@@ -196,13 +200,14 @@ namespace ediri.Stackit
         /// </summary>
         public readonly bool Routed;
         /// <summary>
-        /// Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.
         /// The ID of the routing table associated with the network.
         /// </summary>
         public readonly string RoutingTableId;
 
         [OutputConstructor]
         private GetNetworkResult(
+            bool dhcp,
+
             string id,
 
             string ipv4Gateway,
@@ -245,6 +250,7 @@ namespace ediri.Stackit
 
             string routingTableId)
         {
+            Dhcp = dhcp;
             Id = id;
             Ipv4Gateway = ipv4Gateway;
             Ipv4Nameservers = ipv4Nameservers;

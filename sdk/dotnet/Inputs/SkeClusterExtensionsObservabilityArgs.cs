@@ -20,7 +20,7 @@ namespace ediri.Stackit.Inputs
         public Input<bool> Enabled { get; set; } = null!;
 
         /// <summary>
-        /// Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+        /// Observability instance ID to choose which Observability instance is used. Required when enabled is set to `True`.
         /// </summary>
         [Input("instanceId")]
         public Input<string>? InstanceId { get; set; }

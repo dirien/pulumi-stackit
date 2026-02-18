@@ -13,11 +13,16 @@ import (
 )
 
 // Network resource schema. Must have a `region` specified in the provider configuration.
+// > Behavior of not configured `ipv4Nameservers` will change from January 2026. When `ipv4Nameservers` is not set, it will be set to the network area's `defaultNameservers`.
+// To prevent any nameserver configuration, the `ipv4Nameservers` attribute should be explicitly set to an empty list `[]`.
+// In cases where `ipv4Nameservers` are defined within the resource, the existing behavior will remain unchanged.
 //
 // ## Example Usage
 type Network struct {
 	pulumi.CustomResourceState
 
+	// If the network has DHCP enabled. Default value is `true`.
+	Dhcp pulumi.BoolOutput `pulumi:"dhcp"`
 	// The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
 	Ipv4Gateway pulumi.StringOutput `pulumi:"ipv4Gateway"`
 	// The IPv4 nameservers of the network.
@@ -33,16 +38,16 @@ type Network struct {
 	// The IPv6 nameservers of the network.
 	Ipv6Nameservers pulumi.StringArrayOutput `pulumi:"ipv6Nameservers"`
 	// The IPv6 prefix of the network (CIDR).
-	Ipv6Prefix pulumi.StringPtrOutput `pulumi:"ipv6Prefix"`
+	Ipv6Prefix pulumi.StringOutput `pulumi:"ipv6Prefix"`
 	// The IPv6 prefix length of the network.
-	Ipv6PrefixLength pulumi.IntPtrOutput `pulumi:"ipv6PrefixLength"`
+	Ipv6PrefixLength pulumi.IntOutput `pulumi:"ipv6PrefixLength"`
 	// The IPv6 prefixes of the network.
 	Ipv6Prefixes pulumi.StringArrayOutput `pulumi:"ipv6Prefixes"`
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// The name of the network.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4Nameservers` to configure the nameservers for IPv4.
+	// The nameservers of the network. This field is deprecated and will be removed in January 2026, use `ipv4Nameservers` to configure the nameservers for IPv4.
 	//
 	// Deprecated: Use `ipv4Nameservers` to configure the nameservers for IPv4.
 	Nameservers pulumi.StringArrayOutput `pulumi:"nameservers"`
@@ -52,7 +57,7 @@ type Network struct {
 	NoIpv4Gateway pulumi.BoolPtrOutput `pulumi:"noIpv4Gateway"`
 	// If set to `true`, the network doesn't have a gateway.
 	NoIpv6Gateway pulumi.BoolPtrOutput `pulumi:"noIpv6Gateway"`
-	// The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
+	// The prefixes of the network. This field is deprecated and will be removed in January 2026, use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
 	//
 	// Deprecated: Use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
 	Prefixes pulumi.StringArrayOutput `pulumi:"prefixes"`
@@ -60,12 +65,10 @@ type Network struct {
 	ProjectId pulumi.StringOutput `pulumi:"projectId"`
 	// The public IP of the network.
 	PublicIp pulumi.StringOutput `pulumi:"publicIp"`
-	// Can only be used when experimental "network" is set.
 	// The resource region. If not defined, the provider region is used.
 	Region pulumi.StringOutput `pulumi:"region"`
 	// If set to `true`, the network is routed and therefore accessible from other networks.
 	Routed pulumi.BoolOutput `pulumi:"routed"`
-	// Can only be used when experimental "network" is set.
 	// The ID of the routing table associated with the network.
 	RoutingTableId pulumi.StringOutput `pulumi:"routingTableId"`
 }
@@ -103,6 +106,8 @@ func GetNetwork(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering Network resources.
 type networkState struct {
+	// If the network has DHCP enabled. Default value is `true`.
+	Dhcp *bool `pulumi:"dhcp"`
 	// The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
 	Ipv4Gateway *string `pulumi:"ipv4Gateway"`
 	// The IPv4 nameservers of the network.
@@ -127,7 +132,7 @@ type networkState struct {
 	Labels map[string]string `pulumi:"labels"`
 	// The name of the network.
 	Name *string `pulumi:"name"`
-	// The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4Nameservers` to configure the nameservers for IPv4.
+	// The nameservers of the network. This field is deprecated and will be removed in January 2026, use `ipv4Nameservers` to configure the nameservers for IPv4.
 	//
 	// Deprecated: Use `ipv4Nameservers` to configure the nameservers for IPv4.
 	Nameservers []string `pulumi:"nameservers"`
@@ -137,7 +142,7 @@ type networkState struct {
 	NoIpv4Gateway *bool `pulumi:"noIpv4Gateway"`
 	// If set to `true`, the network doesn't have a gateway.
 	NoIpv6Gateway *bool `pulumi:"noIpv6Gateway"`
-	// The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
+	// The prefixes of the network. This field is deprecated and will be removed in January 2026, use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
 	//
 	// Deprecated: Use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
 	Prefixes []string `pulumi:"prefixes"`
@@ -145,17 +150,17 @@ type networkState struct {
 	ProjectId *string `pulumi:"projectId"`
 	// The public IP of the network.
 	PublicIp *string `pulumi:"publicIp"`
-	// Can only be used when experimental "network" is set.
 	// The resource region. If not defined, the provider region is used.
 	Region *string `pulumi:"region"`
 	// If set to `true`, the network is routed and therefore accessible from other networks.
 	Routed *bool `pulumi:"routed"`
-	// Can only be used when experimental "network" is set.
 	// The ID of the routing table associated with the network.
 	RoutingTableId *string `pulumi:"routingTableId"`
 }
 
 type NetworkState struct {
+	// If the network has DHCP enabled. Default value is `true`.
+	Dhcp pulumi.BoolPtrInput
 	// The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
 	Ipv4Gateway pulumi.StringPtrInput
 	// The IPv4 nameservers of the network.
@@ -180,7 +185,7 @@ type NetworkState struct {
 	Labels pulumi.StringMapInput
 	// The name of the network.
 	Name pulumi.StringPtrInput
-	// The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4Nameservers` to configure the nameservers for IPv4.
+	// The nameservers of the network. This field is deprecated and will be removed in January 2026, use `ipv4Nameservers` to configure the nameservers for IPv4.
 	//
 	// Deprecated: Use `ipv4Nameservers` to configure the nameservers for IPv4.
 	Nameservers pulumi.StringArrayInput
@@ -190,7 +195,7 @@ type NetworkState struct {
 	NoIpv4Gateway pulumi.BoolPtrInput
 	// If set to `true`, the network doesn't have a gateway.
 	NoIpv6Gateway pulumi.BoolPtrInput
-	// The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
+	// The prefixes of the network. This field is deprecated and will be removed in January 2026, use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
 	//
 	// Deprecated: Use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
 	Prefixes pulumi.StringArrayInput
@@ -198,12 +203,10 @@ type NetworkState struct {
 	ProjectId pulumi.StringPtrInput
 	// The public IP of the network.
 	PublicIp pulumi.StringPtrInput
-	// Can only be used when experimental "network" is set.
 	// The resource region. If not defined, the provider region is used.
 	Region pulumi.StringPtrInput
 	// If set to `true`, the network is routed and therefore accessible from other networks.
 	Routed pulumi.BoolPtrInput
-	// Can only be used when experimental "network" is set.
 	// The ID of the routing table associated with the network.
 	RoutingTableId pulumi.StringPtrInput
 }
@@ -213,6 +216,8 @@ func (NetworkState) ElementType() reflect.Type {
 }
 
 type networkArgs struct {
+	// If the network has DHCP enabled. Default value is `true`.
+	Dhcp *bool `pulumi:"dhcp"`
 	// The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
 	Ipv4Gateway *string `pulumi:"ipv4Gateway"`
 	// The IPv4 nameservers of the network.
@@ -233,7 +238,7 @@ type networkArgs struct {
 	Labels map[string]string `pulumi:"labels"`
 	// The name of the network.
 	Name *string `pulumi:"name"`
-	// The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4Nameservers` to configure the nameservers for IPv4.
+	// The nameservers of the network. This field is deprecated and will be removed in January 2026, use `ipv4Nameservers` to configure the nameservers for IPv4.
 	//
 	// Deprecated: Use `ipv4Nameservers` to configure the nameservers for IPv4.
 	Nameservers []string `pulumi:"nameservers"`
@@ -243,18 +248,18 @@ type networkArgs struct {
 	NoIpv6Gateway *bool `pulumi:"noIpv6Gateway"`
 	// STACKIT project ID to which the network is associated.
 	ProjectId string `pulumi:"projectId"`
-	// Can only be used when experimental "network" is set.
 	// The resource region. If not defined, the provider region is used.
 	Region *string `pulumi:"region"`
 	// If set to `true`, the network is routed and therefore accessible from other networks.
 	Routed *bool `pulumi:"routed"`
-	// Can only be used when experimental "network" is set.
 	// The ID of the routing table associated with the network.
 	RoutingTableId *string `pulumi:"routingTableId"`
 }
 
 // The set of arguments for constructing a Network resource.
 type NetworkArgs struct {
+	// If the network has DHCP enabled. Default value is `true`.
+	Dhcp pulumi.BoolPtrInput
 	// The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
 	Ipv4Gateway pulumi.StringPtrInput
 	// The IPv4 nameservers of the network.
@@ -275,7 +280,7 @@ type NetworkArgs struct {
 	Labels pulumi.StringMapInput
 	// The name of the network.
 	Name pulumi.StringPtrInput
-	// The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4Nameservers` to configure the nameservers for IPv4.
+	// The nameservers of the network. This field is deprecated and will be removed in January 2026, use `ipv4Nameservers` to configure the nameservers for IPv4.
 	//
 	// Deprecated: Use `ipv4Nameservers` to configure the nameservers for IPv4.
 	Nameservers pulumi.StringArrayInput
@@ -285,12 +290,10 @@ type NetworkArgs struct {
 	NoIpv6Gateway pulumi.BoolPtrInput
 	// STACKIT project ID to which the network is associated.
 	ProjectId pulumi.StringInput
-	// Can only be used when experimental "network" is set.
 	// The resource region. If not defined, the provider region is used.
 	Region pulumi.StringPtrInput
 	// If set to `true`, the network is routed and therefore accessible from other networks.
 	Routed pulumi.BoolPtrInput
-	// Can only be used when experimental "network" is set.
 	// The ID of the routing table associated with the network.
 	RoutingTableId pulumi.StringPtrInput
 }
@@ -382,6 +385,11 @@ func (o NetworkOutput) ToNetworkOutputWithContext(ctx context.Context) NetworkOu
 	return o
 }
 
+// If the network has DHCP enabled. Default value is `true`.
+func (o NetworkOutput) Dhcp() pulumi.BoolOutput {
+	return o.ApplyT(func(v *Network) pulumi.BoolOutput { return v.Dhcp }).(pulumi.BoolOutput)
+}
+
 // The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
 func (o NetworkOutput) Ipv4Gateway() pulumi.StringOutput {
 	return o.ApplyT(func(v *Network) pulumi.StringOutput { return v.Ipv4Gateway }).(pulumi.StringOutput)
@@ -418,13 +426,13 @@ func (o NetworkOutput) Ipv6Nameservers() pulumi.StringArrayOutput {
 }
 
 // The IPv6 prefix of the network (CIDR).
-func (o NetworkOutput) Ipv6Prefix() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Network) pulumi.StringPtrOutput { return v.Ipv6Prefix }).(pulumi.StringPtrOutput)
+func (o NetworkOutput) Ipv6Prefix() pulumi.StringOutput {
+	return o.ApplyT(func(v *Network) pulumi.StringOutput { return v.Ipv6Prefix }).(pulumi.StringOutput)
 }
 
 // The IPv6 prefix length of the network.
-func (o NetworkOutput) Ipv6PrefixLength() pulumi.IntPtrOutput {
-	return o.ApplyT(func(v *Network) pulumi.IntPtrOutput { return v.Ipv6PrefixLength }).(pulumi.IntPtrOutput)
+func (o NetworkOutput) Ipv6PrefixLength() pulumi.IntOutput {
+	return o.ApplyT(func(v *Network) pulumi.IntOutput { return v.Ipv6PrefixLength }).(pulumi.IntOutput)
 }
 
 // The IPv6 prefixes of the network.
@@ -442,7 +450,7 @@ func (o NetworkOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Network) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4Nameservers` to configure the nameservers for IPv4.
+// The nameservers of the network. This field is deprecated and will be removed in January 2026, use `ipv4Nameservers` to configure the nameservers for IPv4.
 //
 // Deprecated: Use `ipv4Nameservers` to configure the nameservers for IPv4.
 func (o NetworkOutput) Nameservers() pulumi.StringArrayOutput {
@@ -464,7 +472,7 @@ func (o NetworkOutput) NoIpv6Gateway() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Network) pulumi.BoolPtrOutput { return v.NoIpv6Gateway }).(pulumi.BoolPtrOutput)
 }
 
-// The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
+// The prefixes of the network. This field is deprecated and will be removed in January 2026, use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
 //
 // Deprecated: Use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
 func (o NetworkOutput) Prefixes() pulumi.StringArrayOutput {
@@ -481,7 +489,6 @@ func (o NetworkOutput) PublicIp() pulumi.StringOutput {
 	return o.ApplyT(func(v *Network) pulumi.StringOutput { return v.PublicIp }).(pulumi.StringOutput)
 }
 
-// Can only be used when experimental "network" is set.
 // The resource region. If not defined, the provider region is used.
 func (o NetworkOutput) Region() pulumi.StringOutput {
 	return o.ApplyT(func(v *Network) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
@@ -492,7 +499,6 @@ func (o NetworkOutput) Routed() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Network) pulumi.BoolOutput { return v.Routed }).(pulumi.BoolOutput)
 }
 
-// Can only be used when experimental "network" is set.
 // The ID of the routing table associated with the network.
 func (o NetworkOutput) RoutingTableId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Network) pulumi.StringOutput { return v.RoutingTableId }).(pulumi.StringOutput)
