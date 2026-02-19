@@ -26,10 +26,13 @@ class GetResourcemanagerProjectResult:
     """
     A collection of values returned by getResourcemanagerProject.
     """
-    def __init__(__self__, container_id=None, id=None, labels=None, name=None, parent_container_id=None, project_id=None):
+    def __init__(__self__, container_id=None, creation_time=None, id=None, labels=None, name=None, parent_container_id=None, project_id=None, update_time=None):
         if container_id and not isinstance(container_id, str):
             raise TypeError("Expected argument 'container_id' to be a str")
         pulumi.set(__self__, "container_id", container_id)
+        if creation_time and not isinstance(creation_time, str):
+            raise TypeError("Expected argument 'creation_time' to be a str")
+        pulumi.set(__self__, "creation_time", creation_time)
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
@@ -45,6 +48,9 @@ class GetResourcemanagerProjectResult:
         if project_id and not isinstance(project_id, str):
             raise TypeError("Expected argument 'project_id' to be a str")
         pulumi.set(__self__, "project_id", project_id)
+        if update_time and not isinstance(update_time, str):
+            raise TypeError("Expected argument 'update_time' to be a str")
+        pulumi.set(__self__, "update_time", update_time)
 
     @_builtins.property
     @pulumi.getter(name="containerId")
@@ -55,8 +61,19 @@ class GetResourcemanagerProjectResult:
         return pulumi.get(self, "container_id")
 
     @_builtins.property
+    @pulumi.getter(name="creationTime")
+    def creation_time(self) -> _builtins.str:
+        """
+        Date-time at which the project was created.
+        """
+        return pulumi.get(self, "creation_time")
+
+    @_builtins.property
     @pulumi.getter
     def id(self) -> _builtins.str:
+        """
+        Terraform's internal data source. ID. It is structured as "`container_id`".
+        """
         return pulumi.get(self, "id")
 
     @_builtins.property
@@ -91,6 +108,14 @@ class GetResourcemanagerProjectResult:
         """
         return pulumi.get(self, "project_id")
 
+    @_builtins.property
+    @pulumi.getter(name="updateTime")
+    def update_time(self) -> _builtins.str:
+        """
+        Date-time at which the project was last modified.
+        """
+        return pulumi.get(self, "update_time")
+
 
 class AwaitableGetResourcemanagerProjectResult(GetResourcemanagerProjectResult):
     # pylint: disable=using-constant-test
@@ -99,11 +124,13 @@ class AwaitableGetResourcemanagerProjectResult(GetResourcemanagerProjectResult):
             yield self
         return GetResourcemanagerProjectResult(
             container_id=self.container_id,
+            creation_time=self.creation_time,
             id=self.id,
             labels=self.labels,
             name=self.name,
             parent_container_id=self.parent_container_id,
-            project_id=self.project_id)
+            project_id=self.project_id,
+            update_time=self.update_time)
 
 
 def get_resourcemanager_project(container_id: Optional[_builtins.str] = None,
@@ -126,11 +153,13 @@ def get_resourcemanager_project(container_id: Optional[_builtins.str] = None,
 
     return AwaitableGetResourcemanagerProjectResult(
         container_id=pulumi.get(__ret__, 'container_id'),
+        creation_time=pulumi.get(__ret__, 'creation_time'),
         id=pulumi.get(__ret__, 'id'),
         labels=pulumi.get(__ret__, 'labels'),
         name=pulumi.get(__ret__, 'name'),
         parent_container_id=pulumi.get(__ret__, 'parent_container_id'),
-        project_id=pulumi.get(__ret__, 'project_id'))
+        project_id=pulumi.get(__ret__, 'project_id'),
+        update_time=pulumi.get(__ret__, 'update_time'))
 def get_resourcemanager_project_output(container_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
                                        project_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
                                        opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetResourcemanagerProjectResult]:
@@ -150,8 +179,10 @@ def get_resourcemanager_project_output(container_id: Optional[pulumi.Input[Optio
     __ret__ = pulumi.runtime.invoke_output('stackit:index/getResourcemanagerProject:getResourcemanagerProject', __args__, opts=opts, typ=GetResourcemanagerProjectResult)
     return __ret__.apply(lambda __response__: GetResourcemanagerProjectResult(
         container_id=pulumi.get(__response__, 'container_id'),
+        creation_time=pulumi.get(__response__, 'creation_time'),
         id=pulumi.get(__response__, 'id'),
         labels=pulumi.get(__response__, 'labels'),
         name=pulumi.get(__response__, 'name'),
         parent_container_id=pulumi.get(__response__, 'parent_container_id'),
-        project_id=pulumi.get(__response__, 'project_id')))
+        project_id=pulumi.get(__response__, 'project_id'),
+        update_time=pulumi.get(__response__, 'update_time')))

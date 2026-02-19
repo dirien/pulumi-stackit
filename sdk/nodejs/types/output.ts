@@ -5,6 +5,21 @@ import * as pulumi from "@pulumi/pulumi";
 import * as inputs from "../types/input";
 import * as outputs from "../types/output";
 
+export interface CdnCustomDomainCertificate {
+    /**
+     * The PEM-encoded TLS certificate. Required for custom certificates.
+     */
+    certificate?: string;
+    /**
+     * The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+     */
+    privateKey?: string;
+    /**
+     * A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+     */
+    version: number;
+}
+
 export interface CdnDistributionConfig {
     /**
      * The configured backend for the distribution
@@ -13,7 +28,7 @@ export interface CdnDistributionConfig {
     /**
      * The configured countries where distribution of content is blocked
      */
-    blockedCountries?: string[];
+    blockedCountries: string[];
     /**
      * Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
      */
@@ -26,17 +41,44 @@ export interface CdnDistributionConfig {
 
 export interface CdnDistributionConfigBackend {
     /**
-     * The configured origin request headers for the backend
+     * The URL of the bucket (e.g. https://s3.example.com). Required if type is 'bucket'.
+     */
+    bucketUrl?: string;
+    /**
+     * The credentials for the bucket. Required if type is 'bucket'.
+     */
+    credentials?: outputs.CdnDistributionConfigBackendCredentials;
+    /**
+     * The configured type http to configure countries where content is allowed. A map of URLs to a list of countries
+     */
+    geofencing?: {[key: string]: string[]};
+    /**
+     * The configured type http origin request headers for the backend
      */
     originRequestHeaders?: {[key: string]: string};
     /**
-     * The configured backend type for the distribution
+     * The configured backend type http for the distribution
      */
-    originUrl: string;
+    originUrl?: string;
     /**
-     * The configured backend type. Supported values are: `http`.
+     * The region where the bucket is hosted. Required if type is 'bucket'.
+     */
+    region?: string;
+    /**
+     * The configured backend type. Possible values are: `http`, `bucket`.
      */
     type: string;
+}
+
+export interface CdnDistributionConfigBackendCredentials {
+    /**
+     * The access key for the bucket. Required if type is 'bucket'.
+     */
+    accessKeyId: string;
+    /**
+     * The access key for the bucket. Required if type is 'bucket'.
+     */
+    secretAccessKey: string;
 }
 
 export interface CdnDistributionConfigOptimizer {
@@ -62,6 +104,13 @@ export interface CdnDistributionDomain {
     type: string;
 }
 
+export interface GetCdnCustomDomainCertificate {
+    /**
+     * A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+     */
+    version: number;
+}
+
 export interface GetCdnDistributionConfig {
     /**
      * The configured backend for the distribution
@@ -83,15 +132,27 @@ export interface GetCdnDistributionConfig {
 
 export interface GetCdnDistributionConfigBackend {
     /**
-     * The configured origin request headers for the backend
+     * The URL of the bucket (e.g. https://s3.example.com). Required if type is 'bucket'.
+     */
+    bucketUrl: string;
+    /**
+     * The configured type http to configure countries where content is allowed. A map of URLs to a list of countries
+     */
+    geofencing: {[key: string]: string[]};
+    /**
+     * The configured type http origin request headers for the backend
      */
     originRequestHeaders: {[key: string]: string};
     /**
-     * The configured backend type for the distribution
+     * The configured backend type http for the distribution
      */
     originUrl: string;
     /**
-     * The configured backend type. Supported values are: `http`.
+     * The region where the bucket is hosted. Required if type is 'bucket'.
+     */
+    region: string;
+    /**
+     * The configured backend type. Possible values are: `http`, `bucket`.
      */
     type: string;
 }
@@ -117,6 +178,60 @@ export interface GetCdnDistributionDomain {
      * The type of the domain. Each distribution has one domain of type "managed", and domains of type "custom" may be additionally created by the user
      */
     type: string;
+}
+
+export interface GetEdgecloudInstancesInstance {
+    /**
+     * The date and time the instance was created.
+     */
+    created: string;
+    /**
+     * Description of the instance.
+     */
+    description: string;
+    /**
+     * The display name of the instance.
+     */
+    displayName: string;
+    /**
+     * Frontend URL for the Edge Cloud instance.
+     */
+    frontendUrl: string;
+    /**
+     * The ID of the instance.
+     */
+    instanceId: string;
+    /**
+     * The plan ID for the instance.
+     */
+    planId: string;
+    /**
+     * The region where the instance is located.
+     */
+    region: string;
+    /**
+     * The status of the instance.
+     */
+    status: string;
+}
+
+export interface GetEdgecloudPlansPlan {
+    /**
+     * Description of the plan.
+     */
+    description: string;
+    /**
+     * The ID of the plan.
+     */
+    id: string;
+    /**
+     * Maximum number of Edge Cloud hosts that can be used.
+     */
+    maxEdgeHosts: number;
+    /**
+     * The name of the plan.
+     */
+    name: string;
 }
 
 export interface GetImageChecksum {
@@ -185,6 +300,95 @@ export interface GetImageConfig {
     virtioScsi: boolean;
 }
 
+export interface GetImageV2Checksum {
+    /**
+     * Algorithm for the checksum of the image data.
+     */
+    algorithm: string;
+    /**
+     * Hexdigest of the checksum of the image data.
+     */
+    digest: string;
+}
+
+export interface GetImageV2Config {
+    /**
+     * Enables the BIOS bootmenu.
+     */
+    bootMenu: boolean;
+    /**
+     * Sets CDROM bus controller type.
+     */
+    cdromBus: string;
+    /**
+     * Sets Disk bus controller type.
+     */
+    diskBus: string;
+    /**
+     * Sets virtual network interface model.
+     */
+    nicModel: string;
+    /**
+     * Enables operating system specific optimizations.
+     */
+    operatingSystem: string;
+    /**
+     * Operating system distribution.
+     */
+    operatingSystemDistro: string;
+    /**
+     * Version of the operating system.
+     */
+    operatingSystemVersion: string;
+    /**
+     * Sets the device bus when the image is used as a rescue image.
+     */
+    rescueBus: string;
+    /**
+     * Sets the device when the image is used as a rescue image.
+     */
+    rescueDevice: string;
+    /**
+     * Enables Secure Boot.
+     */
+    secureBoot: boolean;
+    /**
+     * Enables UEFI boot.
+     */
+    uefi: boolean;
+    /**
+     * Sets Graphic device model.
+     */
+    videoModel: string;
+    /**
+     * Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
+     */
+    virtioScsi: boolean;
+}
+
+export interface GetImageV2Filter {
+    /**
+     * Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+     */
+    distro?: string;
+    /**
+     * Filter images by operating system type, such as `linux` or `windows`.
+     */
+    os?: string;
+    /**
+     * Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+     */
+    secureBoot?: boolean;
+    /**
+     * Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+     */
+    uefi?: boolean;
+    /**
+     * Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+     */
+    version?: string;
+}
+
 export interface GetLoadbalancerListener {
     displayName: string;
     /**
@@ -203,6 +407,14 @@ export interface GetLoadbalancerListener {
      * Reference target pool by target pool name.
      */
     targetPool: string;
+    /**
+     * Options that are specific to the TCP protocol.
+     */
+    tcp: outputs.GetLoadbalancerListenerTcp;
+    /**
+     * Options that are specific to the UDP protocol.
+     */
+    udp: outputs.GetLoadbalancerListenerUdp;
 }
 
 export interface GetLoadbalancerListenerServerNameIndicator {
@@ -210,6 +422,20 @@ export interface GetLoadbalancerListenerServerNameIndicator {
      * A domain name to match in order to pass TLS traffic to the target pool in the current listener
      */
     name?: string;
+}
+
+export interface GetLoadbalancerListenerTcp {
+    /**
+     * Time after which an idle connection is closed. The default value is set to 5 minutes, and the maximum value is one hour.
+     */
+    idleTimeout: string;
+}
+
+export interface GetLoadbalancerListenerUdp {
+    /**
+     * Time after which an idle session is closed. The default value is set to 1 minute, and the maximum value is 2 minutes.
+     */
+    idleTimeout: string;
 }
 
 export interface GetLoadbalancerNetwork {
@@ -469,6 +695,63 @@ export interface GetNetworkAreaNetworkRange {
     prefix: string;
 }
 
+export interface GetNetworkAreaRegionIpv4 {
+    /**
+     * List of DNS Servers/Nameservers.
+     */
+    defaultNameservers: string[];
+    /**
+     * The default prefix length for networks in the network area.
+     */
+    defaultPrefixLength: number;
+    /**
+     * The maximal prefix length for networks in the network area.
+     */
+    maxPrefixLength: number;
+    /**
+     * The minimal prefix length for networks in the network area.
+     */
+    minPrefixLength: number;
+    /**
+     * List of Network ranges.
+     */
+    networkRanges: outputs.GetNetworkAreaRegionIpv4NetworkRange[];
+    /**
+     * IPv4 Classless Inter-Domain Routing (CIDR).
+     */
+    transferNetwork: string;
+}
+
+export interface GetNetworkAreaRegionIpv4NetworkRange {
+    networkRangeId: string;
+    /**
+     * Classless Inter-Domain Routing (CIDR).
+     */
+    prefix: string;
+}
+
+export interface GetNetworkAreaRouteDestination {
+    /**
+     * CIDRV type. Possible values are: `cidrv4`, `cidrv6`.
+     */
+    type: string;
+    /**
+     * An CIDR string.
+     */
+    value: string;
+}
+
+export interface GetNetworkAreaRouteNextHop {
+    /**
+     * Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
+     */
+    type: string;
+    /**
+     * Either IPv4 or IPv6 (not set for blackhole and internet).
+     */
+    value: string;
+}
+
 export interface GetObservabilityAlertgroupRule {
     /**
      * The name of the alert rule. Is the identifier and must be unique in the group.
@@ -490,6 +773,10 @@ export interface GetObservabilityAlertgroupRule {
      * A map of key:value. Labels to add or overwrite for each alert
      */
     labels: {[key: string]: string};
+    /**
+     * The name of the metric. It's the identifier and must be unique in the group.
+     */
+    record: string;
 }
 
 export interface GetObservabilityInstanceAlertConfig {
@@ -579,6 +866,10 @@ export interface GetObservabilityInstanceAlertConfigReceiverEmailConfig {
      */
     from: string;
     /**
+     * Whether to notify about resolved alerts.
+     */
+    sendResolved: boolean;
+    /**
      * The SMTP host through which emails are sent.
      */
     smartHost: string;
@@ -598,6 +889,14 @@ export interface GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
      */
     apiUrl: string;
     /**
+     * Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+     */
+    priority: string;
+    /**
+     * Whether to notify about resolved alerts.
+     */
+    sendResolved: boolean;
+    /**
      * Comma separated list of tags attached to the notifications.
      */
     tags: string;
@@ -605,9 +904,17 @@ export interface GetObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
 
 export interface GetObservabilityInstanceAlertConfigReceiverWebhooksConfig {
     /**
+     * Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+     */
+    googleChat: boolean;
+    /**
      * Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
      */
     msTeams: boolean;
+    /**
+     * Whether to notify about resolved alerts.
+     */
+    sendResolved: boolean;
     /**
      * The endpoint to send HTTP POST requests to. Must be a valid URL
      */
@@ -615,6 +922,10 @@ export interface GetObservabilityInstanceAlertConfigReceiverWebhooksConfig {
 }
 
 export interface GetObservabilityInstanceAlertConfigRoute {
+    /**
+     * Whether an alert should continue matching subsequent sibling nodes.
+     */
+    continue: boolean;
     /**
      * The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
      */
@@ -627,14 +938,6 @@ export interface GetObservabilityInstanceAlertConfigRoute {
      * How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.) .
      */
     groupWait: string;
-    /**
-     * A set of equality matchers an alert has to fulfill to match the node.
-     */
-    match: {[key: string]: string};
-    /**
-     * A set of regex-matchers an alert has to fulfill to match the node.
-     */
-    matchRegex: {[key: string]: string};
     /**
      * The name of the receiver to route the alerts to.
      */
@@ -651,6 +954,10 @@ export interface GetObservabilityInstanceAlertConfigRoute {
 
 export interface GetObservabilityInstanceAlertConfigRouteRoute {
     /**
+     * Whether an alert should continue matching subsequent sibling nodes.
+     */
+    continue: boolean;
+    /**
      * The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
      */
     groupBies: string[];
@@ -663,13 +970,21 @@ export interface GetObservabilityInstanceAlertConfigRouteRoute {
      */
     groupWait: string;
     /**
-     * A set of equality matchers an alert has to fulfill to match the node.
+     * A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+     *
+     * @deprecated Use `matchers` in the `routes` instead.
      */
     match: {[key: string]: string};
     /**
-     * A set of regex-matchers an alert has to fulfill to match the node.
+     * A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+     *
+     * @deprecated Use `matchers` in the `routes` instead.
      */
     matchRegex: {[key: string]: string};
+    /**
+     * A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+     */
+    matchers: string[];
     /**
      * The name of the receiver to route the alerts to.
      */
@@ -860,9 +1175,9 @@ export interface GetRabbitmqInstanceParameters {
      */
     tlsCiphers: string[];
     /**
-     * TLS protocol to use.
+     * TLS protocol versions to use.
      */
-    tlsProtocols: string;
+    tlsProtocols: string[];
 }
 
 export interface GetRedisInstanceParameters {
@@ -969,7 +1284,7 @@ export interface GetRoutingTableRouteDestination {
 
 export interface GetRoutingTableRouteNextHop {
     /**
-     * Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+     * Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
      */
     type: string;
     /**
@@ -1018,7 +1333,7 @@ export interface GetRoutingTableRoutesRouteDestination {
 
 export interface GetRoutingTableRoutesRouteNextHop {
     /**
-     * Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+     * Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
      */
     type: string;
     /**
@@ -1040,6 +1355,10 @@ export interface GetRoutingTablesItem {
      * Description of the routing table.
      */
     description: string;
+    /**
+     * This controls whether dynamic routes are propagated to this routing table
+     */
+    dynamicRoutes: boolean;
     /**
      * Labels are key-value string pairs which can be attached to a resource container
      */
@@ -1116,7 +1435,7 @@ export interface GetServerBackupSchedulesItem {
      */
     name: string;
     /**
-     * Backup schedule described in `rrule` (recurrence rule) format.
+     * An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
      */
     rrule: string;
 }
@@ -1144,7 +1463,7 @@ export interface GetServerUpdateSchedulesItem {
      */
     enabled: boolean;
     /**
-     * Maintenance window [1..24].
+     * Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
      */
     maintenanceWindow: number;
     /**
@@ -1152,10 +1471,64 @@ export interface GetServerUpdateSchedulesItem {
      */
     name: string;
     /**
-     * Update schedule described in `rrule` (recurrence rule) format.
+     * An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
      */
     rrule: string;
     updateScheduleId: number;
+}
+
+export interface GetSfsExportPolicyRule {
+    /**
+     * Description of the Rule
+     */
+    description?: string;
+    /**
+     * IP access control list; IPs must have a subnet mask (e.g. "172.16.0.0/24" for a range of IPs, or "172.16.0.250/32" for a specific IP).
+     */
+    ipAcls: string[];
+    /**
+     * Order of the rule within a Share Export Policy. The order is used so that when a client IP matches multiple rules, the first rule is applied
+     */
+    order: number;
+    /**
+     * Flag to indicate if client IPs matching this rule can only mount the share in read only mode
+     */
+    readOnly: boolean;
+    /**
+     * Flag to honor set UUID
+     */
+    setUuid: boolean;
+    /**
+     * Flag to indicate if client IPs matching this rule have root access on the Share
+     */
+    superUser: boolean;
+}
+
+export interface GetSfsResourcePoolSnapshotSnapshot {
+    /**
+     * (optional) A comment to add more information about a snapshot
+     */
+    comment: string;
+    /**
+     * creation date of the snapshot
+     */
+    createdAt: string;
+    /**
+     * Represents the user-visible data size at the time of the snapshot (e.g. what’s in the snapshot)
+     */
+    logicalSizeGigabytes: number;
+    /**
+     * ID of the Resource Pool of the Snapshot
+     */
+    resourcePoolId: string;
+    /**
+     * Reflects the actual storage footprint in the backend at snapshot time (e.g. how much storage from the Resource Pool does it use)
+     */
+    sizeGigabytes: number;
+    /**
+     * Name of the Resource Pool Snapshot
+     */
+    snapshotName: string;
 }
 
 export interface GetSkeClusterExtensions {
@@ -1314,11 +1687,11 @@ export interface GetSkeClusterNodePool {
      */
     osVersion: string;
     /**
-     * The minimum OS image version, this field is always nil. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current OS image version being used for the node pool, use the read-only `osVersionUsed` field.
+     * The minimum OS image version, this field is always nil. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current OS image version being used for the node pool, use the read-only `osVersionUsed` field.
      */
     osVersionMin: string;
     /**
-     * Full OS image version used. For example, if 3815.2 was set in `osVersionMin`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+     * Full OS image version used. For example, if 3815.2 was set in `osVersionMin`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
      */
     osVersionUsed: string;
     /**
@@ -1350,6 +1723,55 @@ export interface GetSkeClusterNodePoolTaint {
     value: string;
 }
 
+export interface GetSkeKubernetesVersionsKubernetesVersion {
+    /**
+     * Expiration date of the version in RFC3339 format.
+     */
+    expirationDate: string;
+    /**
+     * Map of available feature gates for this version.
+     */
+    featureGates: {[key: string]: string};
+    /**
+     * State of the kubernetes version.
+     */
+    state: string;
+    /**
+     * Kubernetes version string (e.g., `1.33.6`).
+     */
+    version: string;
+}
+
+export interface GetSkeMachineImageVersionsMachineImage {
+    /**
+     * Name of the OS image (e.g., `ubuntu` or `flatcar`).
+     */
+    name: string;
+    /**
+     * Supported versions of the image.
+     */
+    versions: outputs.GetSkeMachineImageVersionsMachineImageVersion[];
+}
+
+export interface GetSkeMachineImageVersionsMachineImageVersion {
+    /**
+     * Container runtimes supported (e.g., `containerd`).
+     */
+    cris: string[];
+    /**
+     * Expiration date of the version in RFC3339 format.
+     */
+    expirationDate: string;
+    /**
+     * State of the image version.
+     */
+    state: string;
+    /**
+     * Machine image version string.
+     */
+    version: string;
+}
+
 export interface GetSqlserverflexInstanceFlavor {
     cpu: number;
     description: string;
@@ -1373,7 +1795,7 @@ export interface GetVolumeSource {
      */
     id: string;
     /**
-     * The type of the source. Supported values are: `volume`, `image`, `snapshot`, `backup`.
+     * The type of the source. Possible values are: `volume`, `image`, `snapshot`, `backup`.
      */
     type: string;
 }
@@ -1451,7 +1873,7 @@ export interface LoadbalancerListener {
      */
     port: number;
     /**
-     * Protocol is the highest network protocol we understand to load balance. Supported values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
+     * Protocol is the highest network protocol we understand to load balance. Possible values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
      */
     protocol: string;
     /**
@@ -1462,6 +1884,14 @@ export interface LoadbalancerListener {
      * Reference target pool by target pool name.
      */
     targetPool: string;
+    /**
+     * Options that are specific to the TCP protocol.
+     */
+    tcp?: outputs.LoadbalancerListenerTcp;
+    /**
+     * Options that are specific to the UDP protocol.
+     */
+    udp?: outputs.LoadbalancerListenerUdp;
 }
 
 export interface LoadbalancerListenerServerNameIndicator {
@@ -1471,13 +1901,27 @@ export interface LoadbalancerListenerServerNameIndicator {
     name?: string;
 }
 
+export interface LoadbalancerListenerTcp {
+    /**
+     * Time after which an idle connection is closed. The default value is set to 300 seconds, and the maximum value is 3600 seconds. The format is a duration and the unit must be seconds. Example: 30s
+     */
+    idleTimeout?: string;
+}
+
+export interface LoadbalancerListenerUdp {
+    /**
+     * Time after which an idle session is closed. The default value is set to 1 minute, and the maximum value is 2 minutes. The format is a duration and the unit must be seconds. Example: 30s
+     */
+    idleTimeout?: string;
+}
+
 export interface LoadbalancerNetwork {
     /**
      * Openstack network ID.
      */
     networkId: string;
     /**
-     * The role defines how the load balancer is using the network. Supported values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
+     * The role defines how the load balancer is using the network. Possible values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
      */
     role: string;
 }
@@ -1712,7 +2156,7 @@ export interface MongodbflexInstanceOptions {
      */
     snapshotRetentionDays: number;
     /**
-     * Type of the MongoDB Flex instance. Supported values are: `Replica`, `Sharded`, `Single`.
+     * Type of the MongoDB Flex instance. Possible values are: `Replica`, `Sharded`, `Single`.
      */
     type: string;
     /**
@@ -1727,6 +2171,46 @@ export interface MongodbflexInstanceStorage {
 }
 
 export interface NetworkAreaNetworkRange {
+    /**
+     * @deprecated Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `stackit.NetworkAreaRegion` resource instead.
+     */
+    networkRangeId: string;
+    /**
+     * Classless Inter-Domain Routing (CIDR).
+     *
+     * @deprecated Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `stackit.NetworkAreaRegion` resource instead.
+     */
+    prefix: string;
+}
+
+export interface NetworkAreaRegionIpv4 {
+    /**
+     * List of DNS Servers/Nameservers.
+     */
+    defaultNameservers?: string[];
+    /**
+     * The default prefix length for networks in the network area.
+     */
+    defaultPrefixLength: number;
+    /**
+     * The maximal prefix length for networks in the network area.
+     */
+    maxPrefixLength: number;
+    /**
+     * The minimal prefix length for networks in the network area.
+     */
+    minPrefixLength: number;
+    /**
+     * List of Network ranges.
+     */
+    networkRanges: outputs.NetworkAreaRegionIpv4NetworkRange[];
+    /**
+     * IPv4 Classless Inter-Domain Routing (CIDR).
+     */
+    transferNetwork: string;
+}
+
+export interface NetworkAreaRegionIpv4NetworkRange {
     networkRangeId: string;
     /**
      * Classless Inter-Domain Routing (CIDR).
@@ -1734,11 +2218,33 @@ export interface NetworkAreaNetworkRange {
     prefix: string;
 }
 
+export interface NetworkAreaRouteDestination {
+    /**
+     * CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported currently.
+     */
+    type: string;
+    /**
+     * An CIDR string.
+     */
+    value: string;
+}
+
+export interface NetworkAreaRouteNextHop {
+    /**
+     * Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `ipv4` supported currently.
+     */
+    type: string;
+    /**
+     * Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported currently.
+     */
+    value?: string;
+}
+
 export interface ObservabilityAlertgroupRule {
     /**
      * The name of the alert rule. Is the identifier and must be unique in the group.
      */
-    alert: string;
+    alert?: string;
     /**
      * A map of key:value. Annotations to add or overwrite for each alert
      */
@@ -1755,11 +2261,15 @@ export interface ObservabilityAlertgroupRule {
      * A map of key:value. Labels to add or overwrite for each alert
      */
     labels?: {[key: string]: string};
+    /**
+     * The name of the metric. It's the identifier and must be unique in the group.
+     */
+    record?: string;
 }
 
 export interface ObservabilityInstanceAlertConfig {
     /**
-     * Global configuration for the alerts.
+     * Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
      */
     global: outputs.ObservabilityInstanceAlertConfigGlobal;
     /**
@@ -1776,11 +2286,11 @@ export interface ObservabilityInstanceAlertConfigGlobal {
     /**
      * The API key for OpsGenie.
      */
-    opsgenieApiKey?: string;
+    opsgenieApiKey: string;
     /**
      * The host to send OpsGenie API requests to. Must be a valid URL
      */
-    opsgenieApiUrl?: string;
+    opsgenieApiUrl: string;
     /**
      * The default value used by alertmanager if the alert does not include EndsAt. After this time passes, it can declare the alert as resolved if it has not been updated. This has no impact on alerts from Prometheus, as they always include EndsAt.
      */
@@ -1788,15 +2298,15 @@ export interface ObservabilityInstanceAlertConfigGlobal {
     /**
      * SMTP authentication information. Must be a valid email address
      */
-    smtpAuthIdentity?: string;
+    smtpAuthIdentity: string;
     /**
      * SMTP Auth using LOGIN and PLAIN.
      */
-    smtpAuthPassword?: string;
+    smtpAuthPassword: string;
     /**
      * SMTP Auth using CRAM-MD5, LOGIN and PLAIN. If empty, Alertmanager doesn't authenticate to the SMTP server.
      */
-    smtpAuthUsername?: string;
+    smtpAuthUsername: string;
     /**
      * The default SMTP From header field. Must be a valid email address
      */
@@ -1804,7 +2314,7 @@ export interface ObservabilityInstanceAlertConfigGlobal {
     /**
      * The default SMTP smarthost used for sending emails, including port number in format `host:port` (eg. `smtp.example.com:587`). Port number usually is 25, or 587 for SMTP over TLS (sometimes referred to as STARTTLS).
      */
-    smtpSmartHost?: string;
+    smtpSmartHost: string;
 }
 
 export interface ObservabilityInstanceAlertConfigReceiver {
@@ -1844,6 +2354,10 @@ export interface ObservabilityInstanceAlertConfigReceiverEmailConfig {
      */
     from?: string;
     /**
+     * Whether to notify about resolved alerts.
+     */
+    sendResolved: boolean;
+    /**
      * The SMTP host through which emails are sent.
      */
     smartHost?: string;
@@ -1863,6 +2377,14 @@ export interface ObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
      */
     apiUrl?: string;
     /**
+     * Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+     */
+    priority?: string;
+    /**
+     * Whether to notify about resolved alerts.
+     */
+    sendResolved: boolean;
+    /**
      * Comma separated list of tags attached to the notifications.
      */
     tags?: string;
@@ -1870,9 +2392,17 @@ export interface ObservabilityInstanceAlertConfigReceiverOpsgenieConfig {
 
 export interface ObservabilityInstanceAlertConfigReceiverWebhooksConfig {
     /**
+     * Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+     */
+    googleChat: boolean;
+    /**
      * Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
      */
-    msTeams?: boolean;
+    msTeams: boolean;
+    /**
+     * Whether to notify about resolved alerts.
+     */
+    sendResolved: boolean;
     /**
      * The endpoint to send HTTP POST requests to. Must be a valid URL
      */
@@ -1880,6 +2410,10 @@ export interface ObservabilityInstanceAlertConfigReceiverWebhooksConfig {
 }
 
 export interface ObservabilityInstanceAlertConfigRoute {
+    /**
+     * Whether an alert should continue matching subsequent sibling nodes.
+     */
+    continue: boolean;
     /**
      * The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
      */
@@ -1892,14 +2426,6 @@ export interface ObservabilityInstanceAlertConfigRoute {
      * How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
      */
     groupWait: string;
-    /**
-     * A set of equality matchers an alert has to fulfill to match the node.
-     */
-    match?: {[key: string]: string};
-    /**
-     * A set of regex-matchers an alert has to fulfill to match the node.
-     */
-    matchRegex?: {[key: string]: string};
     /**
      * The name of the receiver to route the alerts to.
      */
@@ -1916,6 +2442,10 @@ export interface ObservabilityInstanceAlertConfigRoute {
 
 export interface ObservabilityInstanceAlertConfigRouteRoute {
     /**
+     * Whether an alert should continue matching subsequent sibling nodes.
+     */
+    continue?: boolean;
+    /**
      * The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
      */
     groupBies?: string[];
@@ -1928,13 +2458,21 @@ export interface ObservabilityInstanceAlertConfigRouteRoute {
      */
     groupWait: string;
     /**
-     * A set of equality matchers an alert has to fulfill to match the node.
+     * A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+     *
+     * @deprecated Use `matchers` in the `routes` instead.
      */
     match?: {[key: string]: string};
     /**
-     * A set of regex-matchers an alert has to fulfill to match the node.
+     * A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+     *
+     * @deprecated Use `matchers` in the `routes` instead.
      */
     matchRegex?: {[key: string]: string};
+    /**
+     * A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+     */
+    matchers?: string[];
     /**
      * The name of the receiver to route the alerts to.
      */
@@ -2118,9 +2656,9 @@ export interface RabbitmqInstanceParameters {
      */
     tlsCiphers: string[];
     /**
-     * TLS protocol to use.
+     * TLS protocol versions to use.
      */
-    tlsProtocols: string;
+    tlsProtocols: string[];
 }
 
 export interface RedisInstanceParameters {
@@ -2227,7 +2765,7 @@ export interface RoutingTableRouteDestination {
 
 export interface RoutingTableRouteNextHop {
     /**
-     * Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+     * Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
      */
     type: string;
     /**
@@ -2297,9 +2835,36 @@ export interface ServerBootVolume {
      */
     sourceId: string;
     /**
-     * The type of the source. Supported values are: `volume`, `image`.
+     * The type of the source. Possible values are: `volume`, `image`.
      */
     sourceType: string;
+}
+
+export interface SfsExportPolicyRule {
+    /**
+     * Description of the Rule
+     */
+    description?: string;
+    /**
+     * IP access control list; IPs must have a subnet mask (e.g. "172.16.0.0/24" for a range of IPs, or "172.16.0.250/32" for a specific IP).
+     */
+    ipAcls: string[];
+    /**
+     * Order of the rule within a Share Export Policy. The order is used so that when a client IP matches multiple rules, the first rule is applied
+     */
+    order: number;
+    /**
+     * Flag to indicate if client IPs matching this rule can only mount the share in read only mode
+     */
+    readOnly: boolean;
+    /**
+     * Flag to honor set UUID
+     */
+    setUuid: boolean;
+    /**
+     * Flag to indicate if client IPs matching this rule have root access on the Share
+     */
+    superUser: boolean;
 }
 
 export interface SkeClusterExtensions {
@@ -2384,11 +2949,11 @@ export interface SkeClusterHibernation {
 
 export interface SkeClusterMaintenance {
     /**
-     * Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+     * Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
      */
     enableKubernetesVersionUpdates: boolean;
     /**
-     * Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+     * Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
      */
     enableMachineImageVersionUpdates: boolean;
     /**
@@ -2460,11 +3025,11 @@ export interface SkeClusterNodePool {
      */
     osVersion?: string;
     /**
-     * The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current OS image version being used for the node pool, use the read-only `osVersionUsed` field.
+     * The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current OS image version being used for the node pool, use the read-only `osVersionUsed` field.
      */
     osVersionMin?: string;
     /**
-     * Full OS image version used. For example, if 3815.2 was set in `osVersionMin`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+     * Full OS image version used. For example, if 3815.2 was set in `osVersionMin`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
      */
     osVersionUsed: string;
     /**
@@ -2513,13 +3078,45 @@ export interface SqlserverflexInstanceStorage {
     size: number;
 }
 
+export interface VolumeEncryptionParameters {
+    /**
+     * UUID of the key within the STACKIT-KMS to use for the encryption.
+     */
+    kekKeyId: string;
+    /**
+     * Version of the key within the STACKIT-KMS to use for the encryption.
+     */
+    kekKeyVersion: number;
+    /**
+     * UUID of the keyring where the key is located within the STACKTI-KMS.
+     */
+    kekKeyringId: string;
+    /**
+     * Optional predefined secret, which will be encrypted against the key-encryption-key within the STACKIT-KMS. If not defined, a random secret will be generated by the API and encrypted against the STACKIT-KMS. If a key-payload is provided here, it must be base64 encoded.
+     */
+    keyPayloadBase64?: string;
+    /**
+     * **NOTE:** This field is write-only and its value will not be updated in state as part of read operations.
+     * Optional predefined secret, which will be encrypted against the key-encryption-key within the STACKIT-KMS. If not defined, a random secret will be generated by the API and encrypted against the STACKIT-KMS. If a key-payload is provided here, it must be base64 encoded.
+     */
+    keyPayloadBase64Wo?: string;
+    /**
+     * Used together with `keyPayloadBase64Wo` to trigger an re-create. Increment this value when an update to `keyPayloadBase64Wo` is required.
+     */
+    keyPayloadBase64WoVersion?: number;
+    /**
+     * Service-Account linked to the Key within the STACKIT-KMS.
+     */
+    serviceAccount: string;
+}
+
 export interface VolumeSource {
     /**
      * The ID of the source, e.g. image ID
      */
     id: string;
     /**
-     * The type of the source. Supported values are: `volume`, `image`, `snapshot`, `backup`.
+     * The type of the source. Possible values are: `volume`, `image`, `snapshot`, `backup`.
      */
     type: string;
 }

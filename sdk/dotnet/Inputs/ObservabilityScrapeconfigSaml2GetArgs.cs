@@ -14,7 +14,7 @@ namespace ediri.Stackit.Inputs
     public sealed class ObservabilityScrapeconfigSaml2GetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Specifies if URL parameters are enabled. Defaults to `true`
+        /// Specifies if URL parameters are enabled. Defaults to `True`
         /// </summary>
         [Input("enableUrlParameters")]
         public Input<bool>? EnableUrlParameters { get; set; }

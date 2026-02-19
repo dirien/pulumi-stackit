@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetNetworkAreaRoute
     {
         /// <summary>
-        /// Network area route data resource schema. Must have a `region` specified in the provider configuration.
+        /// Network area route data resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -29,7 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetNetworkAreaRouteResult>("stackit:index/getNetworkAreaRoute:getNetworkAreaRoute", args ?? new GetNetworkAreaRouteArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Network area route data resource schema. Must have a `region` specified in the provider configuration.
+        /// Network area route data resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -45,7 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetNetworkAreaRouteResult>("stackit:index/getNetworkAreaRoute:getNetworkAreaRoute", args ?? new GetNetworkAreaRouteInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Network area route data resource schema. Must have a `region` specified in the provider configuration.
+        /// Network area route data resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -82,6 +82,12 @@ namespace ediri.Stackit
         [Input("organizationId", required: true)]
         public string OrganizationId { get; set; } = null!;
 
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public string? Region { get; set; }
+
         public GetNetworkAreaRouteArgs()
         {
         }
@@ -108,6 +114,12 @@ namespace ediri.Stackit
         [Input("organizationId", required: true)]
         public Input<string> OrganizationId { get; set; } = null!;
 
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
+
         public GetNetworkAreaRouteInvokeArgs()
         {
         }
@@ -118,6 +130,13 @@ namespace ediri.Stackit
     [OutputType]
     public sealed class GetNetworkAreaRouteResult
     {
+        /// <summary>
+        /// Destination of the route.
+        /// </summary>
+        public readonly Outputs.GetNetworkAreaRouteDestinationResult Destination;
+        /// <summary>
+        /// Terraform's internal data source ID. It is structured as "`OrganizationId`,`Region`,`NetworkAreaId`,`NetworkAreaRouteId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// Labels are key-value string pairs which can be attached to a resource container
@@ -132,20 +151,22 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string NetworkAreaRouteId;
         /// <summary>
-        /// The IP address of the routing system, that will route the prefix configured. Should be a valid IPv4 address.
+        /// Next hop destination.
         /// </summary>
-        public readonly string NextHop;
+        public readonly Outputs.GetNetworkAreaRouteNextHopResult NextHop;
         /// <summary>
         /// STACKIT organization ID to which the network area is associated.
         /// </summary>
         public readonly string OrganizationId;
         /// <summary>
-        /// The network, that is reachable though the Next Hop. Should use CIDR notation.
+        /// The resource region. If not defined, the provider region is used.
         /// </summary>
-        public readonly string Prefix;
+        public readonly string? Region;
 
         [OutputConstructor]
         private GetNetworkAreaRouteResult(
+            Outputs.GetNetworkAreaRouteDestinationResult destination,
+
             string id,
 
             ImmutableDictionary<string, string> labels,
@@ -154,19 +175,20 @@ namespace ediri.Stackit
 
             string networkAreaRouteId,
 
-            string nextHop,
+            Outputs.GetNetworkAreaRouteNextHopResult nextHop,
 
             string organizationId,
 
-            string prefix)
+            string? region)
         {
+            Destination = destination;
             Id = id;
             Labels = labels;
             NetworkAreaId = networkAreaId;
             NetworkAreaRouteId = networkAreaRouteId;
             NextHop = nextHop;
             OrganizationId = organizationId;
-            Prefix = prefix;
+            Region = region;
         }
     }
 }
