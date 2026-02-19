@@ -65,6 +65,9 @@ export interface GetDnsZoneResult {
      * Expire time.
      */
     readonly expireTime: number;
+    /**
+     * Terraform's internal data source. ID. It is structured as "`projectId`,`zoneId`".
+     */
     readonly id: string;
     /**
      * Specifies, if the zone is a reverse zone or not.

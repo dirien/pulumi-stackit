@@ -48,8 +48,9 @@ type LookupDnsZoneResult struct {
 	// The zone name. E.g. `example.com`
 	DnsName *string `pulumi:"dnsName"`
 	// Expire time.
-	ExpireTime int    `pulumi:"expireTime"`
-	Id         string `pulumi:"id"`
+	ExpireTime int `pulumi:"expireTime"`
+	// Terraform's internal data source. ID. It is structured as "`projectId`,`zoneId`".
+	Id string `pulumi:"id"`
 	// Specifies, if the zone is a reverse zone or not.
 	IsReverseZone bool `pulumi:"isReverseZone"`
 	// The user given name of the zone.
@@ -152,6 +153,7 @@ func (o LookupDnsZoneResultOutput) ExpireTime() pulumi.IntOutput {
 	return o.ApplyT(func(v LookupDnsZoneResult) int { return v.ExpireTime }).(pulumi.IntOutput)
 }
 
+// Terraform's internal data source. ID. It is structured as "`projectId`,`zoneId`".
 func (o LookupDnsZoneResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDnsZoneResult) string { return v.Id }).(pulumi.StringOutput)
 }

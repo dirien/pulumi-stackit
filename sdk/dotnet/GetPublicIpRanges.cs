@@ -19,6 +19,22 @@ namespace ediri.Stackit
         /// 
         /// ```terraform
         /// data "stackit_public_ip_ranges" "example" {}
+        /// 
+        /// # example usage: allow stackit services and customer vpn cidr to access observability apis
+        /// locals {
+        ///   vpn_cidrs = ["X.X.X.X/32", "X.X.X.X/24"]
+        /// }
+        /// 
+        /// resource "stackit_observability_instance" "example" {
+        ///   project_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        ///   name       = "example-instance"
+        ///   plan_name  = "Observability-Monitoring-Medium-EU01"
+        ///   # Allow all stackit services and customer vpn cidr to access observability apis
+        ///   acl                                    = concat(data.stackit_public_ip_ranges.example.cidr_list, local.vpn_cidrs)
+        ///   metrics_retention_days                 = 90
+        ///   metrics_retention_days_5m_downsampling = 90
+        ///   metrics_retention_days_1h_downsampling = 90
+        /// }
         /// ```
         /// </summary>
         public static Task<GetPublicIpRangesResult> InvokeAsync(InvokeOptions? options = null)
@@ -31,6 +47,22 @@ namespace ediri.Stackit
         /// 
         /// ```terraform
         /// data "stackit_public_ip_ranges" "example" {}
+        /// 
+        /// # example usage: allow stackit services and customer vpn cidr to access observability apis
+        /// locals {
+        ///   vpn_cidrs = ["X.X.X.X/32", "X.X.X.X/24"]
+        /// }
+        /// 
+        /// resource "stackit_observability_instance" "example" {
+        ///   project_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        ///   name       = "example-instance"
+        ///   plan_name  = "Observability-Monitoring-Medium-EU01"
+        ///   # Allow all stackit services and customer vpn cidr to access observability apis
+        ///   acl                                    = concat(data.stackit_public_ip_ranges.example.cidr_list, local.vpn_cidrs)
+        ///   metrics_retention_days                 = 90
+        ///   metrics_retention_days_5m_downsampling = 90
+        ///   metrics_retention_days_1h_downsampling = 90
+        /// }
         /// ```
         /// </summary>
         public static Output<GetPublicIpRangesResult> Invoke(InvokeOptions? options = null)
@@ -43,6 +75,22 @@ namespace ediri.Stackit
         /// 
         /// ```terraform
         /// data "stackit_public_ip_ranges" "example" {}
+        /// 
+        /// # example usage: allow stackit services and customer vpn cidr to access observability apis
+        /// locals {
+        ///   vpn_cidrs = ["X.X.X.X/32", "X.X.X.X/24"]
+        /// }
+        /// 
+        /// resource "stackit_observability_instance" "example" {
+        ///   project_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        ///   name       = "example-instance"
+        ///   plan_name  = "Observability-Monitoring-Medium-EU01"
+        ///   # Allow all stackit services and customer vpn cidr to access observability apis
+        ///   acl                                    = concat(data.stackit_public_ip_ranges.example.cidr_list, local.vpn_cidrs)
+        ///   metrics_retention_days                 = 90
+        ///   metrics_retention_days_5m_downsampling = 90
+        ///   metrics_retention_days_1h_downsampling = 90
+        /// }
         /// ```
         /// </summary>
         public static Output<GetPublicIpRangesResult> Invoke(InvokeOutputOptions options)
@@ -53,6 +101,13 @@ namespace ediri.Stackit
     [OutputType]
     public sealed class GetPublicIpRangesResult
     {
+        /// <summary>
+        /// A list of IP range strings (CIDRs) extracted from the public*ip*ranges for easy consumption.
+        /// </summary>
+        public readonly ImmutableArray<string> CidrLists;
+        /// <summary>
+        /// Terraform's internal resource ID. It takes the values of "`public_ip_ranges.*.cidr`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// A list of all public IP ranges.
@@ -61,10 +116,13 @@ namespace ediri.Stackit
 
         [OutputConstructor]
         private GetPublicIpRangesResult(
+            ImmutableArray<string> cidrLists,
+
             string id,
 
             ImmutableArray<Outputs.GetPublicIpRangesPublicIpRangeResult> publicIpRanges)
         {
+            CidrLists = cidrLists;
             Id = id;
             PublicIpRanges = publicIpRanges;
         }

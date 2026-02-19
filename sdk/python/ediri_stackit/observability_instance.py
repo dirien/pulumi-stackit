@@ -25,22 +25,28 @@ class ObservabilityInstanceArgs:
                  project_id: pulumi.Input[_builtins.str],
                  acls: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  alert_config: Optional[pulumi.Input['ObservabilityInstanceAlertConfigArgs']] = None,
+                 grafana_admin_enabled: Optional[pulumi.Input[_builtins.bool]] = None,
+                 logs_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
                  metrics_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
                  metrics_retention_days1h_downsampling: Optional[pulumi.Input[_builtins.int]] = None,
                  metrics_retention_days5m_downsampling: Optional[pulumi.Input[_builtins.int]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
-                 parameters: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
+                 parameters: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 traces_retention_days: Optional[pulumi.Input[_builtins.int]] = None):
         """
         The set of arguments for constructing a ObservabilityInstance resource.
         :param pulumi.Input[_builtins.str] plan_name: Specifies the Observability plan. E.g. `Observability-Monitoring-Medium-EU01`.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The access control list for this instance. Each entry is an IP address range that is permitted to access, in CIDR notation.
         :param pulumi.Input['ObservabilityInstanceAlertConfigArgs'] alert_config: Alert configuration for the instance.
-        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept.
-        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
-        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        :param pulumi.Input[_builtins.bool] grafana_admin_enabled: If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+        :param pulumi.Input[_builtins.int] logs_retention_days: Specifies for how many days the logs are kept. Default is set to `7`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         :param pulumi.Input[_builtins.str] name: The name of the Observability instance.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Additional parameters.
+        :param pulumi.Input[_builtins.int] traces_retention_days: Specifies for how many days the traces are kept. Default is set to `7`.
         """
         pulumi.set(__self__, "plan_name", plan_name)
         pulumi.set(__self__, "project_id", project_id)
@@ -48,6 +54,10 @@ class ObservabilityInstanceArgs:
             pulumi.set(__self__, "acls", acls)
         if alert_config is not None:
             pulumi.set(__self__, "alert_config", alert_config)
+        if grafana_admin_enabled is not None:
+            pulumi.set(__self__, "grafana_admin_enabled", grafana_admin_enabled)
+        if logs_retention_days is not None:
+            pulumi.set(__self__, "logs_retention_days", logs_retention_days)
         if metrics_retention_days is not None:
             pulumi.set(__self__, "metrics_retention_days", metrics_retention_days)
         if metrics_retention_days1h_downsampling is not None:
@@ -58,6 +68,8 @@ class ObservabilityInstanceArgs:
             pulumi.set(__self__, "name", name)
         if parameters is not None:
             pulumi.set(__self__, "parameters", parameters)
+        if traces_retention_days is not None:
+            pulumi.set(__self__, "traces_retention_days", traces_retention_days)
 
     @_builtins.property
     @pulumi.getter(name="planName")
@@ -108,10 +120,34 @@ class ObservabilityInstanceArgs:
         pulumi.set(self, "alert_config", value)
 
     @_builtins.property
+    @pulumi.getter(name="grafanaAdminEnabled")
+    def grafana_admin_enabled(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+        """
+        return pulumi.get(self, "grafana_admin_enabled")
+
+    @grafana_admin_enabled.setter
+    def grafana_admin_enabled(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "grafana_admin_enabled", value)
+
+    @_builtins.property
+    @pulumi.getter(name="logsRetentionDays")
+    def logs_retention_days(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Specifies for how many days the logs are kept. Default is set to `7`.
+        """
+        return pulumi.get(self, "logs_retention_days")
+
+    @logs_retention_days.setter
+    def logs_retention_days(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "logs_retention_days", value)
+
+    @_builtins.property
     @pulumi.getter(name="metricsRetentionDays")
     def metrics_retention_days(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Specifies for how many days the raw metrics are kept.
+        Specifies for how many days the raw metrics are kept. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days")
 
@@ -123,7 +159,7 @@ class ObservabilityInstanceArgs:
     @pulumi.getter(name="metricsRetentionDays1hDownsampling")
     def metrics_retention_days1h_downsampling(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days1h_downsampling")
 
@@ -135,7 +171,7 @@ class ObservabilityInstanceArgs:
     @pulumi.getter(name="metricsRetentionDays5mDownsampling")
     def metrics_retention_days5m_downsampling(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days5m_downsampling")
 
@@ -167,6 +203,18 @@ class ObservabilityInstanceArgs:
     def parameters(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "parameters", value)
 
+    @_builtins.property
+    @pulumi.getter(name="tracesRetentionDays")
+    def traces_retention_days(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Specifies for how many days the traces are kept. Default is set to `7`.
+        """
+        return pulumi.get(self, "traces_retention_days")
+
+    @traces_retention_days.setter
+    def traces_retention_days(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "traces_retention_days", value)
+
 
 @pulumi.input_type
 class _ObservabilityInstanceState:
@@ -175,6 +223,7 @@ class _ObservabilityInstanceState:
                  alert_config: Optional[pulumi.Input['ObservabilityInstanceAlertConfigArgs']] = None,
                  alerting_url: Optional[pulumi.Input[_builtins.str]] = None,
                  dashboard_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 grafana_admin_enabled: Optional[pulumi.Input[_builtins.bool]] = None,
                  grafana_initial_admin_password: Optional[pulumi.Input[_builtins.str]] = None,
                  grafana_initial_admin_user: Optional[pulumi.Input[_builtins.str]] = None,
                  grafana_public_read_access: Optional[pulumi.Input[_builtins.bool]] = None,
@@ -184,6 +233,7 @@ class _ObservabilityInstanceState:
                  jaeger_traces_url: Optional[pulumi.Input[_builtins.str]] = None,
                  jaeger_ui_url: Optional[pulumi.Input[_builtins.str]] = None,
                  logs_push_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 logs_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
                  logs_url: Optional[pulumi.Input[_builtins.str]] = None,
                  metrics_push_url: Optional[pulumi.Input[_builtins.str]] = None,
                  metrics_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
@@ -197,6 +247,7 @@ class _ObservabilityInstanceState:
                  plan_name: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
                  targets_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 traces_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
                  zipkin_spans_url: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering ObservabilityInstance resources.
@@ -204,6 +255,7 @@ class _ObservabilityInstanceState:
         :param pulumi.Input['ObservabilityInstanceAlertConfigArgs'] alert_config: Alert configuration for the instance.
         :param pulumi.Input[_builtins.str] alerting_url: Specifies Alerting URL.
         :param pulumi.Input[_builtins.str] dashboard_url: Specifies Observability instance dashboard URL.
+        :param pulumi.Input[_builtins.bool] grafana_admin_enabled: If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
         :param pulumi.Input[_builtins.str] grafana_initial_admin_password: Specifies an initial Grafana admin password.
         :param pulumi.Input[_builtins.str] grafana_initial_admin_user: Specifies an initial Grafana admin username.
         :param pulumi.Input[_builtins.bool] grafana_public_read_access: If true, anyone can access Grafana dashboards without logging in.
@@ -211,11 +263,12 @@ class _ObservabilityInstanceState:
         :param pulumi.Input[_builtins.str] instance_id: The Observability instance ID.
         :param pulumi.Input[_builtins.bool] is_updatable: Specifies if the instance can be updated.
         :param pulumi.Input[_builtins.str] logs_push_url: Specifies URL for pushing logs.
+        :param pulumi.Input[_builtins.int] logs_retention_days: Specifies for how many days the logs are kept. Default is set to `7`.
         :param pulumi.Input[_builtins.str] logs_url: Specifies Logs URL.
         :param pulumi.Input[_builtins.str] metrics_push_url: Specifies URL for pushing metrics.
-        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept.
-        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
-        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         :param pulumi.Input[_builtins.str] metrics_url: Specifies metrics URL.
         :param pulumi.Input[_builtins.str] name: The name of the Observability instance.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Additional parameters.
@@ -223,6 +276,7 @@ class _ObservabilityInstanceState:
         :param pulumi.Input[_builtins.str] plan_name: Specifies the Observability plan. E.g. `Observability-Monitoring-Medium-EU01`.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
         :param pulumi.Input[_builtins.str] targets_url: Specifies Targets URL.
+        :param pulumi.Input[_builtins.int] traces_retention_days: Specifies for how many days the traces are kept. Default is set to `7`.
         """
         if acls is not None:
             pulumi.set(__self__, "acls", acls)
@@ -232,8 +286,16 @@ class _ObservabilityInstanceState:
             pulumi.set(__self__, "alerting_url", alerting_url)
         if dashboard_url is not None:
             pulumi.set(__self__, "dashboard_url", dashboard_url)
+        if grafana_admin_enabled is not None:
+            pulumi.set(__self__, "grafana_admin_enabled", grafana_admin_enabled)
+        if grafana_initial_admin_password is not None:
+            warnings.warn("""This attribute is deprecated and will be removed on July 5, 2026. Use `grafana_admin_enabled` instead.""", DeprecationWarning)
+            pulumi.log.warn("""grafana_initial_admin_password is deprecated: This attribute is deprecated and will be removed on July 5, 2026. Use `grafana_admin_enabled` instead.""")
         if grafana_initial_admin_password is not None:
             pulumi.set(__self__, "grafana_initial_admin_password", grafana_initial_admin_password)
+        if grafana_initial_admin_user is not None:
+            warnings.warn("""This attribute is deprecated and will be removed on July 5, 2026. Use `grafana_admin_enabled` instead.""", DeprecationWarning)
+            pulumi.log.warn("""grafana_initial_admin_user is deprecated: This attribute is deprecated and will be removed on July 5, 2026. Use `grafana_admin_enabled` instead.""")
         if grafana_initial_admin_user is not None:
             pulumi.set(__self__, "grafana_initial_admin_user", grafana_initial_admin_user)
         if grafana_public_read_access is not None:
@@ -250,6 +312,8 @@ class _ObservabilityInstanceState:
             pulumi.set(__self__, "jaeger_ui_url", jaeger_ui_url)
         if logs_push_url is not None:
             pulumi.set(__self__, "logs_push_url", logs_push_url)
+        if logs_retention_days is not None:
+            pulumi.set(__self__, "logs_retention_days", logs_retention_days)
         if logs_url is not None:
             pulumi.set(__self__, "logs_url", logs_url)
         if metrics_push_url is not None:
@@ -276,6 +340,8 @@ class _ObservabilityInstanceState:
             pulumi.set(__self__, "project_id", project_id)
         if targets_url is not None:
             pulumi.set(__self__, "targets_url", targets_url)
+        if traces_retention_days is not None:
+            pulumi.set(__self__, "traces_retention_days", traces_retention_days)
         if zipkin_spans_url is not None:
             pulumi.set(__self__, "zipkin_spans_url", zipkin_spans_url)
 
@@ -328,7 +394,20 @@ class _ObservabilityInstanceState:
         pulumi.set(self, "dashboard_url", value)
 
     @_builtins.property
+    @pulumi.getter(name="grafanaAdminEnabled")
+    def grafana_admin_enabled(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+        """
+        return pulumi.get(self, "grafana_admin_enabled")
+
+    @grafana_admin_enabled.setter
+    def grafana_admin_enabled(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "grafana_admin_enabled", value)
+
+    @_builtins.property
     @pulumi.getter(name="grafanaInitialAdminPassword")
+    @_utilities.deprecated("""This attribute is deprecated and will be removed on July 5, 2026. Use `grafana_admin_enabled` instead.""")
     def grafana_initial_admin_password(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         Specifies an initial Grafana admin password.
@@ -341,6 +420,7 @@ class _ObservabilityInstanceState:
 
     @_builtins.property
     @pulumi.getter(name="grafanaInitialAdminUser")
+    @_utilities.deprecated("""This attribute is deprecated and will be removed on July 5, 2026. Use `grafana_admin_enabled` instead.""")
     def grafana_initial_admin_user(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         Specifies an initial Grafana admin username.
@@ -430,6 +510,18 @@ class _ObservabilityInstanceState:
         pulumi.set(self, "logs_push_url", value)
 
     @_builtins.property
+    @pulumi.getter(name="logsRetentionDays")
+    def logs_retention_days(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Specifies for how many days the logs are kept. Default is set to `7`.
+        """
+        return pulumi.get(self, "logs_retention_days")
+
+    @logs_retention_days.setter
+    def logs_retention_days(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "logs_retention_days", value)
+
+    @_builtins.property
     @pulumi.getter(name="logsUrl")
     def logs_url(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -457,7 +549,7 @@ class _ObservabilityInstanceState:
     @pulumi.getter(name="metricsRetentionDays")
     def metrics_retention_days(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Specifies for how many days the raw metrics are kept.
+        Specifies for how many days the raw metrics are kept. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days")
 
@@ -469,7 +561,7 @@ class _ObservabilityInstanceState:
     @pulumi.getter(name="metricsRetentionDays1hDownsampling")
     def metrics_retention_days1h_downsampling(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days1h_downsampling")
 
@@ -481,7 +573,7 @@ class _ObservabilityInstanceState:
     @pulumi.getter(name="metricsRetentionDays5mDownsampling")
     def metrics_retention_days5m_downsampling(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days5m_downsampling")
 
@@ -583,6 +675,18 @@ class _ObservabilityInstanceState:
         pulumi.set(self, "targets_url", value)
 
     @_builtins.property
+    @pulumi.getter(name="tracesRetentionDays")
+    def traces_retention_days(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Specifies for how many days the traces are kept. Default is set to `7`.
+        """
+        return pulumi.get(self, "traces_retention_days")
+
+    @traces_retention_days.setter
+    def traces_retention_days(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "traces_retention_days", value)
+
+    @_builtins.property
     @pulumi.getter(name="zipkinSpansUrl")
     def zipkin_spans_url(self) -> Optional[pulumi.Input[_builtins.str]]:
         return pulumi.get(self, "zipkin_spans_url")
@@ -600,6 +704,8 @@ class ObservabilityInstance(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  acls: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  alert_config: Optional[pulumi.Input[Union['ObservabilityInstanceAlertConfigArgs', 'ObservabilityInstanceAlertConfigArgsDict']]] = None,
+                 grafana_admin_enabled: Optional[pulumi.Input[_builtins.bool]] = None,
+                 logs_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
                  metrics_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
                  metrics_retention_days1h_downsampling: Optional[pulumi.Input[_builtins.int]] = None,
                  metrics_retention_days5m_downsampling: Optional[pulumi.Input[_builtins.int]] = None,
@@ -607,6 +713,7 @@ class ObservabilityInstance(pulumi.CustomResource):
                  parameters: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  plan_name: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 traces_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
                  __props__=None):
         """
         Observability instance resource schema. Must have a `region` specified in the provider configuration.
@@ -617,13 +724,16 @@ class ObservabilityInstance(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The access control list for this instance. Each entry is an IP address range that is permitted to access, in CIDR notation.
         :param pulumi.Input[Union['ObservabilityInstanceAlertConfigArgs', 'ObservabilityInstanceAlertConfigArgsDict']] alert_config: Alert configuration for the instance.
-        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept.
-        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
-        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        :param pulumi.Input[_builtins.bool] grafana_admin_enabled: If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+        :param pulumi.Input[_builtins.int] logs_retention_days: Specifies for how many days the logs are kept. Default is set to `7`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         :param pulumi.Input[_builtins.str] name: The name of the Observability instance.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Additional parameters.
         :param pulumi.Input[_builtins.str] plan_name: Specifies the Observability plan. E.g. `Observability-Monitoring-Medium-EU01`.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
+        :param pulumi.Input[_builtins.int] traces_retention_days: Specifies for how many days the traces are kept. Default is set to `7`.
         """
         ...
     @overload
@@ -653,6 +763,8 @@ class ObservabilityInstance(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  acls: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  alert_config: Optional[pulumi.Input[Union['ObservabilityInstanceAlertConfigArgs', 'ObservabilityInstanceAlertConfigArgsDict']]] = None,
+                 grafana_admin_enabled: Optional[pulumi.Input[_builtins.bool]] = None,
+                 logs_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
                  metrics_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
                  metrics_retention_days1h_downsampling: Optional[pulumi.Input[_builtins.int]] = None,
                  metrics_retention_days5m_downsampling: Optional[pulumi.Input[_builtins.int]] = None,
@@ -660,6 +772,7 @@ class ObservabilityInstance(pulumi.CustomResource):
                  parameters: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  plan_name: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 traces_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
         if not isinstance(opts, pulumi.ResourceOptions):
@@ -671,6 +784,8 @@ class ObservabilityInstance(pulumi.CustomResource):
 
             __props__.__dict__["acls"] = acls
             __props__.__dict__["alert_config"] = alert_config
+            __props__.__dict__["grafana_admin_enabled"] = grafana_admin_enabled
+            __props__.__dict__["logs_retention_days"] = logs_retention_days
             __props__.__dict__["metrics_retention_days"] = metrics_retention_days
             __props__.__dict__["metrics_retention_days1h_downsampling"] = metrics_retention_days1h_downsampling
             __props__.__dict__["metrics_retention_days5m_downsampling"] = metrics_retention_days5m_downsampling
@@ -682,6 +797,7 @@ class ObservabilityInstance(pulumi.CustomResource):
             if project_id is None and not opts.urn:
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
+            __props__.__dict__["traces_retention_days"] = traces_retention_days
             __props__.__dict__["alerting_url"] = None
             __props__.__dict__["dashboard_url"] = None
             __props__.__dict__["grafana_initial_admin_password"] = None
@@ -716,6 +832,7 @@ class ObservabilityInstance(pulumi.CustomResource):
             alert_config: Optional[pulumi.Input[Union['ObservabilityInstanceAlertConfigArgs', 'ObservabilityInstanceAlertConfigArgsDict']]] = None,
             alerting_url: Optional[pulumi.Input[_builtins.str]] = None,
             dashboard_url: Optional[pulumi.Input[_builtins.str]] = None,
+            grafana_admin_enabled: Optional[pulumi.Input[_builtins.bool]] = None,
             grafana_initial_admin_password: Optional[pulumi.Input[_builtins.str]] = None,
             grafana_initial_admin_user: Optional[pulumi.Input[_builtins.str]] = None,
             grafana_public_read_access: Optional[pulumi.Input[_builtins.bool]] = None,
@@ -725,6 +842,7 @@ class ObservabilityInstance(pulumi.CustomResource):
             jaeger_traces_url: Optional[pulumi.Input[_builtins.str]] = None,
             jaeger_ui_url: Optional[pulumi.Input[_builtins.str]] = None,
             logs_push_url: Optional[pulumi.Input[_builtins.str]] = None,
+            logs_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
             logs_url: Optional[pulumi.Input[_builtins.str]] = None,
             metrics_push_url: Optional[pulumi.Input[_builtins.str]] = None,
             metrics_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
@@ -738,6 +856,7 @@ class ObservabilityInstance(pulumi.CustomResource):
             plan_name: Optional[pulumi.Input[_builtins.str]] = None,
             project_id: Optional[pulumi.Input[_builtins.str]] = None,
             targets_url: Optional[pulumi.Input[_builtins.str]] = None,
+            traces_retention_days: Optional[pulumi.Input[_builtins.int]] = None,
             zipkin_spans_url: Optional[pulumi.Input[_builtins.str]] = None) -> 'ObservabilityInstance':
         """
         Get an existing ObservabilityInstance resource's state with the given name, id, and optional extra
@@ -750,6 +869,7 @@ class ObservabilityInstance(pulumi.CustomResource):
         :param pulumi.Input[Union['ObservabilityInstanceAlertConfigArgs', 'ObservabilityInstanceAlertConfigArgsDict']] alert_config: Alert configuration for the instance.
         :param pulumi.Input[_builtins.str] alerting_url: Specifies Alerting URL.
         :param pulumi.Input[_builtins.str] dashboard_url: Specifies Observability instance dashboard URL.
+        :param pulumi.Input[_builtins.bool] grafana_admin_enabled: If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
         :param pulumi.Input[_builtins.str] grafana_initial_admin_password: Specifies an initial Grafana admin password.
         :param pulumi.Input[_builtins.str] grafana_initial_admin_user: Specifies an initial Grafana admin username.
         :param pulumi.Input[_builtins.bool] grafana_public_read_access: If true, anyone can access Grafana dashboards without logging in.
@@ -757,11 +877,12 @@ class ObservabilityInstance(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] instance_id: The Observability instance ID.
         :param pulumi.Input[_builtins.bool] is_updatable: Specifies if the instance can be updated.
         :param pulumi.Input[_builtins.str] logs_push_url: Specifies URL for pushing logs.
+        :param pulumi.Input[_builtins.int] logs_retention_days: Specifies for how many days the logs are kept. Default is set to `7`.
         :param pulumi.Input[_builtins.str] logs_url: Specifies Logs URL.
         :param pulumi.Input[_builtins.str] metrics_push_url: Specifies URL for pushing metrics.
-        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept.
-        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
-        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        :param pulumi.Input[_builtins.int] metrics_retention_days: Specifies for how many days the raw metrics are kept. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days1h_downsampling: Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
+        :param pulumi.Input[_builtins.int] metrics_retention_days5m_downsampling: Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         :param pulumi.Input[_builtins.str] metrics_url: Specifies metrics URL.
         :param pulumi.Input[_builtins.str] name: The name of the Observability instance.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] parameters: Additional parameters.
@@ -769,6 +890,7 @@ class ObservabilityInstance(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] plan_name: Specifies the Observability plan. E.g. `Observability-Monitoring-Medium-EU01`.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
         :param pulumi.Input[_builtins.str] targets_url: Specifies Targets URL.
+        :param pulumi.Input[_builtins.int] traces_retention_days: Specifies for how many days the traces are kept. Default is set to `7`.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -778,6 +900,7 @@ class ObservabilityInstance(pulumi.CustomResource):
         __props__.__dict__["alert_config"] = alert_config
         __props__.__dict__["alerting_url"] = alerting_url
         __props__.__dict__["dashboard_url"] = dashboard_url
+        __props__.__dict__["grafana_admin_enabled"] = grafana_admin_enabled
         __props__.__dict__["grafana_initial_admin_password"] = grafana_initial_admin_password
         __props__.__dict__["grafana_initial_admin_user"] = grafana_initial_admin_user
         __props__.__dict__["grafana_public_read_access"] = grafana_public_read_access
@@ -787,6 +910,7 @@ class ObservabilityInstance(pulumi.CustomResource):
         __props__.__dict__["jaeger_traces_url"] = jaeger_traces_url
         __props__.__dict__["jaeger_ui_url"] = jaeger_ui_url
         __props__.__dict__["logs_push_url"] = logs_push_url
+        __props__.__dict__["logs_retention_days"] = logs_retention_days
         __props__.__dict__["logs_url"] = logs_url
         __props__.__dict__["metrics_push_url"] = metrics_push_url
         __props__.__dict__["metrics_retention_days"] = metrics_retention_days
@@ -800,6 +924,7 @@ class ObservabilityInstance(pulumi.CustomResource):
         __props__.__dict__["plan_name"] = plan_name
         __props__.__dict__["project_id"] = project_id
         __props__.__dict__["targets_url"] = targets_url
+        __props__.__dict__["traces_retention_days"] = traces_retention_days
         __props__.__dict__["zipkin_spans_url"] = zipkin_spans_url
         return ObservabilityInstance(resource_name, opts=opts, __props__=__props__)
 
@@ -836,7 +961,16 @@ class ObservabilityInstance(pulumi.CustomResource):
         return pulumi.get(self, "dashboard_url")
 
     @_builtins.property
+    @pulumi.getter(name="grafanaAdminEnabled")
+    def grafana_admin_enabled(self) -> pulumi.Output[_builtins.bool]:
+        """
+        If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+        """
+        return pulumi.get(self, "grafana_admin_enabled")
+
+    @_builtins.property
     @pulumi.getter(name="grafanaInitialAdminPassword")
+    @_utilities.deprecated("""This attribute is deprecated and will be removed on July 5, 2026. Use `grafana_admin_enabled` instead.""")
     def grafana_initial_admin_password(self) -> pulumi.Output[_builtins.str]:
         """
         Specifies an initial Grafana admin password.
@@ -845,6 +979,7 @@ class ObservabilityInstance(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter(name="grafanaInitialAdminUser")
+    @_utilities.deprecated("""This attribute is deprecated and will be removed on July 5, 2026. Use `grafana_admin_enabled` instead.""")
     def grafana_initial_admin_user(self) -> pulumi.Output[_builtins.str]:
         """
         Specifies an initial Grafana admin username.
@@ -902,6 +1037,14 @@ class ObservabilityInstance(pulumi.CustomResource):
         return pulumi.get(self, "logs_push_url")
 
     @_builtins.property
+    @pulumi.getter(name="logsRetentionDays")
+    def logs_retention_days(self) -> pulumi.Output[_builtins.int]:
+        """
+        Specifies for how many days the logs are kept. Default is set to `7`.
+        """
+        return pulumi.get(self, "logs_retention_days")
+
+    @_builtins.property
     @pulumi.getter(name="logsUrl")
     def logs_url(self) -> pulumi.Output[_builtins.str]:
         """
@@ -921,7 +1064,7 @@ class ObservabilityInstance(pulumi.CustomResource):
     @pulumi.getter(name="metricsRetentionDays")
     def metrics_retention_days(self) -> pulumi.Output[_builtins.int]:
         """
-        Specifies for how many days the raw metrics are kept.
+        Specifies for how many days the raw metrics are kept. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days")
 
@@ -929,7 +1072,7 @@ class ObservabilityInstance(pulumi.CustomResource):
     @pulumi.getter(name="metricsRetentionDays1hDownsampling")
     def metrics_retention_days1h_downsampling(self) -> pulumi.Output[_builtins.int]:
         """
-        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+        Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days1h_downsampling")
 
@@ -937,7 +1080,7 @@ class ObservabilityInstance(pulumi.CustomResource):
     @pulumi.getter(name="metricsRetentionDays5mDownsampling")
     def metrics_retention_days5m_downsampling(self) -> pulumi.Output[_builtins.int]:
         """
-        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         """
         return pulumi.get(self, "metrics_retention_days5m_downsampling")
 
@@ -1001,6 +1144,14 @@ class ObservabilityInstance(pulumi.CustomResource):
         Specifies Targets URL.
         """
         return pulumi.get(self, "targets_url")
+
+    @_builtins.property
+    @pulumi.getter(name="tracesRetentionDays")
+    def traces_retention_days(self) -> pulumi.Output[_builtins.int]:
+        """
+        Specifies for how many days the traces are kept. Default is set to `7`.
+        """
+        return pulumi.get(self, "traces_retention_days")
 
     @_builtins.property
     @pulumi.getter(name="zipkinSpansUrl")

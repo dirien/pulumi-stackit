@@ -59,6 +59,13 @@ export interface GetRoutingTableResult {
      * Description of the routing table.
      */
     readonly description: string;
+    /**
+     * This controls whether dynamic routes are propagated to this routing table
+     */
+    readonly dynamicRoutes: boolean;
+    /**
+     * Terraform's internal datasource ID. It is structured as "`organizationId`,`region`,`networkAreaId`,`routingTableId`".
+     */
     readonly id: string;
     /**
      * Labels are key-value string pairs which can be attached to a resource container
