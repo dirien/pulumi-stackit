@@ -32,6 +32,7 @@ class MariadbInstanceArgs:
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
         :param pulumi.Input[_builtins.str] version: The service version.
         :param pulumi.Input[_builtins.str] name: Instance name.
+        :param pulumi.Input['MariadbInstanceParametersArgs'] parameters: Configuration parameters. Please note that removing a previously configured field from your Terraform configuration won't replace its value in the API. To update a previously configured field, explicitly set a new value for it.
         """
         pulumi.set(__self__, "plan_name", plan_name)
         pulumi.set(__self__, "project_id", project_id)
@@ -92,6 +93,9 @@ class MariadbInstanceArgs:
     @_builtins.property
     @pulumi.getter
     def parameters(self) -> Optional[pulumi.Input['MariadbInstanceParametersArgs']]:
+        """
+        Configuration parameters. Please note that removing a previously configured field from your Terraform configuration won't replace its value in the API. To update a previously configured field, explicitly set a new value for it.
+        """
         return pulumi.get(self, "parameters")
 
     @parameters.setter
@@ -118,6 +122,7 @@ class _MariadbInstanceState:
         Input properties used for looking up and filtering MariadbInstance resources.
         :param pulumi.Input[_builtins.str] instance_id: ID of the MariaDB instance.
         :param pulumi.Input[_builtins.str] name: Instance name.
+        :param pulumi.Input['MariadbInstanceParametersArgs'] parameters: Configuration parameters. Please note that removing a previously configured field from your Terraform configuration won't replace its value in the API. To update a previously configured field, explicitly set a new value for it.
         :param pulumi.Input[_builtins.str] plan_id: The selected plan ID.
         :param pulumi.Input[_builtins.str] plan_name: The selected plan name.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
@@ -220,6 +225,9 @@ class _MariadbInstanceState:
     @_builtins.property
     @pulumi.getter
     def parameters(self) -> Optional[pulumi.Input['MariadbInstanceParametersArgs']]:
+        """
+        Configuration parameters. Please note that removing a previously configured field from your Terraform configuration won't replace its value in the API. To update a previously configured field, explicitly set a new value for it.
+        """
         return pulumi.get(self, "parameters")
 
     @parameters.setter
@@ -295,6 +303,7 @@ class MariadbInstance(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] name: Instance name.
+        :param pulumi.Input[Union['MariadbInstanceParametersArgs', 'MariadbInstanceParametersArgsDict']] parameters: Configuration parameters. Please note that removing a previously configured field from your Terraform configuration won't replace its value in the API. To update a previously configured field, explicitly set a new value for it.
         :param pulumi.Input[_builtins.str] plan_name: The selected plan name.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
         :param pulumi.Input[_builtins.str] version: The service version.
@@ -388,6 +397,7 @@ class MariadbInstance(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] instance_id: ID of the MariaDB instance.
         :param pulumi.Input[_builtins.str] name: Instance name.
+        :param pulumi.Input[Union['MariadbInstanceParametersArgs', 'MariadbInstanceParametersArgsDict']] parameters: Configuration parameters. Please note that removing a previously configured field from your Terraform configuration won't replace its value in the API. To update a previously configured field, explicitly set a new value for it.
         :param pulumi.Input[_builtins.str] plan_id: The selected plan ID.
         :param pulumi.Input[_builtins.str] plan_name: The selected plan name.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
@@ -455,6 +465,9 @@ class MariadbInstance(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter
     def parameters(self) -> pulumi.Output['outputs.MariadbInstanceParameters']:
+        """
+        Configuration parameters. Please note that removing a previously configured field from your Terraform configuration won't replace its value in the API. To update a previously configured field, explicitly set a new value for it.
+        """
         return pulumi.get(self, "parameters")
 
     @_builtins.property

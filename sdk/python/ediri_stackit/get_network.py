@@ -26,7 +26,10 @@ class GetNetworkResult:
     """
     A collection of values returned by getNetwork.
     """
-    def __init__(__self__, id=None, ipv4_gateway=None, ipv4_nameservers=None, ipv4_prefix=None, ipv4_prefix_length=None, ipv4_prefixes=None, ipv6_gateway=None, ipv6_nameservers=None, ipv6_prefix=None, ipv6_prefix_length=None, ipv6_prefixes=None, labels=None, name=None, nameservers=None, network_id=None, prefixes=None, project_id=None, public_ip=None, region=None, routed=None, routing_table_id=None):
+    def __init__(__self__, dhcp=None, id=None, ipv4_gateway=None, ipv4_nameservers=None, ipv4_prefix=None, ipv4_prefix_length=None, ipv4_prefixes=None, ipv6_gateway=None, ipv6_nameservers=None, ipv6_prefix=None, ipv6_prefix_length=None, ipv6_prefixes=None, labels=None, name=None, nameservers=None, network_id=None, prefixes=None, project_id=None, public_ip=None, region=None, routed=None, routing_table_id=None):
+        if dhcp and not isinstance(dhcp, bool):
+            raise TypeError("Expected argument 'dhcp' to be a bool")
+        pulumi.set(__self__, "dhcp", dhcp)
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
@@ -93,7 +96,18 @@ class GetNetworkResult:
 
     @_builtins.property
     @pulumi.getter
+    def dhcp(self) -> _builtins.bool:
+        """
+        Shows if DHCP is enabled for the network.
+        """
+        return pulumi.get(self, "dhcp")
+
+    @_builtins.property
+    @pulumi.getter
     def id(self) -> _builtins.str:
+        """
+        Terraform's internal resource ID. It is structured as "`project_id`,`network_id`".
+        """
         return pulumi.get(self, "id")
 
     @_builtins.property
@@ -240,7 +254,6 @@ class GetNetworkResult:
     @pulumi.getter
     def region(self) -> Optional[_builtins.str]:
         """
-        Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
         The resource region. If not defined, the provider region is used.
         """
         return pulumi.get(self, "region")
@@ -257,7 +270,6 @@ class GetNetworkResult:
     @pulumi.getter(name="routingTableId")
     def routing_table_id(self) -> _builtins.str:
         """
-        Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.
         The ID of the routing table associated with the network.
         """
         return pulumi.get(self, "routing_table_id")
@@ -269,6 +281,7 @@ class AwaitableGetNetworkResult(GetNetworkResult):
         if False:
             yield self
         return GetNetworkResult(
+            dhcp=self.dhcp,
             id=self.id,
             ipv4_gateway=self.ipv4_gateway,
             ipv4_nameservers=self.ipv4_nameservers,
@@ -304,8 +317,7 @@ def get_network(network_id: Optional[_builtins.str] = None,
 
     :param _builtins.str network_id: The network ID.
     :param _builtins.str project_id: STACKIT project ID to which the network is associated.
-    :param _builtins.str region: Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
-           The resource region. If not defined, the provider region is used.
+    :param _builtins.str region: The resource region. If not defined, the provider region is used.
     """
     __args__ = dict()
     __args__['networkId'] = network_id
@@ -315,6 +327,7 @@ def get_network(network_id: Optional[_builtins.str] = None,
     __ret__ = pulumi.runtime.invoke('stackit:index/getNetwork:getNetwork', __args__, opts=opts, typ=GetNetworkResult).value
 
     return AwaitableGetNetworkResult(
+        dhcp=pulumi.get(__ret__, 'dhcp'),
         id=pulumi.get(__ret__, 'id'),
         ipv4_gateway=pulumi.get(__ret__, 'ipv4_gateway'),
         ipv4_nameservers=pulumi.get(__ret__, 'ipv4_nameservers'),
@@ -348,8 +361,7 @@ def get_network_output(network_id: Optional[pulumi.Input[_builtins.str]] = None,
 
     :param _builtins.str network_id: The network ID.
     :param _builtins.str project_id: STACKIT project ID to which the network is associated.
-    :param _builtins.str region: Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
-           The resource region. If not defined, the provider region is used.
+    :param _builtins.str region: The resource region. If not defined, the provider region is used.
     """
     __args__ = dict()
     __args__['networkId'] = network_id
@@ -358,6 +370,7 @@ def get_network_output(network_id: Optional[pulumi.Input[_builtins.str]] = None,
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke_output('stackit:index/getNetwork:getNetwork', __args__, opts=opts, typ=GetNetworkResult)
     return __ret__.apply(lambda __response__: GetNetworkResult(
+        dhcp=pulumi.get(__response__, 'dhcp'),
         id=pulumi.get(__response__, 'id'),
         ipv4_gateway=pulumi.get(__response__, 'ipv4_gateway'),
         ipv4_nameservers=pulumi.get(__response__, 'ipv4_nameservers'),

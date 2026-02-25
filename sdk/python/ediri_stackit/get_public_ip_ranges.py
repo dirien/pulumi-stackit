@@ -27,7 +27,10 @@ class GetPublicIpRangesResult:
     """
     A collection of values returned by getPublicIpRanges.
     """
-    def __init__(__self__, id=None, public_ip_ranges=None):
+    def __init__(__self__, cidr_lists=None, id=None, public_ip_ranges=None):
+        if cidr_lists and not isinstance(cidr_lists, list):
+            raise TypeError("Expected argument 'cidr_lists' to be a list")
+        pulumi.set(__self__, "cidr_lists", cidr_lists)
         if id and not isinstance(id, str):
             raise TypeError("Expected argument 'id' to be a str")
         pulumi.set(__self__, "id", id)
@@ -36,8 +39,19 @@ class GetPublicIpRangesResult:
         pulumi.set(__self__, "public_ip_ranges", public_ip_ranges)
 
     @_builtins.property
+    @pulumi.getter(name="cidrLists")
+    def cidr_lists(self) -> Sequence[_builtins.str]:
+        """
+        A list of IP range strings (CIDRs) extracted from the public*ip*ranges for easy consumption.
+        """
+        return pulumi.get(self, "cidr_lists")
+
+    @_builtins.property
     @pulumi.getter
     def id(self) -> _builtins.str:
+        """
+        Terraform's internal resource ID. It takes the values of "`public_ip_ranges.*.cidr`".
+        """
         return pulumi.get(self, "id")
 
     @_builtins.property
@@ -55,6 +69,7 @@ class AwaitableGetPublicIpRangesResult(GetPublicIpRangesResult):
         if False:
             yield self
         return GetPublicIpRangesResult(
+            cidr_lists=self.cidr_lists,
             id=self.id,
             public_ip_ranges=self.public_ip_ranges)
 
@@ -70,6 +85,7 @@ def get_public_ip_ranges(opts: Optional[pulumi.InvokeOptions] = None) -> Awaitab
     __ret__ = pulumi.runtime.invoke('stackit:index/getPublicIpRanges:getPublicIpRanges', __args__, opts=opts, typ=GetPublicIpRangesResult).value
 
     return AwaitableGetPublicIpRangesResult(
+        cidr_lists=pulumi.get(__ret__, 'cidr_lists'),
         id=pulumi.get(__ret__, 'id'),
         public_ip_ranges=pulumi.get(__ret__, 'public_ip_ranges'))
 def get_public_ip_ranges_output(opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetPublicIpRangesResult]:
@@ -82,5 +98,6 @@ def get_public_ip_ranges_output(opts: Optional[Union[pulumi.InvokeOptions, pulum
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke_output('stackit:index/getPublicIpRanges:getPublicIpRanges', __args__, opts=opts, typ=GetPublicIpRangesResult)
     return __ret__.apply(lambda __response__: GetPublicIpRangesResult(
+        cidr_lists=pulumi.get(__response__, 'cidr_lists'),
         id=pulumi.get(__response__, 'id'),
         public_ip_ranges=pulumi.get(__response__, 'public_ip_ranges')))

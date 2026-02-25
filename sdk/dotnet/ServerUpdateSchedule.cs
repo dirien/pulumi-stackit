@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Server update schedule resource schema. Must have a `region` specified in the provider configuration.
+    /// Server update schedule resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// &gt; This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
     /// 
@@ -27,7 +27,7 @@ namespace ediri.Stackit
         public Output<bool> Enabled { get; private set; } = null!;
 
         /// <summary>
-        /// Maintenance window [1..24].
+        /// Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
         /// </summary>
         [Output("maintenanceWindow")]
         public Output<int> MaintenanceWindow { get; private set; } = null!;
@@ -51,7 +51,7 @@ namespace ediri.Stackit
         public Output<string> Region { get; private set; } = null!;
 
         /// <summary>
-        /// Update schedule described in `rrule` (recurrence rule) format.
+        /// An `Rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         /// </summary>
         [Output("rrule")]
         public Output<string> Rrule { get; private set; } = null!;
@@ -122,7 +122,7 @@ namespace ediri.Stackit
         public Input<bool> Enabled { get; set; } = null!;
 
         /// <summary>
-        /// Maintenance window [1..24].
+        /// Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
         /// </summary>
         [Input("maintenanceWindow", required: true)]
         public Input<int> MaintenanceWindow { get; set; } = null!;
@@ -146,7 +146,7 @@ namespace ediri.Stackit
         public Input<string>? Region { get; set; }
 
         /// <summary>
-        /// Update schedule described in `rrule` (recurrence rule) format.
+        /// An `Rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         /// </summary>
         [Input("rrule", required: true)]
         public Input<string> Rrule { get; set; } = null!;
@@ -172,7 +172,7 @@ namespace ediri.Stackit
         public Input<bool>? Enabled { get; set; }
 
         /// <summary>
-        /// Maintenance window [1..24].
+        /// Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
         /// </summary>
         [Input("maintenanceWindow")]
         public Input<int>? MaintenanceWindow { get; set; }
@@ -196,7 +196,7 @@ namespace ediri.Stackit
         public Input<string>? Region { get; set; }
 
         /// <summary>
-        /// Update schedule described in `rrule` (recurrence rule) format.
+        /// An `Rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         /// </summary>
         [Input("rrule")]
         public Input<string>? Rrule { get; set; }
