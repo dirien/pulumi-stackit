@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Network interface resource schema. Must have a `region` specified in the provider configuration.
+    /// Network interface resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -73,6 +73,12 @@ namespace ediri.Stackit
         public Output<string> ProjectId { get; private set; } = null!;
 
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Output("region")]
+        public Output<string> Region { get; private set; } = null!;
+
+        /// <summary>
         /// The Network Interface Security. If set to false, then no security groups will apply to this network interface.
         /// </summary>
         [Output("security")]
@@ -85,7 +91,7 @@ namespace ediri.Stackit
         public Output<ImmutableArray<string>> SecurityGroupIds { get; private set; } = null!;
 
         /// <summary>
-        /// Type of network interface. Some of the possible values are: Supported values are: `server`, `metadata`, `gateway`.
+        /// Type of network interface. Some of the possible values are: Possible values are: `Server`, `Metadata`, `Gateway`.
         /// </summary>
         [Output("type")]
         public Output<string> Type { get; private set; } = null!;
@@ -186,6 +192,12 @@ namespace ediri.Stackit
         public Input<string> ProjectId { get; set; } = null!;
 
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
+
+        /// <summary>
         /// The Network Interface Security. If set to false, then no security groups will apply to this network interface.
         /// </summary>
         [Input("security")]
@@ -278,6 +290,12 @@ namespace ediri.Stackit
         public Input<string>? ProjectId { get; set; }
 
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
+
+        /// <summary>
         /// The Network Interface Security. If set to false, then no security groups will apply to this network interface.
         /// </summary>
         [Input("security")]
@@ -296,7 +314,7 @@ namespace ediri.Stackit
         }
 
         /// <summary>
-        /// Type of network interface. Some of the possible values are: Supported values are: `server`, `metadata`, `gateway`.
+        /// Type of network interface. Some of the possible values are: Possible values are: `Server`, `Metadata`, `Gateway`.
         /// </summary>
         [Input("type")]
         public Input<string>? Type { get; set; }

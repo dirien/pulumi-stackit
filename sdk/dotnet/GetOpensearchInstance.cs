@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetOpensearchInstance
     {
         /// <summary>
-        /// OpenSearch instance data source schema. Must have a `region` specified in the provider configuration.
+        /// OpenSearch instance data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetOpensearchInstanceResult>("stackit:index/getOpensearchInstance:getOpensearchInstance", args ?? new GetOpensearchInstanceArgs(), options.WithDefaults());
 
         /// <summary>
-        /// OpenSearch instance data source schema. Must have a `region` specified in the provider configuration.
+        /// OpenSearch instance data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetOpensearchInstanceResult>("stackit:index/getOpensearchInstance:getOpensearchInstance", args ?? new GetOpensearchInstanceInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// OpenSearch instance data source schema. Must have a `region` specified in the provider configuration.
+        /// OpenSearch instance data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -107,6 +107,9 @@ namespace ediri.Stackit
         public readonly string CfOrganizationGuid;
         public readonly string CfSpaceGuid;
         public readonly string DashboardUrl;
+        /// <summary>
+        /// Terraform's internal data source. identifier. It is structured as "`ProjectId`,`InstanceId`".
+        /// </summary>
         public readonly string Id;
         public readonly string ImageUrl;
         /// <summary>

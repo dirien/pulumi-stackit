@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Security group rule resource schema. Must have a `region` specified in the provider configuration.
+    /// Security group rule resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -25,7 +25,7 @@ namespace ediri.Stackit
         public Output<string?> Description { get; private set; } = null!;
 
         /// <summary>
-        /// The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+        /// The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `Ingress`, `Egress`.
         /// </summary>
         [Output("direction")]
         public Output<string> Direction { get; private set; } = null!;
@@ -65,6 +65,12 @@ namespace ediri.Stackit
         /// </summary>
         [Output("protocol")]
         public Output<Outputs.SecurityGroupRuleProtocol> Protocol { get; private set; } = null!;
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Output("region")]
+        public Output<string> Region { get; private set; } = null!;
 
         /// <summary>
         /// The remote security group which the rule should match.
@@ -138,7 +144,7 @@ namespace ediri.Stackit
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+        /// The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `Ingress`, `Egress`.
         /// </summary>
         [Input("direction", required: true)]
         public Input<string> Direction { get; set; } = null!;
@@ -180,6 +186,12 @@ namespace ediri.Stackit
         public Input<Inputs.SecurityGroupRuleProtocolArgs>? Protocol { get; set; }
 
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
+
+        /// <summary>
         /// The remote security group which the rule should match.
         /// </summary>
         [Input("remoteSecurityGroupId")]
@@ -206,7 +218,7 @@ namespace ediri.Stackit
         public Input<string>? Description { get; set; }
 
         /// <summary>
-        /// The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+        /// The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `Ingress`, `Egress`.
         /// </summary>
         [Input("direction")]
         public Input<string>? Direction { get; set; }
@@ -246,6 +258,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("protocol")]
         public Input<Inputs.SecurityGroupRuleProtocolGetArgs>? Protocol { get; set; }
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
 
         /// <summary>
         /// The remote security group which the rule should match.

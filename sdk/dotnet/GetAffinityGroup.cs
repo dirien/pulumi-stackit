@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetAffinityGroup
     {
         /// <summary>
-        /// Affinity Group schema. Must have a `region` specified in the provider configuration.
+        /// Affinity Group schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetAffinityGroupResult>("stackit:index/getAffinityGroup:getAffinityGroup", args ?? new GetAffinityGroupArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Affinity Group schema. Must have a `region` specified in the provider configuration.
+        /// Affinity Group schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetAffinityGroupResult>("stackit:index/getAffinityGroup:getAffinityGroup", args ?? new GetAffinityGroupInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Affinity Group schema. Must have a `region` specified in the provider configuration.
+        /// Affinity Group schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -73,6 +73,12 @@ namespace ediri.Stackit
         [Input("projectId", required: true)]
         public string ProjectId { get; set; } = null!;
 
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public string? Region { get; set; }
+
         public GetAffinityGroupArgs()
         {
         }
@@ -93,6 +99,12 @@ namespace ediri.Stackit
         [Input("projectId", required: true)]
         public Input<string> ProjectId { get; set; } = null!;
 
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
+
         public GetAffinityGroupInvokeArgs()
         {
         }
@@ -107,9 +119,12 @@ namespace ediri.Stackit
         /// The affinity group ID.
         /// </summary>
         public readonly string AffinityGroupId;
+        /// <summary>
+        /// Terraform's internal resource identifier. It is structured as "`ProjectId`,`Region`,`AffinityGroupId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
-        /// Affinity Group schema. Must have a `region` specified in the provider configuration.
+        /// Affinity Group schema. Must have a `Region` specified in the provider configuration.
         /// </summary>
         public readonly ImmutableArray<string> Members;
         /// <summary>
@@ -124,6 +139,10 @@ namespace ediri.Stackit
         /// STACKIT Project ID to which the affinity group is associated.
         /// </summary>
         public readonly string ProjectId;
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        public readonly string? Region;
 
         [OutputConstructor]
         private GetAffinityGroupResult(
@@ -137,7 +156,9 @@ namespace ediri.Stackit
 
             string policy,
 
-            string projectId)
+            string projectId,
+
+            string? region)
         {
             AffinityGroupId = affinityGroupId;
             Id = id;
@@ -145,6 +166,7 @@ namespace ediri.Stackit
             Name = name;
             Policy = policy;
             ProjectId = projectId;
+            Region = region;
         }
     }
 }
