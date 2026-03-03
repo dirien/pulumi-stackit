@@ -31,7 +31,6 @@ export interface GetNetworkArgs {
      */
     projectId: string;
     /**
-     * Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
      * The resource region. If not defined, the provider region is used.
      */
     region?: string;
@@ -41,6 +40,13 @@ export interface GetNetworkArgs {
  * A collection of values returned by getNetwork.
  */
 export interface GetNetworkResult {
+    /**
+     * Shows if DHCP is enabled for the network.
+     */
+    readonly dhcp: boolean;
+    /**
+     * Terraform's internal resource ID. It is structured as "`projectId`,`networkId`".
+     */
     readonly id: string;
     /**
      * The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
@@ -119,7 +125,6 @@ export interface GetNetworkResult {
      */
     readonly publicIp: string;
     /**
-     * Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
      * The resource region. If not defined, the provider region is used.
      */
     readonly region?: string;
@@ -128,7 +133,6 @@ export interface GetNetworkResult {
      */
     readonly routed: boolean;
     /**
-     * Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.
      * The ID of the routing table associated with the network.
      */
     readonly routingTableId: string;
@@ -160,7 +164,6 @@ export interface GetNetworkOutputArgs {
      */
     projectId: pulumi.Input<string>;
     /**
-     * Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
      * The resource region. If not defined, the provider region is used.
      */
     region?: pulumi.Input<string>;

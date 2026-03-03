@@ -14,7 +14,7 @@ namespace ediri.Stackit.Inputs
     public sealed class RoutingTableRouteNextHopArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        /// Type of the next hop. Possible values are: `Blackhole`, `Internet`, `Ipv4`, `Ipv6`.
         /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;

@@ -32,13 +32,13 @@ namespace ediri.Stackit.Inputs
         public Input<int> PointInTimeWindowHours { get; set; } = null!;
 
         /// <summary>
-        /// The number of days that continuous backups (controlled via the `backup_schedule`) will be retained.
+        /// The number of days that continuous backups (controlled via the `BackupSchedule`) will be retained.
         /// </summary>
         [Input("snapshotRetentionDays")]
         public Input<int>? SnapshotRetentionDays { get; set; }
 
         /// <summary>
-        /// Type of the MongoDB Flex instance. Supported values are: `Replica`, `Sharded`, `Single`.
+        /// Type of the MongoDB Flex instance. Possible values are: `Replica`, `Sharded`, `Single`.
         /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;

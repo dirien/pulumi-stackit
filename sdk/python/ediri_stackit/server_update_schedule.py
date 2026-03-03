@@ -28,10 +28,11 @@ class ServerUpdateScheduleArgs:
                  region: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a ServerUpdateSchedule resource.
+
         :param pulumi.Input[_builtins.bool] enabled: Is the update schedule enabled or disabled.
-        :param pulumi.Input[_builtins.int] maintenance_window: Maintenance window [1..24].
+        :param pulumi.Input[_builtins.int] maintenance_window: Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
         :param pulumi.Input[_builtins.str] project_id: STACKIT Project ID to which the server is associated.
-        :param pulumi.Input[_builtins.str] rrule: Update schedule described in `rrule` (recurrence rule) format.
+        :param pulumi.Input[_builtins.str] rrule: An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         :param pulumi.Input[_builtins.str] server_id: Server ID for the update schedule.
         :param pulumi.Input[_builtins.str] name: The schedule name.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
@@ -62,7 +63,7 @@ class ServerUpdateScheduleArgs:
     @pulumi.getter(name="maintenanceWindow")
     def maintenance_window(self) -> pulumi.Input[_builtins.int]:
         """
-        Maintenance window [1..24].
+        Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
         """
         return pulumi.get(self, "maintenance_window")
 
@@ -86,7 +87,7 @@ class ServerUpdateScheduleArgs:
     @pulumi.getter
     def rrule(self) -> pulumi.Input[_builtins.str]:
         """
-        Update schedule described in `rrule` (recurrence rule) format.
+        An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         """
         return pulumi.get(self, "rrule")
 
@@ -144,12 +145,13 @@ class _ServerUpdateScheduleState:
                  update_schedule_id: Optional[pulumi.Input[_builtins.int]] = None):
         """
         Input properties used for looking up and filtering ServerUpdateSchedule resources.
+
         :param pulumi.Input[_builtins.bool] enabled: Is the update schedule enabled or disabled.
-        :param pulumi.Input[_builtins.int] maintenance_window: Maintenance window [1..24].
+        :param pulumi.Input[_builtins.int] maintenance_window: Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
         :param pulumi.Input[_builtins.str] name: The schedule name.
         :param pulumi.Input[_builtins.str] project_id: STACKIT Project ID to which the server is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
-        :param pulumi.Input[_builtins.str] rrule: Update schedule described in `rrule` (recurrence rule) format.
+        :param pulumi.Input[_builtins.str] rrule: An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         :param pulumi.Input[_builtins.str] server_id: Server ID for the update schedule.
         :param pulumi.Input[_builtins.int] update_schedule_id: Update schedule ID.
         """
@@ -186,7 +188,7 @@ class _ServerUpdateScheduleState:
     @pulumi.getter(name="maintenanceWindow")
     def maintenance_window(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Maintenance window [1..24].
+        Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
         """
         return pulumi.get(self, "maintenance_window")
 
@@ -234,7 +236,7 @@ class _ServerUpdateScheduleState:
     @pulumi.getter
     def rrule(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Update schedule described in `rrule` (recurrence rule) format.
+        An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         """
         return pulumi.get(self, "rrule")
 
@@ -288,14 +290,15 @@ class ServerUpdateSchedule(pulumi.CustomResource):
 
         ## Example Usage
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.bool] enabled: Is the update schedule enabled or disabled.
-        :param pulumi.Input[_builtins.int] maintenance_window: Maintenance window [1..24].
+        :param pulumi.Input[_builtins.int] maintenance_window: Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
         :param pulumi.Input[_builtins.str] name: The schedule name.
         :param pulumi.Input[_builtins.str] project_id: STACKIT Project ID to which the server is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
-        :param pulumi.Input[_builtins.str] rrule: Update schedule described in `rrule` (recurrence rule) format.
+        :param pulumi.Input[_builtins.str] rrule: An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         :param pulumi.Input[_builtins.str] server_id: Server ID for the update schedule.
         """
         ...
@@ -310,6 +313,7 @@ class ServerUpdateSchedule(pulumi.CustomResource):
         > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param ServerUpdateScheduleArgs args: The arguments to use to populate this resource's properties.
@@ -386,11 +390,11 @@ class ServerUpdateSchedule(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.bool] enabled: Is the update schedule enabled or disabled.
-        :param pulumi.Input[_builtins.int] maintenance_window: Maintenance window [1..24].
+        :param pulumi.Input[_builtins.int] maintenance_window: Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
         :param pulumi.Input[_builtins.str] name: The schedule name.
         :param pulumi.Input[_builtins.str] project_id: STACKIT Project ID to which the server is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
-        :param pulumi.Input[_builtins.str] rrule: Update schedule described in `rrule` (recurrence rule) format.
+        :param pulumi.Input[_builtins.str] rrule: An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         :param pulumi.Input[_builtins.str] server_id: Server ID for the update schedule.
         :param pulumi.Input[_builtins.int] update_schedule_id: Update schedule ID.
         """
@@ -420,7 +424,7 @@ class ServerUpdateSchedule(pulumi.CustomResource):
     @pulumi.getter(name="maintenanceWindow")
     def maintenance_window(self) -> pulumi.Output[_builtins.int]:
         """
-        Maintenance window [1..24].
+        Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
         """
         return pulumi.get(self, "maintenance_window")
 
@@ -452,7 +456,7 @@ class ServerUpdateSchedule(pulumi.CustomResource):
     @pulumi.getter
     def rrule(self) -> pulumi.Output[_builtins.str]:
         """
-        Update schedule described in `rrule` (recurrence rule) format.
+        An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         """
         return pulumi.get(self, "rrule")
 

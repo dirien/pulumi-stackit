@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetResourcemanagerProject
     {
         /// <summary>
-        /// Resource Manager project data source schema. To identify the project, you need to provider either project_id or container_id. If you provide both, project_id will be used.
+        /// Resource Manager project data source schema. To identify the project, you need to provider either ProjectId or container_id. If you provide both, ProjectId will be used.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetResourcemanagerProjectResult>("stackit:index/getResourcemanagerProject:getResourcemanagerProject", args ?? new GetResourcemanagerProjectArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Resource Manager project data source schema. To identify the project, you need to provider either project_id or container_id. If you provide both, project_id will be used.
+        /// Resource Manager project data source schema. To identify the project, you need to provider either ProjectId or container_id. If you provide both, ProjectId will be used.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetResourcemanagerProjectResult>("stackit:index/getResourcemanagerProject:getResourcemanagerProject", args ?? new GetResourcemanagerProjectInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Resource Manager project data source schema. To identify the project, you need to provider either project_id or container_id. If you provide both, project_id will be used.
+        /// Resource Manager project data source schema. To identify the project, you need to provider either ProjectId or container_id. If you provide both, ProjectId will be used.
         /// 
         /// ## Example Usage
         /// 
@@ -107,6 +107,13 @@ namespace ediri.Stackit
         /// Project container ID. Globally unique, user-friendly identifier.
         /// </summary>
         public readonly string? ContainerId;
+        /// <summary>
+        /// Date-time at which the project was created.
+        /// </summary>
+        public readonly string CreationTime;
+        /// <summary>
+        /// Terraform's internal data source. ID. It is structured as "`ContainerId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9*-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9*-]{1,64}
@@ -124,10 +131,16 @@ namespace ediri.Stackit
         /// Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project.
         /// </summary>
         public readonly string? ProjectId;
+        /// <summary>
+        /// Date-time at which the project was last modified.
+        /// </summary>
+        public readonly string UpdateTime;
 
         [OutputConstructor]
         private GetResourcemanagerProjectResult(
             string? containerId,
+
+            string creationTime,
 
             string id,
 
@@ -137,14 +150,18 @@ namespace ediri.Stackit
 
             string parentContainerId,
 
-            string? projectId)
+            string? projectId,
+
+            string updateTime)
         {
             ContainerId = containerId;
+            CreationTime = creationTime;
             Id = id;
             Labels = labels;
             Name = name;
             ParentContainerId = parentContainerId;
             ProjectId = projectId;
+            UpdateTime = updateTime;
         }
     }
 }

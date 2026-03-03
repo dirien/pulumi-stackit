@@ -32,8 +32,11 @@ class PostgresflexInstanceArgs:
                  region: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a PostgresflexInstance resource.
+
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The Access Control List (ACL) for the PostgresFlex instance.
+        :param pulumi.Input[_builtins.str] backup_schedule: The schedule for on what time and how often the database backup will be created. Must be a valid cron expression using numeric minute and hour values, e.g: '0 2 * * *'.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
+        :param pulumi.Input[_builtins.int] replicas: How many replicas the instance should have. Valid values are 1 for single mode or 3 for replication.
         :param pulumi.Input[_builtins.str] name: Instance name.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         """
@@ -64,6 +67,9 @@ class PostgresflexInstanceArgs:
     @_builtins.property
     @pulumi.getter(name="backupSchedule")
     def backup_schedule(self) -> pulumi.Input[_builtins.str]:
+        """
+        The schedule for on what time and how often the database backup will be created. Must be a valid cron expression using numeric minute and hour values, e.g: '0 2 * * *'.
+        """
         return pulumi.get(self, "backup_schedule")
 
     @backup_schedule.setter
@@ -94,6 +100,9 @@ class PostgresflexInstanceArgs:
     @_builtins.property
     @pulumi.getter
     def replicas(self) -> pulumi.Input[_builtins.int]:
+        """
+        How many replicas the instance should have. Valid values are 1 for single mode or 3 for replication.
+        """
         return pulumi.get(self, "replicas")
 
     @replicas.setter
@@ -158,11 +167,14 @@ class _PostgresflexInstanceState:
                  version: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering PostgresflexInstance resources.
+
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The Access Control List (ACL) for the PostgresFlex instance.
+        :param pulumi.Input[_builtins.str] backup_schedule: The schedule for on what time and how often the database backup will be created. Must be a valid cron expression using numeric minute and hour values, e.g: '0 2 * * *'.
         :param pulumi.Input[_builtins.str] instance_id: ID of the PostgresFlex instance.
         :param pulumi.Input[_builtins.str] name: Instance name.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
+        :param pulumi.Input[_builtins.int] replicas: How many replicas the instance should have. Valid values are 1 for single mode or 3 for replication.
         """
         if acls is not None:
             pulumi.set(__self__, "acls", acls)
@@ -200,6 +212,9 @@ class _PostgresflexInstanceState:
     @_builtins.property
     @pulumi.getter(name="backupSchedule")
     def backup_schedule(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The schedule for on what time and how often the database backup will be created. Must be a valid cron expression using numeric minute and hour values, e.g: '0 2 * * *'.
+        """
         return pulumi.get(self, "backup_schedule")
 
     @backup_schedule.setter
@@ -266,6 +281,9 @@ class _PostgresflexInstanceState:
     @_builtins.property
     @pulumi.getter
     def replicas(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        How many replicas the instance should have. Valid values are 1 for single mode or 3 for replication.
+        """
         return pulumi.get(self, "replicas")
 
     @replicas.setter
@@ -312,12 +330,15 @@ class PostgresflexInstance(pulumi.CustomResource):
 
         ## Example Usage
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The Access Control List (ACL) for the PostgresFlex instance.
+        :param pulumi.Input[_builtins.str] backup_schedule: The schedule for on what time and how often the database backup will be created. Must be a valid cron expression using numeric minute and hour values, e.g: '0 2 * * *'.
         :param pulumi.Input[_builtins.str] name: Instance name.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
+        :param pulumi.Input[_builtins.int] replicas: How many replicas the instance should have. Valid values are 1 for single mode or 3 for replication.
         """
         ...
     @overload
@@ -329,6 +350,7 @@ class PostgresflexInstance(pulumi.CustomResource):
         Postgres Flex instance resource schema. Must have a `region` specified in the provider configuration.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param PostgresflexInstanceArgs args: The arguments to use to populate this resource's properties.
@@ -415,10 +437,12 @@ class PostgresflexInstance(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] acls: The Access Control List (ACL) for the PostgresFlex instance.
+        :param pulumi.Input[_builtins.str] backup_schedule: The schedule for on what time and how often the database backup will be created. Must be a valid cron expression using numeric minute and hour values, e.g: '0 2 * * *'.
         :param pulumi.Input[_builtins.str] instance_id: ID of the PostgresFlex instance.
         :param pulumi.Input[_builtins.str] name: Instance name.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the instance is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
+        :param pulumi.Input[_builtins.int] replicas: How many replicas the instance should have. Valid values are 1 for single mode or 3 for replication.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -447,6 +471,9 @@ class PostgresflexInstance(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter(name="backupSchedule")
     def backup_schedule(self) -> pulumi.Output[_builtins.str]:
+        """
+        The schedule for on what time and how often the database backup will be created. Must be a valid cron expression using numeric minute and hour values, e.g: '0 2 * * *'.
+        """
         return pulumi.get(self, "backup_schedule")
 
     @_builtins.property
@@ -489,6 +516,9 @@ class PostgresflexInstance(pulumi.CustomResource):
     @_builtins.property
     @pulumi.getter
     def replicas(self) -> pulumi.Output[_builtins.int]:
+        """
+        How many replicas the instance should have. Valid values are 1 for single mode or 3 for replication.
+        """
         return pulumi.get(self, "replicas")
 
     @_builtins.property
