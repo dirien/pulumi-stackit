@@ -13,6 +13,7 @@ export function getSecurityGroup(args: GetSecurityGroupArgs, opts?: pulumi.Invok
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("stackit:index/getSecurityGroup:getSecurityGroup", {
         "projectId": args.projectId,
+        "region": args.region,
         "securityGroupId": args.securityGroupId,
     }, opts);
 }
@@ -25,6 +26,10 @@ export interface GetSecurityGroupArgs {
      * STACKIT project ID to which the security group is associated.
      */
     projectId: string;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: string;
     /**
      * The security group ID.
      */
@@ -39,6 +44,9 @@ export interface GetSecurityGroupResult {
      * The description of the security group.
      */
     readonly description: string;
+    /**
+     * Terraform's internal resource ID. It is structured as "`projectId`,`region`,`securityGroupId`".
+     */
     readonly id: string;
     /**
      * Labels are key-value string pairs which can be attached to a resource container
@@ -52,6 +60,10 @@ export interface GetSecurityGroupResult {
      * STACKIT project ID to which the security group is associated.
      */
     readonly projectId: string;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    readonly region?: string;
     /**
      * The security group ID.
      */
@@ -70,6 +82,7 @@ export function getSecurityGroupOutput(args: GetSecurityGroupOutputArgs, opts?: 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invokeOutput("stackit:index/getSecurityGroup:getSecurityGroup", {
         "projectId": args.projectId,
+        "region": args.region,
         "securityGroupId": args.securityGroupId,
     }, opts);
 }
@@ -82,6 +95,10 @@ export interface GetSecurityGroupOutputArgs {
      * STACKIT project ID to which the security group is associated.
      */
     projectId: pulumi.Input<string>;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: pulumi.Input<string>;
     /**
      * The security group ID.
      */

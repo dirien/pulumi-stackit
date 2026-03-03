@@ -23,13 +23,16 @@ class SecurityGroupArgs:
                  description: Optional[pulumi.Input[_builtins.str]] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  stateful: Optional[pulumi.Input[_builtins.bool]] = None):
         """
         The set of arguments for constructing a SecurityGroup resource.
+
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the security group is associated.
         :param pulumi.Input[_builtins.str] description: The description of the security group.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the security group.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.bool] stateful: Configures if a security group is stateful or stateless. There can only be one type of security groups per network interface/server.
         """
         pulumi.set(__self__, "project_id", project_id)
@@ -39,6 +42,8 @@ class SecurityGroupArgs:
             pulumi.set(__self__, "labels", labels)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
         if stateful is not None:
             pulumi.set(__self__, "stateful", stateful)
 
@@ -92,6 +97,18 @@ class SecurityGroupArgs:
 
     @_builtins.property
     @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "region", value)
+
+    @_builtins.property
+    @pulumi.getter
     def stateful(self) -> Optional[pulumi.Input[_builtins.bool]]:
         """
         Configures if a security group is stateful or stateless. There can only be one type of security groups per network interface/server.
@@ -110,14 +127,17 @@ class _SecurityGroupState:
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  security_group_id: Optional[pulumi.Input[_builtins.str]] = None,
                  stateful: Optional[pulumi.Input[_builtins.bool]] = None):
         """
         Input properties used for looking up and filtering SecurityGroup resources.
+
         :param pulumi.Input[_builtins.str] description: The description of the security group.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the security group.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the security group is associated.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.str] security_group_id: The security group ID.
         :param pulumi.Input[_builtins.bool] stateful: Configures if a security group is stateful or stateless. There can only be one type of security groups per network interface/server.
         """
@@ -129,6 +149,8 @@ class _SecurityGroupState:
             pulumi.set(__self__, "name", name)
         if project_id is not None:
             pulumi.set(__self__, "project_id", project_id)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
         if security_group_id is not None:
             pulumi.set(__self__, "security_group_id", security_group_id)
         if stateful is not None:
@@ -183,6 +205,18 @@ class _SecurityGroupState:
         pulumi.set(self, "project_id", value)
 
     @_builtins.property
+    @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "region", value)
+
+    @_builtins.property
     @pulumi.getter(name="securityGroupId")
     def security_group_id(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -217,6 +251,7 @@ class SecurityGroup(pulumi.CustomResource):
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  stateful: Optional[pulumi.Input[_builtins.bool]] = None,
                  __props__=None):
         """
@@ -224,12 +259,14 @@ class SecurityGroup(pulumi.CustomResource):
 
         ## Example Usage
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] description: The description of the security group.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the security group.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the security group is associated.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.bool] stateful: Configures if a security group is stateful or stateless. There can only be one type of security groups per network interface/server.
         """
         ...
@@ -242,6 +279,7 @@ class SecurityGroup(pulumi.CustomResource):
         Security group resource schema. Must have a `region` specified in the provider configuration.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param SecurityGroupArgs args: The arguments to use to populate this resource's properties.
@@ -262,6 +300,7 @@ class SecurityGroup(pulumi.CustomResource):
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  stateful: Optional[pulumi.Input[_builtins.bool]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -278,6 +317,7 @@ class SecurityGroup(pulumi.CustomResource):
             if project_id is None and not opts.urn:
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
+            __props__.__dict__["region"] = region
             __props__.__dict__["stateful"] = stateful
             __props__.__dict__["security_group_id"] = None
         super(SecurityGroup, __self__).__init__(
@@ -294,6 +334,7 @@ class SecurityGroup(pulumi.CustomResource):
             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
             project_id: Optional[pulumi.Input[_builtins.str]] = None,
+            region: Optional[pulumi.Input[_builtins.str]] = None,
             security_group_id: Optional[pulumi.Input[_builtins.str]] = None,
             stateful: Optional[pulumi.Input[_builtins.bool]] = None) -> 'SecurityGroup':
         """
@@ -307,6 +348,7 @@ class SecurityGroup(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the security group.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the security group is associated.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.str] security_group_id: The security group ID.
         :param pulumi.Input[_builtins.bool] stateful: Configures if a security group is stateful or stateless. There can only be one type of security groups per network interface/server.
         """
@@ -318,6 +360,7 @@ class SecurityGroup(pulumi.CustomResource):
         __props__.__dict__["labels"] = labels
         __props__.__dict__["name"] = name
         __props__.__dict__["project_id"] = project_id
+        __props__.__dict__["region"] = region
         __props__.__dict__["security_group_id"] = security_group_id
         __props__.__dict__["stateful"] = stateful
         return SecurityGroup(resource_name, opts=opts, __props__=__props__)
@@ -353,6 +396,14 @@ class SecurityGroup(pulumi.CustomResource):
         STACKIT project ID to which the security group is associated.
         """
         return pulumi.get(self, "project_id")
+
+    @_builtins.property
+    @pulumi.getter
+    def region(self) -> pulumi.Output[_builtins.str]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
 
     @_builtins.property
     @pulumi.getter(name="securityGroupId")

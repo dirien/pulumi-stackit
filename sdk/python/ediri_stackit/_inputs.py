@@ -15,10 +15,14 @@ else:
 from . import _utilities
 
 __all__ = [
+    'CdnCustomDomainCertificateArgs',
+    'CdnCustomDomainCertificateArgsDict',
     'CdnDistributionConfigArgs',
     'CdnDistributionConfigArgsDict',
     'CdnDistributionConfigBackendArgs',
     'CdnDistributionConfigBackendArgsDict',
+    'CdnDistributionConfigBackendCredentialsArgs',
+    'CdnDistributionConfigBackendCredentialsArgsDict',
     'CdnDistributionConfigOptimizerArgs',
     'CdnDistributionConfigOptimizerArgsDict',
     'CdnDistributionDomainArgs',
@@ -31,6 +35,10 @@ __all__ = [
     'LoadbalancerListenerArgsDict',
     'LoadbalancerListenerServerNameIndicatorArgs',
     'LoadbalancerListenerServerNameIndicatorArgsDict',
+    'LoadbalancerListenerTcpArgs',
+    'LoadbalancerListenerTcpArgsDict',
+    'LoadbalancerListenerUdpArgs',
+    'LoadbalancerListenerUdpArgsDict',
     'LoadbalancerNetworkArgs',
     'LoadbalancerNetworkArgsDict',
     'LoadbalancerOptionsArgs',
@@ -61,6 +69,14 @@ __all__ = [
     'MongodbflexInstanceStorageArgsDict',
     'NetworkAreaNetworkRangeArgs',
     'NetworkAreaNetworkRangeArgsDict',
+    'NetworkAreaRegionIpv4Args',
+    'NetworkAreaRegionIpv4ArgsDict',
+    'NetworkAreaRegionIpv4NetworkRangeArgs',
+    'NetworkAreaRegionIpv4NetworkRangeArgsDict',
+    'NetworkAreaRouteDestinationArgs',
+    'NetworkAreaRouteDestinationArgsDict',
+    'NetworkAreaRouteNextHopArgs',
+    'NetworkAreaRouteNextHopArgsDict',
     'ObservabilityAlertgroupRuleArgs',
     'ObservabilityAlertgroupRuleArgsDict',
     'ObservabilityInstanceAlertConfigArgs',
@@ -111,6 +127,8 @@ __all__ = [
     'ServerBackupScheduleBackupPropertiesArgsDict',
     'ServerBootVolumeArgs',
     'ServerBootVolumeArgsDict',
+    'SfsExportPolicyRuleArgs',
+    'SfsExportPolicyRuleArgsDict',
     'SkeClusterExtensionsArgs',
     'SkeClusterExtensionsArgsDict',
     'SkeClusterExtensionsAclArgs',
@@ -137,32 +155,102 @@ __all__ = [
     'SqlserverflexInstanceOptionsArgsDict',
     'SqlserverflexInstanceStorageArgs',
     'SqlserverflexInstanceStorageArgsDict',
+    'VolumeEncryptionParametersArgs',
+    'VolumeEncryptionParametersArgsDict',
     'VolumeSourceArgs',
     'VolumeSourceArgsDict',
+    'GetCdnCustomDomainCertificateArgs',
+    'GetCdnCustomDomainCertificateArgsDict',
+    'GetImageV2FilterArgs',
+    'GetImageV2FilterArgsDict',
 ]
 
-MYPY = False
+class CdnCustomDomainCertificateArgsDict(TypedDict):
+    certificate: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The PEM-encoded TLS certificate. Required for custom certificates.
+    """
+    private_key: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+    """
+    version: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+    """
 
-if not MYPY:
-    class CdnDistributionConfigArgsDict(TypedDict):
-        backend: pulumi.Input['CdnDistributionConfigBackendArgsDict']
+@pulumi.input_type
+class CdnCustomDomainCertificateArgs:
+    def __init__(__self__, *,
+                 certificate: Optional[pulumi.Input[_builtins.str]] = None,
+                 private_key: Optional[pulumi.Input[_builtins.str]] = None,
+                 version: Optional[pulumi.Input[_builtins.int]] = None):
         """
-        The configured backend for the distribution
+        :param pulumi.Input[_builtins.str] certificate: The PEM-encoded TLS certificate. Required for custom certificates.
+        :param pulumi.Input[_builtins.str] private_key: The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        :param pulumi.Input[_builtins.int] version: A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
         """
-        regions: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+        if certificate is not None:
+            pulumi.set(__self__, "certificate", certificate)
+        if private_key is not None:
+            pulumi.set(__self__, "private_key", private_key)
+        if version is not None:
+            pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def certificate(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The configured regions where content will be hosted
+        The PEM-encoded TLS certificate. Required for custom certificates.
         """
-        blocked_countries: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+        return pulumi.get(self, "certificate")
+
+    @certificate.setter
+    def certificate(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "certificate", value)
+
+    @_builtins.property
+    @pulumi.getter(name="privateKey")
+    def private_key(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The configured countries where distribution of content is blocked
+        The PEM-encoded private key for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
         """
-        optimizer: NotRequired[pulumi.Input['CdnDistributionConfigOptimizerArgsDict']]
+        return pulumi.get(self, "private_key")
+
+    @private_key.setter
+    def private_key(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "private_key", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> Optional[pulumi.Input[_builtins.int]]:
         """
-        Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+        A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
         """
-elif False:
-    CdnDistributionConfigArgsDict: TypeAlias = Mapping[str, Any]
+        return pulumi.get(self, "version")
+
+    @version.setter
+    def version(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "version", value)
+
+
+class CdnDistributionConfigArgsDict(TypedDict):
+    backend: pulumi.Input['CdnDistributionConfigBackendArgsDict']
+    """
+    The configured backend for the distribution
+    """
+    regions: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    The configured regions where content will be hosted
+    """
+    blocked_countries: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    The configured countries where distribution of content is blocked
+    """
+    optimizer: NotRequired[pulumi.Input['CdnDistributionConfigOptimizerArgsDict']]
+    """
+    Configuration for the Image Optimizer. This is a paid feature that automatically optimizes images to reduce their file size for faster delivery, leading to improved website performance and a better user experience.
+    """
 
 @pulumi.input_type
 class CdnDistributionConfigArgs:
@@ -233,56 +321,74 @@ class CdnDistributionConfigArgs:
         pulumi.set(self, "optimizer", value)
 
 
-if not MYPY:
-    class CdnDistributionConfigBackendArgsDict(TypedDict):
-        origin_url: pulumi.Input[_builtins.str]
-        """
-        The configured backend type for the distribution
-        """
-        type: pulumi.Input[_builtins.str]
-        """
-        The configured backend type. Supported values are: `http`.
-        """
-        origin_request_headers: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        The configured origin request headers for the backend
-        """
-elif False:
-    CdnDistributionConfigBackendArgsDict: TypeAlias = Mapping[str, Any]
+class CdnDistributionConfigBackendArgsDict(TypedDict):
+    type: pulumi.Input[_builtins.str]
+    """
+    The configured backend type. Possible values are: `http`, `bucket`.
+    """
+    bucket_url: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The URL of the bucket (e.g. https://s3.example.com). Required if type is 'bucket'.
+    """
+    credentials: NotRequired[pulumi.Input['CdnDistributionConfigBackendCredentialsArgsDict']]
+    """
+    The credentials for the bucket. Required if type is 'bucket'.
+    """
+    geofencing: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]]]
+    """
+    The configured type http to configure countries where content is allowed. A map of URLs to a list of countries
+    """
+    origin_request_headers: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+    """
+    The configured type http origin request headers for the backend
+    """
+    origin_url: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The configured backend type http for the distribution
+    """
+    region: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The region where the bucket is hosted. Required if type is 'bucket'.
+    """
 
 @pulumi.input_type
 class CdnDistributionConfigBackendArgs:
     def __init__(__self__, *,
-                 origin_url: pulumi.Input[_builtins.str],
                  type: pulumi.Input[_builtins.str],
-                 origin_request_headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
+                 bucket_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 credentials: Optional[pulumi.Input['CdnDistributionConfigBackendCredentialsArgs']] = None,
+                 geofencing: Optional[pulumi.Input[Mapping[str, pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]]] = None,
+                 origin_request_headers: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 origin_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None):
         """
-        :param pulumi.Input[_builtins.str] origin_url: The configured backend type for the distribution
-        :param pulumi.Input[_builtins.str] type: The configured backend type. Supported values are: `http`.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] origin_request_headers: The configured origin request headers for the backend
+        :param pulumi.Input[_builtins.str] type: The configured backend type. Possible values are: `http`, `bucket`.
+        :param pulumi.Input[_builtins.str] bucket_url: The URL of the bucket (e.g. https://s3.example.com). Required if type is 'bucket'.
+        :param pulumi.Input['CdnDistributionConfigBackendCredentialsArgs'] credentials: The credentials for the bucket. Required if type is 'bucket'.
+        :param pulumi.Input[Mapping[str, pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]] geofencing: The configured type http to configure countries where content is allowed. A map of URLs to a list of countries
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] origin_request_headers: The configured type http origin request headers for the backend
+        :param pulumi.Input[_builtins.str] origin_url: The configured backend type http for the distribution
+        :param pulumi.Input[_builtins.str] region: The region where the bucket is hosted. Required if type is 'bucket'.
         """
-        pulumi.set(__self__, "origin_url", origin_url)
         pulumi.set(__self__, "type", type)
+        if bucket_url is not None:
+            pulumi.set(__self__, "bucket_url", bucket_url)
+        if credentials is not None:
+            pulumi.set(__self__, "credentials", credentials)
+        if geofencing is not None:
+            pulumi.set(__self__, "geofencing", geofencing)
         if origin_request_headers is not None:
             pulumi.set(__self__, "origin_request_headers", origin_request_headers)
-
-    @_builtins.property
-    @pulumi.getter(name="originUrl")
-    def origin_url(self) -> pulumi.Input[_builtins.str]:
-        """
-        The configured backend type for the distribution
-        """
-        return pulumi.get(self, "origin_url")
-
-    @origin_url.setter
-    def origin_url(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "origin_url", value)
+        if origin_url is not None:
+            pulumi.set(__self__, "origin_url", origin_url)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
 
     @_builtins.property
     @pulumi.getter
     def type(self) -> pulumi.Input[_builtins.str]:
         """
-        The configured backend type. Supported values are: `http`.
+        The configured backend type. Possible values are: `http`, `bucket`.
         """
         return pulumi.get(self, "type")
 
@@ -291,10 +397,46 @@ class CdnDistributionConfigBackendArgs:
         pulumi.set(self, "type", value)
 
     @_builtins.property
+    @pulumi.getter(name="bucketUrl")
+    def bucket_url(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The URL of the bucket (e.g. https://s3.example.com). Required if type is 'bucket'.
+        """
+        return pulumi.get(self, "bucket_url")
+
+    @bucket_url.setter
+    def bucket_url(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "bucket_url", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def credentials(self) -> Optional[pulumi.Input['CdnDistributionConfigBackendCredentialsArgs']]:
+        """
+        The credentials for the bucket. Required if type is 'bucket'.
+        """
+        return pulumi.get(self, "credentials")
+
+    @credentials.setter
+    def credentials(self, value: Optional[pulumi.Input['CdnDistributionConfigBackendCredentialsArgs']]):
+        pulumi.set(self, "credentials", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def geofencing(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]]]:
+        """
+        The configured type http to configure countries where content is allowed. A map of URLs to a list of countries
+        """
+        return pulumi.get(self, "geofencing")
+
+    @geofencing.setter
+    def geofencing(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]]]):
+        pulumi.set(self, "geofencing", value)
+
+    @_builtins.property
     @pulumi.getter(name="originRequestHeaders")
     def origin_request_headers(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        The configured origin request headers for the backend
+        The configured type http origin request headers for the backend
         """
         return pulumi.get(self, "origin_request_headers")
 
@@ -302,12 +444,80 @@ class CdnDistributionConfigBackendArgs:
     def origin_request_headers(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "origin_request_headers", value)
 
+    @_builtins.property
+    @pulumi.getter(name="originUrl")
+    def origin_url(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The configured backend type http for the distribution
+        """
+        return pulumi.get(self, "origin_url")
 
-if not MYPY:
-    class CdnDistributionConfigOptimizerArgsDict(TypedDict):
-        enabled: NotRequired[pulumi.Input[_builtins.bool]]
-elif False:
-    CdnDistributionConfigOptimizerArgsDict: TypeAlias = Mapping[str, Any]
+    @origin_url.setter
+    def origin_url(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "origin_url", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The region where the bucket is hosted. Required if type is 'bucket'.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "region", value)
+
+
+class CdnDistributionConfigBackendCredentialsArgsDict(TypedDict):
+    access_key_id: pulumi.Input[_builtins.str]
+    """
+    The access key for the bucket. Required if type is 'bucket'.
+    """
+    secret_access_key: pulumi.Input[_builtins.str]
+    """
+    The access key for the bucket. Required if type is 'bucket'.
+    """
+
+@pulumi.input_type
+class CdnDistributionConfigBackendCredentialsArgs:
+    def __init__(__self__, *,
+                 access_key_id: pulumi.Input[_builtins.str],
+                 secret_access_key: pulumi.Input[_builtins.str]):
+        """
+        :param pulumi.Input[_builtins.str] access_key_id: The access key for the bucket. Required if type is 'bucket'.
+        :param pulumi.Input[_builtins.str] secret_access_key: The access key for the bucket. Required if type is 'bucket'.
+        """
+        pulumi.set(__self__, "access_key_id", access_key_id)
+        pulumi.set(__self__, "secret_access_key", secret_access_key)
+
+    @_builtins.property
+    @pulumi.getter(name="accessKeyId")
+    def access_key_id(self) -> pulumi.Input[_builtins.str]:
+        """
+        The access key for the bucket. Required if type is 'bucket'.
+        """
+        return pulumi.get(self, "access_key_id")
+
+    @access_key_id.setter
+    def access_key_id(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "access_key_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="secretAccessKey")
+    def secret_access_key(self) -> pulumi.Input[_builtins.str]:
+        """
+        The access key for the bucket. Required if type is 'bucket'.
+        """
+        return pulumi.get(self, "secret_access_key")
+
+    @secret_access_key.setter
+    def secret_access_key(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "secret_access_key", value)
+
+
+class CdnDistributionConfigOptimizerArgsDict(TypedDict):
+    enabled: NotRequired[pulumi.Input[_builtins.bool]]
 
 @pulumi.input_type
 class CdnDistributionConfigOptimizerArgs:
@@ -326,26 +536,23 @@ class CdnDistributionConfigOptimizerArgs:
         pulumi.set(self, "enabled", value)
 
 
-if not MYPY:
-    class CdnDistributionDomainArgsDict(TypedDict):
-        errors: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        List of domain errors
-        """
-        name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The name of the domain
-        """
-        status: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The status of the domain
-        """
-        type: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The type of the domain. Each distribution has one domain of type "managed", and domains of type "custom" may be additionally created by the user
-        """
-elif False:
-    CdnDistributionDomainArgsDict: TypeAlias = Mapping[str, Any]
+class CdnDistributionDomainArgsDict(TypedDict):
+    errors: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of domain errors
+    """
+    name: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The name of the domain
+    """
+    status: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The status of the domain
+    """
+    type: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The type of the domain. Each distribution has one domain of type "managed", and domains of type "custom" may be additionally created by the user
+    """
 
 @pulumi.input_type
 class CdnDistributionDomainArgs:
@@ -418,18 +625,15 @@ class CdnDistributionDomainArgs:
         pulumi.set(self, "type", value)
 
 
-if not MYPY:
-    class ImageChecksumArgsDict(TypedDict):
-        algorithm: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Algorithm for the checksum of the image data.
-        """
-        digest: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Hexdigest of the checksum of the image data.
-        """
-elif False:
-    ImageChecksumArgsDict: TypeAlias = Mapping[str, Any]
+class ImageChecksumArgsDict(TypedDict):
+    algorithm: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Algorithm for the checksum of the image data.
+    """
+    digest: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Hexdigest of the checksum of the image data.
+    """
 
 @pulumi.input_type
 class ImageChecksumArgs:
@@ -470,62 +674,59 @@ class ImageChecksumArgs:
         pulumi.set(self, "digest", value)
 
 
-if not MYPY:
-    class ImageConfigArgsDict(TypedDict):
-        boot_menu: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Enables the BIOS bootmenu.
-        """
-        cdrom_bus: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Sets CDROM bus controller type.
-        """
-        disk_bus: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Sets Disk bus controller type.
-        """
-        nic_model: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Sets virtual network interface model.
-        """
-        operating_system: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Enables operating system specific optimizations.
-        """
-        operating_system_distro: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Operating system distribution.
-        """
-        operating_system_version: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Version of the operating system.
-        """
-        rescue_bus: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Sets the device bus when the image is used as a rescue image.
-        """
-        rescue_device: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Sets the device when the image is used as a rescue image.
-        """
-        secure_boot: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Enables Secure Boot.
-        """
-        uefi: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Enables UEFI boot.
-        """
-        video_model: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Sets Graphic device model.
-        """
-        virtio_scsi: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
-        """
-elif False:
-    ImageConfigArgsDict: TypeAlias = Mapping[str, Any]
+class ImageConfigArgsDict(TypedDict):
+    boot_menu: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Enables the BIOS bootmenu.
+    """
+    cdrom_bus: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Sets CDROM bus controller type.
+    """
+    disk_bus: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Sets Disk bus controller type.
+    """
+    nic_model: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Sets virtual network interface model.
+    """
+    operating_system: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Enables operating system specific optimizations.
+    """
+    operating_system_distro: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Operating system distribution.
+    """
+    operating_system_version: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Version of the operating system.
+    """
+    rescue_bus: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Sets the device bus when the image is used as a rescue image.
+    """
+    rescue_device: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Sets the device when the image is used as a rescue image.
+    """
+    secure_boot: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Enables Secure Boot.
+    """
+    uefi: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Enables UEFI boot.
+    """
+    video_model: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Sets Graphic device model.
+    """
+    virtio_scsi: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Enables the use of VirtIO SCSI to provide block device access. By default instances use VirtIO Block.
+    """
 
 @pulumi.input_type
 class ImageConfigArgs:
@@ -742,27 +943,32 @@ class ImageConfigArgs:
         pulumi.set(self, "virtio_scsi", value)
 
 
-if not MYPY:
-    class LoadbalancerListenerArgsDict(TypedDict):
-        port: pulumi.Input[_builtins.int]
-        """
-        Port number where we listen for traffic.
-        """
-        protocol: pulumi.Input[_builtins.str]
-        """
-        Protocol is the highest network protocol we understand to load balance. Supported values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
-        """
-        target_pool: pulumi.Input[_builtins.str]
-        """
-        Reference target pool by target pool name.
-        """
-        display_name: NotRequired[pulumi.Input[_builtins.str]]
-        server_name_indicators: NotRequired[pulumi.Input[Sequence[pulumi.Input['LoadbalancerListenerServerNameIndicatorArgsDict']]]]
-        """
-        A list of domain names to match in order to pass TLS traffic to the target pool in the current listener
-        """
-elif False:
-    LoadbalancerListenerArgsDict: TypeAlias = Mapping[str, Any]
+class LoadbalancerListenerArgsDict(TypedDict):
+    port: pulumi.Input[_builtins.int]
+    """
+    Port number where we listen for traffic.
+    """
+    protocol: pulumi.Input[_builtins.str]
+    """
+    Protocol is the highest network protocol we understand to load balance. Possible values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
+    """
+    target_pool: pulumi.Input[_builtins.str]
+    """
+    Reference target pool by target pool name.
+    """
+    display_name: NotRequired[pulumi.Input[_builtins.str]]
+    server_name_indicators: NotRequired[pulumi.Input[Sequence[pulumi.Input['LoadbalancerListenerServerNameIndicatorArgsDict']]]]
+    """
+    A list of domain names to match in order to pass TLS traffic to the target pool in the current listener
+    """
+    tcp: NotRequired[pulumi.Input['LoadbalancerListenerTcpArgsDict']]
+    """
+    Options that are specific to the TCP protocol.
+    """
+    udp: NotRequired[pulumi.Input['LoadbalancerListenerUdpArgsDict']]
+    """
+    Options that are specific to the UDP protocol.
+    """
 
 @pulumi.input_type
 class LoadbalancerListenerArgs:
@@ -771,12 +977,16 @@ class LoadbalancerListenerArgs:
                  protocol: pulumi.Input[_builtins.str],
                  target_pool: pulumi.Input[_builtins.str],
                  display_name: Optional[pulumi.Input[_builtins.str]] = None,
-                 server_name_indicators: Optional[pulumi.Input[Sequence[pulumi.Input['LoadbalancerListenerServerNameIndicatorArgs']]]] = None):
+                 server_name_indicators: Optional[pulumi.Input[Sequence[pulumi.Input['LoadbalancerListenerServerNameIndicatorArgs']]]] = None,
+                 tcp: Optional[pulumi.Input['LoadbalancerListenerTcpArgs']] = None,
+                 udp: Optional[pulumi.Input['LoadbalancerListenerUdpArgs']] = None):
         """
         :param pulumi.Input[_builtins.int] port: Port number where we listen for traffic.
-        :param pulumi.Input[_builtins.str] protocol: Protocol is the highest network protocol we understand to load balance. Supported values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
+        :param pulumi.Input[_builtins.str] protocol: Protocol is the highest network protocol we understand to load balance. Possible values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
         :param pulumi.Input[_builtins.str] target_pool: Reference target pool by target pool name.
         :param pulumi.Input[Sequence[pulumi.Input['LoadbalancerListenerServerNameIndicatorArgs']]] server_name_indicators: A list of domain names to match in order to pass TLS traffic to the target pool in the current listener
+        :param pulumi.Input['LoadbalancerListenerTcpArgs'] tcp: Options that are specific to the TCP protocol.
+        :param pulumi.Input['LoadbalancerListenerUdpArgs'] udp: Options that are specific to the UDP protocol.
         """
         pulumi.set(__self__, "port", port)
         pulumi.set(__self__, "protocol", protocol)
@@ -785,6 +995,10 @@ class LoadbalancerListenerArgs:
             pulumi.set(__self__, "display_name", display_name)
         if server_name_indicators is not None:
             pulumi.set(__self__, "server_name_indicators", server_name_indicators)
+        if tcp is not None:
+            pulumi.set(__self__, "tcp", tcp)
+        if udp is not None:
+            pulumi.set(__self__, "udp", udp)
 
     @_builtins.property
     @pulumi.getter
@@ -802,7 +1016,7 @@ class LoadbalancerListenerArgs:
     @pulumi.getter
     def protocol(self) -> pulumi.Input[_builtins.str]:
         """
-        Protocol is the highest network protocol we understand to load balance. Supported values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
+        Protocol is the highest network protocol we understand to load balance. Possible values are: `PROTOCOL_UNSPECIFIED`, `PROTOCOL_TCP`, `PROTOCOL_UDP`, `PROTOCOL_TCP_PROXY`, `PROTOCOL_TLS_PASSTHROUGH`.
         """
         return pulumi.get(self, "protocol")
 
@@ -843,15 +1057,36 @@ class LoadbalancerListenerArgs:
     def server_name_indicators(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['LoadbalancerListenerServerNameIndicatorArgs']]]]):
         pulumi.set(self, "server_name_indicators", value)
 
+    @_builtins.property
+    @pulumi.getter
+    def tcp(self) -> Optional[pulumi.Input['LoadbalancerListenerTcpArgs']]:
+        """
+        Options that are specific to the TCP protocol.
+        """
+        return pulumi.get(self, "tcp")
 
-if not MYPY:
-    class LoadbalancerListenerServerNameIndicatorArgsDict(TypedDict):
-        name: NotRequired[pulumi.Input[_builtins.str]]
+    @tcp.setter
+    def tcp(self, value: Optional[pulumi.Input['LoadbalancerListenerTcpArgs']]):
+        pulumi.set(self, "tcp", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def udp(self) -> Optional[pulumi.Input['LoadbalancerListenerUdpArgs']]:
         """
-        A domain name to match in order to pass TLS traffic to the target pool in the current listener
+        Options that are specific to the UDP protocol.
         """
-elif False:
-    LoadbalancerListenerServerNameIndicatorArgsDict: TypeAlias = Mapping[str, Any]
+        return pulumi.get(self, "udp")
+
+    @udp.setter
+    def udp(self, value: Optional[pulumi.Input['LoadbalancerListenerUdpArgs']]):
+        pulumi.set(self, "udp", value)
+
+
+class LoadbalancerListenerServerNameIndicatorArgsDict(TypedDict):
+    name: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    A domain name to match in order to pass TLS traffic to the target pool in the current listener
+    """
 
 @pulumi.input_type
 class LoadbalancerListenerServerNameIndicatorArgs:
@@ -876,18 +1111,73 @@ class LoadbalancerListenerServerNameIndicatorArgs:
         pulumi.set(self, "name", value)
 
 
-if not MYPY:
-    class LoadbalancerNetworkArgsDict(TypedDict):
-        network_id: pulumi.Input[_builtins.str]
+class LoadbalancerListenerTcpArgsDict(TypedDict):
+    idle_timeout: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Time after which an idle connection is closed. The default value is set to 300 seconds, and the maximum value is 3600 seconds. The format is a duration and the unit must be seconds. Example: 30s
+    """
+
+@pulumi.input_type
+class LoadbalancerListenerTcpArgs:
+    def __init__(__self__, *,
+                 idle_timeout: Optional[pulumi.Input[_builtins.str]] = None):
         """
-        Openstack network ID.
+        :param pulumi.Input[_builtins.str] idle_timeout: Time after which an idle connection is closed. The default value is set to 300 seconds, and the maximum value is 3600 seconds. The format is a duration and the unit must be seconds. Example: 30s
         """
-        role: pulumi.Input[_builtins.str]
+        if idle_timeout is not None:
+            pulumi.set(__self__, "idle_timeout", idle_timeout)
+
+    @_builtins.property
+    @pulumi.getter(name="idleTimeout")
+    def idle_timeout(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The role defines how the load balancer is using the network. Supported values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
+        Time after which an idle connection is closed. The default value is set to 300 seconds, and the maximum value is 3600 seconds. The format is a duration and the unit must be seconds. Example: 30s
         """
-elif False:
-    LoadbalancerNetworkArgsDict: TypeAlias = Mapping[str, Any]
+        return pulumi.get(self, "idle_timeout")
+
+    @idle_timeout.setter
+    def idle_timeout(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "idle_timeout", value)
+
+
+class LoadbalancerListenerUdpArgsDict(TypedDict):
+    idle_timeout: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Time after which an idle session is closed. The default value is set to 1 minute, and the maximum value is 2 minutes. The format is a duration and the unit must be seconds. Example: 30s
+    """
+
+@pulumi.input_type
+class LoadbalancerListenerUdpArgs:
+    def __init__(__self__, *,
+                 idle_timeout: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] idle_timeout: Time after which an idle session is closed. The default value is set to 1 minute, and the maximum value is 2 minutes. The format is a duration and the unit must be seconds. Example: 30s
+        """
+        if idle_timeout is not None:
+            pulumi.set(__self__, "idle_timeout", idle_timeout)
+
+    @_builtins.property
+    @pulumi.getter(name="idleTimeout")
+    def idle_timeout(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Time after which an idle session is closed. The default value is set to 1 minute, and the maximum value is 2 minutes. The format is a duration and the unit must be seconds. Example: 30s
+        """
+        return pulumi.get(self, "idle_timeout")
+
+    @idle_timeout.setter
+    def idle_timeout(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "idle_timeout", value)
+
+
+class LoadbalancerNetworkArgsDict(TypedDict):
+    network_id: pulumi.Input[_builtins.str]
+    """
+    Openstack network ID.
+    """
+    role: pulumi.Input[_builtins.str]
+    """
+    The role defines how the load balancer is using the network. Possible values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
+    """
 
 @pulumi.input_type
 class LoadbalancerNetworkArgs:
@@ -896,7 +1186,7 @@ class LoadbalancerNetworkArgs:
                  role: pulumi.Input[_builtins.str]):
         """
         :param pulumi.Input[_builtins.str] network_id: Openstack network ID.
-        :param pulumi.Input[_builtins.str] role: The role defines how the load balancer is using the network. Supported values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
+        :param pulumi.Input[_builtins.str] role: The role defines how the load balancer is using the network. Possible values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
         """
         pulumi.set(__self__, "network_id", network_id)
         pulumi.set(__self__, "role", role)
@@ -917,7 +1207,7 @@ class LoadbalancerNetworkArgs:
     @pulumi.getter
     def role(self) -> pulumi.Input[_builtins.str]:
         """
-        The role defines how the load balancer is using the network. Supported values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
+        The role defines how the load balancer is using the network. Possible values are: `ROLE_UNSPECIFIED`, `ROLE_LISTENERS_AND_TARGETS`, `ROLE_LISTENERS`, `ROLE_TARGETS`.
         """
         return pulumi.get(self, "role")
 
@@ -926,22 +1216,19 @@ class LoadbalancerNetworkArgs:
         pulumi.set(self, "role", value)
 
 
-if not MYPY:
-    class LoadbalancerOptionsArgsDict(TypedDict):
-        acls: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        Load Balancer is accessible only from an IP address in this range.
-        """
-        observability: NotRequired[pulumi.Input['LoadbalancerOptionsObservabilityArgsDict']]
-        """
-        We offer Load Balancer metrics observability via ARGUS or external solutions. Not changeable after creation.
-        """
-        private_network_only: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        If true, Load Balancer is accessible only via a private network IP address.
-        """
-elif False:
-    LoadbalancerOptionsArgsDict: TypeAlias = Mapping[str, Any]
+class LoadbalancerOptionsArgsDict(TypedDict):
+    acls: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    Load Balancer is accessible only from an IP address in this range.
+    """
+    observability: NotRequired[pulumi.Input['LoadbalancerOptionsObservabilityArgsDict']]
+    """
+    We offer Load Balancer metrics observability via ARGUS or external solutions. Not changeable after creation.
+    """
+    private_network_only: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    If true, Load Balancer is accessible only via a private network IP address.
+    """
 
 @pulumi.input_type
 class LoadbalancerOptionsArgs:
@@ -998,18 +1285,15 @@ class LoadbalancerOptionsArgs:
         pulumi.set(self, "private_network_only", value)
 
 
-if not MYPY:
-    class LoadbalancerOptionsObservabilityArgsDict(TypedDict):
-        logs: NotRequired[pulumi.Input['LoadbalancerOptionsObservabilityLogsArgsDict']]
-        """
-        Observability logs configuration. Not changeable after creation.
-        """
-        metrics: NotRequired[pulumi.Input['LoadbalancerOptionsObservabilityMetricsArgsDict']]
-        """
-        Observability metrics configuration. Not changeable after creation.
-        """
-elif False:
-    LoadbalancerOptionsObservabilityArgsDict: TypeAlias = Mapping[str, Any]
+class LoadbalancerOptionsObservabilityArgsDict(TypedDict):
+    logs: NotRequired[pulumi.Input['LoadbalancerOptionsObservabilityLogsArgsDict']]
+    """
+    Observability logs configuration. Not changeable after creation.
+    """
+    metrics: NotRequired[pulumi.Input['LoadbalancerOptionsObservabilityMetricsArgsDict']]
+    """
+    Observability metrics configuration. Not changeable after creation.
+    """
 
 @pulumi.input_type
 class LoadbalancerOptionsObservabilityArgs:
@@ -1050,18 +1334,15 @@ class LoadbalancerOptionsObservabilityArgs:
         pulumi.set(self, "metrics", value)
 
 
-if not MYPY:
-    class LoadbalancerOptionsObservabilityLogsArgsDict(TypedDict):
-        credentials_ref: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Credentials reference for logs. Not changeable after creation.
-        """
-        push_url: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Credentials reference for logs. Not changeable after creation.
-        """
-elif False:
-    LoadbalancerOptionsObservabilityLogsArgsDict: TypeAlias = Mapping[str, Any]
+class LoadbalancerOptionsObservabilityLogsArgsDict(TypedDict):
+    credentials_ref: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Credentials reference for logs. Not changeable after creation.
+    """
+    push_url: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Credentials reference for logs. Not changeable after creation.
+    """
 
 @pulumi.input_type
 class LoadbalancerOptionsObservabilityLogsArgs:
@@ -1102,18 +1383,15 @@ class LoadbalancerOptionsObservabilityLogsArgs:
         pulumi.set(self, "push_url", value)
 
 
-if not MYPY:
-    class LoadbalancerOptionsObservabilityMetricsArgsDict(TypedDict):
-        credentials_ref: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Credentials reference for metrics. Not changeable after creation.
-        """
-        push_url: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Credentials reference for metrics. Not changeable after creation.
-        """
-elif False:
-    LoadbalancerOptionsObservabilityMetricsArgsDict: TypeAlias = Mapping[str, Any]
+class LoadbalancerOptionsObservabilityMetricsArgsDict(TypedDict):
+    credentials_ref: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Credentials reference for metrics. Not changeable after creation.
+    """
+    push_url: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Credentials reference for metrics. Not changeable after creation.
+    """
 
 @pulumi.input_type
 class LoadbalancerOptionsObservabilityMetricsArgs:
@@ -1154,27 +1432,24 @@ class LoadbalancerOptionsObservabilityMetricsArgs:
         pulumi.set(self, "push_url", value)
 
 
-if not MYPY:
-    class LoadbalancerTargetPoolArgsDict(TypedDict):
-        name: pulumi.Input[_builtins.str]
-        """
-        Target pool name.
-        """
-        target_port: pulumi.Input[_builtins.int]
-        """
-        Identical port number where each target listens for traffic.
-        """
-        targets: pulumi.Input[Sequence[pulumi.Input['LoadbalancerTargetPoolTargetArgsDict']]]
-        """
-        List of all targets which will be used in the pool. Limited to 1000.
-        """
-        active_health_check: NotRequired[pulumi.Input['LoadbalancerTargetPoolActiveHealthCheckArgsDict']]
-        session_persistence: NotRequired[pulumi.Input['LoadbalancerTargetPoolSessionPersistenceArgsDict']]
-        """
-        Here you can setup various session persistence options, so far only "`use_source_ip_address`" is supported.
-        """
-elif False:
-    LoadbalancerTargetPoolArgsDict: TypeAlias = Mapping[str, Any]
+class LoadbalancerTargetPoolArgsDict(TypedDict):
+    name: pulumi.Input[_builtins.str]
+    """
+    Target pool name.
+    """
+    target_port: pulumi.Input[_builtins.int]
+    """
+    Identical port number where each target listens for traffic.
+    """
+    targets: pulumi.Input[Sequence[pulumi.Input['LoadbalancerTargetPoolTargetArgsDict']]]
+    """
+    List of all targets which will be used in the pool. Limited to 1000.
+    """
+    active_health_check: NotRequired[pulumi.Input['LoadbalancerTargetPoolActiveHealthCheckArgsDict']]
+    session_persistence: NotRequired[pulumi.Input['LoadbalancerTargetPoolSessionPersistenceArgsDict']]
+    """
+    Here you can setup various session persistence options, so far only "`use_source_ip_address`" is supported.
+    """
 
 @pulumi.input_type
 class LoadbalancerTargetPoolArgs:
@@ -1256,30 +1531,27 @@ class LoadbalancerTargetPoolArgs:
         pulumi.set(self, "session_persistence", value)
 
 
-if not MYPY:
-    class LoadbalancerTargetPoolActiveHealthCheckArgsDict(TypedDict):
-        healthy_threshold: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Healthy threshold of the health checking.
-        """
-        interval: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Interval duration of health checking in seconds.
-        """
-        interval_jitter: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Interval duration threshold of the health checking in seconds.
-        """
-        timeout: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Active health checking timeout duration in seconds.
-        """
-        unhealthy_threshold: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Unhealthy threshold of the health checking.
-        """
-elif False:
-    LoadbalancerTargetPoolActiveHealthCheckArgsDict: TypeAlias = Mapping[str, Any]
+class LoadbalancerTargetPoolActiveHealthCheckArgsDict(TypedDict):
+    healthy_threshold: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Healthy threshold of the health checking.
+    """
+    interval: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Interval duration of health checking in seconds.
+    """
+    interval_jitter: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Interval duration threshold of the health checking in seconds.
+    """
+    timeout: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Active health checking timeout duration in seconds.
+    """
+    unhealthy_threshold: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Unhealthy threshold of the health checking.
+    """
 
 @pulumi.input_type
 class LoadbalancerTargetPoolActiveHealthCheckArgs:
@@ -1368,14 +1640,11 @@ class LoadbalancerTargetPoolActiveHealthCheckArgs:
         pulumi.set(self, "unhealthy_threshold", value)
 
 
-if not MYPY:
-    class LoadbalancerTargetPoolSessionPersistenceArgsDict(TypedDict):
-        use_source_ip_address: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        If true then all connections from one source IP address are redirected to the same target. This setting changes the load balancing algorithm to Maglev.
-        """
-elif False:
-    LoadbalancerTargetPoolSessionPersistenceArgsDict: TypeAlias = Mapping[str, Any]
+class LoadbalancerTargetPoolSessionPersistenceArgsDict(TypedDict):
+    use_source_ip_address: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    If true then all connections from one source IP address are redirected to the same target. This setting changes the load balancing algorithm to Maglev.
+    """
 
 @pulumi.input_type
 class LoadbalancerTargetPoolSessionPersistenceArgs:
@@ -1400,18 +1669,15 @@ class LoadbalancerTargetPoolSessionPersistenceArgs:
         pulumi.set(self, "use_source_ip_address", value)
 
 
-if not MYPY:
-    class LoadbalancerTargetPoolTargetArgsDict(TypedDict):
-        display_name: pulumi.Input[_builtins.str]
-        """
-        Target display name
-        """
-        ip: pulumi.Input[_builtins.str]
-        """
-        Target IP
-        """
-elif False:
-    LoadbalancerTargetPoolTargetArgsDict: TypeAlias = Mapping[str, Any]
+class LoadbalancerTargetPoolTargetArgsDict(TypedDict):
+    display_name: pulumi.Input[_builtins.str]
+    """
+    Target display name
+    """
+    ip: pulumi.Input[_builtins.str]
+    """
+    Target IP
+    """
 
 @pulumi.input_type
 class LoadbalancerTargetPoolTargetArgs:
@@ -1450,68 +1716,65 @@ class LoadbalancerTargetPoolTargetArgs:
         pulumi.set(self, "ip", value)
 
 
-if not MYPY:
-    class LogmeInstanceParametersArgsDict(TypedDict):
-        enable_monitoring: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Enable monitoring.
-        """
-        fluentd_tcp: NotRequired[pulumi.Input[_builtins.int]]
-        fluentd_tls: NotRequired[pulumi.Input[_builtins.int]]
-        fluentd_tls_ciphers: NotRequired[pulumi.Input[_builtins.str]]
-        fluentd_tls_max_version: NotRequired[pulumi.Input[_builtins.str]]
-        fluentd_tls_min_version: NotRequired[pulumi.Input[_builtins.str]]
-        fluentd_tls_version: NotRequired[pulumi.Input[_builtins.str]]
-        fluentd_udp: NotRequired[pulumi.Input[_builtins.int]]
-        graphite: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        If set, monitoring with Graphite will be enabled. Expects the host and port where the Graphite metrics should be sent to (host:port).
-        """
-        ism_deletion_after: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Combination of an integer and a timerange when an index will be considered "old" and can be deleted. Possible values for the timerange are `s`, `m`, `h` and `d`.
-        """
-        ism_jitter: NotRequired[pulumi.Input[_builtins.float]]
-        ism_job_interval: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Jitter of the execution time.
-        """
-        java_heapspace: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The amount of memory (in MB) allocated as heap by the JVM for OpenSearch.
-        """
-        java_maxmetaspace: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The amount of memory (in MB) used by the JVM to store metadata for OpenSearch.
-        """
-        max_disk_threshold: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The maximum disk threshold in MB. If the disk usage exceeds this threshold, the instance will be stopped.
-        """
-        metrics_frequency: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The frequency in seconds at which metrics are emitted (in seconds).
-        """
-        metrics_prefix: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The prefix for the metrics. Could be useful when using Graphite monitoring to prefix the metrics with a certain value, like an API key.
-        """
-        monitoring_instance_id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The ID of the STACKIT monitoring instance.
-        """
-        opensearch_tls_ciphers: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        opensearch_tls_protocols: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        sgw_acl: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
-        """
-        syslogs: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        List of syslog servers to send logs to.
-        """
-elif False:
-    LogmeInstanceParametersArgsDict: TypeAlias = Mapping[str, Any]
+class LogmeInstanceParametersArgsDict(TypedDict):
+    enable_monitoring: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Enable monitoring.
+    """
+    fluentd_tcp: NotRequired[pulumi.Input[_builtins.int]]
+    fluentd_tls: NotRequired[pulumi.Input[_builtins.int]]
+    fluentd_tls_ciphers: NotRequired[pulumi.Input[_builtins.str]]
+    fluentd_tls_max_version: NotRequired[pulumi.Input[_builtins.str]]
+    fluentd_tls_min_version: NotRequired[pulumi.Input[_builtins.str]]
+    fluentd_tls_version: NotRequired[pulumi.Input[_builtins.str]]
+    fluentd_udp: NotRequired[pulumi.Input[_builtins.int]]
+    graphite: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    If set, monitoring with Graphite will be enabled. Expects the host and port where the Graphite metrics should be sent to (host:port).
+    """
+    ism_deletion_after: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Combination of an integer and a timerange when an index will be considered "old" and can be deleted. Possible values for the timerange are `s`, `m`, `h` and `d`.
+    """
+    ism_jitter: NotRequired[pulumi.Input[_builtins.float]]
+    ism_job_interval: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Jitter of the execution time.
+    """
+    java_heapspace: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The amount of memory (in MB) allocated as heap by the JVM for OpenSearch.
+    """
+    java_maxmetaspace: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The amount of memory (in MB) used by the JVM to store metadata for OpenSearch.
+    """
+    max_disk_threshold: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The maximum disk threshold in MB. If the disk usage exceeds this threshold, the instance will be stopped.
+    """
+    metrics_frequency: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The frequency in seconds at which metrics are emitted (in seconds).
+    """
+    metrics_prefix: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The prefix for the metrics. Could be useful when using Graphite monitoring to prefix the metrics with a certain value, like an API key.
+    """
+    monitoring_instance_id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The ID of the STACKIT monitoring instance.
+    """
+    opensearch_tls_ciphers: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    opensearch_tls_protocols: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    sgw_acl: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
+    """
+    syslogs: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of syslog servers to send logs to.
+    """
 
 @pulumi.input_type
 class LogmeInstanceParametersArgs:
@@ -1832,42 +2095,39 @@ class LogmeInstanceParametersArgs:
         pulumi.set(self, "syslogs", value)
 
 
-if not MYPY:
-    class MariadbInstanceParametersArgsDict(TypedDict):
-        enable_monitoring: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Enable monitoring.
-        """
-        graphite: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Graphite server URL (host and port). If set, monitoring with Graphite will be enabled.
-        """
-        max_disk_threshold: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The maximum disk threshold in MB. If the disk usage exceeds this threshold, the instance will be stopped.
-        """
-        metrics_frequency: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The frequency in seconds at which metrics are emitted.
-        """
-        metrics_prefix: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The prefix for the metrics. Could be useful when using Graphite monitoring to prefix the metrics with a certain value, like an API key
-        """
-        monitoring_instance_id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The ID of the STACKIT monitoring instance. Monitoring instances with the plan "Observability-Monitoring-Starter" are not supported.
-        """
-        sgw_acl: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
-        """
-        syslogs: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        List of syslog servers to send logs to.
-        """
-elif False:
-    MariadbInstanceParametersArgsDict: TypeAlias = Mapping[str, Any]
+class MariadbInstanceParametersArgsDict(TypedDict):
+    enable_monitoring: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Enable monitoring.
+    """
+    graphite: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Graphite server URL (host and port). If set, monitoring with Graphite will be enabled.
+    """
+    max_disk_threshold: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The maximum disk threshold in MB. If the disk usage exceeds this threshold, the instance will be stopped.
+    """
+    metrics_frequency: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The frequency in seconds at which metrics are emitted.
+    """
+    metrics_prefix: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The prefix for the metrics. Could be useful when using Graphite monitoring to prefix the metrics with a certain value, like an API key
+    """
+    monitoring_instance_id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The ID of the STACKIT monitoring instance. Monitoring instances with the plan "Observability-Monitoring-Starter" are not supported.
+    """
+    sgw_acl: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
+    """
+    syslogs: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of syslog servers to send logs to.
+    """
 
 @pulumi.input_type
 class MariadbInstanceParametersArgs:
@@ -2004,14 +2264,11 @@ class MariadbInstanceParametersArgs:
         pulumi.set(self, "syslogs", value)
 
 
-if not MYPY:
-    class MongodbflexInstanceFlavorArgsDict(TypedDict):
-        cpu: pulumi.Input[_builtins.int]
-        ram: pulumi.Input[_builtins.int]
-        description: NotRequired[pulumi.Input[_builtins.str]]
-        id: NotRequired[pulumi.Input[_builtins.str]]
-elif False:
-    MongodbflexInstanceFlavorArgsDict: TypeAlias = Mapping[str, Any]
+class MongodbflexInstanceFlavorArgsDict(TypedDict):
+    cpu: pulumi.Input[_builtins.int]
+    ram: pulumi.Input[_builtins.int]
+    description: NotRequired[pulumi.Input[_builtins.str]]
+    id: NotRequired[pulumi.Input[_builtins.str]]
 
 @pulumi.input_type
 class MongodbflexInstanceFlavorArgs:
@@ -2064,34 +2321,31 @@ class MongodbflexInstanceFlavorArgs:
         pulumi.set(self, "id", value)
 
 
-if not MYPY:
-    class MongodbflexInstanceOptionsArgsDict(TypedDict):
-        point_in_time_window_hours: pulumi.Input[_builtins.int]
-        """
-        The number of hours back in time the point-in-time recovery feature will be able to recover.
-        """
-        type: pulumi.Input[_builtins.str]
-        """
-        Type of the MongoDB Flex instance. Supported values are: `Replica`, `Sharded`, `Single`.
-        """
-        daily_snapshot_retention_days: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The number of days that daily backups will be retained.
-        """
-        monthly_snapshot_retention_months: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The number of months that monthly backups will be retained.
-        """
-        snapshot_retention_days: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The number of days that continuous backups (controlled via the `backup_schedule`) will be retained.
-        """
-        weekly_snapshot_retention_weeks: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The number of weeks that weekly backups will be retained.
-        """
-elif False:
-    MongodbflexInstanceOptionsArgsDict: TypeAlias = Mapping[str, Any]
+class MongodbflexInstanceOptionsArgsDict(TypedDict):
+    point_in_time_window_hours: pulumi.Input[_builtins.int]
+    """
+    The number of hours back in time the point-in-time recovery feature will be able to recover.
+    """
+    type: pulumi.Input[_builtins.str]
+    """
+    Type of the MongoDB Flex instance. Possible values are: `Replica`, `Sharded`, `Single`.
+    """
+    daily_snapshot_retention_days: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The number of days that daily backups will be retained.
+    """
+    monthly_snapshot_retention_months: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The number of months that monthly backups will be retained.
+    """
+    snapshot_retention_days: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The number of days that continuous backups (controlled via the `backup_schedule`) will be retained.
+    """
+    weekly_snapshot_retention_weeks: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The number of weeks that weekly backups will be retained.
+    """
 
 @pulumi.input_type
 class MongodbflexInstanceOptionsArgs:
@@ -2104,7 +2358,7 @@ class MongodbflexInstanceOptionsArgs:
                  weekly_snapshot_retention_weeks: Optional[pulumi.Input[_builtins.int]] = None):
         """
         :param pulumi.Input[_builtins.int] point_in_time_window_hours: The number of hours back in time the point-in-time recovery feature will be able to recover.
-        :param pulumi.Input[_builtins.str] type: Type of the MongoDB Flex instance. Supported values are: `Replica`, `Sharded`, `Single`.
+        :param pulumi.Input[_builtins.str] type: Type of the MongoDB Flex instance. Possible values are: `Replica`, `Sharded`, `Single`.
         :param pulumi.Input[_builtins.int] daily_snapshot_retention_days: The number of days that daily backups will be retained.
         :param pulumi.Input[_builtins.int] monthly_snapshot_retention_months: The number of months that monthly backups will be retained.
         :param pulumi.Input[_builtins.int] snapshot_retention_days: The number of days that continuous backups (controlled via the `backup_schedule`) will be retained.
@@ -2137,7 +2391,7 @@ class MongodbflexInstanceOptionsArgs:
     @pulumi.getter
     def type(self) -> pulumi.Input[_builtins.str]:
         """
-        Type of the MongoDB Flex instance. Supported values are: `Replica`, `Sharded`, `Single`.
+        Type of the MongoDB Flex instance. Possible values are: `Replica`, `Sharded`, `Single`.
         """
         return pulumi.get(self, "type")
 
@@ -2194,12 +2448,9 @@ class MongodbflexInstanceOptionsArgs:
         pulumi.set(self, "weekly_snapshot_retention_weeks", value)
 
 
-if not MYPY:
-    class MongodbflexInstanceStorageArgsDict(TypedDict):
-        class_: pulumi.Input[_builtins.str]
-        size: pulumi.Input[_builtins.int]
-elif False:
-    MongodbflexInstanceStorageArgsDict: TypeAlias = Mapping[str, Any]
+class MongodbflexInstanceStorageArgsDict(TypedDict):
+    class_: pulumi.Input[_builtins.str]
+    size: pulumi.Input[_builtins.int]
 
 @pulumi.input_type
 class MongodbflexInstanceStorageArgs:
@@ -2228,18 +2479,191 @@ class MongodbflexInstanceStorageArgs:
         pulumi.set(self, "size", value)
 
 
-if not MYPY:
-    class NetworkAreaNetworkRangeArgsDict(TypedDict):
-        prefix: pulumi.Input[_builtins.str]
-        """
-        Classless Inter-Domain Routing (CIDR).
-        """
-        network_range_id: NotRequired[pulumi.Input[_builtins.str]]
-elif False:
-    NetworkAreaNetworkRangeArgsDict: TypeAlias = Mapping[str, Any]
+class NetworkAreaNetworkRangeArgsDict(TypedDict):
+    prefix: pulumi.Input[_builtins.str]
+    """
+    Classless Inter-Domain Routing (CIDR).
+    """
+    network_range_id: NotRequired[pulumi.Input[_builtins.str]]
 
 @pulumi.input_type
 class NetworkAreaNetworkRangeArgs:
+    def __init__(__self__, *,
+                 prefix: pulumi.Input[_builtins.str],
+                 network_range_id: Optional[pulumi.Input[_builtins.str]] = None):
+        """
+        :param pulumi.Input[_builtins.str] prefix: Classless Inter-Domain Routing (CIDR).
+        """
+        if prefix is not None:
+            warnings.warn("""Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `NetworkAreaRegion` resource instead.""", DeprecationWarning)
+            pulumi.log.warn("""prefix is deprecated: Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `NetworkAreaRegion` resource instead.""")
+        pulumi.set(__self__, "prefix", prefix)
+        if network_range_id is not None:
+            warnings.warn("""Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `NetworkAreaRegion` resource instead.""", DeprecationWarning)
+            pulumi.log.warn("""network_range_id is deprecated: Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `NetworkAreaRegion` resource instead.""")
+        if network_range_id is not None:
+            pulumi.set(__self__, "network_range_id", network_range_id)
+
+    @_builtins.property
+    @pulumi.getter
+    @_utilities.deprecated("""Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `NetworkAreaRegion` resource instead.""")
+    def prefix(self) -> pulumi.Input[_builtins.str]:
+        """
+        Classless Inter-Domain Routing (CIDR).
+        """
+        return pulumi.get(self, "prefix")
+
+    @prefix.setter
+    def prefix(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "prefix", value)
+
+    @_builtins.property
+    @pulumi.getter(name="networkRangeId")
+    @_utilities.deprecated("""Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `NetworkAreaRegion` resource instead.""")
+    def network_range_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+        return pulumi.get(self, "network_range_id")
+
+    @network_range_id.setter
+    def network_range_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "network_range_id", value)
+
+
+class NetworkAreaRegionIpv4ArgsDict(TypedDict):
+    network_ranges: pulumi.Input[Sequence[pulumi.Input['NetworkAreaRegionIpv4NetworkRangeArgsDict']]]
+    """
+    List of Network ranges.
+    """
+    transfer_network: pulumi.Input[_builtins.str]
+    """
+    IPv4 Classless Inter-Domain Routing (CIDR).
+    """
+    default_nameservers: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of DNS Servers/Nameservers.
+    """
+    default_prefix_length: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The default prefix length for networks in the network area.
+    """
+    max_prefix_length: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The maximal prefix length for networks in the network area.
+    """
+    min_prefix_length: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The minimal prefix length for networks in the network area.
+    """
+
+@pulumi.input_type
+class NetworkAreaRegionIpv4Args:
+    def __init__(__self__, *,
+                 network_ranges: pulumi.Input[Sequence[pulumi.Input['NetworkAreaRegionIpv4NetworkRangeArgs']]],
+                 transfer_network: pulumi.Input[_builtins.str],
+                 default_nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 default_prefix_length: Optional[pulumi.Input[_builtins.int]] = None,
+                 max_prefix_length: Optional[pulumi.Input[_builtins.int]] = None,
+                 min_prefix_length: Optional[pulumi.Input[_builtins.int]] = None):
+        """
+        :param pulumi.Input[Sequence[pulumi.Input['NetworkAreaRegionIpv4NetworkRangeArgs']]] network_ranges: List of Network ranges.
+        :param pulumi.Input[_builtins.str] transfer_network: IPv4 Classless Inter-Domain Routing (CIDR).
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] default_nameservers: List of DNS Servers/Nameservers.
+        :param pulumi.Input[_builtins.int] default_prefix_length: The default prefix length for networks in the network area.
+        :param pulumi.Input[_builtins.int] max_prefix_length: The maximal prefix length for networks in the network area.
+        :param pulumi.Input[_builtins.int] min_prefix_length: The minimal prefix length for networks in the network area.
+        """
+        pulumi.set(__self__, "network_ranges", network_ranges)
+        pulumi.set(__self__, "transfer_network", transfer_network)
+        if default_nameservers is not None:
+            pulumi.set(__self__, "default_nameservers", default_nameservers)
+        if default_prefix_length is not None:
+            pulumi.set(__self__, "default_prefix_length", default_prefix_length)
+        if max_prefix_length is not None:
+            pulumi.set(__self__, "max_prefix_length", max_prefix_length)
+        if min_prefix_length is not None:
+            pulumi.set(__self__, "min_prefix_length", min_prefix_length)
+
+    @_builtins.property
+    @pulumi.getter(name="networkRanges")
+    def network_ranges(self) -> pulumi.Input[Sequence[pulumi.Input['NetworkAreaRegionIpv4NetworkRangeArgs']]]:
+        """
+        List of Network ranges.
+        """
+        return pulumi.get(self, "network_ranges")
+
+    @network_ranges.setter
+    def network_ranges(self, value: pulumi.Input[Sequence[pulumi.Input['NetworkAreaRegionIpv4NetworkRangeArgs']]]):
+        pulumi.set(self, "network_ranges", value)
+
+    @_builtins.property
+    @pulumi.getter(name="transferNetwork")
+    def transfer_network(self) -> pulumi.Input[_builtins.str]:
+        """
+        IPv4 Classless Inter-Domain Routing (CIDR).
+        """
+        return pulumi.get(self, "transfer_network")
+
+    @transfer_network.setter
+    def transfer_network(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "transfer_network", value)
+
+    @_builtins.property
+    @pulumi.getter(name="defaultNameservers")
+    def default_nameservers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        List of DNS Servers/Nameservers.
+        """
+        return pulumi.get(self, "default_nameservers")
+
+    @default_nameservers.setter
+    def default_nameservers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "default_nameservers", value)
+
+    @_builtins.property
+    @pulumi.getter(name="defaultPrefixLength")
+    def default_prefix_length(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        The default prefix length for networks in the network area.
+        """
+        return pulumi.get(self, "default_prefix_length")
+
+    @default_prefix_length.setter
+    def default_prefix_length(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "default_prefix_length", value)
+
+    @_builtins.property
+    @pulumi.getter(name="maxPrefixLength")
+    def max_prefix_length(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        The maximal prefix length for networks in the network area.
+        """
+        return pulumi.get(self, "max_prefix_length")
+
+    @max_prefix_length.setter
+    def max_prefix_length(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "max_prefix_length", value)
+
+    @_builtins.property
+    @pulumi.getter(name="minPrefixLength")
+    def min_prefix_length(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        The minimal prefix length for networks in the network area.
+        """
+        return pulumi.get(self, "min_prefix_length")
+
+    @min_prefix_length.setter
+    def min_prefix_length(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "min_prefix_length", value)
+
+
+class NetworkAreaRegionIpv4NetworkRangeArgsDict(TypedDict):
+    prefix: pulumi.Input[_builtins.str]
+    """
+    Classless Inter-Domain Routing (CIDR).
+    """
+    network_range_id: NotRequired[pulumi.Input[_builtins.str]]
+
+@pulumi.input_type
+class NetworkAreaRegionIpv4NetworkRangeArgs:
     def __init__(__self__, *,
                  prefix: pulumi.Input[_builtins.str],
                  network_range_id: Optional[pulumi.Input[_builtins.str]] = None):
@@ -2272,66 +2696,155 @@ class NetworkAreaNetworkRangeArgs:
         pulumi.set(self, "network_range_id", value)
 
 
-if not MYPY:
-    class ObservabilityAlertgroupRuleArgsDict(TypedDict):
-        alert: pulumi.Input[_builtins.str]
+class NetworkAreaRouteDestinationArgsDict(TypedDict):
+    type: pulumi.Input[_builtins.str]
+    """
+    CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported currently.
+    """
+    value: pulumi.Input[_builtins.str]
+    """
+    An CIDR string.
+    """
+
+@pulumi.input_type
+class NetworkAreaRouteDestinationArgs:
+    def __init__(__self__, *,
+                 type: pulumi.Input[_builtins.str],
+                 value: pulumi.Input[_builtins.str]):
         """
-        The name of the alert rule. Is the identifier and must be unique in the group.
+        :param pulumi.Input[_builtins.str] type: CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported currently.
+        :param pulumi.Input[_builtins.str] value: An CIDR string.
         """
-        expression: pulumi.Input[_builtins.str]
+        pulumi.set(__self__, "type", type)
+        pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[_builtins.str]:
         """
-        The PromQL expression to evaluate. Every evaluation cycle this is evaluated at the current time, and all resultant time series become pending/firing alerts.
+        CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported currently.
         """
-        annotations: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "type", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> pulumi.Input[_builtins.str]:
         """
-        A map of key:value. Annotations to add or overwrite for each alert
+        An CIDR string.
         """
-        for_: NotRequired[pulumi.Input[_builtins.str]]
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "value", value)
+
+
+class NetworkAreaRouteNextHopArgsDict(TypedDict):
+    type: pulumi.Input[_builtins.str]
+    """
+    Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `ipv4` supported currently.
+    """
+    value: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported currently.
+    """
+
+@pulumi.input_type
+class NetworkAreaRouteNextHopArgs:
+    def __init__(__self__, *,
+                 type: pulumi.Input[_builtins.str],
+                 value: Optional[pulumi.Input[_builtins.str]] = None):
         """
-        Alerts are considered firing once they have been returned for this long. Alerts which have not yet fired for long enough are considered pending. Default is 0s
+        :param pulumi.Input[_builtins.str] type: Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `ipv4` supported currently.
+        :param pulumi.Input[_builtins.str] value: Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported currently.
         """
-        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+        pulumi.set(__self__, "type", type)
+        if value is not None:
+            pulumi.set(__self__, "value", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def type(self) -> pulumi.Input[_builtins.str]:
         """
-        A map of key:value. Labels to add or overwrite for each alert
+        Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `ipv4` supported currently.
         """
-elif False:
-    ObservabilityAlertgroupRuleArgsDict: TypeAlias = Mapping[str, Any]
+        return pulumi.get(self, "type")
+
+    @type.setter
+    def type(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "type", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def value(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported currently.
+        """
+        return pulumi.get(self, "value")
+
+    @value.setter
+    def value(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "value", value)
+
+
+class ObservabilityAlertgroupRuleArgsDict(TypedDict):
+    expression: pulumi.Input[_builtins.str]
+    """
+    The PromQL expression to evaluate. Every evaluation cycle this is evaluated at the current time, and all resultant time series become pending/firing alerts.
+    """
+    alert: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The name of the alert rule. Is the identifier and must be unique in the group.
+    """
+    annotations: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+    """
+    A map of key:value. Annotations to add or overwrite for each alert
+    """
+    for_: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Alerts are considered firing once they have been returned for this long. Alerts which have not yet fired for long enough are considered pending. Default is 0s
+    """
+    labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+    """
+    A map of key:value. Labels to add or overwrite for each alert
+    """
+    record: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The name of the metric. It's the identifier and must be unique in the group.
+    """
 
 @pulumi.input_type
 class ObservabilityAlertgroupRuleArgs:
     def __init__(__self__, *,
-                 alert: pulumi.Input[_builtins.str],
                  expression: pulumi.Input[_builtins.str],
+                 alert: Optional[pulumi.Input[_builtins.str]] = None,
                  annotations: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  for_: Optional[pulumi.Input[_builtins.str]] = None,
-                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None):
+                 labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 record: Optional[pulumi.Input[_builtins.str]] = None):
         """
-        :param pulumi.Input[_builtins.str] alert: The name of the alert rule. Is the identifier and must be unique in the group.
         :param pulumi.Input[_builtins.str] expression: The PromQL expression to evaluate. Every evaluation cycle this is evaluated at the current time, and all resultant time series become pending/firing alerts.
+        :param pulumi.Input[_builtins.str] alert: The name of the alert rule. Is the identifier and must be unique in the group.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] annotations: A map of key:value. Annotations to add or overwrite for each alert
         :param pulumi.Input[_builtins.str] for_: Alerts are considered firing once they have been returned for this long. Alerts which have not yet fired for long enough are considered pending. Default is 0s
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: A map of key:value. Labels to add or overwrite for each alert
+        :param pulumi.Input[_builtins.str] record: The name of the metric. It's the identifier and must be unique in the group.
         """
-        pulumi.set(__self__, "alert", alert)
         pulumi.set(__self__, "expression", expression)
+        if alert is not None:
+            pulumi.set(__self__, "alert", alert)
         if annotations is not None:
             pulumi.set(__self__, "annotations", annotations)
         if for_ is not None:
             pulumi.set(__self__, "for_", for_)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
-
-    @_builtins.property
-    @pulumi.getter
-    def alert(self) -> pulumi.Input[_builtins.str]:
-        """
-        The name of the alert rule. Is the identifier and must be unique in the group.
-        """
-        return pulumi.get(self, "alert")
-
-    @alert.setter
-    def alert(self, value: pulumi.Input[_builtins.str]):
-        pulumi.set(self, "alert", value)
+        if record is not None:
+            pulumi.set(__self__, "record", record)
 
     @_builtins.property
     @pulumi.getter
@@ -2344,6 +2857,18 @@ class ObservabilityAlertgroupRuleArgs:
     @expression.setter
     def expression(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "expression", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def alert(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The name of the alert rule. Is the identifier and must be unique in the group.
+        """
+        return pulumi.get(self, "alert")
+
+    @alert.setter
+    def alert(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "alert", value)
 
     @_builtins.property
     @pulumi.getter
@@ -2381,23 +2906,32 @@ class ObservabilityAlertgroupRuleArgs:
     def labels(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "labels", value)
 
+    @_builtins.property
+    @pulumi.getter
+    def record(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The name of the metric. It's the identifier and must be unique in the group.
+        """
+        return pulumi.get(self, "record")
 
-if not MYPY:
-    class ObservabilityInstanceAlertConfigArgsDict(TypedDict):
-        receivers: pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigReceiverArgsDict']]]
-        """
-        List of alert receivers.
-        """
-        route: pulumi.Input['ObservabilityInstanceAlertConfigRouteArgsDict']
-        """
-        Route configuration for the alerts.
-        """
-        global_: NotRequired[pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgsDict']]
-        """
-        Global configuration for the alerts.
-        """
-elif False:
-    ObservabilityInstanceAlertConfigArgsDict: TypeAlias = Mapping[str, Any]
+    @record.setter
+    def record(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "record", value)
+
+
+class ObservabilityInstanceAlertConfigArgsDict(TypedDict):
+    receivers: pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigReceiverArgsDict']]]
+    """
+    List of alert receivers.
+    """
+    route: pulumi.Input['ObservabilityInstanceAlertConfigRouteArgsDict']
+    """
+    Route configuration for the alerts.
+    """
+    global_: NotRequired[pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgsDict']]
+    """
+    Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
+    """
 
 @pulumi.input_type
 class ObservabilityInstanceAlertConfigArgs:
@@ -2408,7 +2942,7 @@ class ObservabilityInstanceAlertConfigArgs:
         """
         :param pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigReceiverArgs']]] receivers: List of alert receivers.
         :param pulumi.Input['ObservabilityInstanceAlertConfigRouteArgs'] route: Route configuration for the alerts.
-        :param pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgs'] global_: Global configuration for the alerts.
+        :param pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgs'] global_: Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
         """
         pulumi.set(__self__, "receivers", receivers)
         pulumi.set(__self__, "route", route)
@@ -2443,7 +2977,7 @@ class ObservabilityInstanceAlertConfigArgs:
     @pulumi.getter(name="global")
     def global_(self) -> Optional[pulumi.Input['ObservabilityInstanceAlertConfigGlobalArgs']]:
         """
-        Global configuration for the alerts.
+        Global configuration for the alerts. If nothing passed the default argus config will be used. It is only possible to update the entire global part, not individual attributes.
         """
         return pulumi.get(self, "global_")
 
@@ -2452,42 +2986,39 @@ class ObservabilityInstanceAlertConfigArgs:
         pulumi.set(self, "global_", value)
 
 
-if not MYPY:
-    class ObservabilityInstanceAlertConfigGlobalArgsDict(TypedDict):
-        opsgenie_api_key: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The API key for OpsGenie.
-        """
-        opsgenie_api_url: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The host to send OpsGenie API requests to. Must be a valid URL
-        """
-        resolve_timeout: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The default value used by alertmanager if the alert does not include EndsAt. After this time passes, it can declare the alert as resolved if it has not been updated. This has no impact on alerts from Prometheus, as they always include EndsAt.
-        """
-        smtp_auth_identity: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        SMTP authentication information. Must be a valid email address
-        """
-        smtp_auth_password: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        SMTP Auth using LOGIN and PLAIN.
-        """
-        smtp_auth_username: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        SMTP Auth using CRAM-MD5, LOGIN and PLAIN. If empty, Alertmanager doesn't authenticate to the SMTP server.
-        """
-        smtp_from: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The default SMTP From header field. Must be a valid email address
-        """
-        smtp_smart_host: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The default SMTP smarthost used for sending emails, including port number in format `host:port` (eg. `smtp.example.com:587`). Port number usually is 25, or 587 for SMTP over TLS (sometimes referred to as STARTTLS).
-        """
-elif False:
-    ObservabilityInstanceAlertConfigGlobalArgsDict: TypeAlias = Mapping[str, Any]
+class ObservabilityInstanceAlertConfigGlobalArgsDict(TypedDict):
+    opsgenie_api_key: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The API key for OpsGenie.
+    """
+    opsgenie_api_url: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The host to send OpsGenie API requests to. Must be a valid URL
+    """
+    resolve_timeout: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The default value used by alertmanager if the alert does not include EndsAt. After this time passes, it can declare the alert as resolved if it has not been updated. This has no impact on alerts from Prometheus, as they always include EndsAt.
+    """
+    smtp_auth_identity: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    SMTP authentication information. Must be a valid email address
+    """
+    smtp_auth_password: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    SMTP Auth using LOGIN and PLAIN.
+    """
+    smtp_auth_username: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    SMTP Auth using CRAM-MD5, LOGIN and PLAIN. If empty, Alertmanager doesn't authenticate to the SMTP server.
+    """
+    smtp_from: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The default SMTP From header field. Must be a valid email address
+    """
+    smtp_smart_host: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The default SMTP smarthost used for sending emails, including port number in format `host:port` (eg. `smtp.example.com:587`). Port number usually is 25, or 587 for SMTP over TLS (sometimes referred to as STARTTLS).
+    """
 
 @pulumi.input_type
 class ObservabilityInstanceAlertConfigGlobalArgs:
@@ -2624,26 +3155,23 @@ class ObservabilityInstanceAlertConfigGlobalArgs:
         pulumi.set(self, "smtp_smart_host", value)
 
 
-if not MYPY:
-    class ObservabilityInstanceAlertConfigReceiverArgsDict(TypedDict):
-        name: pulumi.Input[_builtins.str]
-        """
-        Name of the receiver.
-        """
-        email_configs: NotRequired[pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigReceiverEmailConfigArgsDict']]]]
-        """
-        List of email configurations.
-        """
-        opsgenie_configs: NotRequired[pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgsDict']]]]
-        """
-        List of OpsGenie configurations.
-        """
-        webhooks_configs: NotRequired[pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgsDict']]]]
-        """
-        List of Webhooks configurations.
-        """
-elif False:
-    ObservabilityInstanceAlertConfigReceiverArgsDict: TypeAlias = Mapping[str, Any]
+class ObservabilityInstanceAlertConfigReceiverArgsDict(TypedDict):
+    name: pulumi.Input[_builtins.str]
+    """
+    Name of the receiver.
+    """
+    email_configs: NotRequired[pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigReceiverEmailConfigArgsDict']]]]
+    """
+    List of email configurations.
+    """
+    opsgenie_configs: NotRequired[pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgsDict']]]]
+    """
+    List of OpsGenie configurations.
+    """
+    webhooks_configs: NotRequired[pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgsDict']]]]
+    """
+    List of Webhooks configurations.
+    """
 
 @pulumi.input_type
 class ObservabilityInstanceAlertConfigReceiverArgs:
@@ -2715,34 +3243,35 @@ class ObservabilityInstanceAlertConfigReceiverArgs:
         pulumi.set(self, "webhooks_configs", value)
 
 
-if not MYPY:
-    class ObservabilityInstanceAlertConfigReceiverEmailConfigArgsDict(TypedDict):
-        auth_identity: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        SMTP authentication information. Must be a valid email address
-        """
-        auth_password: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        SMTP authentication password.
-        """
-        auth_username: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        SMTP authentication username.
-        """
-        from_: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The sender email address. Must be a valid email address
-        """
-        smart_host: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The SMTP host through which emails are sent.
-        """
-        to: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The email address to send notifications to. Must be a valid email address
-        """
-elif False:
-    ObservabilityInstanceAlertConfigReceiverEmailConfigArgsDict: TypeAlias = Mapping[str, Any]
+class ObservabilityInstanceAlertConfigReceiverEmailConfigArgsDict(TypedDict):
+    auth_identity: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    SMTP authentication information. Must be a valid email address
+    """
+    auth_password: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    SMTP authentication password.
+    """
+    auth_username: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    SMTP authentication username.
+    """
+    from_: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The sender email address. Must be a valid email address
+    """
+    send_resolved: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Whether to notify about resolved alerts.
+    """
+    smart_host: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The SMTP host through which emails are sent.
+    """
+    to: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The email address to send notifications to. Must be a valid email address
+    """
 
 @pulumi.input_type
 class ObservabilityInstanceAlertConfigReceiverEmailConfigArgs:
@@ -2751,6 +3280,7 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfigArgs:
                  auth_password: Optional[pulumi.Input[_builtins.str]] = None,
                  auth_username: Optional[pulumi.Input[_builtins.str]] = None,
                  from_: Optional[pulumi.Input[_builtins.str]] = None,
+                 send_resolved: Optional[pulumi.Input[_builtins.bool]] = None,
                  smart_host: Optional[pulumi.Input[_builtins.str]] = None,
                  to: Optional[pulumi.Input[_builtins.str]] = None):
         """
@@ -2758,6 +3288,7 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfigArgs:
         :param pulumi.Input[_builtins.str] auth_password: SMTP authentication password.
         :param pulumi.Input[_builtins.str] auth_username: SMTP authentication username.
         :param pulumi.Input[_builtins.str] from_: The sender email address. Must be a valid email address
+        :param pulumi.Input[_builtins.bool] send_resolved: Whether to notify about resolved alerts.
         :param pulumi.Input[_builtins.str] smart_host: The SMTP host through which emails are sent.
         :param pulumi.Input[_builtins.str] to: The email address to send notifications to. Must be a valid email address
         """
@@ -2769,6 +3300,8 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfigArgs:
             pulumi.set(__self__, "auth_username", auth_username)
         if from_ is not None:
             pulumi.set(__self__, "from_", from_)
+        if send_resolved is not None:
+            pulumi.set(__self__, "send_resolved", send_resolved)
         if smart_host is not None:
             pulumi.set(__self__, "smart_host", smart_host)
         if to is not None:
@@ -2823,6 +3356,18 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfigArgs:
         pulumi.set(self, "from_", value)
 
     @_builtins.property
+    @pulumi.getter(name="sendResolved")
+    def send_resolved(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether to notify about resolved alerts.
+        """
+        return pulumi.get(self, "send_resolved")
+
+    @send_resolved.setter
+    def send_resolved(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "send_resolved", value)
+
+    @_builtins.property
     @pulumi.getter(name="smartHost")
     def smart_host(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -2847,38 +3392,51 @@ class ObservabilityInstanceAlertConfigReceiverEmailConfigArgs:
         pulumi.set(self, "to", value)
 
 
-if not MYPY:
-    class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgsDict(TypedDict):
-        api_key: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The API key for OpsGenie.
-        """
-        api_url: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The host to send OpsGenie API requests to. Must be a valid URL
-        """
-        tags: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Comma separated list of tags attached to the notifications.
-        """
-elif False:
-    ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgsDict: TypeAlias = Mapping[str, Any]
+class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgsDict(TypedDict):
+    api_key: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The API key for OpsGenie.
+    """
+    api_url: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The host to send OpsGenie API requests to. Must be a valid URL
+    """
+    priority: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+    """
+    send_resolved: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Whether to notify about resolved alerts.
+    """
+    tags: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Comma separated list of tags attached to the notifications.
+    """
 
 @pulumi.input_type
 class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs:
     def __init__(__self__, *,
                  api_key: Optional[pulumi.Input[_builtins.str]] = None,
                  api_url: Optional[pulumi.Input[_builtins.str]] = None,
+                 priority: Optional[pulumi.Input[_builtins.str]] = None,
+                 send_resolved: Optional[pulumi.Input[_builtins.bool]] = None,
                  tags: Optional[pulumi.Input[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] api_key: The API key for OpsGenie.
         :param pulumi.Input[_builtins.str] api_url: The host to send OpsGenie API requests to. Must be a valid URL
+        :param pulumi.Input[_builtins.str] priority: Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        :param pulumi.Input[_builtins.bool] send_resolved: Whether to notify about resolved alerts.
         :param pulumi.Input[_builtins.str] tags: Comma separated list of tags attached to the notifications.
         """
         if api_key is not None:
             pulumi.set(__self__, "api_key", api_key)
         if api_url is not None:
             pulumi.set(__self__, "api_url", api_url)
+        if priority is not None:
+            pulumi.set(__self__, "priority", priority)
+        if send_resolved is not None:
+            pulumi.set(__self__, "send_resolved", send_resolved)
         if tags is not None:
             pulumi.set(__self__, "tags", tags)
 
@@ -2908,6 +3466,30 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs:
 
     @_builtins.property
     @pulumi.getter
+    def priority(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Priority of the alert. Possible values are: `P1`, `P2`, `P3`, `P4`, `P5`.
+        """
+        return pulumi.get(self, "priority")
+
+    @priority.setter
+    def priority(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "priority", value)
+
+    @_builtins.property
+    @pulumi.getter(name="sendResolved")
+    def send_resolved(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether to notify about resolved alerts.
+        """
+        return pulumi.get(self, "send_resolved")
+
+    @send_resolved.setter
+    def send_resolved(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "send_resolved", value)
+
+    @_builtins.property
+    @pulumi.getter
     def tags(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
         Comma separated list of tags attached to the notifications.
@@ -2919,32 +3501,57 @@ class ObservabilityInstanceAlertConfigReceiverOpsgenieConfigArgs:
         pulumi.set(self, "tags", value)
 
 
-if not MYPY:
-    class ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgsDict(TypedDict):
-        ms_teams: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
-        """
-        url: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The endpoint to send HTTP POST requests to. Must be a valid URL
-        """
-elif False:
-    ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgsDict: TypeAlias = Mapping[str, Any]
+class ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgsDict(TypedDict):
+    google_chat: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+    """
+    ms_teams: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
+    """
+    send_resolved: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Whether to notify about resolved alerts.
+    """
+    url: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The endpoint to send HTTP POST requests to. Must be a valid URL
+    """
 
 @pulumi.input_type
 class ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs:
     def __init__(__self__, *,
+                 google_chat: Optional[pulumi.Input[_builtins.bool]] = None,
                  ms_teams: Optional[pulumi.Input[_builtins.bool]] = None,
+                 send_resolved: Optional[pulumi.Input[_builtins.bool]] = None,
                  url: Optional[pulumi.Input[_builtins.str]] = None):
         """
+        :param pulumi.Input[_builtins.bool] google_chat: Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
         :param pulumi.Input[_builtins.bool] ms_teams: Microsoft Teams webhooks require special handling, set this to true if the webhook is for Microsoft Teams.
+        :param pulumi.Input[_builtins.bool] send_resolved: Whether to notify about resolved alerts.
         :param pulumi.Input[_builtins.str] url: The endpoint to send HTTP POST requests to. Must be a valid URL
         """
+        if google_chat is not None:
+            pulumi.set(__self__, "google_chat", google_chat)
         if ms_teams is not None:
             pulumi.set(__self__, "ms_teams", ms_teams)
+        if send_resolved is not None:
+            pulumi.set(__self__, "send_resolved", send_resolved)
         if url is not None:
             pulumi.set(__self__, "url", url)
+
+    @_builtins.property
+    @pulumi.getter(name="googleChat")
+    def google_chat(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Google Chat webhooks require special handling, set this to true if the webhook is for Google Chat.
+        """
+        return pulumi.get(self, "google_chat")
+
+    @google_chat.setter
+    def google_chat(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "google_chat", value)
 
     @_builtins.property
     @pulumi.getter(name="msTeams")
@@ -2959,6 +3566,18 @@ class ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs:
         pulumi.set(self, "ms_teams", value)
 
     @_builtins.property
+    @pulumi.getter(name="sendResolved")
+    def send_resolved(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether to notify about resolved alerts.
+        """
+        return pulumi.get(self, "send_resolved")
+
+    @send_resolved.setter
+    def send_resolved(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "send_resolved", value)
+
+    @_builtins.property
     @pulumi.getter
     def url(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -2971,75 +3590,64 @@ class ObservabilityInstanceAlertConfigReceiverWebhooksConfigArgs:
         pulumi.set(self, "url", value)
 
 
-if not MYPY:
-    class ObservabilityInstanceAlertConfigRouteArgsDict(TypedDict):
-        receiver: pulumi.Input[_builtins.str]
-        """
-        The name of the receiver to route the alerts to.
-        """
-        group_bies: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
-        """
-        group_interval: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
-        """
-        group_wait: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
-        """
-        match: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        A set of equality matchers an alert has to fulfill to match the node.
-        """
-        match_regex: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        A set of regex-matchers an alert has to fulfill to match the node.
-        """
-        repeat_interval: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
-        """
-        routes: NotRequired[pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigRouteRouteArgsDict']]]]
-        """
-        List of child routes.
-        """
-elif False:
-    ObservabilityInstanceAlertConfigRouteArgsDict: TypeAlias = Mapping[str, Any]
+class ObservabilityInstanceAlertConfigRouteArgsDict(TypedDict):
+    receiver: pulumi.Input[_builtins.str]
+    """
+    The name of the receiver to route the alerts to.
+    """
+    continue_: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Whether an alert should continue matching subsequent sibling nodes.
+    """
+    group_bies: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
+    """
+    group_interval: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
+    """
+    group_wait: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
+    """
+    repeat_interval: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
+    """
+    routes: NotRequired[pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigRouteRouteArgsDict']]]]
+    """
+    List of child routes.
+    """
 
 @pulumi.input_type
 class ObservabilityInstanceAlertConfigRouteArgs:
     def __init__(__self__, *,
                  receiver: pulumi.Input[_builtins.str],
+                 continue_: Optional[pulumi.Input[_builtins.bool]] = None,
                  group_bies: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  group_interval: Optional[pulumi.Input[_builtins.str]] = None,
                  group_wait: Optional[pulumi.Input[_builtins.str]] = None,
-                 match: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
-                 match_regex: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  repeat_interval: Optional[pulumi.Input[_builtins.str]] = None,
                  routes: Optional[pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigRouteRouteArgs']]]] = None):
         """
         :param pulumi.Input[_builtins.str] receiver: The name of the receiver to route the alerts to.
+        :param pulumi.Input[_builtins.bool] continue_: Whether an alert should continue matching subsequent sibling nodes.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] group_bies: The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
         :param pulumi.Input[_builtins.str] group_interval: How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
         :param pulumi.Input[_builtins.str] group_wait: How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] match: A set of equality matchers an alert has to fulfill to match the node.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] match_regex: A set of regex-matchers an alert has to fulfill to match the node.
         :param pulumi.Input[_builtins.str] repeat_interval: How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
         :param pulumi.Input[Sequence[pulumi.Input['ObservabilityInstanceAlertConfigRouteRouteArgs']]] routes: List of child routes.
         """
         pulumi.set(__self__, "receiver", receiver)
+        if continue_ is not None:
+            pulumi.set(__self__, "continue_", continue_)
         if group_bies is not None:
             pulumi.set(__self__, "group_bies", group_bies)
         if group_interval is not None:
             pulumi.set(__self__, "group_interval", group_interval)
         if group_wait is not None:
             pulumi.set(__self__, "group_wait", group_wait)
-        if match is not None:
-            pulumi.set(__self__, "match", match)
-        if match_regex is not None:
-            pulumi.set(__self__, "match_regex", match_regex)
         if repeat_interval is not None:
             pulumi.set(__self__, "repeat_interval", repeat_interval)
         if routes is not None:
@@ -3056,6 +3664,18 @@ class ObservabilityInstanceAlertConfigRouteArgs:
     @receiver.setter
     def receiver(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "receiver", value)
+
+    @_builtins.property
+    @pulumi.getter(name="continue")
+    def continue_(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether an alert should continue matching subsequent sibling nodes.
+        """
+        return pulumi.get(self, "continue_")
+
+    @continue_.setter
+    def continue_(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "continue_", value)
 
     @_builtins.property
     @pulumi.getter(name="groupBies")
@@ -3092,30 +3712,6 @@ class ObservabilityInstanceAlertConfigRouteArgs:
     @group_wait.setter
     def group_wait(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "group_wait", value)
-
-    @_builtins.property
-    @pulumi.getter
-    def match(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
-        """
-        A set of equality matchers an alert has to fulfill to match the node.
-        """
-        return pulumi.get(self, "match")
-
-    @match.setter
-    def match(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "match", value)
-
-    @_builtins.property
-    @pulumi.getter(name="matchRegex")
-    def match_regex(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
-        """
-        A set of regex-matchers an alert has to fulfill to match the node.
-        """
-        return pulumi.get(self, "match_regex")
-
-    @match_regex.setter
-    def match_regex(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "match_regex", value)
 
     @_builtins.property
     @pulumi.getter(name="repeatInterval")
@@ -3142,59 +3738,70 @@ class ObservabilityInstanceAlertConfigRouteArgs:
         pulumi.set(self, "routes", value)
 
 
-if not MYPY:
-    class ObservabilityInstanceAlertConfigRouteRouteArgsDict(TypedDict):
-        receiver: pulumi.Input[_builtins.str]
-        """
-        The name of the receiver to route the alerts to.
-        """
-        group_bies: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
-        """
-        group_interval: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
-        """
-        group_wait: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
-        """
-        match: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        A set of equality matchers an alert has to fulfill to match the node.
-        """
-        match_regex: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        A set of regex-matchers an alert has to fulfill to match the node.
-        """
-        repeat_interval: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
-        """
-elif False:
-    ObservabilityInstanceAlertConfigRouteRouteArgsDict: TypeAlias = Mapping[str, Any]
+class ObservabilityInstanceAlertConfigRouteRouteArgsDict(TypedDict):
+    receiver: pulumi.Input[_builtins.str]
+    """
+    The name of the receiver to route the alerts to.
+    """
+    continue_: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Whether an alert should continue matching subsequent sibling nodes.
+    """
+    group_bies: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
+    """
+    group_interval: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
+    """
+    group_wait: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
+    """
+    match: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+    """
+    A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+    """
+    match_regex: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+    """
+    A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+    """
+    matchers: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+    """
+    repeat_interval: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
+    """
 
 @pulumi.input_type
 class ObservabilityInstanceAlertConfigRouteRouteArgs:
     def __init__(__self__, *,
                  receiver: pulumi.Input[_builtins.str],
+                 continue_: Optional[pulumi.Input[_builtins.bool]] = None,
                  group_bies: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  group_interval: Optional[pulumi.Input[_builtins.str]] = None,
                  group_wait: Optional[pulumi.Input[_builtins.str]] = None,
                  match: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  match_regex: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
+                 matchers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  repeat_interval: Optional[pulumi.Input[_builtins.str]] = None):
         """
         :param pulumi.Input[_builtins.str] receiver: The name of the receiver to route the alerts to.
+        :param pulumi.Input[_builtins.bool] continue_: Whether an alert should continue matching subsequent sibling nodes.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] group_bies: The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
         :param pulumi.Input[_builtins.str] group_interval: How long to wait before sending a notification about new alerts that are added to a group of alerts for which an initial notification has already been sent. (Usually ~5m or more.)
         :param pulumi.Input[_builtins.str] group_wait: How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] match: A set of equality matchers an alert has to fulfill to match the node.
-        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] match_regex: A set of regex-matchers an alert has to fulfill to match the node.
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] match: A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+        :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] match_regex: A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] matchers: A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
         :param pulumi.Input[_builtins.str] repeat_interval: How long to wait before sending a notification again if it has already been sent successfully for an alert. (Usually ~3h or more).
         """
         pulumi.set(__self__, "receiver", receiver)
+        if continue_ is not None:
+            pulumi.set(__self__, "continue_", continue_)
         if group_bies is not None:
             pulumi.set(__self__, "group_bies", group_bies)
         if group_interval is not None:
@@ -3202,9 +3809,17 @@ class ObservabilityInstanceAlertConfigRouteRouteArgs:
         if group_wait is not None:
             pulumi.set(__self__, "group_wait", group_wait)
         if match is not None:
+            warnings.warn("""Use `matchers` in the `routes` instead.""", DeprecationWarning)
+            pulumi.log.warn("""match is deprecated: Use `matchers` in the `routes` instead.""")
+        if match is not None:
             pulumi.set(__self__, "match", match)
         if match_regex is not None:
+            warnings.warn("""Use `matchers` in the `routes` instead.""", DeprecationWarning)
+            pulumi.log.warn("""match_regex is deprecated: Use `matchers` in the `routes` instead.""")
+        if match_regex is not None:
             pulumi.set(__self__, "match_regex", match_regex)
+        if matchers is not None:
+            pulumi.set(__self__, "matchers", matchers)
         if repeat_interval is not None:
             pulumi.set(__self__, "repeat_interval", repeat_interval)
 
@@ -3219,6 +3834,18 @@ class ObservabilityInstanceAlertConfigRouteRouteArgs:
     @receiver.setter
     def receiver(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "receiver", value)
+
+    @_builtins.property
+    @pulumi.getter(name="continue")
+    def continue_(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Whether an alert should continue matching subsequent sibling nodes.
+        """
+        return pulumi.get(self, "continue_")
+
+    @continue_.setter
+    def continue_(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "continue_", value)
 
     @_builtins.property
     @pulumi.getter(name="groupBies")
@@ -3258,9 +3885,10 @@ class ObservabilityInstanceAlertConfigRouteRouteArgs:
 
     @_builtins.property
     @pulumi.getter
+    @_utilities.deprecated("""Use `matchers` in the `routes` instead.""")
     def match(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        A set of equality matchers an alert has to fulfill to match the node.
+        A set of equality matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
         """
         return pulumi.get(self, "match")
 
@@ -3270,15 +3898,28 @@ class ObservabilityInstanceAlertConfigRouteRouteArgs:
 
     @_builtins.property
     @pulumi.getter(name="matchRegex")
+    @_utilities.deprecated("""Use `matchers` in the `routes` instead.""")
     def match_regex(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
-        A set of regex-matchers an alert has to fulfill to match the node.
+        A set of regex-matchers an alert has to fulfill to match the node. This field is deprecated and will be removed after 10th March 2026, use `matchers` in the `routes` instead
         """
         return pulumi.get(self, "match_regex")
 
     @match_regex.setter
     def match_regex(self, value: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "match_regex", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def matchers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
+        """
+        A list of matchers that an alert has to fulfill to match the node. A matcher is a string with a syntax inspired by PromQL and OpenMetrics.
+        """
+        return pulumi.get(self, "matchers")
+
+    @matchers.setter
+    def matchers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
+        pulumi.set(self, "matchers", value)
 
     @_builtins.property
     @pulumi.getter(name="repeatInterval")
@@ -3293,30 +3934,27 @@ class ObservabilityInstanceAlertConfigRouteRouteArgs:
         pulumi.set(self, "repeat_interval", value)
 
 
-if not MYPY:
-    class ObservabilityLogalertgroupRuleArgsDict(TypedDict):
-        alert: pulumi.Input[_builtins.str]
-        """
-        The name of the alert rule. Is the identifier and must be unique in the group.
-        """
-        expression: pulumi.Input[_builtins.str]
-        """
-        The LogQL expression to evaluate. Every evaluation cycle this is evaluated at the current time, and all resultant time series become pending/firing alerts.
-        """
-        annotations: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        A map of key:value. Annotations to add or overwrite for each alert
-        """
-        for_: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Alerts are considered firing once they have been returned for this long. Alerts which have not yet fired for long enough are considered pending. Default is 0s
-        """
-        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        A map of key:value. Labels to add or overwrite for each alert
-        """
-elif False:
-    ObservabilityLogalertgroupRuleArgsDict: TypeAlias = Mapping[str, Any]
+class ObservabilityLogalertgroupRuleArgsDict(TypedDict):
+    alert: pulumi.Input[_builtins.str]
+    """
+    The name of the alert rule. Is the identifier and must be unique in the group.
+    """
+    expression: pulumi.Input[_builtins.str]
+    """
+    The LogQL expression to evaluate. Every evaluation cycle this is evaluated at the current time, and all resultant time series become pending/firing alerts.
+    """
+    annotations: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+    """
+    A map of key:value. Annotations to add or overwrite for each alert
+    """
+    for_: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Alerts are considered firing once they have been returned for this long. Alerts which have not yet fired for long enough are considered pending. Default is 0s
+    """
+    labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+    """
+    A map of key:value. Labels to add or overwrite for each alert
+    """
 
 @pulumi.input_type
 class ObservabilityLogalertgroupRuleArgs:
@@ -3403,18 +4041,15 @@ class ObservabilityLogalertgroupRuleArgs:
         pulumi.set(self, "labels", value)
 
 
-if not MYPY:
-    class ObservabilityScrapeconfigBasicAuthArgsDict(TypedDict):
-        password: pulumi.Input[_builtins.str]
-        """
-        Specifies basic auth password.
-        """
-        username: pulumi.Input[_builtins.str]
-        """
-        Specifies basic auth username.
-        """
-elif False:
-    ObservabilityScrapeconfigBasicAuthArgsDict: TypeAlias = Mapping[str, Any]
+class ObservabilityScrapeconfigBasicAuthArgsDict(TypedDict):
+    password: pulumi.Input[_builtins.str]
+    """
+    Specifies basic auth password.
+    """
+    username: pulumi.Input[_builtins.str]
+    """
+    Specifies basic auth username.
+    """
 
 @pulumi.input_type
 class ObservabilityScrapeconfigBasicAuthArgs:
@@ -3453,14 +4088,11 @@ class ObservabilityScrapeconfigBasicAuthArgs:
         pulumi.set(self, "username", value)
 
 
-if not MYPY:
-    class ObservabilityScrapeconfigSaml2ArgsDict(TypedDict):
-        enable_url_parameters: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Specifies if URL parameters are enabled. Defaults to `true`
-        """
-elif False:
-    ObservabilityScrapeconfigSaml2ArgsDict: TypeAlias = Mapping[str, Any]
+class ObservabilityScrapeconfigSaml2ArgsDict(TypedDict):
+    enable_url_parameters: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Specifies if URL parameters are enabled. Defaults to `true`
+    """
 
 @pulumi.input_type
 class ObservabilityScrapeconfigSaml2Args:
@@ -3485,18 +4117,15 @@ class ObservabilityScrapeconfigSaml2Args:
         pulumi.set(self, "enable_url_parameters", value)
 
 
-if not MYPY:
-    class ObservabilityScrapeconfigTargetArgsDict(TypedDict):
-        urls: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
-        """
-        Specifies target URLs.
-        """
-        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        Specifies labels.
-        """
-elif False:
-    ObservabilityScrapeconfigTargetArgsDict: TypeAlias = Mapping[str, Any]
+class ObservabilityScrapeconfigTargetArgsDict(TypedDict):
+    urls: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    Specifies target URLs.
+    """
+    labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+    """
+    Specifies labels.
+    """
 
 @pulumi.input_type
 class ObservabilityScrapeconfigTargetArgs:
@@ -3536,66 +4165,63 @@ class ObservabilityScrapeconfigTargetArgs:
         pulumi.set(self, "labels", value)
 
 
-if not MYPY:
-    class OpensearchInstanceParametersArgsDict(TypedDict):
-        enable_monitoring: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Enable monitoring.
-        """
-        graphite: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        If set, monitoring with Graphite will be enabled. Expects the host and port where the Graphite metrics should be sent to (host:port).
-        """
-        java_garbage_collector: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The garbage collector to use for OpenSearch.
-        """
-        java_heapspace: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The amount of memory (in MB) allocated as heap by the JVM for OpenSearch.
-        """
-        java_maxmetaspace: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The amount of memory (in MB) used by the JVM to store metadata for OpenSearch.
-        """
-        max_disk_threshold: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The maximum disk threshold in MB. If the disk usage exceeds this threshold, the instance will be stopped.
-        """
-        metrics_frequency: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The frequency in seconds at which metrics are emitted (in seconds).
-        """
-        metrics_prefix: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The prefix for the metrics. Could be useful when using Graphite monitoring to prefix the metrics with a certain value, like an API key.
-        """
-        monitoring_instance_id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The ID of the STACKIT monitoring instance.
-        """
-        plugins: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        List of plugins to install. Must be a supported plugin name. The plugins `repository-s3` and `repository-azure` are enabled by default and cannot be disabled.
-        """
-        sgw_acl: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
-        """
-        syslogs: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        List of syslog servers to send logs to.
-        """
-        tls_ciphers: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        List of TLS ciphers to use.
-        """
-        tls_protocols: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        The TLS protocol to use.
-        """
-elif False:
-    OpensearchInstanceParametersArgsDict: TypeAlias = Mapping[str, Any]
+class OpensearchInstanceParametersArgsDict(TypedDict):
+    enable_monitoring: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Enable monitoring.
+    """
+    graphite: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    If set, monitoring with Graphite will be enabled. Expects the host and port where the Graphite metrics should be sent to (host:port).
+    """
+    java_garbage_collector: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The garbage collector to use for OpenSearch.
+    """
+    java_heapspace: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The amount of memory (in MB) allocated as heap by the JVM for OpenSearch.
+    """
+    java_maxmetaspace: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The amount of memory (in MB) used by the JVM to store metadata for OpenSearch.
+    """
+    max_disk_threshold: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The maximum disk threshold in MB. If the disk usage exceeds this threshold, the instance will be stopped.
+    """
+    metrics_frequency: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The frequency in seconds at which metrics are emitted (in seconds).
+    """
+    metrics_prefix: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The prefix for the metrics. Could be useful when using Graphite monitoring to prefix the metrics with a certain value, like an API key.
+    """
+    monitoring_instance_id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The ID of the STACKIT monitoring instance.
+    """
+    plugins: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of plugins to install. Must be a supported plugin name. The plugins `repository-s3` and `repository-azure` are enabled by default and cannot be disabled.
+    """
+    sgw_acl: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
+    """
+    syslogs: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of syslog servers to send logs to.
+    """
+    tls_ciphers: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of TLS ciphers to use.
+    """
+    tls_protocols: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    The TLS protocol to use.
+    """
 
 @pulumi.input_type
 class OpensearchInstanceParametersArgs:
@@ -3828,14 +4454,11 @@ class OpensearchInstanceParametersArgs:
         pulumi.set(self, "tls_protocols", value)
 
 
-if not MYPY:
-    class PostgresflexInstanceFlavorArgsDict(TypedDict):
-        cpu: pulumi.Input[_builtins.int]
-        ram: pulumi.Input[_builtins.int]
-        description: NotRequired[pulumi.Input[_builtins.str]]
-        id: NotRequired[pulumi.Input[_builtins.str]]
-elif False:
-    PostgresflexInstanceFlavorArgsDict: TypeAlias = Mapping[str, Any]
+class PostgresflexInstanceFlavorArgsDict(TypedDict):
+    cpu: pulumi.Input[_builtins.int]
+    ram: pulumi.Input[_builtins.int]
+    description: NotRequired[pulumi.Input[_builtins.str]]
+    id: NotRequired[pulumi.Input[_builtins.str]]
 
 @pulumi.input_type
 class PostgresflexInstanceFlavorArgs:
@@ -3888,12 +4511,9 @@ class PostgresflexInstanceFlavorArgs:
         pulumi.set(self, "id", value)
 
 
-if not MYPY:
-    class PostgresflexInstanceStorageArgsDict(TypedDict):
-        class_: pulumi.Input[_builtins.str]
-        size: pulumi.Input[_builtins.int]
-elif False:
-    PostgresflexInstanceStorageArgsDict: TypeAlias = Mapping[str, Any]
+class PostgresflexInstanceStorageArgsDict(TypedDict):
+    class_: pulumi.Input[_builtins.str]
+    size: pulumi.Input[_builtins.int]
 
 @pulumi.input_type
 class PostgresflexInstanceStorageArgs:
@@ -3922,62 +4542,59 @@ class PostgresflexInstanceStorageArgs:
         pulumi.set(self, "size", value)
 
 
-if not MYPY:
-    class RabbitmqInstanceParametersArgsDict(TypedDict):
-        consumer_timeout: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The timeout in milliseconds for the consumer.
-        """
-        enable_monitoring: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Enable monitoring.
-        """
-        graphite: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Graphite server URL (host and port). If set, monitoring with Graphite will be enabled.
-        """
-        max_disk_threshold: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The maximum disk threshold in MB. If the disk usage exceeds this threshold, the instance will be stopped.
-        """
-        metrics_frequency: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The frequency in seconds at which metrics are emitted.
-        """
-        metrics_prefix: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The prefix for the metrics. Could be useful when using Graphite monitoring to prefix the metrics with a certain value, like an API key
-        """
-        monitoring_instance_id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The ID of the STACKIT monitoring instance.
-        """
-        plugins: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        List of plugins to install. Must be a supported plugin name.
-        """
-        roles: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        List of roles to assign to the instance.
-        """
-        sgw_acl: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
-        """
-        syslogs: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        List of syslog servers to send logs to.
-        """
-        tls_ciphers: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        List of TLS ciphers to use.
-        """
-        tls_protocols: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        TLS protocol to use.
-        """
-elif False:
-    RabbitmqInstanceParametersArgsDict: TypeAlias = Mapping[str, Any]
+class RabbitmqInstanceParametersArgsDict(TypedDict):
+    consumer_timeout: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The timeout in milliseconds for the consumer.
+    """
+    enable_monitoring: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Enable monitoring.
+    """
+    graphite: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Graphite server URL (host and port). If set, monitoring with Graphite will be enabled.
+    """
+    max_disk_threshold: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The maximum disk threshold in MB. If the disk usage exceeds this threshold, the instance will be stopped.
+    """
+    metrics_frequency: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The frequency in seconds at which metrics are emitted.
+    """
+    metrics_prefix: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The prefix for the metrics. Could be useful when using Graphite monitoring to prefix the metrics with a certain value, like an API key
+    """
+    monitoring_instance_id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The ID of the STACKIT monitoring instance.
+    """
+    plugins: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of plugins to install. Must be a supported plugin name.
+    """
+    roles: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of roles to assign to the instance.
+    """
+    sgw_acl: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
+    """
+    syslogs: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of syslog servers to send logs to.
+    """
+    tls_ciphers: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of TLS ciphers to use.
+    """
+    tls_protocols: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    TLS protocol versions to use.
+    """
 
 @pulumi.input_type
 class RabbitmqInstanceParametersArgs:
@@ -3994,7 +4611,7 @@ class RabbitmqInstanceParametersArgs:
                  sgw_acl: Optional[pulumi.Input[_builtins.str]] = None,
                  syslogs: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  tls_ciphers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
-                 tls_protocols: Optional[pulumi.Input[_builtins.str]] = None):
+                 tls_protocols: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         :param pulumi.Input[_builtins.int] consumer_timeout: The timeout in milliseconds for the consumer.
         :param pulumi.Input[_builtins.bool] enable_monitoring: Enable monitoring.
@@ -4008,7 +4625,7 @@ class RabbitmqInstanceParametersArgs:
         :param pulumi.Input[_builtins.str] sgw_acl: Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] syslogs: List of syslog servers to send logs to.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] tls_ciphers: List of TLS ciphers to use.
-        :param pulumi.Input[_builtins.str] tls_protocols: TLS protocol to use.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] tls_protocols: TLS protocol versions to use.
         """
         if consumer_timeout is not None:
             pulumi.set(__self__, "consumer_timeout", consumer_timeout)
@@ -4183,109 +4800,106 @@ class RabbitmqInstanceParametersArgs:
 
     @_builtins.property
     @pulumi.getter(name="tlsProtocols")
-    def tls_protocols(self) -> Optional[pulumi.Input[_builtins.str]]:
+    def tls_protocols(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
         """
-        TLS protocol to use.
+        TLS protocol versions to use.
         """
         return pulumi.get(self, "tls_protocols")
 
     @tls_protocols.setter
-    def tls_protocols(self, value: Optional[pulumi.Input[_builtins.str]]):
+    def tls_protocols(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "tls_protocols", value)
 
 
-if not MYPY:
-    class RedisInstanceParametersArgsDict(TypedDict):
-        down_after_milliseconds: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The number of milliseconds after which the instance is considered down.
-        """
-        enable_monitoring: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Enable monitoring.
-        """
-        failover_timeout: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The failover timeout in milliseconds.
-        """
-        graphite: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Graphite server URL (host and port). If set, monitoring with Graphite will be enabled.
-        """
-        lazyfree_lazy_eviction: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The lazy eviction enablement (yes or no).
-        """
-        lazyfree_lazy_expire: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The lazy expire enablement (yes or no).
-        """
-        lua_time_limit: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The Lua time limit.
-        """
-        max_disk_threshold: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The maximum disk threshold in MB. If the disk usage exceeds this threshold, the instance will be stopped.
-        """
-        maxclients: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The maximum number of clients.
-        """
-        maxmemory_policy: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The policy to handle the maximum memory (volatile-lru, noeviction, etc).
-        """
-        maxmemory_samples: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The maximum memory samples.
-        """
-        metrics_frequency: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The frequency in seconds at which metrics are emitted.
-        """
-        metrics_prefix: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The prefix for the metrics. Could be useful when using Graphite monitoring to prefix the metrics with a certain value, like an API key
-        """
-        min_replicas_max_lag: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The minimum replicas maximum lag.
-        """
-        monitoring_instance_id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The ID of the STACKIT monitoring instance.
-        """
-        notify_keyspace_events: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The notify keyspace events.
-        """
-        sgw_acl: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
-        """
-        snapshot: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The snapshot configuration.
-        """
-        syslogs: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        List of syslog servers to send logs to.
-        """
-        tls_ciphers: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        List of TLS ciphers to use.
-        """
-        tls_ciphersuites: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        TLS cipher suites to use.
-        """
-        tls_protocols: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        TLS protocol to use.
-        """
-elif False:
-    RedisInstanceParametersArgsDict: TypeAlias = Mapping[str, Any]
+class RedisInstanceParametersArgsDict(TypedDict):
+    down_after_milliseconds: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The number of milliseconds after which the instance is considered down.
+    """
+    enable_monitoring: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Enable monitoring.
+    """
+    failover_timeout: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The failover timeout in milliseconds.
+    """
+    graphite: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Graphite server URL (host and port). If set, monitoring with Graphite will be enabled.
+    """
+    lazyfree_lazy_eviction: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The lazy eviction enablement (yes or no).
+    """
+    lazyfree_lazy_expire: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The lazy expire enablement (yes or no).
+    """
+    lua_time_limit: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The Lua time limit.
+    """
+    max_disk_threshold: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The maximum disk threshold in MB. If the disk usage exceeds this threshold, the instance will be stopped.
+    """
+    maxclients: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The maximum number of clients.
+    """
+    maxmemory_policy: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The policy to handle the maximum memory (volatile-lru, noeviction, etc).
+    """
+    maxmemory_samples: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The maximum memory samples.
+    """
+    metrics_frequency: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The frequency in seconds at which metrics are emitted.
+    """
+    metrics_prefix: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The prefix for the metrics. Could be useful when using Graphite monitoring to prefix the metrics with a certain value, like an API key
+    """
+    min_replicas_max_lag: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The minimum replicas maximum lag.
+    """
+    monitoring_instance_id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The ID of the STACKIT monitoring instance.
+    """
+    notify_keyspace_events: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The notify keyspace events.
+    """
+    sgw_acl: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Comma separated list of IP networks in CIDR notation which are allowed to access this instance.
+    """
+    snapshot: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The snapshot configuration.
+    """
+    syslogs: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of syslog servers to send logs to.
+    """
+    tls_ciphers: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    List of TLS ciphers to use.
+    """
+    tls_ciphersuites: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    TLS cipher suites to use.
+    """
+    tls_protocols: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    TLS protocol to use.
+    """
 
 @pulumi.input_type
 class RedisInstanceParametersArgs:
@@ -4646,18 +5260,15 @@ class RedisInstanceParametersArgs:
         pulumi.set(self, "tls_protocols", value)
 
 
-if not MYPY:
-    class RoutingTableRouteDestinationArgsDict(TypedDict):
-        type: pulumi.Input[_builtins.str]
-        """
-        CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
-        """
-        value: pulumi.Input[_builtins.str]
-        """
-        An CIDR string.
-        """
-elif False:
-    RoutingTableRouteDestinationArgsDict: TypeAlias = Mapping[str, Any]
+class RoutingTableRouteDestinationArgsDict(TypedDict):
+    type: pulumi.Input[_builtins.str]
+    """
+    CIDRV type. Possible values are: `cidrv4`, `cidrv6`. Only `cidrv4` is supported during experimental stage.
+    """
+    value: pulumi.Input[_builtins.str]
+    """
+    An CIDR string.
+    """
 
 @pulumi.input_type
 class RoutingTableRouteDestinationArgs:
@@ -4696,18 +5307,15 @@ class RoutingTableRouteDestinationArgs:
         pulumi.set(self, "value", value)
 
 
-if not MYPY:
-    class RoutingTableRouteNextHopArgsDict(TypedDict):
-        type: pulumi.Input[_builtins.str]
-        """
-        Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
-        """
-        value: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
-        """
-elif False:
-    RoutingTableRouteNextHopArgsDict: TypeAlias = Mapping[str, Any]
+class RoutingTableRouteNextHopArgsDict(TypedDict):
+    type: pulumi.Input[_builtins.str]
+    """
+    Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
+    """
+    value: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
+    """
 
 @pulumi.input_type
 class RoutingTableRouteNextHopArgs:
@@ -4715,7 +5323,7 @@ class RoutingTableRouteNextHopArgs:
                  type: pulumi.Input[_builtins.str],
                  value: Optional[pulumi.Input[_builtins.str]] = None):
         """
-        :param pulumi.Input[_builtins.str] type: Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        :param pulumi.Input[_builtins.str] type: Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
         :param pulumi.Input[_builtins.str] value: Either IPv4 or IPv6 (not set for blackhole and internet). Only IPv4 supported during experimental stage.
         """
         pulumi.set(__self__, "type", type)
@@ -4726,7 +5334,7 @@ class RoutingTableRouteNextHopArgs:
     @pulumi.getter
     def type(self) -> pulumi.Input[_builtins.str]:
         """
-        Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`. Only `cidrv4` is supported during experimental stage..
+        Type of the next hop. Possible values are: `blackhole`, `internet`, `ipv4`, `ipv6`.
         """
         return pulumi.get(self, "type")
 
@@ -4747,18 +5355,15 @@ class RoutingTableRouteNextHopArgs:
         pulumi.set(self, "value", value)
 
 
-if not MYPY:
-    class SecurityGroupRuleIcmpParametersArgsDict(TypedDict):
-        code: pulumi.Input[_builtins.int]
-        """
-        ICMP code. Can be set if the protocol is ICMP.
-        """
-        type: pulumi.Input[_builtins.int]
-        """
-        ICMP type. Can be set if the protocol is ICMP.
-        """
-elif False:
-    SecurityGroupRuleIcmpParametersArgsDict: TypeAlias = Mapping[str, Any]
+class SecurityGroupRuleIcmpParametersArgsDict(TypedDict):
+    code: pulumi.Input[_builtins.int]
+    """
+    ICMP code. Can be set if the protocol is ICMP.
+    """
+    type: pulumi.Input[_builtins.int]
+    """
+    ICMP type. Can be set if the protocol is ICMP.
+    """
 
 @pulumi.input_type
 class SecurityGroupRuleIcmpParametersArgs:
@@ -4797,18 +5402,15 @@ class SecurityGroupRuleIcmpParametersArgs:
         pulumi.set(self, "type", value)
 
 
-if not MYPY:
-    class SecurityGroupRulePortRangeArgsDict(TypedDict):
-        max: pulumi.Input[_builtins.int]
-        """
-        The maximum port number. Should be greater or equal to the minimum.
-        """
-        min: pulumi.Input[_builtins.int]
-        """
-        The minimum port number. Should be less or equal to the maximum.
-        """
-elif False:
-    SecurityGroupRulePortRangeArgsDict: TypeAlias = Mapping[str, Any]
+class SecurityGroupRulePortRangeArgsDict(TypedDict):
+    max: pulumi.Input[_builtins.int]
+    """
+    The maximum port number. Should be greater or equal to the minimum.
+    """
+    min: pulumi.Input[_builtins.int]
+    """
+    The minimum port number. Should be less or equal to the maximum.
+    """
 
 @pulumi.input_type
 class SecurityGroupRulePortRangeArgs:
@@ -4847,18 +5449,15 @@ class SecurityGroupRulePortRangeArgs:
         pulumi.set(self, "min", value)
 
 
-if not MYPY:
-    class SecurityGroupRuleProtocolArgsDict(TypedDict):
-        name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The protocol name which the rule should match. Either `name` or `number` must be provided. Possible values are: `ah`, `dccp`, `egp`, `esp`, `gre`, `icmp`, `igmp`, `ipip`, `ipv6-encap`, `ipv6-frag`, `ipv6-icmp`, `ipv6-nonxt`, `ipv6-opts`, `ipv6-route`, `ospf`, `pgm`, `rsvp`, `sctp`, `tcp`, `udp`, `udplite`, `vrrp`.
-        """
-        number: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The protocol number which the rule should match. Either `name` or `number` must be provided.
-        """
-elif False:
-    SecurityGroupRuleProtocolArgsDict: TypeAlias = Mapping[str, Any]
+class SecurityGroupRuleProtocolArgsDict(TypedDict):
+    name: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The protocol name which the rule should match. Either `name` or `number` must be provided. Possible values are: `ah`, `dccp`, `egp`, `esp`, `gre`, `icmp`, `igmp`, `ipip`, `ipv6-encap`, `ipv6-frag`, `ipv6-icmp`, `ipv6-nonxt`, `ipv6-opts`, `ipv6-route`, `ospf`, `pgm`, `rsvp`, `sctp`, `tcp`, `udp`, `udplite`, `vrrp`.
+    """
+    number: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The protocol number which the rule should match. Either `name` or `number` must be provided.
+    """
 
 @pulumi.input_type
 class SecurityGroupRuleProtocolArgs:
@@ -4899,13 +5498,10 @@ class SecurityGroupRuleProtocolArgs:
         pulumi.set(self, "number", value)
 
 
-if not MYPY:
-    class ServerBackupScheduleBackupPropertiesArgsDict(TypedDict):
-        name: pulumi.Input[_builtins.str]
-        retention_period: pulumi.Input[_builtins.int]
-        volume_ids: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-elif False:
-    ServerBackupScheduleBackupPropertiesArgsDict: TypeAlias = Mapping[str, Any]
+class ServerBackupScheduleBackupPropertiesArgsDict(TypedDict):
+    name: pulumi.Input[_builtins.str]
+    retention_period: pulumi.Input[_builtins.int]
+    volume_ids: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
 
 @pulumi.input_type
 class ServerBackupScheduleBackupPropertiesArgs:
@@ -4946,34 +5542,31 @@ class ServerBackupScheduleBackupPropertiesArgs:
         pulumi.set(self, "volume_ids", value)
 
 
-if not MYPY:
-    class ServerBootVolumeArgsDict(TypedDict):
-        source_id: pulumi.Input[_builtins.str]
-        """
-        The ID of the source, either image ID or volume ID
-        """
-        source_type: pulumi.Input[_builtins.str]
-        """
-        The type of the source. Supported values are: `volume`, `image`.
-        """
-        delete_on_termination: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Delete the volume during the termination of the server. Only allowed when `source_type` is `image`.
-        """
-        id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The ID of the boot volume
-        """
-        performance_class: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The performance class of the server.
-        """
-        size: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The size of the boot volume in GB. Must be provided when `source_type` is `image`.
-        """
-elif False:
-    ServerBootVolumeArgsDict: TypeAlias = Mapping[str, Any]
+class ServerBootVolumeArgsDict(TypedDict):
+    source_id: pulumi.Input[_builtins.str]
+    """
+    The ID of the source, either image ID or volume ID
+    """
+    source_type: pulumi.Input[_builtins.str]
+    """
+    The type of the source. Possible values are: `volume`, `image`.
+    """
+    delete_on_termination: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Delete the volume during the termination of the server. Only allowed when `source_type` is `image`.
+    """
+    id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The ID of the boot volume
+    """
+    performance_class: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The performance class of the server.
+    """
+    size: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The size of the boot volume in GB. Must be provided when `source_type` is `image`.
+    """
 
 @pulumi.input_type
 class ServerBootVolumeArgs:
@@ -4986,7 +5579,7 @@ class ServerBootVolumeArgs:
                  size: Optional[pulumi.Input[_builtins.int]] = None):
         """
         :param pulumi.Input[_builtins.str] source_id: The ID of the source, either image ID or volume ID
-        :param pulumi.Input[_builtins.str] source_type: The type of the source. Supported values are: `volume`, `image`.
+        :param pulumi.Input[_builtins.str] source_type: The type of the source. Possible values are: `volume`, `image`.
         :param pulumi.Input[_builtins.bool] delete_on_termination: Delete the volume during the termination of the server. Only allowed when `source_type` is `image`.
         :param pulumi.Input[_builtins.str] id: The ID of the boot volume
         :param pulumi.Input[_builtins.str] performance_class: The performance class of the server.
@@ -5019,7 +5612,7 @@ class ServerBootVolumeArgs:
     @pulumi.getter(name="sourceType")
     def source_type(self) -> pulumi.Input[_builtins.str]:
         """
-        The type of the source. Supported values are: `volume`, `image`.
+        The type of the source. Possible values are: `volume`, `image`.
         """
         return pulumi.get(self, "source_type")
 
@@ -5076,26 +5669,150 @@ class ServerBootVolumeArgs:
         pulumi.set(self, "size", value)
 
 
-if not MYPY:
-    class SkeClusterExtensionsArgsDict(TypedDict):
-        acl: NotRequired[pulumi.Input['SkeClusterExtensionsAclArgsDict']]
+class SfsExportPolicyRuleArgsDict(TypedDict):
+    ip_acls: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    IP access control list; IPs must have a subnet mask (e.g. "172.16.0.0/24" for a range of IPs, or "172.16.0.250/32" for a specific IP).
+    """
+    order: pulumi.Input[_builtins.int]
+    """
+    Order of the rule within a Share Export Policy. The order is used so that when a client IP matches multiple rules, the first rule is applied
+    """
+    description: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Description of the Rule
+    """
+    read_only: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Flag to indicate if client IPs matching this rule can only mount the share in read only mode
+    """
+    set_uuid: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Flag to honor set UUID
+    """
+    super_user: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Flag to indicate if client IPs matching this rule have root access on the Share
+    """
+
+@pulumi.input_type
+class SfsExportPolicyRuleArgs:
+    def __init__(__self__, *,
+                 ip_acls: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]],
+                 order: pulumi.Input[_builtins.int],
+                 description: Optional[pulumi.Input[_builtins.str]] = None,
+                 read_only: Optional[pulumi.Input[_builtins.bool]] = None,
+                 set_uuid: Optional[pulumi.Input[_builtins.bool]] = None,
+                 super_user: Optional[pulumi.Input[_builtins.bool]] = None):
         """
-        Cluster access control configuration.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ip_acls: IP access control list; IPs must have a subnet mask (e.g. "172.16.0.0/24" for a range of IPs, or "172.16.0.250/32" for a specific IP).
+        :param pulumi.Input[_builtins.int] order: Order of the rule within a Share Export Policy. The order is used so that when a client IP matches multiple rules, the first rule is applied
+        :param pulumi.Input[_builtins.str] description: Description of the Rule
+        :param pulumi.Input[_builtins.bool] read_only: Flag to indicate if client IPs matching this rule can only mount the share in read only mode
+        :param pulumi.Input[_builtins.bool] set_uuid: Flag to honor set UUID
+        :param pulumi.Input[_builtins.bool] super_user: Flag to indicate if client IPs matching this rule have root access on the Share
         """
-        argus: NotRequired[pulumi.Input['SkeClusterExtensionsArgusArgsDict']]
+        pulumi.set(__self__, "ip_acls", ip_acls)
+        pulumi.set(__self__, "order", order)
+        if description is not None:
+            pulumi.set(__self__, "description", description)
+        if read_only is not None:
+            pulumi.set(__self__, "read_only", read_only)
+        if set_uuid is not None:
+            pulumi.set(__self__, "set_uuid", set_uuid)
+        if super_user is not None:
+            pulumi.set(__self__, "super_user", super_user)
+
+    @_builtins.property
+    @pulumi.getter(name="ipAcls")
+    def ip_acls(self) -> pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]:
         """
-        A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
+        IP access control list; IPs must have a subnet mask (e.g. "172.16.0.0/24" for a range of IPs, or "172.16.0.250/32" for a specific IP).
         """
-        dns: NotRequired[pulumi.Input['SkeClusterExtensionsDnsArgsDict']]
+        return pulumi.get(self, "ip_acls")
+
+    @ip_acls.setter
+    def ip_acls(self, value: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]):
+        pulumi.set(self, "ip_acls", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def order(self) -> pulumi.Input[_builtins.int]:
         """
-        DNS extension configuration
+        Order of the rule within a Share Export Policy. The order is used so that when a client IP matches multiple rules, the first rule is applied
         """
-        observability: NotRequired[pulumi.Input['SkeClusterExtensionsObservabilityArgsDict']]
+        return pulumi.get(self, "order")
+
+    @order.setter
+    def order(self, value: pulumi.Input[_builtins.int]):
+        pulumi.set(self, "order", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        A single observability block as defined below.
+        Description of the Rule
         """
-elif False:
-    SkeClusterExtensionsArgsDict: TypeAlias = Mapping[str, Any]
+        return pulumi.get(self, "description")
+
+    @description.setter
+    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "description", value)
+
+    @_builtins.property
+    @pulumi.getter(name="readOnly")
+    def read_only(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Flag to indicate if client IPs matching this rule can only mount the share in read only mode
+        """
+        return pulumi.get(self, "read_only")
+
+    @read_only.setter
+    def read_only(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "read_only", value)
+
+    @_builtins.property
+    @pulumi.getter(name="setUuid")
+    def set_uuid(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Flag to honor set UUID
+        """
+        return pulumi.get(self, "set_uuid")
+
+    @set_uuid.setter
+    def set_uuid(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "set_uuid", value)
+
+    @_builtins.property
+    @pulumi.getter(name="superUser")
+    def super_user(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Flag to indicate if client IPs matching this rule have root access on the Share
+        """
+        return pulumi.get(self, "super_user")
+
+    @super_user.setter
+    def super_user(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "super_user", value)
+
+
+class SkeClusterExtensionsArgsDict(TypedDict):
+    acl: NotRequired[pulumi.Input['SkeClusterExtensionsAclArgsDict']]
+    """
+    Cluster access control configuration.
+    """
+    argus: NotRequired[pulumi.Input['SkeClusterExtensionsArgusArgsDict']]
+    """
+    A single argus block as defined below. This field is deprecated and will be removed 06 January 2026.
+    """
+    dns: NotRequired[pulumi.Input['SkeClusterExtensionsDnsArgsDict']]
+    """
+    DNS extension configuration
+    """
+    observability: NotRequired[pulumi.Input['SkeClusterExtensionsObservabilityArgsDict']]
+    """
+    A single observability block as defined below.
+    """
 
 @pulumi.input_type
 class SkeClusterExtensionsArgs:
@@ -5172,18 +5889,15 @@ class SkeClusterExtensionsArgs:
         pulumi.set(self, "observability", value)
 
 
-if not MYPY:
-    class SkeClusterExtensionsAclArgsDict(TypedDict):
-        allowed_cidrs: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
-        """
-        Specify a list of CIDRs to whitelist.
-        """
-        enabled: pulumi.Input[_builtins.bool]
-        """
-        Is ACL enabled?
-        """
-elif False:
-    SkeClusterExtensionsAclArgsDict: TypeAlias = Mapping[str, Any]
+class SkeClusterExtensionsAclArgsDict(TypedDict):
+    allowed_cidrs: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    Specify a list of CIDRs to whitelist.
+    """
+    enabled: pulumi.Input[_builtins.bool]
+    """
+    Is ACL enabled?
+    """
 
 @pulumi.input_type
 class SkeClusterExtensionsAclArgs:
@@ -5222,18 +5936,15 @@ class SkeClusterExtensionsAclArgs:
         pulumi.set(self, "enabled", value)
 
 
-if not MYPY:
-    class SkeClusterExtensionsArgusArgsDict(TypedDict):
-        enabled: pulumi.Input[_builtins.bool]
-        """
-        Flag to enable/disable Argus extensions.
-        """
-        argus_instance_id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Argus instance ID to choose which Argus instance is used. Required when enabled is set to `true`.
-        """
-elif False:
-    SkeClusterExtensionsArgusArgsDict: TypeAlias = Mapping[str, Any]
+class SkeClusterExtensionsArgusArgsDict(TypedDict):
+    enabled: pulumi.Input[_builtins.bool]
+    """
+    Flag to enable/disable Argus extensions.
+    """
+    argus_instance_id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Argus instance ID to choose which Argus instance is used. Required when enabled is set to `true`.
+    """
 
 @pulumi.input_type
 class SkeClusterExtensionsArgusArgs:
@@ -5273,18 +5984,15 @@ class SkeClusterExtensionsArgusArgs:
         pulumi.set(self, "argus_instance_id", value)
 
 
-if not MYPY:
-    class SkeClusterExtensionsDnsArgsDict(TypedDict):
-        enabled: pulumi.Input[_builtins.bool]
-        """
-        Flag to enable/disable DNS extensions
-        """
-        zones: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
-        """
-        Specify a list of domain filters for externalDNS (e.g., `foo.runs.onstackit.cloud`)
-        """
-elif False:
-    SkeClusterExtensionsDnsArgsDict: TypeAlias = Mapping[str, Any]
+class SkeClusterExtensionsDnsArgsDict(TypedDict):
+    enabled: pulumi.Input[_builtins.bool]
+    """
+    Flag to enable/disable DNS extensions
+    """
+    zones: NotRequired[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]
+    """
+    Specify a list of domain filters for externalDNS (e.g., `foo.runs.onstackit.cloud`)
+    """
 
 @pulumi.input_type
 class SkeClusterExtensionsDnsArgs:
@@ -5324,18 +6032,15 @@ class SkeClusterExtensionsDnsArgs:
         pulumi.set(self, "zones", value)
 
 
-if not MYPY:
-    class SkeClusterExtensionsObservabilityArgsDict(TypedDict):
-        enabled: pulumi.Input[_builtins.bool]
-        """
-        Flag to enable/disable Observability extensions.
-        """
-        instance_id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
-        """
-elif False:
-    SkeClusterExtensionsObservabilityArgsDict: TypeAlias = Mapping[str, Any]
+class SkeClusterExtensionsObservabilityArgsDict(TypedDict):
+    enabled: pulumi.Input[_builtins.bool]
+    """
+    Flag to enable/disable Observability extensions.
+    """
+    instance_id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Observability instance ID to choose which Observability instance is used. Required when enabled is set to `true`.
+    """
 
 @pulumi.input_type
 class SkeClusterExtensionsObservabilityArgs:
@@ -5375,22 +6080,19 @@ class SkeClusterExtensionsObservabilityArgs:
         pulumi.set(self, "instance_id", value)
 
 
-if not MYPY:
-    class SkeClusterHibernationArgsDict(TypedDict):
-        end: pulumi.Input[_builtins.str]
-        """
-        End time of hibernation in crontab syntax. E.g. `0 8 * * *` for waking up the cluster at 8am.
-        """
-        start: pulumi.Input[_builtins.str]
-        """
-        Start time of cluster hibernation in crontab syntax. E.g. `0 18 * * *` for starting everyday at 6pm.
-        """
-        timezone: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Timezone name corresponding to a file in the IANA Time Zone database. i.e. `Europe/Berlin`.
-        """
-elif False:
-    SkeClusterHibernationArgsDict: TypeAlias = Mapping[str, Any]
+class SkeClusterHibernationArgsDict(TypedDict):
+    end: pulumi.Input[_builtins.str]
+    """
+    End time of hibernation in crontab syntax. E.g. `0 8 * * *` for waking up the cluster at 8am.
+    """
+    start: pulumi.Input[_builtins.str]
+    """
+    Start time of cluster hibernation in crontab syntax. E.g. `0 18 * * *` for starting everyday at 6pm.
+    """
+    timezone: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Timezone name corresponding to a file in the IANA Time Zone database. i.e. `Europe/Berlin`.
+    """
 
 @pulumi.input_type
 class SkeClusterHibernationArgs:
@@ -5445,26 +6147,23 @@ class SkeClusterHibernationArgs:
         pulumi.set(self, "timezone", value)
 
 
-if not MYPY:
-    class SkeClusterMaintenanceArgsDict(TypedDict):
-        end: pulumi.Input[_builtins.str]
-        """
-        Time for maintenance window end. E.g. `01:23:45Z`, `05:00:00+02:00`.
-        """
-        start: pulumi.Input[_builtins.str]
-        """
-        Time for maintenance window start. E.g. `01:23:45Z`, `05:00:00+02:00`.
-        """
-        enable_kubernetes_version_updates: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
-        """
-        enable_machine_image_version_updates: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
-        """
-elif False:
-    SkeClusterMaintenanceArgsDict: TypeAlias = Mapping[str, Any]
+class SkeClusterMaintenanceArgsDict(TypedDict):
+    end: pulumi.Input[_builtins.str]
+    """
+    Time for maintenance window end. E.g. `01:23:45Z`, `05:00:00+02:00`.
+    """
+    start: pulumi.Input[_builtins.str]
+    """
+    Time for maintenance window start. E.g. `01:23:45Z`, `05:00:00+02:00`.
+    """
+    enable_kubernetes_version_updates: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
+    """
+    enable_machine_image_version_updates: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
+    """
 
 @pulumi.input_type
 class SkeClusterMaintenanceArgs:
@@ -5476,8 +6175,8 @@ class SkeClusterMaintenanceArgs:
         """
         :param pulumi.Input[_builtins.str] end: Time for maintenance window end. E.g. `01:23:45Z`, `05:00:00+02:00`.
         :param pulumi.Input[_builtins.str] start: Time for maintenance window start. E.g. `01:23:45Z`, `05:00:00+02:00`.
-        :param pulumi.Input[_builtins.bool] enable_kubernetes_version_updates: Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
-        :param pulumi.Input[_builtins.bool] enable_machine_image_version_updates: Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        :param pulumi.Input[_builtins.bool] enable_kubernetes_version_updates: Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
+        :param pulumi.Input[_builtins.bool] enable_machine_image_version_updates: Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
         pulumi.set(__self__, "end", end)
         pulumi.set(__self__, "start", start)
@@ -5514,7 +6213,7 @@ class SkeClusterMaintenanceArgs:
     @pulumi.getter(name="enableKubernetesVersionUpdates")
     def enable_kubernetes_version_updates(self) -> Optional[pulumi.Input[_builtins.bool]]:
         """
-        Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
         return pulumi.get(self, "enable_kubernetes_version_updates")
 
@@ -5526,7 +6225,7 @@ class SkeClusterMaintenanceArgs:
     @pulumi.getter(name="enableMachineImageVersionUpdates")
     def enable_machine_image_version_updates(self) -> Optional[pulumi.Input[_builtins.bool]]:
         """
-        Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
         return pulumi.get(self, "enable_machine_image_version_updates")
 
@@ -5535,14 +6234,11 @@ class SkeClusterMaintenanceArgs:
         pulumi.set(self, "enable_machine_image_version_updates", value)
 
 
-if not MYPY:
-    class SkeClusterNetworkArgsDict(TypedDict):
-        id: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        ID of the STACKIT Network Area (SNA) network into which the cluster will be deployed.
-        """
-elif False:
-    SkeClusterNetworkArgsDict: TypeAlias = Mapping[str, Any]
+class SkeClusterNetworkArgsDict(TypedDict):
+    id: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    ID of the STACKIT Network Area (SNA) network into which the cluster will be deployed.
+    """
 
 @pulumi.input_type
 class SkeClusterNetworkArgs:
@@ -5567,78 +6263,75 @@ class SkeClusterNetworkArgs:
         pulumi.set(self, "id", value)
 
 
-if not MYPY:
-    class SkeClusterNodePoolArgsDict(TypedDict):
-        availability_zones: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
-        """
-        Specify a list of availability zones. E.g. `eu01-m`
-        """
-        machine_type: pulumi.Input[_builtins.str]
-        """
-        The machine type.
-        """
-        maximum: pulumi.Input[_builtins.int]
-        """
-        Maximum number of nodes in the pool.
-        """
-        minimum: pulumi.Input[_builtins.int]
-        """
-        Minimum number of nodes in the pool.
-        """
-        name: pulumi.Input[_builtins.str]
-        """
-        Specifies the name of the node pool.
-        """
-        allow_system_components: NotRequired[pulumi.Input[_builtins.bool]]
-        """
-        Allow system components to run on this node pool.
-        """
-        cri: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Specifies the container runtime. Defaults to `containerd`
-        """
-        labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
-        """
-        Labels to add to each node.
-        """
-        max_surge: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Maximum number of additional VMs that are created during an update. If set (larger than 0), then it must be at least the amount of zones configured for the nodepool. The `max_surge` and `max_unavailable` fields cannot both be unset at the same time.
-        """
-        max_unavailable: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        Maximum number of VMs that that can be unavailable during an update. If set (larger than 0), then it must be at least the amount of zones configured for the nodepool. The `max_surge` and `max_unavailable` fields cannot both be unset at the same time.
-        """
-        os_name: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The name of the OS image. Defaults to `flatcar`.
-        """
-        os_version: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        This field is deprecated, use `os_version_min` to configure the version and `os_version_used` to get the currently used version instead.
-        """
-        os_version_min: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current OS image version being used for the node pool, use the read-only `os_version_used` field.
-        """
-        os_version_used: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Full OS image version used. For example, if 3815.2 was set in `os_version_min`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
-        """
-        taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolTaintArgsDict']]]]
-        """
-        Specifies a taint list as defined below.
-        """
-        volume_size: NotRequired[pulumi.Input[_builtins.int]]
-        """
-        The volume size in GB. Defaults to `20`
-        """
-        volume_type: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Specifies the volume type. Defaults to `storage_premium_perf1`.
-        """
-elif False:
-    SkeClusterNodePoolArgsDict: TypeAlias = Mapping[str, Any]
+class SkeClusterNodePoolArgsDict(TypedDict):
+    availability_zones: pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]
+    """
+    Specify a list of availability zones. E.g. `eu01-m`
+    """
+    machine_type: pulumi.Input[_builtins.str]
+    """
+    The machine type.
+    """
+    maximum: pulumi.Input[_builtins.int]
+    """
+    Maximum number of nodes in the pool.
+    """
+    minimum: pulumi.Input[_builtins.int]
+    """
+    Minimum number of nodes in the pool.
+    """
+    name: pulumi.Input[_builtins.str]
+    """
+    Specifies the name of the node pool.
+    """
+    allow_system_components: NotRequired[pulumi.Input[_builtins.bool]]
+    """
+    Allow system components to run on this node pool.
+    """
+    cri: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Specifies the container runtime. Defaults to `containerd`
+    """
+    labels: NotRequired[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]
+    """
+    Labels to add to each node.
+    """
+    max_surge: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Maximum number of additional VMs that are created during an update. If set (larger than 0), then it must be at least the amount of zones configured for the nodepool. The `max_surge` and `max_unavailable` fields cannot both be unset at the same time.
+    """
+    max_unavailable: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Maximum number of VMs that that can be unavailable during an update. If set (larger than 0), then it must be at least the amount of zones configured for the nodepool. The `max_surge` and `max_unavailable` fields cannot both be unset at the same time.
+    """
+    os_name: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The name of the OS image. Defaults to `flatcar`.
+    """
+    os_version: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    This field is deprecated, use `os_version_min` to configure the version and `os_version_used` to get the currently used version instead.
+    """
+    os_version_min: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current OS image version being used for the node pool, use the read-only `os_version_used` field.
+    """
+    os_version_used: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Full OS image version used. For example, if 3815.2 was set in `os_version_min`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
+    """
+    taints: NotRequired[pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolTaintArgsDict']]]]
+    """
+    Specifies a taint list as defined below.
+    """
+    volume_size: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    The volume size in GB. Defaults to `20`
+    """
+    volume_type: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Specifies the volume type. Defaults to `storage_premium_perf1`.
+    """
 
 @pulumi.input_type
 class SkeClusterNodePoolArgs:
@@ -5673,8 +6366,8 @@ class SkeClusterNodePoolArgs:
         :param pulumi.Input[_builtins.int] max_unavailable: Maximum number of VMs that that can be unavailable during an update. If set (larger than 0), then it must be at least the amount of zones configured for the nodepool. The `max_surge` and `max_unavailable` fields cannot both be unset at the same time.
         :param pulumi.Input[_builtins.str] os_name: The name of the OS image. Defaults to `flatcar`.
         :param pulumi.Input[_builtins.str] os_version: This field is deprecated, use `os_version_min` to configure the version and `os_version_used` to get the currently used version instead.
-        :param pulumi.Input[_builtins.str] os_version_min: The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current OS image version being used for the node pool, use the read-only `os_version_used` field.
-        :param pulumi.Input[_builtins.str] os_version_used: Full OS image version used. For example, if 3815.2 was set in `os_version_min`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        :param pulumi.Input[_builtins.str] os_version_min: The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current OS image version being used for the node pool, use the read-only `os_version_used` field.
+        :param pulumi.Input[_builtins.str] os_version_used: Full OS image version used. For example, if 3815.2 was set in `os_version_min`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         :param pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolTaintArgs']]] taints: Specifies a taint list as defined below.
         :param pulumi.Input[_builtins.int] volume_size: The volume size in GB. Defaults to `20`
         :param pulumi.Input[_builtins.str] volume_type: Specifies the volume type. Defaults to `storage_premium_perf1`.
@@ -5861,7 +6554,7 @@ class SkeClusterNodePoolArgs:
     @pulumi.getter(name="osVersionMin")
     def os_version_min(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current OS image version being used for the node pool, use the read-only `os_version_used` field.
+        The minimum OS image version. This field will be used to set the minimum OS image version on creation/update of the cluster. If unset, the latest supported OS image version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current OS image version being used for the node pool, use the read-only `os_version_used` field.
         """
         return pulumi.get(self, "os_version_min")
 
@@ -5873,7 +6566,7 @@ class SkeClusterNodePoolArgs:
     @pulumi.getter(name="osVersionUsed")
     def os_version_used(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Full OS image version used. For example, if 3815.2 was set in `os_version_min`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        Full OS image version used. For example, if 3815.2 was set in `os_version_min`, this value may result to 3815.2.2. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
         return pulumi.get(self, "os_version_used")
 
@@ -5918,22 +6611,19 @@ class SkeClusterNodePoolArgs:
         pulumi.set(self, "volume_type", value)
 
 
-if not MYPY:
-    class SkeClusterNodePoolTaintArgsDict(TypedDict):
-        effect: pulumi.Input[_builtins.str]
-        """
-        The taint effect. E.g `PreferNoSchedule`.
-        """
-        key: pulumi.Input[_builtins.str]
-        """
-        Taint key to be applied to a node.
-        """
-        value: NotRequired[pulumi.Input[_builtins.str]]
-        """
-        Taint value corresponding to the taint key.
-        """
-elif False:
-    SkeClusterNodePoolTaintArgsDict: TypeAlias = Mapping[str, Any]
+class SkeClusterNodePoolTaintArgsDict(TypedDict):
+    effect: pulumi.Input[_builtins.str]
+    """
+    The taint effect. E.g `PreferNoSchedule`.
+    """
+    key: pulumi.Input[_builtins.str]
+    """
+    Taint key to be applied to a node.
+    """
+    value: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Taint value corresponding to the taint key.
+    """
 
 @pulumi.input_type
 class SkeClusterNodePoolTaintArgs:
@@ -5988,14 +6678,11 @@ class SkeClusterNodePoolTaintArgs:
         pulumi.set(self, "value", value)
 
 
-if not MYPY:
-    class SqlserverflexInstanceFlavorArgsDict(TypedDict):
-        cpu: pulumi.Input[_builtins.int]
-        ram: pulumi.Input[_builtins.int]
-        description: NotRequired[pulumi.Input[_builtins.str]]
-        id: NotRequired[pulumi.Input[_builtins.str]]
-elif False:
-    SqlserverflexInstanceFlavorArgsDict: TypeAlias = Mapping[str, Any]
+class SqlserverflexInstanceFlavorArgsDict(TypedDict):
+    cpu: pulumi.Input[_builtins.int]
+    ram: pulumi.Input[_builtins.int]
+    description: NotRequired[pulumi.Input[_builtins.str]]
+    id: NotRequired[pulumi.Input[_builtins.str]]
 
 @pulumi.input_type
 class SqlserverflexInstanceFlavorArgs:
@@ -6048,12 +6735,9 @@ class SqlserverflexInstanceFlavorArgs:
         pulumi.set(self, "id", value)
 
 
-if not MYPY:
-    class SqlserverflexInstanceOptionsArgsDict(TypedDict):
-        edition: NotRequired[pulumi.Input[_builtins.str]]
-        retention_days: NotRequired[pulumi.Input[_builtins.int]]
-elif False:
-    SqlserverflexInstanceOptionsArgsDict: TypeAlias = Mapping[str, Any]
+class SqlserverflexInstanceOptionsArgsDict(TypedDict):
+    edition: NotRequired[pulumi.Input[_builtins.str]]
+    retention_days: NotRequired[pulumi.Input[_builtins.int]]
 
 @pulumi.input_type
 class SqlserverflexInstanceOptionsArgs:
@@ -6084,12 +6768,9 @@ class SqlserverflexInstanceOptionsArgs:
         pulumi.set(self, "retention_days", value)
 
 
-if not MYPY:
-    class SqlserverflexInstanceStorageArgsDict(TypedDict):
-        class_: NotRequired[pulumi.Input[_builtins.str]]
-        size: NotRequired[pulumi.Input[_builtins.int]]
-elif False:
-    SqlserverflexInstanceStorageArgsDict: TypeAlias = Mapping[str, Any]
+class SqlserverflexInstanceStorageArgsDict(TypedDict):
+    class_: NotRequired[pulumi.Input[_builtins.str]]
+    size: NotRequired[pulumi.Input[_builtins.int]]
 
 @pulumi.input_type
 class SqlserverflexInstanceStorageArgs:
@@ -6120,18 +6801,163 @@ class SqlserverflexInstanceStorageArgs:
         pulumi.set(self, "size", value)
 
 
-if not MYPY:
-    class VolumeSourceArgsDict(TypedDict):
-        id: pulumi.Input[_builtins.str]
+class VolumeEncryptionParametersArgsDict(TypedDict):
+    kek_key_id: pulumi.Input[_builtins.str]
+    """
+    UUID of the key within the STACKIT-KMS to use for the encryption.
+    """
+    kek_key_version: pulumi.Input[_builtins.int]
+    """
+    Version of the key within the STACKIT-KMS to use for the encryption.
+    """
+    kek_keyring_id: pulumi.Input[_builtins.str]
+    """
+    UUID of the keyring where the key is located within the STACKTI-KMS.
+    """
+    service_account: pulumi.Input[_builtins.str]
+    """
+    Service-Account linked to the Key within the STACKIT-KMS.
+    """
+    key_payload_base64: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    Optional predefined secret, which will be encrypted against the key-encryption-key within the STACKIT-KMS. If not defined, a random secret will be generated by the API and encrypted against the STACKIT-KMS. If a key-payload is provided here, it must be base64 encoded.
+    """
+    key_payload_base64_wo: NotRequired[pulumi.Input[_builtins.str]]
+    """
+    **NOTE:** This field is write-only and its value will not be updated in state as part of read operations.
+    Optional predefined secret, which will be encrypted against the key-encryption-key within the STACKIT-KMS. If not defined, a random secret will be generated by the API and encrypted against the STACKIT-KMS. If a key-payload is provided here, it must be base64 encoded.
+    """
+    key_payload_base64_wo_version: NotRequired[pulumi.Input[_builtins.int]]
+    """
+    Used together with `key_payload_base64_wo` to trigger an re-create. Increment this value when an update to `key_payload_base64_wo` is required.
+    """
+
+@pulumi.input_type
+class VolumeEncryptionParametersArgs:
+    def __init__(__self__, *,
+                 kek_key_id: pulumi.Input[_builtins.str],
+                 kek_key_version: pulumi.Input[_builtins.int],
+                 kek_keyring_id: pulumi.Input[_builtins.str],
+                 service_account: pulumi.Input[_builtins.str],
+                 key_payload_base64: Optional[pulumi.Input[_builtins.str]] = None,
+                 key_payload_base64_wo: Optional[pulumi.Input[_builtins.str]] = None,
+                 key_payload_base64_wo_version: Optional[pulumi.Input[_builtins.int]] = None):
         """
-        The ID of the source, e.g. image ID
+        :param pulumi.Input[_builtins.str] kek_key_id: UUID of the key within the STACKIT-KMS to use for the encryption.
+        :param pulumi.Input[_builtins.int] kek_key_version: Version of the key within the STACKIT-KMS to use for the encryption.
+        :param pulumi.Input[_builtins.str] kek_keyring_id: UUID of the keyring where the key is located within the STACKTI-KMS.
+        :param pulumi.Input[_builtins.str] service_account: Service-Account linked to the Key within the STACKIT-KMS.
+        :param pulumi.Input[_builtins.str] key_payload_base64: Optional predefined secret, which will be encrypted against the key-encryption-key within the STACKIT-KMS. If not defined, a random secret will be generated by the API and encrypted against the STACKIT-KMS. If a key-payload is provided here, it must be base64 encoded.
+        :param pulumi.Input[_builtins.str] key_payload_base64_wo: **NOTE:** This field is write-only and its value will not be updated in state as part of read operations.
+               Optional predefined secret, which will be encrypted against the key-encryption-key within the STACKIT-KMS. If not defined, a random secret will be generated by the API and encrypted against the STACKIT-KMS. If a key-payload is provided here, it must be base64 encoded.
+        :param pulumi.Input[_builtins.int] key_payload_base64_wo_version: Used together with `key_payload_base64_wo` to trigger an re-create. Increment this value when an update to `key_payload_base64_wo` is required.
         """
-        type: pulumi.Input[_builtins.str]
+        pulumi.set(__self__, "kek_key_id", kek_key_id)
+        pulumi.set(__self__, "kek_key_version", kek_key_version)
+        pulumi.set(__self__, "kek_keyring_id", kek_keyring_id)
+        pulumi.set(__self__, "service_account", service_account)
+        if key_payload_base64 is not None:
+            pulumi.set(__self__, "key_payload_base64", key_payload_base64)
+        if key_payload_base64_wo is not None:
+            pulumi.set(__self__, "key_payload_base64_wo", key_payload_base64_wo)
+        if key_payload_base64_wo_version is not None:
+            pulumi.set(__self__, "key_payload_base64_wo_version", key_payload_base64_wo_version)
+
+    @_builtins.property
+    @pulumi.getter(name="kekKeyId")
+    def kek_key_id(self) -> pulumi.Input[_builtins.str]:
         """
-        The type of the source. Supported values are: `volume`, `image`, `snapshot`, `backup`.
+        UUID of the key within the STACKIT-KMS to use for the encryption.
         """
-elif False:
-    VolumeSourceArgsDict: TypeAlias = Mapping[str, Any]
+        return pulumi.get(self, "kek_key_id")
+
+    @kek_key_id.setter
+    def kek_key_id(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "kek_key_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="kekKeyVersion")
+    def kek_key_version(self) -> pulumi.Input[_builtins.int]:
+        """
+        Version of the key within the STACKIT-KMS to use for the encryption.
+        """
+        return pulumi.get(self, "kek_key_version")
+
+    @kek_key_version.setter
+    def kek_key_version(self, value: pulumi.Input[_builtins.int]):
+        pulumi.set(self, "kek_key_version", value)
+
+    @_builtins.property
+    @pulumi.getter(name="kekKeyringId")
+    def kek_keyring_id(self) -> pulumi.Input[_builtins.str]:
+        """
+        UUID of the keyring where the key is located within the STACKTI-KMS.
+        """
+        return pulumi.get(self, "kek_keyring_id")
+
+    @kek_keyring_id.setter
+    def kek_keyring_id(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "kek_keyring_id", value)
+
+    @_builtins.property
+    @pulumi.getter(name="serviceAccount")
+    def service_account(self) -> pulumi.Input[_builtins.str]:
+        """
+        Service-Account linked to the Key within the STACKIT-KMS.
+        """
+        return pulumi.get(self, "service_account")
+
+    @service_account.setter
+    def service_account(self, value: pulumi.Input[_builtins.str]):
+        pulumi.set(self, "service_account", value)
+
+    @_builtins.property
+    @pulumi.getter(name="keyPayloadBase64")
+    def key_payload_base64(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        Optional predefined secret, which will be encrypted against the key-encryption-key within the STACKIT-KMS. If not defined, a random secret will be generated by the API and encrypted against the STACKIT-KMS. If a key-payload is provided here, it must be base64 encoded.
+        """
+        return pulumi.get(self, "key_payload_base64")
+
+    @key_payload_base64.setter
+    def key_payload_base64(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "key_payload_base64", value)
+
+    @_builtins.property
+    @pulumi.getter(name="keyPayloadBase64Wo")
+    def key_payload_base64_wo(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        **NOTE:** This field is write-only and its value will not be updated in state as part of read operations.
+        Optional predefined secret, which will be encrypted against the key-encryption-key within the STACKIT-KMS. If not defined, a random secret will be generated by the API and encrypted against the STACKIT-KMS. If a key-payload is provided here, it must be base64 encoded.
+        """
+        return pulumi.get(self, "key_payload_base64_wo")
+
+    @key_payload_base64_wo.setter
+    def key_payload_base64_wo(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "key_payload_base64_wo", value)
+
+    @_builtins.property
+    @pulumi.getter(name="keyPayloadBase64WoVersion")
+    def key_payload_base64_wo_version(self) -> Optional[pulumi.Input[_builtins.int]]:
+        """
+        Used together with `key_payload_base64_wo` to trigger an re-create. Increment this value when an update to `key_payload_base64_wo` is required.
+        """
+        return pulumi.get(self, "key_payload_base64_wo_version")
+
+    @key_payload_base64_wo_version.setter
+    def key_payload_base64_wo_version(self, value: Optional[pulumi.Input[_builtins.int]]):
+        pulumi.set(self, "key_payload_base64_wo_version", value)
+
+
+class VolumeSourceArgsDict(TypedDict):
+    id: pulumi.Input[_builtins.str]
+    """
+    The ID of the source, e.g. image ID
+    """
+    type: pulumi.Input[_builtins.str]
+    """
+    The type of the source. Possible values are: `volume`, `image`, `snapshot`, `backup`.
+    """
 
 @pulumi.input_type
 class VolumeSourceArgs:
@@ -6140,7 +6966,7 @@ class VolumeSourceArgs:
                  type: pulumi.Input[_builtins.str]):
         """
         :param pulumi.Input[_builtins.str] id: The ID of the source, e.g. image ID
-        :param pulumi.Input[_builtins.str] type: The type of the source. Supported values are: `volume`, `image`, `snapshot`, `backup`.
+        :param pulumi.Input[_builtins.str] type: The type of the source. Possible values are: `volume`, `image`, `snapshot`, `backup`.
         """
         pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "type", type)
@@ -6161,12 +6987,149 @@ class VolumeSourceArgs:
     @pulumi.getter
     def type(self) -> pulumi.Input[_builtins.str]:
         """
-        The type of the source. Supported values are: `volume`, `image`, `snapshot`, `backup`.
+        The type of the source. Possible values are: `volume`, `image`, `snapshot`, `backup`.
         """
         return pulumi.get(self, "type")
 
     @type.setter
     def type(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "type", value)
+
+
+class GetCdnCustomDomainCertificateArgsDict(TypedDict):
+    version: _builtins.int
+    """
+    A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+    """
+
+@pulumi.input_type
+class GetCdnCustomDomainCertificateArgs:
+    def __init__(__self__, *,
+                 version: _builtins.int):
+        """
+        :param _builtins.int version: A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> _builtins.int:
+        """
+        A version identifier for the certificate. Required for custom certificates. The certificate will be updated if this field is changed.
+        """
+        return pulumi.get(self, "version")
+
+    @version.setter
+    def version(self, value: _builtins.int):
+        pulumi.set(self, "version", value)
+
+
+class GetImageV2FilterArgsDict(TypedDict):
+    distro: NotRequired[_builtins.str]
+    """
+    Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+    """
+    os: NotRequired[_builtins.str]
+    """
+    Filter images by operating system type, such as `linux` or `windows`.
+    """
+    secure_boot: NotRequired[_builtins.bool]
+    """
+    Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+    """
+    uefi: NotRequired[_builtins.bool]
+    """
+    Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+    """
+    version: NotRequired[_builtins.str]
+    """
+    Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+    """
+
+@pulumi.input_type
+class GetImageV2FilterArgs:
+    def __init__(__self__, *,
+                 distro: Optional[_builtins.str] = None,
+                 os: Optional[_builtins.str] = None,
+                 secure_boot: Optional[_builtins.bool] = None,
+                 uefi: Optional[_builtins.bool] = None,
+                 version: Optional[_builtins.str] = None):
+        """
+        :param _builtins.str distro: Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+        :param _builtins.str os: Filter images by operating system type, such as `linux` or `windows`.
+        :param _builtins.bool secure_boot: Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+        :param _builtins.bool uefi: Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+        :param _builtins.str version: Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+        """
+        if distro is not None:
+            pulumi.set(__self__, "distro", distro)
+        if os is not None:
+            pulumi.set(__self__, "os", os)
+        if secure_boot is not None:
+            pulumi.set(__self__, "secure_boot", secure_boot)
+        if uefi is not None:
+            pulumi.set(__self__, "uefi", uefi)
+        if version is not None:
+            pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter
+    def distro(self) -> Optional[_builtins.str]:
+        """
+        Filter images by operating system distribution. For example: `ubuntu`, `ubuntu-arm64`, `debian`, `rhel`, etc.
+        """
+        return pulumi.get(self, "distro")
+
+    @distro.setter
+    def distro(self, value: Optional[_builtins.str]):
+        pulumi.set(self, "distro", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def os(self) -> Optional[_builtins.str]:
+        """
+        Filter images by operating system type, such as `linux` or `windows`.
+        """
+        return pulumi.get(self, "os")
+
+    @os.setter
+    def os(self, value: Optional[_builtins.str]):
+        pulumi.set(self, "os", value)
+
+    @_builtins.property
+    @pulumi.getter(name="secureBoot")
+    def secure_boot(self) -> Optional[_builtins.bool]:
+        """
+        Filter images with Secure Boot support. Set to `true` to match images that support Secure Boot.
+        """
+        return pulumi.get(self, "secure_boot")
+
+    @secure_boot.setter
+    def secure_boot(self, value: Optional[_builtins.bool]):
+        pulumi.set(self, "secure_boot", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def uefi(self) -> Optional[_builtins.bool]:
+        """
+        Filter images based on UEFI support. Set to `true` to match images that support UEFI.
+        """
+        return pulumi.get(self, "uefi")
+
+    @uefi.setter
+    def uefi(self, value: Optional[_builtins.bool]):
+        pulumi.set(self, "uefi", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> Optional[_builtins.str]:
+        """
+        Filter images by OS distribution version, such as `22.04`, `11`, or `9.1`.
+        """
+        return pulumi.get(self, "version")
+
+    @version.setter
+    def version(self, value: Optional[_builtins.str]):
+        pulumi.set(self, "version", value)
 
 

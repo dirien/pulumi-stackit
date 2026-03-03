@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetLoadbalancer
     {
         /// <summary>
-        /// Load Balancer data source schema. Must have a `region` specified in the provider configuration.
+        /// Load Balancer data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetLoadbalancerResult>("stackit:index/getLoadbalancer:getLoadbalancer", args ?? new GetLoadbalancerArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Load Balancer data source schema. Must have a `region` specified in the provider configuration.
+        /// Load Balancer data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetLoadbalancerResult>("stackit:index/getLoadbalancer:getLoadbalancer", args ?? new GetLoadbalancerInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Load Balancer data source schema. Must have a `region` specified in the provider configuration.
+        /// Load Balancer data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -116,9 +116,16 @@ namespace ediri.Stackit
     public sealed class GetLoadbalancerResult
     {
         /// <summary>
+        /// If set to true, this will disable the automatic assignment of a security group to the load balancer's targets. This option is primarily used to allow targets that are not within the load balancer's own network or SNA (STACKIT Network area). When this is enabled, you are fully responsible for ensuring network connectivity to the targets, including managing all routing and security group rules manually. This setting cannot be changed after the load balancer is created.
+        /// </summary>
+        public readonly bool DisableSecurityGroupAssignment;
+        /// <summary>
         /// External Load Balancer IP address where this Load Balancer is exposed.
         /// </summary>
         public readonly string ExternalAddress;
+        /// <summary>
+        /// Terraform's internal resource ID. It is structured as "`ProjectId`","region","`Name`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// List of all listeners which will accept traffic. Limited to 20.
@@ -137,7 +144,7 @@ namespace ediri.Stackit
         /// </summary>
         public readonly Outputs.GetLoadbalancerOptionsResult Options;
         /// <summary>
-        /// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+        /// The service plan ID. If not defined, the default service plan is `P10`. Possible values are: `P10`, `P50`, `P250`, `P750`.
         /// </summary>
         public readonly string PlanId;
         /// <summary>
@@ -153,12 +160,18 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string? Region;
         /// <summary>
+        /// The ID of the egress security group assigned to the Load Balancer's internal machines. This ID is essential for allowing traffic from the Load Balancer to targets in different networks or STACKIT Network areas (SNA). To enable this, create a security group rule for your target VMs and set the `RemoteSecurityGroupId` of that rule to this value. This is typically used when `DisableSecurityGroupAssignment` is set to `True`.
+        /// </summary>
+        public readonly string SecurityGroupId;
+        /// <summary>
         /// List of all target pools which will be used in the Load Balancer. Limited to 20.
         /// </summary>
         public readonly ImmutableArray<Outputs.GetLoadbalancerTargetPoolResult> TargetPools;
 
         [OutputConstructor]
         private GetLoadbalancerResult(
+            bool disableSecurityGroupAssignment,
+
             string externalAddress,
 
             string id,
@@ -179,8 +192,11 @@ namespace ediri.Stackit
 
             string? region,
 
+            string securityGroupId,
+
             ImmutableArray<Outputs.GetLoadbalancerTargetPoolResult> targetPools)
         {
+            DisableSecurityGroupAssignment = disableSecurityGroupAssignment;
             ExternalAddress = externalAddress;
             Id = id;
             Listeners = listeners;
@@ -191,6 +207,7 @@ namespace ediri.Stackit
             PrivateAddress = privateAddress;
             ProjectId = projectId;
             Region = region;
+            SecurityGroupId = securityGroupId;
             TargetPools = targetPools;
         }
     }

@@ -13,6 +13,8 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
+from . import outputs
+from ._inputs import *
 
 __all__ = [
     'GetCdnCustomDomainResult',
@@ -26,7 +28,10 @@ class GetCdnCustomDomainResult:
     """
     A collection of values returned by getCdnCustomDomain.
     """
-    def __init__(__self__, distribution_id=None, errors=None, id=None, name=None, project_id=None, status=None):
+    def __init__(__self__, certificate=None, distribution_id=None, errors=None, id=None, name=None, project_id=None, status=None):
+        if certificate and not isinstance(certificate, dict):
+            raise TypeError("Expected argument 'certificate' to be a dict")
+        pulumi.set(__self__, "certificate", certificate)
         if distribution_id and not isinstance(distribution_id, str):
             raise TypeError("Expected argument 'distribution_id' to be a str")
         pulumi.set(__self__, "distribution_id", distribution_id)
@@ -47,6 +52,14 @@ class GetCdnCustomDomainResult:
         pulumi.set(__self__, "status", status)
 
     @_builtins.property
+    @pulumi.getter
+    def certificate(self) -> Optional['outputs.GetCdnCustomDomainCertificateResult']:
+        """
+        The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+        """
+        return pulumi.get(self, "certificate")
+
+    @_builtins.property
     @pulumi.getter(name="distributionId")
     def distribution_id(self) -> _builtins.str:
         """
@@ -65,6 +78,9 @@ class GetCdnCustomDomainResult:
     @_builtins.property
     @pulumi.getter
     def id(self) -> _builtins.str:
+        """
+        Terraform's internal resource identifier. It is structured as "`project_id`,`distribution_id`".
+        """
         return pulumi.get(self, "id")
 
     @_builtins.property
@@ -95,6 +111,7 @@ class AwaitableGetCdnCustomDomainResult(GetCdnCustomDomainResult):
         if False:
             yield self
         return GetCdnCustomDomainResult(
+            certificate=self.certificate,
             distribution_id=self.distribution_id,
             errors=self.errors,
             id=self.id,
@@ -103,7 +120,8 @@ class AwaitableGetCdnCustomDomainResult(GetCdnCustomDomainResult):
             status=self.status)
 
 
-def get_cdn_custom_domain(distribution_id: Optional[_builtins.str] = None,
+def get_cdn_custom_domain(certificate: Optional[Union['GetCdnCustomDomainCertificateArgs', 'GetCdnCustomDomainCertificateArgsDict']] = None,
+                          distribution_id: Optional[_builtins.str] = None,
                           name: Optional[_builtins.str] = None,
                           project_id: Optional[_builtins.str] = None,
                           opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetCdnCustomDomainResult:
@@ -115,10 +133,12 @@ def get_cdn_custom_domain(distribution_id: Optional[_builtins.str] = None,
     ## Example Usage
 
 
+    :param Union['GetCdnCustomDomainCertificateArgs', 'GetCdnCustomDomainCertificateArgsDict'] certificate: The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
     :param _builtins.str distribution_id: CDN distribution ID
     :param _builtins.str project_id: STACKIT project ID associated with the distribution
     """
     __args__ = dict()
+    __args__['certificate'] = certificate
     __args__['distributionId'] = distribution_id
     __args__['name'] = name
     __args__['projectId'] = project_id
@@ -126,13 +146,15 @@ def get_cdn_custom_domain(distribution_id: Optional[_builtins.str] = None,
     __ret__ = pulumi.runtime.invoke('stackit:index/getCdnCustomDomain:getCdnCustomDomain', __args__, opts=opts, typ=GetCdnCustomDomainResult).value
 
     return AwaitableGetCdnCustomDomainResult(
+        certificate=pulumi.get(__ret__, 'certificate'),
         distribution_id=pulumi.get(__ret__, 'distribution_id'),
         errors=pulumi.get(__ret__, 'errors'),
         id=pulumi.get(__ret__, 'id'),
         name=pulumi.get(__ret__, 'name'),
         project_id=pulumi.get(__ret__, 'project_id'),
         status=pulumi.get(__ret__, 'status'))
-def get_cdn_custom_domain_output(distribution_id: Optional[pulumi.Input[_builtins.str]] = None,
+def get_cdn_custom_domain_output(certificate: Optional[pulumi.Input[Optional[Union['GetCdnCustomDomainCertificateArgs', 'GetCdnCustomDomainCertificateArgsDict']]]] = None,
+                                 distribution_id: Optional[pulumi.Input[_builtins.str]] = None,
                                  name: Optional[pulumi.Input[_builtins.str]] = None,
                                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
                                  opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetCdnCustomDomainResult]:
@@ -144,16 +166,19 @@ def get_cdn_custom_domain_output(distribution_id: Optional[pulumi.Input[_builtin
     ## Example Usage
 
 
+    :param Union['GetCdnCustomDomainCertificateArgs', 'GetCdnCustomDomainCertificateArgsDict'] certificate: The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
     :param _builtins.str distribution_id: CDN distribution ID
     :param _builtins.str project_id: STACKIT project ID associated with the distribution
     """
     __args__ = dict()
+    __args__['certificate'] = certificate
     __args__['distributionId'] = distribution_id
     __args__['name'] = name
     __args__['projectId'] = project_id
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke_output('stackit:index/getCdnCustomDomain:getCdnCustomDomain', __args__, opts=opts, typ=GetCdnCustomDomainResult)
     return __ret__.apply(lambda __response__: GetCdnCustomDomainResult(
+        certificate=pulumi.get(__response__, 'certificate'),
         distribution_id=pulumi.get(__response__, 'distribution_id'),
         errors=pulumi.get(__response__, 'errors'),
         id=pulumi.get(__response__, 'id'),
