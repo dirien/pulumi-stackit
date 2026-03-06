@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetSecretsmanagerInstance
     {
         /// <summary>
-        /// Secrets Manager instance data source schema. Must have a `region` specified in the provider configuration.
+        /// Secrets Manager instance data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetSecretsmanagerInstanceResult>("stackit:index/getSecretsmanagerInstance:getSecretsmanagerInstance", args ?? new GetSecretsmanagerInstanceArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Secrets Manager instance data source schema. Must have a `region` specified in the provider configuration.
+        /// Secrets Manager instance data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetSecretsmanagerInstanceResult>("stackit:index/getSecretsmanagerInstance:getSecretsmanagerInstance", args ?? new GetSecretsmanagerInstanceInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Secrets Manager instance data source schema. Must have a `region` specified in the provider configuration.
+        /// Secrets Manager instance data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -107,6 +107,9 @@ namespace ediri.Stackit
         /// The access control list for this instance. Each entry is an IP or IP range that is permitted to access, in CIDR notation
         /// </summary>
         public readonly ImmutableArray<string> Acls;
+        /// <summary>
+        /// Terraform's internal resource ID. It is structured as "`ProjectId`,`InstanceId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// ID of the Secrets Manager instance.

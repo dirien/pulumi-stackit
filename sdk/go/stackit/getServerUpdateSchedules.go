@@ -13,8 +13,6 @@ import (
 
 // Server update schedules datasource schema. Must have a `region` specified in the provider configuration.
 //
-// > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
-//
 // ## Example Usage
 func GetServerUpdateSchedules(ctx *pulumi.Context, args *GetServerUpdateSchedulesArgs, opts ...pulumi.InvokeOption) (*GetServerUpdateSchedulesResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
@@ -38,6 +36,7 @@ type GetServerUpdateSchedulesArgs struct {
 
 // A collection of values returned by getServerUpdateSchedules.
 type GetServerUpdateSchedulesResult struct {
+	// Terraform's internal data source identifier. It is structured as "`projectId`,`region`,`serverId`".
 	Id    string                         `pulumi:"id"`
 	Items []GetServerUpdateSchedulesItem `pulumi:"items"`
 	// STACKIT Project ID (UUID) to which the server is associated.
@@ -86,6 +85,7 @@ func (o GetServerUpdateSchedulesResultOutput) ToGetServerUpdateSchedulesResultOu
 	return o
 }
 
+// Terraform's internal data source identifier. It is structured as "`projectId`,`region`,`serverId`".
 func (o GetServerUpdateSchedulesResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v GetServerUpdateSchedulesResult) string { return v.Id }).(pulumi.StringOutput)
 }
