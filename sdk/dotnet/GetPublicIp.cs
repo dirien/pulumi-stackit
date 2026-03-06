@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetPublicIp
     {
         /// <summary>
-        /// Public IP resource schema. Must have a `region` specified in the provider configuration.
+        /// Public IP resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetPublicIpResult>("stackit:index/getPublicIp:getPublicIp", args ?? new GetPublicIpArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Public IP resource schema. Must have a `region` specified in the provider configuration.
+        /// Public IP resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetPublicIpResult>("stackit:index/getPublicIp:getPublicIp", args ?? new GetPublicIpInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Public IP resource schema. Must have a `region` specified in the provider configuration.
+        /// Public IP resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -73,6 +73,12 @@ namespace ediri.Stackit
         [Input("publicIpId", required: true)]
         public string PublicIpId { get; set; } = null!;
 
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public string? Region { get; set; }
+
         public GetPublicIpArgs()
         {
         }
@@ -93,6 +99,12 @@ namespace ediri.Stackit
         [Input("publicIpId", required: true)]
         public Input<string> PublicIpId { get; set; } = null!;
 
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
+
         public GetPublicIpInvokeArgs()
         {
         }
@@ -103,6 +115,9 @@ namespace ediri.Stackit
     [OutputType]
     public sealed class GetPublicIpResult
     {
+        /// <summary>
+        /// Terraform's internal datasource ID. It is structured as "`ProjectId`,`Region`,`PublicIpId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// The IP address.
@@ -124,6 +139,10 @@ namespace ediri.Stackit
         /// The public IP ID.
         /// </summary>
         public readonly string PublicIpId;
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        public readonly string? Region;
 
         [OutputConstructor]
         private GetPublicIpResult(
@@ -137,7 +156,9 @@ namespace ediri.Stackit
 
             string projectId,
 
-            string publicIpId)
+            string publicIpId,
+
+            string? region)
         {
             Id = id;
             Ip = ip;
@@ -145,6 +166,7 @@ namespace ediri.Stackit
             NetworkInterfaceId = networkInterfaceId;
             ProjectId = projectId;
             PublicIpId = publicIpId;
+            Region = region;
         }
     }
 }

@@ -30,10 +30,11 @@ class ServerBackupScheduleArgs:
                  region: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a ServerBackupSchedule resource.
+
         :param pulumi.Input['ServerBackupScheduleBackupPropertiesArgs'] backup_properties: Backup schedule details for the backups.
         :param pulumi.Input[_builtins.bool] enabled: Is the backup schedule enabled or disabled.
         :param pulumi.Input[_builtins.str] project_id: STACKIT Project ID to which the server is associated.
-        :param pulumi.Input[_builtins.str] rrule: Backup schedule described in `rrule` (recurrence rule) format.
+        :param pulumi.Input[_builtins.str] rrule: An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         :param pulumi.Input[_builtins.str] server_id: Server ID for the backup schedule.
         :param pulumi.Input[_builtins.str] name: The schedule name.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
@@ -88,7 +89,7 @@ class ServerBackupScheduleArgs:
     @pulumi.getter
     def rrule(self) -> pulumi.Input[_builtins.str]:
         """
-        Backup schedule described in `rrule` (recurrence rule) format.
+        An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         """
         return pulumi.get(self, "rrule")
 
@@ -146,13 +147,14 @@ class _ServerBackupScheduleState:
                  server_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering ServerBackupSchedule resources.
+
         :param pulumi.Input['ServerBackupScheduleBackupPropertiesArgs'] backup_properties: Backup schedule details for the backups.
         :param pulumi.Input[_builtins.int] backup_schedule_id: Backup schedule ID.
         :param pulumi.Input[_builtins.bool] enabled: Is the backup schedule enabled or disabled.
         :param pulumi.Input[_builtins.str] name: The schedule name.
         :param pulumi.Input[_builtins.str] project_id: STACKIT Project ID to which the server is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
-        :param pulumi.Input[_builtins.str] rrule: Backup schedule described in `rrule` (recurrence rule) format.
+        :param pulumi.Input[_builtins.str] rrule: An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         :param pulumi.Input[_builtins.str] server_id: Server ID for the backup schedule.
         """
         if backup_properties is not None:
@@ -248,7 +250,7 @@ class _ServerBackupScheduleState:
     @pulumi.getter
     def rrule(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Backup schedule described in `rrule` (recurrence rule) format.
+        An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         """
         return pulumi.get(self, "rrule")
 
@@ -286,9 +288,8 @@ class ServerBackupSchedule(pulumi.CustomResource):
         """
         Server backup schedule resource schema. Must have a `region` specified in the provider configuration.
 
-        > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
-
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -297,7 +298,7 @@ class ServerBackupSchedule(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] name: The schedule name.
         :param pulumi.Input[_builtins.str] project_id: STACKIT Project ID to which the server is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
-        :param pulumi.Input[_builtins.str] rrule: Backup schedule described in `rrule` (recurrence rule) format.
+        :param pulumi.Input[_builtins.str] rrule: An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         :param pulumi.Input[_builtins.str] server_id: Server ID for the backup schedule.
         """
         ...
@@ -309,9 +310,8 @@ class ServerBackupSchedule(pulumi.CustomResource):
         """
         Server backup schedule resource schema. Must have a `region` specified in the provider configuration.
 
-        > This resource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
-
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param ServerBackupScheduleArgs args: The arguments to use to populate this resource's properties.
@@ -393,7 +393,7 @@ class ServerBackupSchedule(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] name: The schedule name.
         :param pulumi.Input[_builtins.str] project_id: STACKIT Project ID to which the server is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
-        :param pulumi.Input[_builtins.str] rrule: Backup schedule described in `rrule` (recurrence rule) format.
+        :param pulumi.Input[_builtins.str] rrule: An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         :param pulumi.Input[_builtins.str] server_id: Server ID for the backup schedule.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -462,7 +462,7 @@ class ServerBackupSchedule(pulumi.CustomResource):
     @pulumi.getter
     def rrule(self) -> pulumi.Output[_builtins.str]:
         """
-        Backup schedule described in `rrule` (recurrence rule) format.
+        An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         """
         return pulumi.get(self, "rrule")
 

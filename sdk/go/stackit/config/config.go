@@ -11,6 +11,11 @@ import (
 
 var _ = internal.GetEnvOrDefault
 
+// Custom endpoint for the Application Load Balancer service
+func GetAlbCustomEndpoint(ctx *pulumi.Context) string {
+	return config.Get(ctx, "stackit:albCustomEndpoint")
+}
+
 // Custom endpoint for the Membership service
 func GetAuthorizationCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:authorizationCustomEndpoint")
@@ -21,8 +26,7 @@ func GetCdnCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:cdnCustomEndpoint")
 }
 
-// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
-// value is `~/.stackit/credentials.json`.
+// Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
 func GetCredentialsPath(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:credentialsPath")
 }
@@ -37,13 +41,17 @@ func GetDnsCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:dnsCustomEndpoint")
 }
 
+// Custom endpoint for the Edge Cloud service
+func GetEdgecloudCustomEndpoint(ctx *pulumi.Context) string {
+	return config.Get(ctx, "stackit:edgecloudCustomEndpoint")
+}
+
 // Enable beta resources. Default is false.
 func GetEnableBetaResources(ctx *pulumi.Context) bool {
 	return config.GetBool(ctx, "stackit:enableBetaResources")
 }
 
-// Enables experiments. These are unstable features without official support. More information can be found in the README.
-// Available Experiments: iam, routing-tables, network
+// Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network
 func GetExperiments(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:experiments")
 }
@@ -58,6 +66,11 @@ func GetIaasCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:iaasCustomEndpoint")
 }
 
+// Custom endpoint for the KMS service
+func GetKmsCustomEndpoint(ctx *pulumi.Context) string {
+	return config.Get(ctx, "stackit:kmsCustomEndpoint")
+}
+
 // Custom endpoint for the Load Balancer service
 func GetLoadbalancerCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:loadbalancerCustomEndpoint")
@@ -66,6 +79,11 @@ func GetLoadbalancerCustomEndpoint(ctx *pulumi.Context) string {
 // Custom endpoint for the LogMe service
 func GetLogmeCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:logmeCustomEndpoint")
+}
+
+// Custom endpoint for the Logs service
+func GetLogsCustomEndpoint(ctx *pulumi.Context) string {
+	return config.Get(ctx, "stackit:logsCustomEndpoint")
 }
 
 // Custom endpoint for the MariaDB service
@@ -93,6 +111,16 @@ func GetObservabilityCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:observabilityCustomEndpoint")
 }
 
+// The bearer token for the request to the OIDC provider. For use when authenticating as a Service Account using OpenID Connect.
+func GetOidcRequestToken(ctx *pulumi.Context) string {
+	return config.Get(ctx, "stackit:oidcRequestToken")
+}
+
+// The URL for the OIDC provider from which to request an ID token. For use when authenticating as a Service Account using OpenID Connect.
+func GetOidcRequestUrl(ctx *pulumi.Context) string {
+	return config.Get(ctx, "stackit:oidcRequestUrl")
+}
+
 // Custom endpoint for the OpenSearch service
 func GetOpensearchCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:opensearchCustomEndpoint")
@@ -103,14 +131,12 @@ func GetPostgresflexCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:postgresflexCustomEndpoint")
 }
 
-// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
-// included in the service account key.
+// Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 func GetPrivateKey(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:privateKey")
 }
 
-// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
-// key that is included in the service account key.
+// Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
 func GetPrivateKeyPath(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:privateKeyPath")
 }
@@ -137,6 +163,11 @@ func GetResourcemanagerCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:resourcemanagerCustomEndpoint")
 }
 
+// Custom endpoint for the Cloud Foundry (SCF) service
+func GetScfCustomEndpoint(ctx *pulumi.Context) string {
+	return config.Get(ctx, "stackit:scfCustomEndpoint")
+}
+
 // Custom endpoint for the Secrets Manager service
 func GetSecretsmanagerCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:secretsmanagerCustomEndpoint")
@@ -157,12 +188,19 @@ func GetServiceAccountCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:serviceAccountCustomEndpoint")
 }
 
-// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
-// if you want to use the resource manager project resource.
-//
-// Deprecated: The `serviceAccountEmail` field has been deprecated because it is not required. Will be removed after June 12th 2025.
+// Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource. This value is required using OpenID Connect authentication.
 func GetServiceAccountEmail(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:serviceAccountEmail")
+}
+
+// The OIDC ID token for use when authenticating as a Service Account using OpenID Connect.
+func GetServiceAccountFederatedToken(ctx *pulumi.Context) string {
+	return config.Get(ctx, "stackit:serviceAccountFederatedToken")
+}
+
+// Path for workload identity assertion. It can also be set using the environment variable STACKIT_FEDERATED_TOKEN_FILE.
+func GetServiceAccountFederatedTokenPath(ctx *pulumi.Context) string {
+	return config.Get(ctx, "stackit:serviceAccountFederatedTokenPath")
 }
 
 // Service account key used for authentication. If set, the key flow will be used to authenticate all operations.
@@ -170,15 +208,14 @@ func GetServiceAccountKey(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:serviceAccountKey")
 }
 
-// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
-// operations.
+// Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
 func GetServiceAccountKeyPath(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:serviceAccountKeyPath")
 }
 
 // Token used for authentication. If set, the token flow will be used to authenticate all operations.
 //
-// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/stackit/en/deprecation-plan-for-service-account-access-tokens-and-migration-guide-373293307.html
+// Deprecated: Authentication via Service Account Token is deprecated and will be removed on December 17, 2025. Please use `serviceAccountKey` or `serviceAccountKeyPath` instead. For a smooth transition, refer to our migration guide: https://docs.stackit.cloud/platform/access-and-identity/service-accounts/migrate-flows/
 func GetServiceAccountToken(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:serviceAccountToken")
 }
@@ -186,6 +223,11 @@ func GetServiceAccountToken(ctx *pulumi.Context) string {
 // Custom endpoint for the Service Enablement API
 func GetServiceEnablementCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:serviceEnablementCustomEndpoint")
+}
+
+// Custom endpoint for the Stackit Filestorage API
+func GetSfsCustomEndpoint(ctx *pulumi.Context) string {
+	return config.Get(ctx, "stackit:sfsCustomEndpoint")
 }
 
 // Custom endpoint for the Kubernetes Engine (SKE) service
@@ -201,4 +243,9 @@ func GetSqlserverflexCustomEndpoint(ctx *pulumi.Context) string {
 // Custom endpoint for the token API, which is used to request access tokens when using the key flow
 func GetTokenCustomEndpoint(ctx *pulumi.Context) string {
 	return config.Get(ctx, "stackit:tokenCustomEndpoint")
+}
+
+// Enables OIDC for Authentication. This can also be sourced from the `STACKIT_USE_OIDC` Environment Variable. Defaults to `false`.
+func GetUseOidc(ctx *pulumi.Context) bool {
+	return config.GetBool(ctx, "stackit:useOidc")
 }
