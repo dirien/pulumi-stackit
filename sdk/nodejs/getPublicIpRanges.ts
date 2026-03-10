@@ -21,6 +21,13 @@ export function getPublicIpRanges(opts?: pulumi.InvokeOptions): Promise<GetPubli
  * A collection of values returned by getPublicIpRanges.
  */
 export interface GetPublicIpRangesResult {
+    /**
+     * A list of IP range strings (CIDRs) extracted from the public*ip*ranges for easy consumption.
+     */
+    readonly cidrLists: string[];
+    /**
+     * Terraform's internal resource ID. It takes the values of "`public_ip_ranges.*.cidr`".
+     */
     readonly id: string;
     /**
      * A list of all public IP ranges.

@@ -32,20 +32,23 @@ class ServerArgs:
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  network_interfaces: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  user_data: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a Server resource.
-        :param pulumi.Input[_builtins.str] machine_type: Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+
+        :param pulumi.Input[_builtins.str] machine_type: Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the server is associated.
         :param pulumi.Input[_builtins.str] affinity_group: The affinity group the server is assigned to.
         :param pulumi.Input[_builtins.str] availability_zone: The availability zone of the server.
         :param pulumi.Input['ServerBootVolumeArgs'] boot_volume: The boot volume for the server
-        :param pulumi.Input[_builtins.str] desired_status: The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+        :param pulumi.Input[_builtins.str] desired_status: The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
         :param pulumi.Input[_builtins.str] image_id: The image ID to be used for an ephemeral disk on the server.
         :param pulumi.Input[_builtins.str] keypair_name: The name of the keypair used during server creation.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the server.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] network_interfaces: The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] network_interfaces: The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.str] user_data: User data that is passed via cloud-init to the server.
         """
         pulumi.set(__self__, "machine_type", machine_type)
@@ -68,6 +71,8 @@ class ServerArgs:
             pulumi.set(__self__, "name", name)
         if network_interfaces is not None:
             pulumi.set(__self__, "network_interfaces", network_interfaces)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
         if user_data is not None:
             pulumi.set(__self__, "user_data", user_data)
 
@@ -75,7 +80,7 @@ class ServerArgs:
     @pulumi.getter(name="machineType")
     def machine_type(self) -> pulumi.Input[_builtins.str]:
         """
-        Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+        Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
         """
         return pulumi.get(self, "machine_type")
 
@@ -135,7 +140,7 @@ class ServerArgs:
     @pulumi.getter(name="desiredStatus")
     def desired_status(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+        The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
         """
         return pulumi.get(self, "desired_status")
 
@@ -195,13 +200,25 @@ class ServerArgs:
     @pulumi.getter(name="networkInterfaces")
     def network_interfaces(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
         """
-        The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+        The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
         """
         return pulumi.get(self, "network_interfaces")
 
     @network_interfaces.setter
     def network_interfaces(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
         pulumi.set(self, "network_interfaces", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "region", value)
 
     @_builtins.property
     @pulumi.getter(name="userData")
@@ -232,24 +249,27 @@ class _ServerState:
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  network_interfaces: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  server_id: Optional[pulumi.Input[_builtins.str]] = None,
                  updated_at: Optional[pulumi.Input[_builtins.str]] = None,
                  user_data: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering Server resources.
+
         :param pulumi.Input[_builtins.str] affinity_group: The affinity group the server is assigned to.
         :param pulumi.Input[_builtins.str] availability_zone: The availability zone of the server.
         :param pulumi.Input['ServerBootVolumeArgs'] boot_volume: The boot volume for the server
         :param pulumi.Input[_builtins.str] created_at: Date-time when the server was created
-        :param pulumi.Input[_builtins.str] desired_status: The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+        :param pulumi.Input[_builtins.str] desired_status: The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
         :param pulumi.Input[_builtins.str] image_id: The image ID to be used for an ephemeral disk on the server.
         :param pulumi.Input[_builtins.str] keypair_name: The name of the keypair used during server creation.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] launched_at: Date-time when the server was launched
-        :param pulumi.Input[_builtins.str] machine_type: Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+        :param pulumi.Input[_builtins.str] machine_type: Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
         :param pulumi.Input[_builtins.str] name: The name of the server.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] network_interfaces: The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] network_interfaces: The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the server is associated.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.str] server_id: The server ID.
         :param pulumi.Input[_builtins.str] updated_at: Date-time when the server was updated
         :param pulumi.Input[_builtins.str] user_data: User data that is passed via cloud-init to the server.
@@ -280,6 +300,8 @@ class _ServerState:
             pulumi.set(__self__, "network_interfaces", network_interfaces)
         if project_id is not None:
             pulumi.set(__self__, "project_id", project_id)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
         if server_id is not None:
             pulumi.set(__self__, "server_id", server_id)
         if updated_at is not None:
@@ -339,7 +361,7 @@ class _ServerState:
     @pulumi.getter(name="desiredStatus")
     def desired_status(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+        The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
         """
         return pulumi.get(self, "desired_status")
 
@@ -399,7 +421,7 @@ class _ServerState:
     @pulumi.getter(name="machineType")
     def machine_type(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+        Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
         """
         return pulumi.get(self, "machine_type")
 
@@ -423,7 +445,7 @@ class _ServerState:
     @pulumi.getter(name="networkInterfaces")
     def network_interfaces(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
         """
-        The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+        The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
         """
         return pulumi.get(self, "network_interfaces")
 
@@ -442,6 +464,18 @@ class _ServerState:
     @project_id.setter
     def project_id(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "project_id", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "region", value)
 
     @_builtins.property
     @pulumi.getter(name="serverId")
@@ -497,6 +531,7 @@ class Server(pulumi.CustomResource):
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  network_interfaces: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  user_data: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
         """
@@ -518,19 +553,21 @@ class Server(pulumi.CustomResource):
 
         ### Additional Examples
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] affinity_group: The affinity group the server is assigned to.
         :param pulumi.Input[_builtins.str] availability_zone: The availability zone of the server.
         :param pulumi.Input[Union['ServerBootVolumeArgs', 'ServerBootVolumeArgsDict']] boot_volume: The boot volume for the server
-        :param pulumi.Input[_builtins.str] desired_status: The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+        :param pulumi.Input[_builtins.str] desired_status: The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
         :param pulumi.Input[_builtins.str] image_id: The image ID to be used for an ephemeral disk on the server.
         :param pulumi.Input[_builtins.str] keypair_name: The name of the keypair used during server creation.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
-        :param pulumi.Input[_builtins.str] machine_type: Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+        :param pulumi.Input[_builtins.str] machine_type: Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
         :param pulumi.Input[_builtins.str] name: The name of the server.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] network_interfaces: The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] network_interfaces: The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the server is associated.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.str] user_data: User data that is passed via cloud-init to the server.
         """
         ...
@@ -558,6 +595,7 @@ class Server(pulumi.CustomResource):
 
         ### Additional Examples
 
+
         :param str resource_name: The name of the resource.
         :param ServerArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -584,6 +622,7 @@ class Server(pulumi.CustomResource):
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  network_interfaces: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  user_data: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -609,6 +648,7 @@ class Server(pulumi.CustomResource):
             if project_id is None and not opts.urn:
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
+            __props__.__dict__["region"] = region
             __props__.__dict__["user_data"] = user_data
             __props__.__dict__["created_at"] = None
             __props__.__dict__["launched_at"] = None
@@ -637,6 +677,7 @@ class Server(pulumi.CustomResource):
             name: Optional[pulumi.Input[_builtins.str]] = None,
             network_interfaces: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
             project_id: Optional[pulumi.Input[_builtins.str]] = None,
+            region: Optional[pulumi.Input[_builtins.str]] = None,
             server_id: Optional[pulumi.Input[_builtins.str]] = None,
             updated_at: Optional[pulumi.Input[_builtins.str]] = None,
             user_data: Optional[pulumi.Input[_builtins.str]] = None) -> 'Server':
@@ -651,15 +692,16 @@ class Server(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] availability_zone: The availability zone of the server.
         :param pulumi.Input[Union['ServerBootVolumeArgs', 'ServerBootVolumeArgsDict']] boot_volume: The boot volume for the server
         :param pulumi.Input[_builtins.str] created_at: Date-time when the server was created
-        :param pulumi.Input[_builtins.str] desired_status: The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+        :param pulumi.Input[_builtins.str] desired_status: The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
         :param pulumi.Input[_builtins.str] image_id: The image ID to be used for an ephemeral disk on the server.
         :param pulumi.Input[_builtins.str] keypair_name: The name of the keypair used during server creation.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] launched_at: Date-time when the server was launched
-        :param pulumi.Input[_builtins.str] machine_type: Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+        :param pulumi.Input[_builtins.str] machine_type: Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
         :param pulumi.Input[_builtins.str] name: The name of the server.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] network_interfaces: The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] network_interfaces: The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the server is associated.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.str] server_id: The server ID.
         :param pulumi.Input[_builtins.str] updated_at: Date-time when the server was updated
         :param pulumi.Input[_builtins.str] user_data: User data that is passed via cloud-init to the server.
@@ -681,6 +723,7 @@ class Server(pulumi.CustomResource):
         __props__.__dict__["name"] = name
         __props__.__dict__["network_interfaces"] = network_interfaces
         __props__.__dict__["project_id"] = project_id
+        __props__.__dict__["region"] = region
         __props__.__dict__["server_id"] = server_id
         __props__.__dict__["updated_at"] = updated_at
         __props__.__dict__["user_data"] = user_data
@@ -722,7 +765,7 @@ class Server(pulumi.CustomResource):
     @pulumi.getter(name="desiredStatus")
     def desired_status(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+        The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
         """
         return pulumi.get(self, "desired_status")
 
@@ -762,7 +805,7 @@ class Server(pulumi.CustomResource):
     @pulumi.getter(name="machineType")
     def machine_type(self) -> pulumi.Output[_builtins.str]:
         """
-        Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+        Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
         """
         return pulumi.get(self, "machine_type")
 
@@ -778,7 +821,7 @@ class Server(pulumi.CustomResource):
     @pulumi.getter(name="networkInterfaces")
     def network_interfaces(self) -> pulumi.Output[Optional[Sequence[_builtins.str]]]:
         """
-        The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+        The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
         """
         return pulumi.get(self, "network_interfaces")
 
@@ -789,6 +832,14 @@ class Server(pulumi.CustomResource):
         STACKIT project ID to which the server is associated.
         """
         return pulumi.get(self, "project_id")
+
+    @_builtins.property
+    @pulumi.getter
+    def region(self) -> pulumi.Output[_builtins.str]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
 
     @_builtins.property
     @pulumi.getter(name="serverId")

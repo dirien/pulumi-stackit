@@ -15,6 +15,10 @@ namespace ediri.Stackit.Outputs
     public sealed class ObservabilityInstanceAlertConfigRoute
     {
         /// <summary>
+        /// Whether an alert should continue matching subsequent sibling nodes.
+        /// </summary>
+        public readonly bool? Continue;
+        /// <summary>
         /// The labels by which incoming alerts are grouped together. For example, multiple alerts coming in for cluster=A and alertname=LatencyHigh would be batched into a single group. To aggregate by all possible labels use the special value '...' as the sole label name, for example: group_by: ['...']. This effectively disables aggregation entirely, passing through all alerts as-is. This is unlikely to be what you want, unless you have a very low alert volume or your upstream notification system performs its own grouping.
         /// </summary>
         public readonly ImmutableArray<string> GroupBies;
@@ -26,14 +30,6 @@ namespace ediri.Stackit.Outputs
         /// How long to initially wait to send a notification for a group of alerts. Allows to wait for an inhibiting alert to arrive or collect more initial alerts for the same group. (Usually ~0s to few minutes.)
         /// </summary>
         public readonly string? GroupWait;
-        /// <summary>
-        /// A set of equality matchers an alert has to fulfill to match the node.
-        /// </summary>
-        public readonly ImmutableDictionary<string, string>? Match;
-        /// <summary>
-        /// A set of regex-matchers an alert has to fulfill to match the node.
-        /// </summary>
-        public readonly ImmutableDictionary<string, string>? MatchRegex;
         /// <summary>
         /// The name of the receiver to route the alerts to.
         /// </summary>
@@ -49,15 +45,13 @@ namespace ediri.Stackit.Outputs
 
         [OutputConstructor]
         private ObservabilityInstanceAlertConfigRoute(
+            bool? @continue,
+
             ImmutableArray<string> groupBies,
 
             string? groupInterval,
 
             string? groupWait,
-
-            ImmutableDictionary<string, string>? match,
-
-            ImmutableDictionary<string, string>? matchRegex,
 
             string receiver,
 
@@ -65,11 +59,10 @@ namespace ediri.Stackit.Outputs
 
             ImmutableArray<Outputs.ObservabilityInstanceAlertConfigRouteRoute> routes)
         {
+            Continue = @continue;
             GroupBies = groupBies;
             GroupInterval = groupInterval;
             GroupWait = groupWait;
-            Match = match;
-            MatchRegex = matchRegex;
             Receiver = receiver;
             RepeatInterval = repeatInterval;
             Routes = routes;

@@ -20,14 +20,19 @@ __all__ = ['ObservabilityCredentialArgs', 'ObservabilityCredential']
 class ObservabilityCredentialArgs:
     def __init__(__self__, *,
                  instance_id: pulumi.Input[_builtins.str],
-                 project_id: pulumi.Input[_builtins.str]):
+                 project_id: pulumi.Input[_builtins.str],
+                 description: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a ObservabilityCredential resource.
+
         :param pulumi.Input[_builtins.str] instance_id: The Observability Instance ID the credential belongs to.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the credential is associated.
+        :param pulumi.Input[_builtins.str] description: A description of the credential.
         """
         pulumi.set(__self__, "instance_id", instance_id)
         pulumi.set(__self__, "project_id", project_id)
+        if description is not None:
+            pulumi.set(__self__, "description", description)
 
     @_builtins.property
     @pulumi.getter(name="instanceId")
@@ -53,21 +58,38 @@ class ObservabilityCredentialArgs:
     def project_id(self, value: pulumi.Input[_builtins.str]):
         pulumi.set(self, "project_id", value)
 
+    @_builtins.property
+    @pulumi.getter
+    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        A description of the credential.
+        """
+        return pulumi.get(self, "description")
+
+    @description.setter
+    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "description", value)
+
 
 @pulumi.input_type
 class _ObservabilityCredentialState:
     def __init__(__self__, *,
+                 description: Optional[pulumi.Input[_builtins.str]] = None,
                  instance_id: Optional[pulumi.Input[_builtins.str]] = None,
                  password: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
                  username: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering ObservabilityCredential resources.
+
+        :param pulumi.Input[_builtins.str] description: A description of the credential.
         :param pulumi.Input[_builtins.str] instance_id: The Observability Instance ID the credential belongs to.
         :param pulumi.Input[_builtins.str] password: Credential password
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the credential is associated.
         :param pulumi.Input[_builtins.str] username: Credential username
         """
+        if description is not None:
+            pulumi.set(__self__, "description", description)
         if instance_id is not None:
             pulumi.set(__self__, "instance_id", instance_id)
         if password is not None:
@@ -76,6 +98,18 @@ class _ObservabilityCredentialState:
             pulumi.set(__self__, "project_id", project_id)
         if username is not None:
             pulumi.set(__self__, "username", username)
+
+    @_builtins.property
+    @pulumi.getter
+    def description(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        A description of the credential.
+        """
+        return pulumi.get(self, "description")
+
+    @description.setter
+    def description(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "description", value)
 
     @_builtins.property
     @pulumi.getter(name="instanceId")
@@ -132,6 +166,7 @@ class ObservabilityCredential(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 description: Optional[pulumi.Input[_builtins.str]] = None,
                  instance_id: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
@@ -140,8 +175,10 @@ class ObservabilityCredential(pulumi.CustomResource):
 
         ## Example Usage
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.str] description: A description of the credential.
         :param pulumi.Input[_builtins.str] instance_id: The Observability Instance ID the credential belongs to.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the credential is associated.
         """
@@ -155,6 +192,7 @@ class ObservabilityCredential(pulumi.CustomResource):
         Observability credential resource schema. Must have a `region` specified in the provider configuration.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param ObservabilityCredentialArgs args: The arguments to use to populate this resource's properties.
@@ -171,6 +209,7 @@ class ObservabilityCredential(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 description: Optional[pulumi.Input[_builtins.str]] = None,
                  instance_id: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
@@ -182,6 +221,7 @@ class ObservabilityCredential(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = ObservabilityCredentialArgs.__new__(ObservabilityCredentialArgs)
 
+            __props__.__dict__["description"] = description
             if instance_id is None and not opts.urn:
                 raise TypeError("Missing required property 'instance_id'")
             __props__.__dict__["instance_id"] = instance_id
@@ -202,6 +242,7 @@ class ObservabilityCredential(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
+            description: Optional[pulumi.Input[_builtins.str]] = None,
             instance_id: Optional[pulumi.Input[_builtins.str]] = None,
             password: Optional[pulumi.Input[_builtins.str]] = None,
             project_id: Optional[pulumi.Input[_builtins.str]] = None,
@@ -213,6 +254,7 @@ class ObservabilityCredential(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.str] description: A description of the credential.
         :param pulumi.Input[_builtins.str] instance_id: The Observability Instance ID the credential belongs to.
         :param pulumi.Input[_builtins.str] password: Credential password
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the credential is associated.
@@ -222,11 +264,20 @@ class ObservabilityCredential(pulumi.CustomResource):
 
         __props__ = _ObservabilityCredentialState.__new__(_ObservabilityCredentialState)
 
+        __props__.__dict__["description"] = description
         __props__.__dict__["instance_id"] = instance_id
         __props__.__dict__["password"] = password
         __props__.__dict__["project_id"] = project_id
         __props__.__dict__["username"] = username
         return ObservabilityCredential(resource_name, opts=opts, __props__=__props__)
+
+    @_builtins.property
+    @pulumi.getter
+    def description(self) -> pulumi.Output[Optional[_builtins.str]]:
+        """
+        A description of the credential.
+        """
+        return pulumi.get(self, "description")
 
     @_builtins.property
     @pulumi.getter(name="instanceId")

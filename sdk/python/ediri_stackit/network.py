@@ -20,6 +20,7 @@ __all__ = ['NetworkArgs', 'Network']
 class NetworkArgs:
     def __init__(__self__, *,
                  project_id: pulumi.Input[_builtins.str],
+                 dhcp: Optional[pulumi.Input[_builtins.bool]] = None,
                  ipv4_gateway: Optional[pulumi.Input[_builtins.str]] = None,
                  ipv4_nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  ipv4_prefix: Optional[pulumi.Input[_builtins.str]] = None,
@@ -30,7 +31,6 @@ class NetworkArgs:
                  ipv6_prefix_length: Optional[pulumi.Input[_builtins.int]] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
-                 nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  no_ipv4_gateway: Optional[pulumi.Input[_builtins.bool]] = None,
                  no_ipv6_gateway: Optional[pulumi.Input[_builtins.bool]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
@@ -38,9 +38,11 @@ class NetworkArgs:
                  routing_table_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a Network resource.
+
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the network is associated.
+        :param pulumi.Input[_builtins.bool] dhcp: If the network has DHCP enabled. Default value is `true`.
         :param pulumi.Input[_builtins.str] ipv4_gateway: The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ipv4_nameservers: The IPv4 nameservers of the network.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ipv4_nameservers: The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
         :param pulumi.Input[_builtins.str] ipv4_prefix: The IPv4 prefix of the network (CIDR).
         :param pulumi.Input[_builtins.int] ipv4_prefix_length: The IPv4 prefix length of the network.
         :param pulumi.Input[_builtins.str] ipv6_gateway: The IPv6 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
@@ -49,16 +51,15 @@ class NetworkArgs:
         :param pulumi.Input[_builtins.int] ipv6_prefix_length: The IPv6 prefix length of the network.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the network.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] nameservers: The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4_nameservers` to configure the nameservers for IPv4.
         :param pulumi.Input[_builtins.bool] no_ipv4_gateway: If set to `true`, the network doesn't have a gateway.
         :param pulumi.Input[_builtins.bool] no_ipv6_gateway: If set to `true`, the network doesn't have a gateway.
-        :param pulumi.Input[_builtins.str] region: Can only be used when experimental "network" is set.
-               The resource region. If not defined, the provider region is used.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.bool] routed: If set to `true`, the network is routed and therefore accessible from other networks.
-        :param pulumi.Input[_builtins.str] routing_table_id: Can only be used when experimental "network" is set.
-               The ID of the routing table associated with the network.
+        :param pulumi.Input[_builtins.str] routing_table_id: The ID of the routing table associated with the network.
         """
         pulumi.set(__self__, "project_id", project_id)
+        if dhcp is not None:
+            pulumi.set(__self__, "dhcp", dhcp)
         if ipv4_gateway is not None:
             pulumi.set(__self__, "ipv4_gateway", ipv4_gateway)
         if ipv4_nameservers is not None:
@@ -79,11 +80,6 @@ class NetworkArgs:
             pulumi.set(__self__, "labels", labels)
         if name is not None:
             pulumi.set(__self__, "name", name)
-        if nameservers is not None:
-            warnings.warn("""Use `ipv4_nameservers` to configure the nameservers for IPv4.""", DeprecationWarning)
-            pulumi.log.warn("""nameservers is deprecated: Use `ipv4_nameservers` to configure the nameservers for IPv4.""")
-        if nameservers is not None:
-            pulumi.set(__self__, "nameservers", nameservers)
         if no_ipv4_gateway is not None:
             pulumi.set(__self__, "no_ipv4_gateway", no_ipv4_gateway)
         if no_ipv6_gateway is not None:
@@ -108,6 +104,18 @@ class NetworkArgs:
         pulumi.set(self, "project_id", value)
 
     @_builtins.property
+    @pulumi.getter
+    def dhcp(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        If the network has DHCP enabled. Default value is `true`.
+        """
+        return pulumi.get(self, "dhcp")
+
+    @dhcp.setter
+    def dhcp(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "dhcp", value)
+
+    @_builtins.property
     @pulumi.getter(name="ipv4Gateway")
     def ipv4_gateway(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -123,7 +131,7 @@ class NetworkArgs:
     @pulumi.getter(name="ipv4Nameservers")
     def ipv4_nameservers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
         """
-        The IPv4 nameservers of the network.
+        The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
         """
         return pulumi.get(self, "ipv4_nameservers")
 
@@ -228,19 +236,6 @@ class NetworkArgs:
         pulumi.set(self, "name", value)
 
     @_builtins.property
-    @pulumi.getter
-    @_utilities.deprecated("""Use `ipv4_nameservers` to configure the nameservers for IPv4.""")
-    def nameservers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
-        """
-        The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4_nameservers` to configure the nameservers for IPv4.
-        """
-        return pulumi.get(self, "nameservers")
-
-    @nameservers.setter
-    def nameservers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "nameservers", value)
-
-    @_builtins.property
     @pulumi.getter(name="noIpv4Gateway")
     def no_ipv4_gateway(self) -> Optional[pulumi.Input[_builtins.bool]]:
         """
@@ -268,7 +263,6 @@ class NetworkArgs:
     @pulumi.getter
     def region(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Can only be used when experimental "network" is set.
         The resource region. If not defined, the provider region is used.
         """
         return pulumi.get(self, "region")
@@ -293,7 +287,6 @@ class NetworkArgs:
     @pulumi.getter(name="routingTableId")
     def routing_table_id(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Can only be used when experimental "network" is set.
         The ID of the routing table associated with the network.
         """
         return pulumi.get(self, "routing_table_id")
@@ -306,6 +299,7 @@ class NetworkArgs:
 @pulumi.input_type
 class _NetworkState:
     def __init__(__self__, *,
+                 dhcp: Optional[pulumi.Input[_builtins.bool]] = None,
                  ipv4_gateway: Optional[pulumi.Input[_builtins.str]] = None,
                  ipv4_nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  ipv4_prefix: Optional[pulumi.Input[_builtins.str]] = None,
@@ -318,11 +312,9 @@ class _NetworkState:
                  ipv6_prefixes: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
-                 nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  network_id: Optional[pulumi.Input[_builtins.str]] = None,
                  no_ipv4_gateway: Optional[pulumi.Input[_builtins.bool]] = None,
                  no_ipv6_gateway: Optional[pulumi.Input[_builtins.bool]] = None,
-                 prefixes: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
                  public_ip: Optional[pulumi.Input[_builtins.str]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
@@ -330,8 +322,10 @@ class _NetworkState:
                  routing_table_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering Network resources.
+
+        :param pulumi.Input[_builtins.bool] dhcp: If the network has DHCP enabled. Default value is `true`.
         :param pulumi.Input[_builtins.str] ipv4_gateway: The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ipv4_nameservers: The IPv4 nameservers of the network.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ipv4_nameservers: The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
         :param pulumi.Input[_builtins.str] ipv4_prefix: The IPv4 prefix of the network (CIDR).
         :param pulumi.Input[_builtins.int] ipv4_prefix_length: The IPv4 prefix length of the network.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ipv4_prefixes: The IPv4 prefixes of the network.
@@ -342,19 +336,17 @@ class _NetworkState:
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ipv6_prefixes: The IPv6 prefixes of the network.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the network.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] nameservers: The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4_nameservers` to configure the nameservers for IPv4.
         :param pulumi.Input[_builtins.str] network_id: The network ID.
         :param pulumi.Input[_builtins.bool] no_ipv4_gateway: If set to `true`, the network doesn't have a gateway.
         :param pulumi.Input[_builtins.bool] no_ipv6_gateway: If set to `true`, the network doesn't have a gateway.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] prefixes: The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4_prefixes` to read the prefixes of the IPv4 networks.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the network is associated.
         :param pulumi.Input[_builtins.str] public_ip: The public IP of the network.
-        :param pulumi.Input[_builtins.str] region: Can only be used when experimental "network" is set.
-               The resource region. If not defined, the provider region is used.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.bool] routed: If set to `true`, the network is routed and therefore accessible from other networks.
-        :param pulumi.Input[_builtins.str] routing_table_id: Can only be used when experimental "network" is set.
-               The ID of the routing table associated with the network.
+        :param pulumi.Input[_builtins.str] routing_table_id: The ID of the routing table associated with the network.
         """
+        if dhcp is not None:
+            pulumi.set(__self__, "dhcp", dhcp)
         if ipv4_gateway is not None:
             pulumi.set(__self__, "ipv4_gateway", ipv4_gateway)
         if ipv4_nameservers is not None:
@@ -379,22 +371,12 @@ class _NetworkState:
             pulumi.set(__self__, "labels", labels)
         if name is not None:
             pulumi.set(__self__, "name", name)
-        if nameservers is not None:
-            warnings.warn("""Use `ipv4_nameservers` to configure the nameservers for IPv4.""", DeprecationWarning)
-            pulumi.log.warn("""nameservers is deprecated: Use `ipv4_nameservers` to configure the nameservers for IPv4.""")
-        if nameservers is not None:
-            pulumi.set(__self__, "nameservers", nameservers)
         if network_id is not None:
             pulumi.set(__self__, "network_id", network_id)
         if no_ipv4_gateway is not None:
             pulumi.set(__self__, "no_ipv4_gateway", no_ipv4_gateway)
         if no_ipv6_gateway is not None:
             pulumi.set(__self__, "no_ipv6_gateway", no_ipv6_gateway)
-        if prefixes is not None:
-            warnings.warn("""Use `ipv4_prefixes` to read the prefixes of the IPv4 networks.""", DeprecationWarning)
-            pulumi.log.warn("""prefixes is deprecated: Use `ipv4_prefixes` to read the prefixes of the IPv4 networks.""")
-        if prefixes is not None:
-            pulumi.set(__self__, "prefixes", prefixes)
         if project_id is not None:
             pulumi.set(__self__, "project_id", project_id)
         if public_ip is not None:
@@ -405,6 +387,18 @@ class _NetworkState:
             pulumi.set(__self__, "routed", routed)
         if routing_table_id is not None:
             pulumi.set(__self__, "routing_table_id", routing_table_id)
+
+    @_builtins.property
+    @pulumi.getter
+    def dhcp(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        If the network has DHCP enabled. Default value is `true`.
+        """
+        return pulumi.get(self, "dhcp")
+
+    @dhcp.setter
+    def dhcp(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "dhcp", value)
 
     @_builtins.property
     @pulumi.getter(name="ipv4Gateway")
@@ -422,7 +416,7 @@ class _NetworkState:
     @pulumi.getter(name="ipv4Nameservers")
     def ipv4_nameservers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
         """
-        The IPv4 nameservers of the network.
+        The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
         """
         return pulumi.get(self, "ipv4_nameservers")
 
@@ -551,19 +545,6 @@ class _NetworkState:
         pulumi.set(self, "name", value)
 
     @_builtins.property
-    @pulumi.getter
-    @_utilities.deprecated("""Use `ipv4_nameservers` to configure the nameservers for IPv4.""")
-    def nameservers(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
-        """
-        The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4_nameservers` to configure the nameservers for IPv4.
-        """
-        return pulumi.get(self, "nameservers")
-
-    @nameservers.setter
-    def nameservers(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "nameservers", value)
-
-    @_builtins.property
     @pulumi.getter(name="networkId")
     def network_id(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -600,19 +581,6 @@ class _NetworkState:
         pulumi.set(self, "no_ipv6_gateway", value)
 
     @_builtins.property
-    @pulumi.getter
-    @_utilities.deprecated("""Use `ipv4_prefixes` to read the prefixes of the IPv4 networks.""")
-    def prefixes(self) -> Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]:
-        """
-        The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4_prefixes` to read the prefixes of the IPv4 networks.
-        """
-        return pulumi.get(self, "prefixes")
-
-    @prefixes.setter
-    def prefixes(self, value: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]]):
-        pulumi.set(self, "prefixes", value)
-
-    @_builtins.property
     @pulumi.getter(name="projectId")
     def project_id(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -640,7 +608,6 @@ class _NetworkState:
     @pulumi.getter
     def region(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Can only be used when experimental "network" is set.
         The resource region. If not defined, the provider region is used.
         """
         return pulumi.get(self, "region")
@@ -665,7 +632,6 @@ class _NetworkState:
     @pulumi.getter(name="routingTableId")
     def routing_table_id(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Can only be used when experimental "network" is set.
         The ID of the routing table associated with the network.
         """
         return pulumi.get(self, "routing_table_id")
@@ -681,6 +647,7 @@ class Network(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 dhcp: Optional[pulumi.Input[_builtins.bool]] = None,
                  ipv4_gateway: Optional[pulumi.Input[_builtins.str]] = None,
                  ipv4_nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  ipv4_prefix: Optional[pulumi.Input[_builtins.str]] = None,
@@ -691,7 +658,6 @@ class Network(pulumi.CustomResource):
                  ipv6_prefix_length: Optional[pulumi.Input[_builtins.int]] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
-                 nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  no_ipv4_gateway: Optional[pulumi.Input[_builtins.bool]] = None,
                  no_ipv6_gateway: Optional[pulumi.Input[_builtins.bool]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
@@ -701,13 +667,18 @@ class Network(pulumi.CustomResource):
                  __props__=None):
         """
         Network resource schema. Must have a `region` specified in the provider configuration.
+        > Behavior of not configured `ipv4_nameservers` has changed. When `ipv4_nameservers` is not set, it will be set to the network area's `default_nameservers`.
+        To prevent any nameserver configuration, the `ipv4_nameservers` attribute should be explicitly set to an empty list `[]`.
+        In cases where `ipv4_nameservers` are defined within the resource, the existing behavior will remain unchanged.
 
         ## Example Usage
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.bool] dhcp: If the network has DHCP enabled. Default value is `true`.
         :param pulumi.Input[_builtins.str] ipv4_gateway: The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ipv4_nameservers: The IPv4 nameservers of the network.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ipv4_nameservers: The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
         :param pulumi.Input[_builtins.str] ipv4_prefix: The IPv4 prefix of the network (CIDR).
         :param pulumi.Input[_builtins.int] ipv4_prefix_length: The IPv4 prefix length of the network.
         :param pulumi.Input[_builtins.str] ipv6_gateway: The IPv6 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
@@ -716,15 +687,12 @@ class Network(pulumi.CustomResource):
         :param pulumi.Input[_builtins.int] ipv6_prefix_length: The IPv6 prefix length of the network.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the network.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] nameservers: The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4_nameservers` to configure the nameservers for IPv4.
         :param pulumi.Input[_builtins.bool] no_ipv4_gateway: If set to `true`, the network doesn't have a gateway.
         :param pulumi.Input[_builtins.bool] no_ipv6_gateway: If set to `true`, the network doesn't have a gateway.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the network is associated.
-        :param pulumi.Input[_builtins.str] region: Can only be used when experimental "network" is set.
-               The resource region. If not defined, the provider region is used.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.bool] routed: If set to `true`, the network is routed and therefore accessible from other networks.
-        :param pulumi.Input[_builtins.str] routing_table_id: Can only be used when experimental "network" is set.
-               The ID of the routing table associated with the network.
+        :param pulumi.Input[_builtins.str] routing_table_id: The ID of the routing table associated with the network.
         """
         ...
     @overload
@@ -734,8 +702,12 @@ class Network(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
         Network resource schema. Must have a `region` specified in the provider configuration.
+        > Behavior of not configured `ipv4_nameservers` has changed. When `ipv4_nameservers` is not set, it will be set to the network area's `default_nameservers`.
+        To prevent any nameserver configuration, the `ipv4_nameservers` attribute should be explicitly set to an empty list `[]`.
+        In cases where `ipv4_nameservers` are defined within the resource, the existing behavior will remain unchanged.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param NetworkArgs args: The arguments to use to populate this resource's properties.
@@ -752,6 +724,7 @@ class Network(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 dhcp: Optional[pulumi.Input[_builtins.bool]] = None,
                  ipv4_gateway: Optional[pulumi.Input[_builtins.str]] = None,
                  ipv4_nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  ipv4_prefix: Optional[pulumi.Input[_builtins.str]] = None,
@@ -762,7 +735,6 @@ class Network(pulumi.CustomResource):
                  ipv6_prefix_length: Optional[pulumi.Input[_builtins.int]] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
-                 nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  no_ipv4_gateway: Optional[pulumi.Input[_builtins.bool]] = None,
                  no_ipv6_gateway: Optional[pulumi.Input[_builtins.bool]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
@@ -778,6 +750,7 @@ class Network(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = NetworkArgs.__new__(NetworkArgs)
 
+            __props__.__dict__["dhcp"] = dhcp
             __props__.__dict__["ipv4_gateway"] = ipv4_gateway
             __props__.__dict__["ipv4_nameservers"] = ipv4_nameservers
             __props__.__dict__["ipv4_prefix"] = ipv4_prefix
@@ -788,7 +761,6 @@ class Network(pulumi.CustomResource):
             __props__.__dict__["ipv6_prefix_length"] = ipv6_prefix_length
             __props__.__dict__["labels"] = labels
             __props__.__dict__["name"] = name
-            __props__.__dict__["nameservers"] = nameservers
             __props__.__dict__["no_ipv4_gateway"] = no_ipv4_gateway
             __props__.__dict__["no_ipv6_gateway"] = no_ipv6_gateway
             if project_id is None and not opts.urn:
@@ -800,7 +772,6 @@ class Network(pulumi.CustomResource):
             __props__.__dict__["ipv4_prefixes"] = None
             __props__.__dict__["ipv6_prefixes"] = None
             __props__.__dict__["network_id"] = None
-            __props__.__dict__["prefixes"] = None
             __props__.__dict__["public_ip"] = None
         super(Network, __self__).__init__(
             'stackit:index/network:Network',
@@ -812,6 +783,7 @@ class Network(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
+            dhcp: Optional[pulumi.Input[_builtins.bool]] = None,
             ipv4_gateway: Optional[pulumi.Input[_builtins.str]] = None,
             ipv4_nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
             ipv4_prefix: Optional[pulumi.Input[_builtins.str]] = None,
@@ -824,11 +796,9 @@ class Network(pulumi.CustomResource):
             ipv6_prefixes: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
-            nameservers: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
             network_id: Optional[pulumi.Input[_builtins.str]] = None,
             no_ipv4_gateway: Optional[pulumi.Input[_builtins.bool]] = None,
             no_ipv6_gateway: Optional[pulumi.Input[_builtins.bool]] = None,
-            prefixes: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
             project_id: Optional[pulumi.Input[_builtins.str]] = None,
             public_ip: Optional[pulumi.Input[_builtins.str]] = None,
             region: Optional[pulumi.Input[_builtins.str]] = None,
@@ -841,8 +811,9 @@ class Network(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[_builtins.bool] dhcp: If the network has DHCP enabled. Default value is `true`.
         :param pulumi.Input[_builtins.str] ipv4_gateway: The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ipv4_nameservers: The IPv4 nameservers of the network.
+        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ipv4_nameservers: The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
         :param pulumi.Input[_builtins.str] ipv4_prefix: The IPv4 prefix of the network (CIDR).
         :param pulumi.Input[_builtins.int] ipv4_prefix_length: The IPv4 prefix length of the network.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ipv4_prefixes: The IPv4 prefixes of the network.
@@ -853,23 +824,20 @@ class Network(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] ipv6_prefixes: The IPv6 prefixes of the network.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the network.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] nameservers: The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4_nameservers` to configure the nameservers for IPv4.
         :param pulumi.Input[_builtins.str] network_id: The network ID.
         :param pulumi.Input[_builtins.bool] no_ipv4_gateway: If set to `true`, the network doesn't have a gateway.
         :param pulumi.Input[_builtins.bool] no_ipv6_gateway: If set to `true`, the network doesn't have a gateway.
-        :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] prefixes: The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4_prefixes` to read the prefixes of the IPv4 networks.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the network is associated.
         :param pulumi.Input[_builtins.str] public_ip: The public IP of the network.
-        :param pulumi.Input[_builtins.str] region: Can only be used when experimental "network" is set.
-               The resource region. If not defined, the provider region is used.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.bool] routed: If set to `true`, the network is routed and therefore accessible from other networks.
-        :param pulumi.Input[_builtins.str] routing_table_id: Can only be used when experimental "network" is set.
-               The ID of the routing table associated with the network.
+        :param pulumi.Input[_builtins.str] routing_table_id: The ID of the routing table associated with the network.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
         __props__ = _NetworkState.__new__(_NetworkState)
 
+        __props__.__dict__["dhcp"] = dhcp
         __props__.__dict__["ipv4_gateway"] = ipv4_gateway
         __props__.__dict__["ipv4_nameservers"] = ipv4_nameservers
         __props__.__dict__["ipv4_prefix"] = ipv4_prefix
@@ -882,17 +850,23 @@ class Network(pulumi.CustomResource):
         __props__.__dict__["ipv6_prefixes"] = ipv6_prefixes
         __props__.__dict__["labels"] = labels
         __props__.__dict__["name"] = name
-        __props__.__dict__["nameservers"] = nameservers
         __props__.__dict__["network_id"] = network_id
         __props__.__dict__["no_ipv4_gateway"] = no_ipv4_gateway
         __props__.__dict__["no_ipv6_gateway"] = no_ipv6_gateway
-        __props__.__dict__["prefixes"] = prefixes
         __props__.__dict__["project_id"] = project_id
         __props__.__dict__["public_ip"] = public_ip
         __props__.__dict__["region"] = region
         __props__.__dict__["routed"] = routed
         __props__.__dict__["routing_table_id"] = routing_table_id
         return Network(resource_name, opts=opts, __props__=__props__)
+
+    @_builtins.property
+    @pulumi.getter
+    def dhcp(self) -> pulumi.Output[_builtins.bool]:
+        """
+        If the network has DHCP enabled. Default value is `true`.
+        """
+        return pulumi.get(self, "dhcp")
 
     @_builtins.property
     @pulumi.getter(name="ipv4Gateway")
@@ -906,7 +880,7 @@ class Network(pulumi.CustomResource):
     @pulumi.getter(name="ipv4Nameservers")
     def ipv4_nameservers(self) -> pulumi.Output[Sequence[_builtins.str]]:
         """
-        The IPv4 nameservers of the network.
+        The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
         """
         return pulumi.get(self, "ipv4_nameservers")
 
@@ -952,7 +926,7 @@ class Network(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter(name="ipv6Prefix")
-    def ipv6_prefix(self) -> pulumi.Output[Optional[_builtins.str]]:
+    def ipv6_prefix(self) -> pulumi.Output[_builtins.str]:
         """
         The IPv6 prefix of the network (CIDR).
         """
@@ -960,7 +934,7 @@ class Network(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter(name="ipv6PrefixLength")
-    def ipv6_prefix_length(self) -> pulumi.Output[Optional[_builtins.int]]:
+    def ipv6_prefix_length(self) -> pulumi.Output[_builtins.int]:
         """
         The IPv6 prefix length of the network.
         """
@@ -991,15 +965,6 @@ class Network(pulumi.CustomResource):
         return pulumi.get(self, "name")
 
     @_builtins.property
-    @pulumi.getter
-    @_utilities.deprecated("""Use `ipv4_nameservers` to configure the nameservers for IPv4.""")
-    def nameservers(self) -> pulumi.Output[Sequence[_builtins.str]]:
-        """
-        The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4_nameservers` to configure the nameservers for IPv4.
-        """
-        return pulumi.get(self, "nameservers")
-
-    @_builtins.property
     @pulumi.getter(name="networkId")
     def network_id(self) -> pulumi.Output[_builtins.str]:
         """
@@ -1024,15 +989,6 @@ class Network(pulumi.CustomResource):
         return pulumi.get(self, "no_ipv6_gateway")
 
     @_builtins.property
-    @pulumi.getter
-    @_utilities.deprecated("""Use `ipv4_prefixes` to read the prefixes of the IPv4 networks.""")
-    def prefixes(self) -> pulumi.Output[Sequence[_builtins.str]]:
-        """
-        The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4_prefixes` to read the prefixes of the IPv4 networks.
-        """
-        return pulumi.get(self, "prefixes")
-
-    @_builtins.property
     @pulumi.getter(name="projectId")
     def project_id(self) -> pulumi.Output[_builtins.str]:
         """
@@ -1052,7 +1008,6 @@ class Network(pulumi.CustomResource):
     @pulumi.getter
     def region(self) -> pulumi.Output[_builtins.str]:
         """
-        Can only be used when experimental "network" is set.
         The resource region. If not defined, the provider region is used.
         """
         return pulumi.get(self, "region")
@@ -1069,7 +1024,6 @@ class Network(pulumi.CustomResource):
     @pulumi.getter(name="routingTableId")
     def routing_table_id(self) -> pulumi.Output[_builtins.str]:
         """
-        Can only be used when experimental "network" is set.
         The ID of the routing table associated with the network.
         """
         return pulumi.get(self, "routing_table_id")

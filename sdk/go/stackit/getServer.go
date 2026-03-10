@@ -28,6 +28,8 @@ func LookupServer(ctx *pulumi.Context, args *LookupServerArgs, opts ...pulumi.In
 type LookupServerArgs struct {
 	// STACKIT project ID to which the server is associated.
 	ProjectId string `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The server ID.
 	ServerId string `pulumi:"serverId"`
 }
@@ -42,7 +44,8 @@ type LookupServerResult struct {
 	BootVolume GetServerBootVolume `pulumi:"bootVolume"`
 	// Date-time when the server was created
 	CreatedAt string `pulumi:"createdAt"`
-	Id        string `pulumi:"id"`
+	// Terraform's internal resource ID. It is structured as "`projectId`,`region`,`serverId`".
+	Id string `pulumi:"id"`
 	// The image ID to be used for an ephemeral disk on the server.
 	ImageId string `pulumi:"imageId"`
 	// The name of the keypair used during server creation.
@@ -51,7 +54,7 @@ type LookupServerResult struct {
 	Labels map[string]string `pulumi:"labels"`
 	// Date-time when the server was launched
 	LaunchedAt string `pulumi:"launchedAt"`
-	// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+	// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
 	MachineType string `pulumi:"machineType"`
 	// The name of the server.
 	Name string `pulumi:"name"`
@@ -59,6 +62,8 @@ type LookupServerResult struct {
 	NetworkInterfaces []string `pulumi:"networkInterfaces"`
 	// STACKIT project ID to which the server is associated.
 	ProjectId string `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The server ID.
 	ServerId string `pulumi:"serverId"`
 	// Date-time when the server was updated
@@ -80,6 +85,8 @@ func LookupServerOutput(ctx *pulumi.Context, args LookupServerOutputArgs, opts .
 type LookupServerOutputArgs struct {
 	// STACKIT project ID to which the server is associated.
 	ProjectId pulumi.StringInput `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput `pulumi:"region"`
 	// The server ID.
 	ServerId pulumi.StringInput `pulumi:"serverId"`
 }
@@ -123,6 +130,7 @@ func (o LookupServerResultOutput) CreatedAt() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupServerResult) string { return v.CreatedAt }).(pulumi.StringOutput)
 }
 
+// Terraform's internal resource ID. It is structured as "`projectId`,`region`,`serverId`".
 func (o LookupServerResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupServerResult) string { return v.Id }).(pulumi.StringOutput)
 }
@@ -147,7 +155,7 @@ func (o LookupServerResultOutput) LaunchedAt() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupServerResult) string { return v.LaunchedAt }).(pulumi.StringOutput)
 }
 
-// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
 func (o LookupServerResultOutput) MachineType() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupServerResult) string { return v.MachineType }).(pulumi.StringOutput)
 }
@@ -165,6 +173,11 @@ func (o LookupServerResultOutput) NetworkInterfaces() pulumi.StringArrayOutput {
 // STACKIT project ID to which the server is associated.
 func (o LookupServerResultOutput) ProjectId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupServerResult) string { return v.ProjectId }).(pulumi.StringOutput)
+}
+
+// The resource region. If not defined, the provider region is used.
+func (o LookupServerResultOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v LookupServerResult) *string { return v.Region }).(pulumi.StringPtrOutput)
 }
 
 // The server ID.

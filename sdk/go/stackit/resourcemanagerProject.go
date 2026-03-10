@@ -12,26 +12,31 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
+// Resource Manager project resource schema.
+//
+// > In case you're getting started with an empty STACKIT organization and want to use this resource to create projects in it, check out this guide for how to create a service account which you can use for authentication in the STACKIT Terraform provider.
+//
 // ## Example Usage
 type ResourcemanagerProject struct {
 	pulumi.CustomResourceState
 
 	// Project container ID. Globally unique, user-friendly identifier.
 	ContainerId pulumi.StringOutput `pulumi:"containerId"`
-	// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-	// [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-	// project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-	// changed after project creation.
+	// Date-time at which the project was created.
+	CreationTime pulumi.StringOutput `pulumi:"creationTime"`
+	// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.\
+	// To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// Project name.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-	// have no effect.
+	// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
 	OwnerEmail pulumi.StringOutput `pulumi:"ownerEmail"`
 	// Parent resource identifier. Both container ID (user-friendly) and UUID are supported
 	ParentContainerId pulumi.StringOutput `pulumi:"parentContainerId"`
 	// Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project.
 	ProjectId pulumi.StringOutput `pulumi:"projectId"`
+	// Date-time at which the project was last modified.
+	UpdateTime pulumi.StringOutput `pulumi:"updateTime"`
 }
 
 // NewResourcemanagerProject registers a new resource with the given unique name, arguments, and options.
@@ -72,39 +77,41 @@ func GetResourcemanagerProject(ctx *pulumi.Context,
 type resourcemanagerProjectState struct {
 	// Project container ID. Globally unique, user-friendly identifier.
 	ContainerId *string `pulumi:"containerId"`
-	// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-	// [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-	// project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-	// changed after project creation.
+	// Date-time at which the project was created.
+	CreationTime *string `pulumi:"creationTime"`
+	// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.\
+	// To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
 	Labels map[string]string `pulumi:"labels"`
 	// Project name.
 	Name *string `pulumi:"name"`
-	// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-	// have no effect.
+	// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
 	OwnerEmail *string `pulumi:"ownerEmail"`
 	// Parent resource identifier. Both container ID (user-friendly) and UUID are supported
 	ParentContainerId *string `pulumi:"parentContainerId"`
 	// Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project.
 	ProjectId *string `pulumi:"projectId"`
+	// Date-time at which the project was last modified.
+	UpdateTime *string `pulumi:"updateTime"`
 }
 
 type ResourcemanagerProjectState struct {
 	// Project container ID. Globally unique, user-friendly identifier.
 	ContainerId pulumi.StringPtrInput
-	// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-	// [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-	// project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-	// changed after project creation.
+	// Date-time at which the project was created.
+	CreationTime pulumi.StringPtrInput
+	// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.\
+	// To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
 	Labels pulumi.StringMapInput
 	// Project name.
 	Name pulumi.StringPtrInput
-	// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-	// have no effect.
+	// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
 	OwnerEmail pulumi.StringPtrInput
 	// Parent resource identifier. Both container ID (user-friendly) and UUID are supported
 	ParentContainerId pulumi.StringPtrInput
 	// Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project.
 	ProjectId pulumi.StringPtrInput
+	// Date-time at which the project was last modified.
+	UpdateTime pulumi.StringPtrInput
 }
 
 func (ResourcemanagerProjectState) ElementType() reflect.Type {
@@ -112,15 +119,12 @@ func (ResourcemanagerProjectState) ElementType() reflect.Type {
 }
 
 type resourcemanagerProjectArgs struct {
-	// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-	// [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-	// project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-	// changed after project creation.
+	// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.\
+	// To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
 	Labels map[string]string `pulumi:"labels"`
 	// Project name.
 	Name *string `pulumi:"name"`
-	// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-	// have no effect.
+	// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
 	OwnerEmail string `pulumi:"ownerEmail"`
 	// Parent resource identifier. Both container ID (user-friendly) and UUID are supported
 	ParentContainerId string `pulumi:"parentContainerId"`
@@ -128,15 +132,12 @@ type resourcemanagerProjectArgs struct {
 
 // The set of arguments for constructing a ResourcemanagerProject resource.
 type ResourcemanagerProjectArgs struct {
-	// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-	// [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-	// project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-	// changed after project creation.
+	// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.\
+	// To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
 	Labels pulumi.StringMapInput
 	// Project name.
 	Name pulumi.StringPtrInput
-	// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-	// have no effect.
+	// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
 	OwnerEmail pulumi.StringInput
 	// Parent resource identifier. Both container ID (user-friendly) and UUID are supported
 	ParentContainerId pulumi.StringInput
@@ -234,10 +235,13 @@ func (o ResourcemanagerProjectOutput) ContainerId() pulumi.StringOutput {
 	return o.ApplyT(func(v *ResourcemanagerProject) pulumi.StringOutput { return v.ContainerId }).(pulumi.StringOutput)
 }
 
-// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex
-// [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}. To create a
-// project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be
-// changed after project creation.
+// Date-time at which the project was created.
+func (o ResourcemanagerProjectOutput) CreationTime() pulumi.StringOutput {
+	return o.ApplyT(func(v *ResourcemanagerProject) pulumi.StringOutput { return v.CreationTime }).(pulumi.StringOutput)
+}
+
+// Labels are key-value string pairs which can be attached to a resource container. A label key must match the regex [A-ZÄÜÖa-zäüöß0-9_-]{1,64}. A label value must match the regex ^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}.\
+// To create a project within a STACKIT Network Area, setting the label `networkArea=<networkAreaID>` is required. This can not be changed after project creation.
 func (o ResourcemanagerProjectOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *ResourcemanagerProject) pulumi.StringMapOutput { return v.Labels }).(pulumi.StringMapOutput)
 }
@@ -247,8 +251,7 @@ func (o ResourcemanagerProjectOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *ResourcemanagerProject) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will
-// have no effect.
+// Email address of the owner of the project. This value is only considered during creation. Changing it afterwards will have no effect.
 func (o ResourcemanagerProjectOutput) OwnerEmail() pulumi.StringOutput {
 	return o.ApplyT(func(v *ResourcemanagerProject) pulumi.StringOutput { return v.OwnerEmail }).(pulumi.StringOutput)
 }
@@ -261,6 +264,11 @@ func (o ResourcemanagerProjectOutput) ParentContainerId() pulumi.StringOutput {
 // Project UUID identifier. This is the ID that can be used in most of the other resources to identify the project.
 func (o ResourcemanagerProjectOutput) ProjectId() pulumi.StringOutput {
 	return o.ApplyT(func(v *ResourcemanagerProject) pulumi.StringOutput { return v.ProjectId }).(pulumi.StringOutput)
+}
+
+// Date-time at which the project was last modified.
+func (o ResourcemanagerProjectOutput) UpdateTime() pulumi.StringOutput {
+	return o.ApplyT(func(v *ResourcemanagerProject) pulumi.StringOutput { return v.UpdateTime }).(pulumi.StringOutput)
 }
 
 type ResourcemanagerProjectArrayOutput struct{ *pulumi.OutputState }
