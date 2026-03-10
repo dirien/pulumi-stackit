@@ -83,6 +83,9 @@ class GetServerBackupScheduleResult:
     @_builtins.property
     @pulumi.getter
     def id(self) -> _builtins.str:
+        """
+        Terraform's internal resource identifier. It is structured as "`project_id`,`server_id`,`backup_schedule_id`".
+        """
         return pulumi.get(self, "id")
 
     @_builtins.property
@@ -113,7 +116,7 @@ class GetServerBackupScheduleResult:
     @pulumi.getter
     def rrule(self) -> _builtins.str:
         """
-        Backup schedule described in `rrule` (recurrence rule) format.
+        An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         """
         return pulumi.get(self, "rrule")
 
@@ -151,8 +154,6 @@ def get_server_backup_schedule(backup_schedule_id: Optional[_builtins.int] = Non
     """
     Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.
 
-    > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
-
     ## Example Usage
 
 
@@ -186,8 +187,6 @@ def get_server_backup_schedule_output(backup_schedule_id: Optional[pulumi.Input[
                                       opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetServerBackupScheduleResult]:
     """
     Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.
-
-    > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
 
     ## Example Usage
 

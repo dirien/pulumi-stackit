@@ -47,6 +47,9 @@ class GetServerBackupSchedulesResult:
     @_builtins.property
     @pulumi.getter
     def id(self) -> _builtins.str:
+        """
+        Terraform's internal data source identifier. It is structured as "`project_id`,`server_id`".
+        """
         return pulumi.get(self, "id")
 
     @_builtins.property
@@ -99,8 +102,6 @@ def get_server_backup_schedules(project_id: Optional[_builtins.str] = None,
     """
     Server backup schedules datasource schema. Must have a `region` specified in the provider configuration.
 
-    > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
-
     ## Example Usage
 
 
@@ -127,8 +128,6 @@ def get_server_backup_schedules_output(project_id: Optional[pulumi.Input[_builti
                                        opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetServerBackupSchedulesResult]:
     """
     Server backup schedules datasource schema. Must have a `region` specified in the provider configuration.
-
-    > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
 
     ## Example Usage
 

@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Routing table resource schema. Must have a `region` specified in the provider configuration.
+    /// Routing table resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// &gt; This resource is part of the routing-tables experiment and is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.
     /// 
@@ -31,6 +31,12 @@ namespace ediri.Stackit
         /// </summary>
         [Output("description")]
         public Output<string> Description { get; private set; } = null!;
+
+        /// <summary>
+        /// This controls whether dynamic routes are propagated to this routing table
+        /// </summary>
+        [Output("dynamicRoutes")]
+        public Output<bool> DynamicRoutes { get; private set; } = null!;
 
         /// <summary>
         /// Labels are key-value string pairs which can be attached to a resource container
@@ -133,6 +139,12 @@ namespace ediri.Stackit
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        /// <summary>
+        /// This controls whether dynamic routes are propagated to this routing table
+        /// </summary>
+        [Input("dynamicRoutes")]
+        public Input<bool>? DynamicRoutes { get; set; }
+
         [Input("labels")]
         private InputMap<string>? _labels;
 
@@ -194,6 +206,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
+
+        /// <summary>
+        /// This controls whether dynamic routes are propagated to this routing table
+        /// </summary>
+        [Input("dynamicRoutes")]
+        public Input<bool>? DynamicRoutes { get; set; }
 
         [Input("labels")]
         private InputMap<string>? _labels;

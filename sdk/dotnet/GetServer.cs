@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetServer
     {
         /// <summary>
-        /// Server datasource schema. Must have a `region` specified in the provider configuration.
+        /// Server datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetServerResult>("stackit:index/getServer:getServer", args ?? new GetServerArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Server datasource schema. Must have a `region` specified in the provider configuration.
+        /// Server datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetServerResult>("stackit:index/getServer:getServer", args ?? new GetServerInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Server datasource schema. Must have a `region` specified in the provider configuration.
+        /// Server datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -68,6 +68,12 @@ namespace ediri.Stackit
         public string ProjectId { get; set; } = null!;
 
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public string? Region { get; set; }
+
+        /// <summary>
         /// The server ID.
         /// </summary>
         [Input("serverId", required: true)]
@@ -86,6 +92,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("projectId", required: true)]
         public Input<string> ProjectId { get; set; } = null!;
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
 
         /// <summary>
         /// The server ID.
@@ -119,6 +131,9 @@ namespace ediri.Stackit
         /// Date-time when the server was created
         /// </summary>
         public readonly string CreatedAt;
+        /// <summary>
+        /// Terraform's internal resource ID. It is structured as "`ProjectId`,`Region`,`ServerId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// The image ID to be used for an ephemeral disk on the server.
@@ -137,7 +152,7 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string LaunchedAt;
         /// <summary>
-        /// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+        /// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
         /// </summary>
         public readonly string MachineType;
         /// <summary>
@@ -152,6 +167,10 @@ namespace ediri.Stackit
         /// STACKIT project ID to which the server is associated.
         /// </summary>
         public readonly string ProjectId;
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        public readonly string? Region;
         /// <summary>
         /// The server ID.
         /// </summary>
@@ -193,6 +212,8 @@ namespace ediri.Stackit
 
             string projectId,
 
+            string? region,
+
             string serverId,
 
             string updatedAt,
@@ -212,6 +233,7 @@ namespace ediri.Stackit
             Name = name;
             NetworkInterfaces = networkInterfaces;
             ProjectId = projectId;
+            Region = region;
             ServerId = serverId;
             UpdatedAt = updatedAt;
             UserData = userData;

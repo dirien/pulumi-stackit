@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Secrets Manager instance resource schema. Must have a `region` specified in the provider configuration.
+    /// Secrets Manager instance resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
