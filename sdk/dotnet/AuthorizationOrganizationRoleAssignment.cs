@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// organization Role Assignment resource schema.
+    /// Organization Role Assignment resource schema.
     /// 
     /// &gt; This resource is part of the iam experiment and is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.
     /// 
@@ -21,19 +21,19 @@ namespace ediri.Stackit
     public partial class AuthorizationOrganizationRoleAssignment : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// organization Resource to assign the role to.
+        /// Organization Resource to assign the role to.
         /// </summary>
         [Output("resourceId")]
         public Output<string> ResourceId { get; private set; } = null!;
 
         /// <summary>
-        /// Role to be assigned
+        /// Role to be assigned. Available roles can be queried using stackit-cli: `stackit curl https://authorization.api.stackit.cloud/v2/permissions`
         /// </summary>
         [Output("role")]
         public Output<string> Role { get; private set; } = null!;
 
         /// <summary>
-        /// Identifier of user, service account or client. Usually email address or name in case of clients
+        /// Identifier of user, service account or client. Usually email address or name in case of clients. All letters must be lowercased.
         /// </summary>
         [Output("subject")]
         public Output<string> Subject { get; private set; } = null!;
@@ -86,19 +86,19 @@ namespace ediri.Stackit
     public sealed class AuthorizationOrganizationRoleAssignmentArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// organization Resource to assign the role to.
+        /// Organization Resource to assign the role to.
         /// </summary>
         [Input("resourceId", required: true)]
         public Input<string> ResourceId { get; set; } = null!;
 
         /// <summary>
-        /// Role to be assigned
+        /// Role to be assigned. Available roles can be queried using stackit-cli: `stackit curl https://authorization.api.stackit.cloud/v2/permissions`
         /// </summary>
         [Input("role", required: true)]
         public Input<string> Role { get; set; } = null!;
 
         /// <summary>
-        /// Identifier of user, service account or client. Usually email address or name in case of clients
+        /// Identifier of user, service account or client. Usually email address or name in case of clients. All letters must be lowercased.
         /// </summary>
         [Input("subject", required: true)]
         public Input<string> Subject { get; set; } = null!;
@@ -112,19 +112,19 @@ namespace ediri.Stackit
     public sealed class AuthorizationOrganizationRoleAssignmentState : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// organization Resource to assign the role to.
+        /// Organization Resource to assign the role to.
         /// </summary>
         [Input("resourceId")]
         public Input<string>? ResourceId { get; set; }
 
         /// <summary>
-        /// Role to be assigned
+        /// Role to be assigned. Available roles can be queried using stackit-cli: `stackit curl https://authorization.api.stackit.cloud/v2/permissions`
         /// </summary>
         [Input("role")]
         public Input<string>? Role { get; set; }
 
         /// <summary>
-        /// Identifier of user, service account or client. Usually email address or name in case of clients
+        /// Identifier of user, service account or client. Usually email address or name in case of clients. All letters must be lowercased.
         /// </summary>
         [Input("subject")]
         public Input<string>? Subject { get; set; }

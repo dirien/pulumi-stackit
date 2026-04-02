@@ -13,6 +13,8 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
+from . import outputs
+from ._inputs import *
 
 __all__ = ['CdnCustomDomainArgs', 'CdnCustomDomain']
 
@@ -21,14 +23,19 @@ class CdnCustomDomainArgs:
     def __init__(__self__, *,
                  distribution_id: pulumi.Input[_builtins.str],
                  project_id: pulumi.Input[_builtins.str],
+                 certificate: Optional[pulumi.Input['CdnCustomDomainCertificateArgs']] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a CdnCustomDomain resource.
+
         :param pulumi.Input[_builtins.str] distribution_id: CDN distribution ID
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID associated with the distribution
+        :param pulumi.Input['CdnCustomDomainCertificateArgs'] certificate: The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
         """
         pulumi.set(__self__, "distribution_id", distribution_id)
         pulumi.set(__self__, "project_id", project_id)
+        if certificate is not None:
+            pulumi.set(__self__, "certificate", certificate)
         if name is not None:
             pulumi.set(__self__, "name", name)
 
@@ -58,6 +65,18 @@ class CdnCustomDomainArgs:
 
     @_builtins.property
     @pulumi.getter
+    def certificate(self) -> Optional[pulumi.Input['CdnCustomDomainCertificateArgs']]:
+        """
+        The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+        """
+        return pulumi.get(self, "certificate")
+
+    @certificate.setter
+    def certificate(self, value: Optional[pulumi.Input['CdnCustomDomainCertificateArgs']]):
+        pulumi.set(self, "certificate", value)
+
+    @_builtins.property
+    @pulumi.getter
     def name(self) -> Optional[pulumi.Input[_builtins.str]]:
         return pulumi.get(self, "name")
 
@@ -69,6 +88,7 @@ class CdnCustomDomainArgs:
 @pulumi.input_type
 class _CdnCustomDomainState:
     def __init__(__self__, *,
+                 certificate: Optional[pulumi.Input['CdnCustomDomainCertificateArgs']] = None,
                  distribution_id: Optional[pulumi.Input[_builtins.str]] = None,
                  errors: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
@@ -76,11 +96,15 @@ class _CdnCustomDomainState:
                  status: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering CdnCustomDomain resources.
+
+        :param pulumi.Input['CdnCustomDomainCertificateArgs'] certificate: The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
         :param pulumi.Input[_builtins.str] distribution_id: CDN distribution ID
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] errors: List of distribution errors
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID associated with the distribution
         :param pulumi.Input[_builtins.str] status: Status of the distribution
         """
+        if certificate is not None:
+            pulumi.set(__self__, "certificate", certificate)
         if distribution_id is not None:
             pulumi.set(__self__, "distribution_id", distribution_id)
         if errors is not None:
@@ -91,6 +115,18 @@ class _CdnCustomDomainState:
             pulumi.set(__self__, "project_id", project_id)
         if status is not None:
             pulumi.set(__self__, "status", status)
+
+    @_builtins.property
+    @pulumi.getter
+    def certificate(self) -> Optional[pulumi.Input['CdnCustomDomainCertificateArgs']]:
+        """
+        The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+        """
+        return pulumi.get(self, "certificate")
+
+    @certificate.setter
+    def certificate(self, value: Optional[pulumi.Input['CdnCustomDomainCertificateArgs']]):
+        pulumi.set(self, "certificate", value)
 
     @_builtins.property
     @pulumi.getter(name="distributionId")
@@ -156,6 +192,7 @@ class CdnCustomDomain(pulumi.CustomResource):
     def __init__(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 certificate: Optional[pulumi.Input[Union['CdnCustomDomainCertificateArgs', 'CdnCustomDomainCertificateArgsDict']]] = None,
                  distribution_id: Optional[pulumi.Input[_builtins.str]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
@@ -167,8 +204,10 @@ class CdnCustomDomain(pulumi.CustomResource):
 
         ## Example Usage
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Union['CdnCustomDomainCertificateArgs', 'CdnCustomDomainCertificateArgsDict']] certificate: The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
         :param pulumi.Input[_builtins.str] distribution_id: CDN distribution ID
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID associated with the distribution
         """
@@ -185,6 +224,7 @@ class CdnCustomDomain(pulumi.CustomResource):
 
         ## Example Usage
 
+
         :param str resource_name: The name of the resource.
         :param CdnCustomDomainArgs args: The arguments to use to populate this resource's properties.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -200,6 +240,7 @@ class CdnCustomDomain(pulumi.CustomResource):
     def _internal_init(__self__,
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
+                 certificate: Optional[pulumi.Input[Union['CdnCustomDomainCertificateArgs', 'CdnCustomDomainCertificateArgsDict']]] = None,
                  distribution_id: Optional[pulumi.Input[_builtins.str]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
@@ -212,6 +253,7 @@ class CdnCustomDomain(pulumi.CustomResource):
                 raise TypeError('__props__ is only valid when passed in combination with a valid opts.id to get an existing resource')
             __props__ = CdnCustomDomainArgs.__new__(CdnCustomDomainArgs)
 
+            __props__.__dict__["certificate"] = certificate
             if distribution_id is None and not opts.urn:
                 raise TypeError("Missing required property 'distribution_id'")
             __props__.__dict__["distribution_id"] = distribution_id
@@ -231,6 +273,7 @@ class CdnCustomDomain(pulumi.CustomResource):
     def get(resource_name: str,
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
+            certificate: Optional[pulumi.Input[Union['CdnCustomDomainCertificateArgs', 'CdnCustomDomainCertificateArgsDict']]] = None,
             distribution_id: Optional[pulumi.Input[_builtins.str]] = None,
             errors: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
@@ -243,6 +286,7 @@ class CdnCustomDomain(pulumi.CustomResource):
         :param str resource_name: The unique name of the resulting resource.
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
+        :param pulumi.Input[Union['CdnCustomDomainCertificateArgs', 'CdnCustomDomainCertificateArgsDict']] certificate: The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
         :param pulumi.Input[_builtins.str] distribution_id: CDN distribution ID
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] errors: List of distribution errors
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID associated with the distribution
@@ -252,12 +296,21 @@ class CdnCustomDomain(pulumi.CustomResource):
 
         __props__ = _CdnCustomDomainState.__new__(_CdnCustomDomainState)
 
+        __props__.__dict__["certificate"] = certificate
         __props__.__dict__["distribution_id"] = distribution_id
         __props__.__dict__["errors"] = errors
         __props__.__dict__["name"] = name
         __props__.__dict__["project_id"] = project_id
         __props__.__dict__["status"] = status
         return CdnCustomDomain(resource_name, opts=opts, __props__=__props__)
+
+    @_builtins.property
+    @pulumi.getter
+    def certificate(self) -> pulumi.Output[Optional['outputs.CdnCustomDomainCertificate']]:
+        """
+        The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+        """
+        return pulumi.get(self, "certificate")
 
     @_builtins.property
     @pulumi.getter(name="distributionId")

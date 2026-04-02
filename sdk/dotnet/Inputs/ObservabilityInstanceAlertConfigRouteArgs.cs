@@ -13,6 +13,12 @@ namespace ediri.Stackit.Inputs
 
     public sealed class ObservabilityInstanceAlertConfigRouteArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Whether an alert should continue matching subsequent sibling nodes.
+        /// </summary>
+        [Input("continue")]
+        public Input<bool>? Continue { get; set; }
+
         [Input("groupBies")]
         private InputList<string>? _groupBies;
 
@@ -36,30 +42,6 @@ namespace ediri.Stackit.Inputs
         /// </summary>
         [Input("groupWait")]
         public Input<string>? GroupWait { get; set; }
-
-        [Input("match")]
-        private InputMap<string>? _match;
-
-        /// <summary>
-        /// A set of equality matchers an alert has to fulfill to match the node.
-        /// </summary>
-        public InputMap<string> Match
-        {
-            get => _match ?? (_match = new InputMap<string>());
-            set => _match = value;
-        }
-
-        [Input("matchRegex")]
-        private InputMap<string>? _matchRegex;
-
-        /// <summary>
-        /// A set of regex-matchers an alert has to fulfill to match the node.
-        /// </summary>
-        public InputMap<string> MatchRegex
-        {
-            get => _matchRegex ?? (_matchRegex = new InputMap<string>());
-            set => _matchRegex = value;
-        }
 
         /// <summary>
         /// The name of the receiver to route the alerts to.

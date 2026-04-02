@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetRabbitmqInstance
     {
         /// <summary>
-        /// RabbitMQ instance data source schema. Must have a `region` specified in the provider configuration.
+        /// RabbitMQ instance data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetRabbitmqInstanceResult>("stackit:index/getRabbitmqInstance:getRabbitmqInstance", args ?? new GetRabbitmqInstanceArgs(), options.WithDefaults());
 
         /// <summary>
-        /// RabbitMQ instance data source schema. Must have a `region` specified in the provider configuration.
+        /// RabbitMQ instance data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetRabbitmqInstanceResult>("stackit:index/getRabbitmqInstance:getRabbitmqInstance", args ?? new GetRabbitmqInstanceInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// RabbitMQ instance data source schema. Must have a `region` specified in the provider configuration.
+        /// RabbitMQ instance data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -107,6 +107,9 @@ namespace ediri.Stackit
         public readonly string CfOrganizationGuid;
         public readonly string CfSpaceGuid;
         public readonly string DashboardUrl;
+        /// <summary>
+        /// Terraform's internal data source. identifier. It is structured as "`ProjectId`,`InstanceId`".
+        /// </summary>
         public readonly string Id;
         public readonly string ImageUrl;
         /// <summary>

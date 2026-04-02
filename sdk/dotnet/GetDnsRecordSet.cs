@@ -76,6 +76,9 @@ namespace ediri.Stackit
         [Input("recordSetId", required: true)]
         public string RecordSetId { get; set; } = null!;
 
+        [Input("timeouts")]
+        public Inputs.GetDnsRecordSetTimeoutsArgs? Timeouts { get; set; }
+
         /// <summary>
         /// The zone ID to which is dns record set is associated.
         /// </summary>
@@ -101,6 +104,9 @@ namespace ediri.Stackit
         /// </summary>
         [Input("recordSetId", required: true)]
         public Input<string> RecordSetId { get; set; } = null!;
+
+        [Input("timeouts")]
+        public Input<Inputs.GetDnsRecordSetTimeoutsInputArgs>? Timeouts { get; set; }
 
         /// <summary>
         /// The zone ID to which is dns record set is associated.
@@ -134,6 +140,9 @@ namespace ediri.Stackit
         /// Fully qualified domain name (FQDN) of the record set.
         /// </summary>
         public readonly string Fqdn;
+        /// <summary>
+        /// Terraform's internal data source. ID. It is structured as "`ProjectId`,`ZoneId`,`RecordSetId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// Name of the record which should be a valid domain according to rfc1035 Section 2.3.4. E.g. `example.com`
@@ -155,6 +164,7 @@ namespace ediri.Stackit
         /// Record set state.
         /// </summary>
         public readonly string State;
+        public readonly Outputs.GetDnsRecordSetTimeoutsResult? Timeouts;
         /// <summary>
         /// Time to live. E.g. 3600
         /// </summary>
@@ -190,6 +200,8 @@ namespace ediri.Stackit
 
             string state,
 
+            Outputs.GetDnsRecordSetTimeoutsResult? timeouts,
+
             int ttl,
 
             string type,
@@ -206,6 +218,7 @@ namespace ediri.Stackit
             RecordSetId = recordSetId;
             Records = records;
             State = state;
+            Timeouts = timeouts;
             Ttl = ttl;
             Type = type;
             ZoneId = zoneId;

@@ -24,19 +24,24 @@ class VolumeArgs:
                  availability_zone: pulumi.Input[_builtins.str],
                  project_id: pulumi.Input[_builtins.str],
                  description: Optional[pulumi.Input[_builtins.str]] = None,
+                 encryption_parameters: Optional[pulumi.Input['VolumeEncryptionParametersArgs']] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  performance_class: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  size: Optional[pulumi.Input[_builtins.int]] = None,
                  source: Optional[pulumi.Input['VolumeSourceArgs']] = None):
         """
         The set of arguments for constructing a Volume resource.
+
         :param pulumi.Input[_builtins.str] availability_zone: The availability zone of the volume.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the volume is associated.
         :param pulumi.Input[_builtins.str] description: The description of the volume.
+        :param pulumi.Input['VolumeEncryptionParametersArgs'] encryption_parameters: Parameter to connect to a key-encryption-key within the STACKIT-KMS to create encrypted volumes. These parameters never leave the backend again. So these parameters are not present on imports or in the datasource. They live only in your Terraform state after creation of the resource.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the volume.
-        :param pulumi.Input[_builtins.str] performance_class: The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+        :param pulumi.Input[_builtins.str] performance_class: The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.int] size: The size of the volume in GB. It can only be updated to a larger value than the current size. Either `size` or `source` must be provided
         :param pulumi.Input['VolumeSourceArgs'] source: The source of the volume. It can be either a volume, an image, a snapshot or a backup. Either `size` or `source` must be provided
         """
@@ -44,12 +49,16 @@ class VolumeArgs:
         pulumi.set(__self__, "project_id", project_id)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if encryption_parameters is not None:
+            pulumi.set(__self__, "encryption_parameters", encryption_parameters)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if performance_class is not None:
             pulumi.set(__self__, "performance_class", performance_class)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
         if size is not None:
             pulumi.set(__self__, "size", size)
         if source is not None:
@@ -92,6 +101,18 @@ class VolumeArgs:
         pulumi.set(self, "description", value)
 
     @_builtins.property
+    @pulumi.getter(name="encryptionParameters")
+    def encryption_parameters(self) -> Optional[pulumi.Input['VolumeEncryptionParametersArgs']]:
+        """
+        Parameter to connect to a key-encryption-key within the STACKIT-KMS to create encrypted volumes. These parameters never leave the backend again. So these parameters are not present on imports or in the datasource. They live only in your Terraform state after creation of the resource.
+        """
+        return pulumi.get(self, "encryption_parameters")
+
+    @encryption_parameters.setter
+    def encryption_parameters(self, value: Optional[pulumi.Input['VolumeEncryptionParametersArgs']]):
+        pulumi.set(self, "encryption_parameters", value)
+
+    @_builtins.property
     @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
@@ -119,13 +140,25 @@ class VolumeArgs:
     @pulumi.getter(name="performanceClass")
     def performance_class(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+        The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
         """
         return pulumi.get(self, "performance_class")
 
     @performance_class.setter
     def performance_class(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "performance_class", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "region", value)
 
     @_builtins.property
     @pulumi.getter
@@ -157,22 +190,29 @@ class _VolumeState:
     def __init__(__self__, *,
                  availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
+                 encrypted: Optional[pulumi.Input[_builtins.bool]] = None,
+                 encryption_parameters: Optional[pulumi.Input['VolumeEncryptionParametersArgs']] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  performance_class: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  server_id: Optional[pulumi.Input[_builtins.str]] = None,
                  size: Optional[pulumi.Input[_builtins.int]] = None,
                  source: Optional[pulumi.Input['VolumeSourceArgs']] = None,
                  volume_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering Volume resources.
+
         :param pulumi.Input[_builtins.str] availability_zone: The availability zone of the volume.
         :param pulumi.Input[_builtins.str] description: The description of the volume.
+        :param pulumi.Input[_builtins.bool] encrypted: Indicates if the volume is encrypted.
+        :param pulumi.Input['VolumeEncryptionParametersArgs'] encryption_parameters: Parameter to connect to a key-encryption-key within the STACKIT-KMS to create encrypted volumes. These parameters never leave the backend again. So these parameters are not present on imports or in the datasource. They live only in your Terraform state after creation of the resource.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the volume.
-        :param pulumi.Input[_builtins.str] performance_class: The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+        :param pulumi.Input[_builtins.str] performance_class: The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the volume is associated.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.str] server_id: The server ID of the server to which the volume is attached to.
         :param pulumi.Input[_builtins.int] size: The size of the volume in GB. It can only be updated to a larger value than the current size. Either `size` or `source` must be provided
         :param pulumi.Input['VolumeSourceArgs'] source: The source of the volume. It can be either a volume, an image, a snapshot or a backup. Either `size` or `source` must be provided
@@ -182,6 +222,10 @@ class _VolumeState:
             pulumi.set(__self__, "availability_zone", availability_zone)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if encrypted is not None:
+            pulumi.set(__self__, "encrypted", encrypted)
+        if encryption_parameters is not None:
+            pulumi.set(__self__, "encryption_parameters", encryption_parameters)
         if labels is not None:
             pulumi.set(__self__, "labels", labels)
         if name is not None:
@@ -190,6 +234,8 @@ class _VolumeState:
             pulumi.set(__self__, "performance_class", performance_class)
         if project_id is not None:
             pulumi.set(__self__, "project_id", project_id)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
         if server_id is not None:
             pulumi.set(__self__, "server_id", server_id)
         if size is not None:
@@ -225,6 +271,30 @@ class _VolumeState:
 
     @_builtins.property
     @pulumi.getter
+    def encrypted(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Indicates if the volume is encrypted.
+        """
+        return pulumi.get(self, "encrypted")
+
+    @encrypted.setter
+    def encrypted(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "encrypted", value)
+
+    @_builtins.property
+    @pulumi.getter(name="encryptionParameters")
+    def encryption_parameters(self) -> Optional[pulumi.Input['VolumeEncryptionParametersArgs']]:
+        """
+        Parameter to connect to a key-encryption-key within the STACKIT-KMS to create encrypted volumes. These parameters never leave the backend again. So these parameters are not present on imports or in the datasource. They live only in your Terraform state after creation of the resource.
+        """
+        return pulumi.get(self, "encryption_parameters")
+
+    @encryption_parameters.setter
+    def encryption_parameters(self, value: Optional[pulumi.Input['VolumeEncryptionParametersArgs']]):
+        pulumi.set(self, "encryption_parameters", value)
+
+    @_builtins.property
+    @pulumi.getter
     def labels(self) -> Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]]:
         """
         Labels are key-value string pairs which can be attached to a resource container
@@ -251,7 +321,7 @@ class _VolumeState:
     @pulumi.getter(name="performanceClass")
     def performance_class(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+        The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
         """
         return pulumi.get(self, "performance_class")
 
@@ -270,6 +340,18 @@ class _VolumeState:
     @project_id.setter
     def project_id(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "project_id", value)
+
+    @_builtins.property
+    @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "region", value)
 
     @_builtins.property
     @pulumi.getter(name="serverId")
@@ -328,26 +410,33 @@ class Volume(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
+                 encryption_parameters: Optional[pulumi.Input[Union['VolumeEncryptionParametersArgs', 'VolumeEncryptionParametersArgsDict']]] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  performance_class: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  size: Optional[pulumi.Input[_builtins.int]] = None,
                  source: Optional[pulumi.Input[Union['VolumeSourceArgs', 'VolumeSourceArgsDict']]] = None,
                  __props__=None):
         """
         Volume resource schema. Must have a `region` specified in the provider configuration.
 
+        > **Note:** Write-Only argument `key_payload_base64_wo` is available to use in place of `key_payload_base64`. Write-Only arguments are supported in HashiCorp Terraform 1.11.0 and later. Learn more.
+
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] availability_zone: The availability zone of the volume.
         :param pulumi.Input[_builtins.str] description: The description of the volume.
+        :param pulumi.Input[Union['VolumeEncryptionParametersArgs', 'VolumeEncryptionParametersArgsDict']] encryption_parameters: Parameter to connect to a key-encryption-key within the STACKIT-KMS to create encrypted volumes. These parameters never leave the backend again. So these parameters are not present on imports or in the datasource. They live only in your Terraform state after creation of the resource.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the volume.
-        :param pulumi.Input[_builtins.str] performance_class: The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+        :param pulumi.Input[_builtins.str] performance_class: The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the volume is associated.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.int] size: The size of the volume in GB. It can only be updated to a larger value than the current size. Either `size` or `source` must be provided
         :param pulumi.Input[Union['VolumeSourceArgs', 'VolumeSourceArgsDict']] source: The source of the volume. It can be either a volume, an image, a snapshot or a backup. Either `size` or `source` must be provided
         """
@@ -360,7 +449,10 @@ class Volume(pulumi.CustomResource):
         """
         Volume resource schema. Must have a `region` specified in the provider configuration.
 
+        > **Note:** Write-Only argument `key_payload_base64_wo` is available to use in place of `key_payload_base64`. Write-Only arguments are supported in HashiCorp Terraform 1.11.0 and later. Learn more.
+
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param VolumeArgs args: The arguments to use to populate this resource's properties.
@@ -379,10 +471,12 @@ class Volume(pulumi.CustomResource):
                  opts: Optional[pulumi.ResourceOptions] = None,
                  availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
                  description: Optional[pulumi.Input[_builtins.str]] = None,
+                 encryption_parameters: Optional[pulumi.Input[Union['VolumeEncryptionParametersArgs', 'VolumeEncryptionParametersArgsDict']]] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  performance_class: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  size: Optional[pulumi.Input[_builtins.int]] = None,
                  source: Optional[pulumi.Input[Union['VolumeSourceArgs', 'VolumeSourceArgsDict']]] = None,
                  __props__=None):
@@ -398,14 +492,17 @@ class Volume(pulumi.CustomResource):
                 raise TypeError("Missing required property 'availability_zone'")
             __props__.__dict__["availability_zone"] = availability_zone
             __props__.__dict__["description"] = description
+            __props__.__dict__["encryption_parameters"] = encryption_parameters
             __props__.__dict__["labels"] = labels
             __props__.__dict__["name"] = name
             __props__.__dict__["performance_class"] = performance_class
             if project_id is None and not opts.urn:
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
+            __props__.__dict__["region"] = region
             __props__.__dict__["size"] = size
             __props__.__dict__["source"] = source
+            __props__.__dict__["encrypted"] = None
             __props__.__dict__["server_id"] = None
             __props__.__dict__["volume_id"] = None
         super(Volume, __self__).__init__(
@@ -420,10 +517,13 @@ class Volume(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             availability_zone: Optional[pulumi.Input[_builtins.str]] = None,
             description: Optional[pulumi.Input[_builtins.str]] = None,
+            encrypted: Optional[pulumi.Input[_builtins.bool]] = None,
+            encryption_parameters: Optional[pulumi.Input[Union['VolumeEncryptionParametersArgs', 'VolumeEncryptionParametersArgsDict']]] = None,
             labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
             performance_class: Optional[pulumi.Input[_builtins.str]] = None,
             project_id: Optional[pulumi.Input[_builtins.str]] = None,
+            region: Optional[pulumi.Input[_builtins.str]] = None,
             server_id: Optional[pulumi.Input[_builtins.str]] = None,
             size: Optional[pulumi.Input[_builtins.int]] = None,
             source: Optional[pulumi.Input[Union['VolumeSourceArgs', 'VolumeSourceArgsDict']]] = None,
@@ -437,10 +537,13 @@ class Volume(pulumi.CustomResource):
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] availability_zone: The availability zone of the volume.
         :param pulumi.Input[_builtins.str] description: The description of the volume.
+        :param pulumi.Input[_builtins.bool] encrypted: Indicates if the volume is encrypted.
+        :param pulumi.Input[Union['VolumeEncryptionParametersArgs', 'VolumeEncryptionParametersArgsDict']] encryption_parameters: Parameter to connect to a key-encryption-key within the STACKIT-KMS to create encrypted volumes. These parameters never leave the backend again. So these parameters are not present on imports or in the datasource. They live only in your Terraform state after creation of the resource.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a resource container
         :param pulumi.Input[_builtins.str] name: The name of the volume.
-        :param pulumi.Input[_builtins.str] performance_class: The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+        :param pulumi.Input[_builtins.str] performance_class: The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the volume is associated.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.str] server_id: The server ID of the server to which the volume is attached to.
         :param pulumi.Input[_builtins.int] size: The size of the volume in GB. It can only be updated to a larger value than the current size. Either `size` or `source` must be provided
         :param pulumi.Input[Union['VolumeSourceArgs', 'VolumeSourceArgsDict']] source: The source of the volume. It can be either a volume, an image, a snapshot or a backup. Either `size` or `source` must be provided
@@ -452,10 +555,13 @@ class Volume(pulumi.CustomResource):
 
         __props__.__dict__["availability_zone"] = availability_zone
         __props__.__dict__["description"] = description
+        __props__.__dict__["encrypted"] = encrypted
+        __props__.__dict__["encryption_parameters"] = encryption_parameters
         __props__.__dict__["labels"] = labels
         __props__.__dict__["name"] = name
         __props__.__dict__["performance_class"] = performance_class
         __props__.__dict__["project_id"] = project_id
+        __props__.__dict__["region"] = region
         __props__.__dict__["server_id"] = server_id
         __props__.__dict__["size"] = size
         __props__.__dict__["source"] = source
@@ -480,6 +586,22 @@ class Volume(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
+    def encrypted(self) -> pulumi.Output[_builtins.bool]:
+        """
+        Indicates if the volume is encrypted.
+        """
+        return pulumi.get(self, "encrypted")
+
+    @_builtins.property
+    @pulumi.getter(name="encryptionParameters")
+    def encryption_parameters(self) -> pulumi.Output[Optional['outputs.VolumeEncryptionParameters']]:
+        """
+        Parameter to connect to a key-encryption-key within the STACKIT-KMS to create encrypted volumes. These parameters never leave the backend again. So these parameters are not present on imports or in the datasource. They live only in your Terraform state after creation of the resource.
+        """
+        return pulumi.get(self, "encryption_parameters")
+
+    @_builtins.property
+    @pulumi.getter
     def labels(self) -> pulumi.Output[Optional[Mapping[str, _builtins.str]]]:
         """
         Labels are key-value string pairs which can be attached to a resource container
@@ -498,7 +620,7 @@ class Volume(pulumi.CustomResource):
     @pulumi.getter(name="performanceClass")
     def performance_class(self) -> pulumi.Output[_builtins.str]:
         """
-        The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+        The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
         """
         return pulumi.get(self, "performance_class")
 
@@ -509,6 +631,14 @@ class Volume(pulumi.CustomResource):
         STACKIT project ID to which the volume is associated.
         """
         return pulumi.get(self, "project_id")
+
+    @_builtins.property
+    @pulumi.getter
+    def region(self) -> pulumi.Output[_builtins.str]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
 
     @_builtins.property
     @pulumi.getter(name="serverId")

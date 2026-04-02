@@ -26,10 +26,11 @@ func LookupDnsZone(ctx *pulumi.Context, args *LookupDnsZoneArgs, opts ...pulumi.
 
 // A collection of arguments for invoking getDnsZone.
 type LookupDnsZoneArgs struct {
-	// The zone name. E.g. `example.com`
+	// The zone name. E.g. `example.com` (must not end with a trailing dot).
 	DnsName *string `pulumi:"dnsName"`
 	// STACKIT project ID to which the dns zone is associated.
-	ProjectId string `pulumi:"projectId"`
+	ProjectId string              `pulumi:"projectId"`
+	Timeouts  *GetDnsZoneTimeouts `pulumi:"timeouts"`
 	// The zone ID.
 	ZoneId *string `pulumi:"zoneId"`
 }
@@ -45,11 +46,12 @@ type LookupDnsZoneResult struct {
 	DefaultTtl int `pulumi:"defaultTtl"`
 	// Description of the zone.
 	Description string `pulumi:"description"`
-	// The zone name. E.g. `example.com`
+	// The zone name. E.g. `example.com` (must not end with a trailing dot).
 	DnsName *string `pulumi:"dnsName"`
 	// Expire time.
-	ExpireTime int    `pulumi:"expireTime"`
-	Id         string `pulumi:"id"`
+	ExpireTime int `pulumi:"expireTime"`
+	// Terraform's internal data source. ID. It is structured as "`projectId`,`zoneId`".
+	Id string `pulumi:"id"`
 	// Specifies, if the zone is a reverse zone or not.
 	IsReverseZone bool `pulumi:"isReverseZone"`
 	// The user given name of the zone.
@@ -71,7 +73,8 @@ type LookupDnsZoneResult struct {
 	// Serial number.
 	SerialNumber int `pulumi:"serialNumber"`
 	// Zone state.
-	State string `pulumi:"state"`
+	State    string              `pulumi:"state"`
+	Timeouts *GetDnsZoneTimeouts `pulumi:"timeouts"`
 	// Zone type.
 	Type string `pulumi:"type"`
 	// Visibility of the zone.
@@ -91,10 +94,11 @@ func LookupDnsZoneOutput(ctx *pulumi.Context, args LookupDnsZoneOutputArgs, opts
 
 // A collection of arguments for invoking getDnsZone.
 type LookupDnsZoneOutputArgs struct {
-	// The zone name. E.g. `example.com`
+	// The zone name. E.g. `example.com` (must not end with a trailing dot).
 	DnsName pulumi.StringPtrInput `pulumi:"dnsName"`
 	// STACKIT project ID to which the dns zone is associated.
-	ProjectId pulumi.StringInput `pulumi:"projectId"`
+	ProjectId pulumi.StringInput         `pulumi:"projectId"`
+	Timeouts  GetDnsZoneTimeoutsPtrInput `pulumi:"timeouts"`
 	// The zone ID.
 	ZoneId pulumi.StringPtrInput `pulumi:"zoneId"`
 }
@@ -142,7 +146,7 @@ func (o LookupDnsZoneResultOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDnsZoneResult) string { return v.Description }).(pulumi.StringOutput)
 }
 
-// The zone name. E.g. `example.com`
+// The zone name. E.g. `example.com` (must not end with a trailing dot).
 func (o LookupDnsZoneResultOutput) DnsName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupDnsZoneResult) *string { return v.DnsName }).(pulumi.StringPtrOutput)
 }
@@ -152,6 +156,7 @@ func (o LookupDnsZoneResultOutput) ExpireTime() pulumi.IntOutput {
 	return o.ApplyT(func(v LookupDnsZoneResult) int { return v.ExpireTime }).(pulumi.IntOutput)
 }
 
+// Terraform's internal data source. ID. It is structured as "`projectId`,`zoneId`".
 func (o LookupDnsZoneResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDnsZoneResult) string { return v.Id }).(pulumi.StringOutput)
 }
@@ -209,6 +214,10 @@ func (o LookupDnsZoneResultOutput) SerialNumber() pulumi.IntOutput {
 // Zone state.
 func (o LookupDnsZoneResultOutput) State() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupDnsZoneResult) string { return v.State }).(pulumi.StringOutput)
+}
+
+func (o LookupDnsZoneResultOutput) Timeouts() GetDnsZoneTimeoutsPtrOutput {
+	return o.ApplyT(func(v LookupDnsZoneResult) *GetDnsZoneTimeouts { return v.Timeouts }).(GetDnsZoneTimeoutsPtrOutput)
 }
 
 // Zone type.

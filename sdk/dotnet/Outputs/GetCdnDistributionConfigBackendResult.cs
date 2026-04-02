@@ -15,28 +15,49 @@ namespace ediri.Stackit.Outputs
     public sealed class GetCdnDistributionConfigBackendResult
     {
         /// <summary>
-        /// The configured origin request headers for the backend
+        /// The URL of the bucket (e.g. https://s3.example.com). Required if type is 'bucket'.
+        /// </summary>
+        public readonly string BucketUrl;
+        /// <summary>
+        /// The configured type http to configure countries where content is allowed. A map of URLs to a list of countries
+        /// </summary>
+        public readonly ImmutableDictionary<string, ImmutableArray<string>> Geofencing;
+        /// <summary>
+        /// The configured type http origin request headers for the backend
         /// </summary>
         public readonly ImmutableDictionary<string, string> OriginRequestHeaders;
         /// <summary>
-        /// The configured backend type for the distribution
+        /// The configured backend type http for the distribution
         /// </summary>
         public readonly string OriginUrl;
         /// <summary>
-        /// The configured backend type. Supported values are: `http`.
+        /// The region where the bucket is hosted. Required if type is 'bucket'.
+        /// </summary>
+        public readonly string Region;
+        /// <summary>
+        /// The configured backend type. Possible values are: `Http`, `Bucket`.
         /// </summary>
         public readonly string Type;
 
         [OutputConstructor]
         private GetCdnDistributionConfigBackendResult(
+            string bucketUrl,
+
+            ImmutableDictionary<string, ImmutableArray<string>> geofencing,
+
             ImmutableDictionary<string, string> originRequestHeaders,
 
             string originUrl,
 
+            string region,
+
             string type)
         {
+            BucketUrl = bucketUrl;
+            Geofencing = geofencing;
             OriginRequestHeaders = originRequestHeaders;
             OriginUrl = originUrl;
+            Region = region;
             Type = type;
         }
     }

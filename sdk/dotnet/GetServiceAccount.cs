@@ -107,6 +107,9 @@ namespace ediri.Stackit
         /// Email of the service account.
         /// </summary>
         public readonly string Email;
+        /// <summary>
+        /// Terraform's internal resource ID, structured as "`ProjectId`,`Email`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// Name of the service account.
@@ -116,6 +119,10 @@ namespace ediri.Stackit
         /// STACKIT project ID to which the service account is associated.
         /// </summary>
         public readonly string ProjectId;
+        /// <summary>
+        /// The internal UUID of the service account.
+        /// </summary>
+        public readonly string ServiceAccountId;
 
         [OutputConstructor]
         private GetServiceAccountResult(
@@ -125,12 +132,15 @@ namespace ediri.Stackit
 
             string name,
 
-            string projectId)
+            string projectId,
+
+            string serviceAccountId)
         {
             Email = email;
             Id = id;
             Name = name;
             ProjectId = projectId;
+            ServiceAccountId = serviceAccountId;
         }
     }
 }

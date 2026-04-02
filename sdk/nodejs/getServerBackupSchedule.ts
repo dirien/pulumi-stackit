@@ -9,8 +9,6 @@ import * as utilities from "./utilities";
 /**
  * Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.
  *
- * > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
- *
  * ## Example Usage
  */
 export function getServerBackupSchedule(args: GetServerBackupScheduleArgs, opts?: pulumi.InvokeOptions): Promise<GetServerBackupScheduleResult> {
@@ -61,6 +59,9 @@ export interface GetServerBackupScheduleResult {
      * Is the backup schedule enabled or disabled.
      */
     readonly enabled: boolean;
+    /**
+     * Terraform's internal resource identifier. It is structured as "`projectId`,`serverId`,`backupScheduleId`".
+     */
     readonly id: string;
     /**
      * The schedule name.
@@ -75,7 +76,7 @@ export interface GetServerBackupScheduleResult {
      */
     readonly region?: string;
     /**
-     * Backup schedule described in `rrule` (recurrence rule) format.
+     * An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
      */
     readonly rrule: string;
     /**
@@ -85,8 +86,6 @@ export interface GetServerBackupScheduleResult {
 }
 /**
  * Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.
- *
- * > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
  *
  * ## Example Usage
  */

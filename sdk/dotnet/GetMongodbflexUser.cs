@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetMongodbflexUser
     {
         /// <summary>
-        /// MongoDB Flex user data source schema. Must have a `region` specified in the provider configuration.
+        /// MongoDB Flex user data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -29,7 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetMongodbflexUserResult>("stackit:index/getMongodbflexUser:getMongodbflexUser", args ?? new GetMongodbflexUserArgs(), options.WithDefaults());
 
         /// <summary>
-        /// MongoDB Flex user data source schema. Must have a `region` specified in the provider configuration.
+        /// MongoDB Flex user data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -45,7 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetMongodbflexUserResult>("stackit:index/getMongodbflexUser:getMongodbflexUser", args ?? new GetMongodbflexUserInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// MongoDB Flex user data source schema. Must have a `region` specified in the provider configuration.
+        /// MongoDB Flex user data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -132,6 +132,9 @@ namespace ediri.Stackit
     {
         public readonly string Database;
         public readonly string Host;
+        /// <summary>
+        /// Terraform's internal data source. ID. It is structured as "`ProjectId`,`Region`,`InstanceId`,`UserId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// ID of the MongoDB Flex instance.

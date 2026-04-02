@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetObjectstorageBucket
     {
         /// <summary>
-        /// ObjectStorage bucket data source schema. Must have a `region` specified in the provider configuration.
+        /// ObjectStorage bucket data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetObjectstorageBucketResult>("stackit:index/getObjectstorageBucket:getObjectstorageBucket", args ?? new GetObjectstorageBucketArgs(), options.WithDefaults());
 
         /// <summary>
-        /// ObjectStorage bucket data source schema. Must have a `region` specified in the provider configuration.
+        /// ObjectStorage bucket data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetObjectstorageBucketResult>("stackit:index/getObjectstorageBucket:getObjectstorageBucket", args ?? new GetObjectstorageBucketInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// ObjectStorage bucket data source schema. Must have a `region` specified in the provider configuration.
+        /// ObjectStorage bucket data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -115,11 +115,18 @@ namespace ediri.Stackit
     [OutputType]
     public sealed class GetObjectstorageBucketResult
     {
+        /// <summary>
+        /// Terraform's internal data source identifier. It is structured as "`ProjectId`,`Region`,`Name`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// The bucket name. It must be DNS conform.
         /// </summary>
         public readonly string Name;
+        /// <summary>
+        /// Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
+        /// </summary>
+        public readonly bool ObjectLock;
         /// <summary>
         /// STACKIT Project ID to which the bucket is associated.
         /// </summary>
@@ -137,6 +144,8 @@ namespace ediri.Stackit
 
             string name,
 
+            bool objectLock,
+
             string projectId,
 
             string? region,
@@ -147,6 +156,7 @@ namespace ediri.Stackit
         {
             Id = id;
             Name = name;
+            ObjectLock = objectLock;
             ProjectId = projectId;
             Region = region;
             UrlPathStyle = urlPathStyle;
