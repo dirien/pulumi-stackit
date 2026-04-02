@@ -20,7 +20,7 @@ type SecurityGroupRule struct {
 
 	// The rule description.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
-	// The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+	// The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `ingress`, `egress`.
 	Direction pulumi.StringOutput `pulumi:"direction"`
 	// The ethertype which the rule should match.
 	EtherType pulumi.StringOutput `pulumi:"etherType"`
@@ -34,6 +34,8 @@ type SecurityGroupRule struct {
 	ProjectId pulumi.StringOutput `pulumi:"projectId"`
 	// The internet protocol which the rule should match.
 	Protocol SecurityGroupRuleProtocolOutput `pulumi:"protocol"`
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringOutput `pulumi:"region"`
 	// The remote security group which the rule should match.
 	RemoteSecurityGroupId pulumi.StringPtrOutput `pulumi:"remoteSecurityGroupId"`
 	// The security group ID.
@@ -83,7 +85,7 @@ func GetSecurityGroupRule(ctx *pulumi.Context,
 type securityGroupRuleState struct {
 	// The rule description.
 	Description *string `pulumi:"description"`
-	// The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+	// The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `ingress`, `egress`.
 	Direction *string `pulumi:"direction"`
 	// The ethertype which the rule should match.
 	EtherType *string `pulumi:"etherType"`
@@ -97,6 +99,8 @@ type securityGroupRuleState struct {
 	ProjectId *string `pulumi:"projectId"`
 	// The internet protocol which the rule should match.
 	Protocol *SecurityGroupRuleProtocol `pulumi:"protocol"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The remote security group which the rule should match.
 	RemoteSecurityGroupId *string `pulumi:"remoteSecurityGroupId"`
 	// The security group ID.
@@ -108,7 +112,7 @@ type securityGroupRuleState struct {
 type SecurityGroupRuleState struct {
 	// The rule description.
 	Description pulumi.StringPtrInput
-	// The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+	// The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `ingress`, `egress`.
 	Direction pulumi.StringPtrInput
 	// The ethertype which the rule should match.
 	EtherType pulumi.StringPtrInput
@@ -122,6 +126,8 @@ type SecurityGroupRuleState struct {
 	ProjectId pulumi.StringPtrInput
 	// The internet protocol which the rule should match.
 	Protocol SecurityGroupRuleProtocolPtrInput
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput
 	// The remote security group which the rule should match.
 	RemoteSecurityGroupId pulumi.StringPtrInput
 	// The security group ID.
@@ -137,7 +143,7 @@ func (SecurityGroupRuleState) ElementType() reflect.Type {
 type securityGroupRuleArgs struct {
 	// The rule description.
 	Description *string `pulumi:"description"`
-	// The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+	// The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `ingress`, `egress`.
 	Direction string `pulumi:"direction"`
 	// The ethertype which the rule should match.
 	EtherType *string `pulumi:"etherType"`
@@ -151,6 +157,8 @@ type securityGroupRuleArgs struct {
 	ProjectId string `pulumi:"projectId"`
 	// The internet protocol which the rule should match.
 	Protocol *SecurityGroupRuleProtocol `pulumi:"protocol"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The remote security group which the rule should match.
 	RemoteSecurityGroupId *string `pulumi:"remoteSecurityGroupId"`
 	// The security group ID.
@@ -161,7 +169,7 @@ type securityGroupRuleArgs struct {
 type SecurityGroupRuleArgs struct {
 	// The rule description.
 	Description pulumi.StringPtrInput
-	// The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+	// The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `ingress`, `egress`.
 	Direction pulumi.StringInput
 	// The ethertype which the rule should match.
 	EtherType pulumi.StringPtrInput
@@ -175,6 +183,8 @@ type SecurityGroupRuleArgs struct {
 	ProjectId pulumi.StringInput
 	// The internet protocol which the rule should match.
 	Protocol SecurityGroupRuleProtocolPtrInput
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput
 	// The remote security group which the rule should match.
 	RemoteSecurityGroupId pulumi.StringPtrInput
 	// The security group ID.
@@ -273,7 +283,7 @@ func (o SecurityGroupRuleOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *SecurityGroupRule) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
-// The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+// The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `ingress`, `egress`.
 func (o SecurityGroupRuleOutput) Direction() pulumi.StringOutput {
 	return o.ApplyT(func(v *SecurityGroupRule) pulumi.StringOutput { return v.Direction }).(pulumi.StringOutput)
 }
@@ -306,6 +316,11 @@ func (o SecurityGroupRuleOutput) ProjectId() pulumi.StringOutput {
 // The internet protocol which the rule should match.
 func (o SecurityGroupRuleOutput) Protocol() SecurityGroupRuleProtocolOutput {
 	return o.ApplyT(func(v *SecurityGroupRule) SecurityGroupRuleProtocolOutput { return v.Protocol }).(SecurityGroupRuleProtocolOutput)
+}
+
+// The resource region. If not defined, the provider region is used.
+func (o SecurityGroupRuleOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v *SecurityGroupRule) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }
 
 // The remote security group which the rule should match.

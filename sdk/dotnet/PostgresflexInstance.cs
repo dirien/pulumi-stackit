@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Postgres Flex instance resource schema. Must have a `region` specified in the provider configuration.
+    /// Postgres Flex instance resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -24,6 +24,9 @@ namespace ediri.Stackit
         [Output("acls")]
         public Output<ImmutableArray<string>> Acls { get; private set; } = null!;
 
+        /// <summary>
+        /// The schedule for on what time and how often the database backup will be created. Must be a valid cron expression using numeric minute and hour values, e.g: '0 2 * * *'.
+        /// </summary>
         [Output("backupSchedule")]
         public Output<string> BackupSchedule { get; private set; } = null!;
 
@@ -54,6 +57,9 @@ namespace ediri.Stackit
         [Output("region")]
         public Output<string> Region { get; private set; } = null!;
 
+        /// <summary>
+        /// How many replicas the instance should have. Valid values are 1 for single mode or 3 for replication.
+        /// </summary>
         [Output("replicas")]
         public Output<int> Replicas { get; private set; } = null!;
 
@@ -122,6 +128,9 @@ namespace ediri.Stackit
             set => _acls = value;
         }
 
+        /// <summary>
+        /// The schedule for on what time and how often the database backup will be created. Must be a valid cron expression using numeric minute and hour values, e.g: '0 2 * * *'.
+        /// </summary>
         [Input("backupSchedule", required: true)]
         public Input<string> BackupSchedule { get; set; } = null!;
 
@@ -146,6 +155,9 @@ namespace ediri.Stackit
         [Input("region")]
         public Input<string>? Region { get; set; }
 
+        /// <summary>
+        /// How many replicas the instance should have. Valid values are 1 for single mode or 3 for replication.
+        /// </summary>
         [Input("replicas", required: true)]
         public Input<int> Replicas { get; set; } = null!;
 
@@ -175,6 +187,9 @@ namespace ediri.Stackit
             set => _acls = value;
         }
 
+        /// <summary>
+        /// The schedule for on what time and how often the database backup will be created. Must be a valid cron expression using numeric minute and hour values, e.g: '0 2 * * *'.
+        /// </summary>
         [Input("backupSchedule")]
         public Input<string>? BackupSchedule { get; set; }
 
@@ -205,6 +220,9 @@ namespace ediri.Stackit
         [Input("region")]
         public Input<string>? Region { get; set; }
 
+        /// <summary>
+        /// How many replicas the instance should have. Valid values are 1 for single mode or 3 for replication.
+        /// </summary>
         [Input("replicas")]
         public Input<int>? Replicas { get; set; }
 

@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Public IP resource schema. Must have a `region` specified in the provider configuration.
+    /// Public IP resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -30,6 +30,9 @@ namespace ediri.Stackit
         [Output("labels")]
         public Output<ImmutableDictionary<string, string>?> Labels { get; private set; } = null!;
 
+        /// <summary>
+        /// Associates the public IP with a network interface or a virtual IP (ID). If you are using this resource with a Kubernetes Load Balancer or any other resource which associates a network interface implicitly, use the lifecycle `IgnoreChanges` property in this field to prevent unintentional removal of the network interface due to drift in the Terraform state
+        /// </summary>
         [Output("networkInterfaceId")]
         public Output<string> NetworkInterfaceId { get; private set; } = null!;
 
@@ -44,6 +47,12 @@ namespace ediri.Stackit
         /// </summary>
         [Output("publicIpId")]
         public Output<string> PublicIpId { get; private set; } = null!;
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Output("region")]
+        public Output<string> Region { get; private set; } = null!;
 
 
         /// <summary>
@@ -104,6 +113,9 @@ namespace ediri.Stackit
             set => _labels = value;
         }
 
+        /// <summary>
+        /// Associates the public IP with a network interface or a virtual IP (ID). If you are using this resource with a Kubernetes Load Balancer or any other resource which associates a network interface implicitly, use the lifecycle `IgnoreChanges` property in this field to prevent unintentional removal of the network interface due to drift in the Terraform state
+        /// </summary>
         [Input("networkInterfaceId")]
         public Input<string>? NetworkInterfaceId { get; set; }
 
@@ -112,6 +124,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("projectId", required: true)]
         public Input<string> ProjectId { get; set; } = null!;
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
 
         public PublicIpArgs()
         {
@@ -139,6 +157,9 @@ namespace ediri.Stackit
             set => _labels = value;
         }
 
+        /// <summary>
+        /// Associates the public IP with a network interface or a virtual IP (ID). If you are using this resource with a Kubernetes Load Balancer or any other resource which associates a network interface implicitly, use the lifecycle `IgnoreChanges` property in this field to prevent unintentional removal of the network interface due to drift in the Terraform state
+        /// </summary>
         [Input("networkInterfaceId")]
         public Input<string>? NetworkInterfaceId { get; set; }
 
@@ -153,6 +174,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("publicIpId")]
         public Input<string>? PublicIpId { get; set; }
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
 
         public PublicIpState()
         {

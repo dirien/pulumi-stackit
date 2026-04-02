@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetVolume
     {
         /// <summary>
-        /// Volume resource schema. Must have a `region` specified in the provider configuration.
+        /// Volume resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetVolumeResult>("stackit:index/getVolume:getVolume", args ?? new GetVolumeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Volume resource schema. Must have a `region` specified in the provider configuration.
+        /// Volume resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetVolumeResult>("stackit:index/getVolume:getVolume", args ?? new GetVolumeInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Volume resource schema. Must have a `region` specified in the provider configuration.
+        /// Volume resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -68,6 +68,12 @@ namespace ediri.Stackit
         public string ProjectId { get; set; } = null!;
 
         /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public string? Region { get; set; }
+
+        /// <summary>
         /// The volume ID.
         /// </summary>
         [Input("volumeId", required: true)]
@@ -86,6 +92,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("projectId", required: true)]
         public Input<string> ProjectId { get; set; } = null!;
+
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
 
         /// <summary>
         /// The volume ID.
@@ -111,6 +123,13 @@ namespace ediri.Stackit
         /// The description of the volume.
         /// </summary>
         public readonly string Description;
+        /// <summary>
+        /// Indicates if the volume is encrypted.
+        /// </summary>
+        public readonly bool Encrypted;
+        /// <summary>
+        /// Terraform's internal resource ID. It is structured as "`ProjectId`,`Region`,`VolumeId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// Labels are key-value string pairs which can be attached to a resource container
@@ -121,13 +140,17 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string Name;
         /// <summary>
-        /// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/stackit/en/service-plans-blockstorage-75137974.html#ServiceplansBlockStorage-CurrentlyavailableServicePlans%28performanceclasses%29)
+        /// The performance class of the volume. Possible values are documented in [Service plans BlockStorage](https://docs.stackit.cloud/products/storage/block-storage/basics/service-plans/#currently-available-service-plans-performance-classes)
         /// </summary>
         public readonly string PerformanceClass;
         /// <summary>
         /// STACKIT project ID to which the volume is associated.
         /// </summary>
         public readonly string ProjectId;
+        /// <summary>
+        /// The resource region. If not defined, the provider region is used.
+        /// </summary>
+        public readonly string? Region;
         /// <summary>
         /// The server ID of the server to which the volume is attached to.
         /// </summary>
@@ -151,6 +174,8 @@ namespace ediri.Stackit
 
             string description,
 
+            bool encrypted,
+
             string id,
 
             ImmutableDictionary<string, string> labels,
@@ -160,6 +185,8 @@ namespace ediri.Stackit
             string performanceClass,
 
             string projectId,
+
+            string? region,
 
             string serverId,
 
@@ -171,11 +198,13 @@ namespace ediri.Stackit
         {
             AvailabilityZone = availabilityZone;
             Description = description;
+            Encrypted = encrypted;
             Id = id;
             Labels = labels;
             Name = name;
             PerformanceClass = performanceClass;
             ProjectId = projectId;
+            Region = region;
             ServerId = serverId;
             Size = size;
             Source = source;

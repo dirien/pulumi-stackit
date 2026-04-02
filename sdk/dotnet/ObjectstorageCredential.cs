@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// ObjectStorage credential resource schema. Must have a `region` specified in the provider configuration.
+    /// ObjectStorage credential resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>

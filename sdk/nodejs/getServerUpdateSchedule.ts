@@ -7,8 +7,6 @@ import * as utilities from "./utilities";
 /**
  * Server update schedule datasource schema. Must have a `region` specified in the provider configuration.
  *
- * > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
- *
  * ## Example Usage
  */
 export function getServerUpdateSchedule(args: GetServerUpdateScheduleArgs, opts?: pulumi.InvokeOptions): Promise<GetServerUpdateScheduleResult> {
@@ -51,9 +49,12 @@ export interface GetServerUpdateScheduleResult {
      * Is the update schedule enabled or disabled.
      */
     readonly enabled: boolean;
+    /**
+     * Terraform's internal resource identifier. It is structured as "`projectId`,`region`,`serverId`,`updateScheduleId`".
+     */
     readonly id: string;
     /**
-     * Maintenance window [1..24].
+     * Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
      */
     readonly maintenanceWindow: number;
     /**
@@ -69,7 +70,7 @@ export interface GetServerUpdateScheduleResult {
      */
     readonly region?: string;
     /**
-     * Update schedule described in `rrule` (recurrence rule) format.
+     * An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
      */
     readonly rrule: string;
     /**
@@ -83,8 +84,6 @@ export interface GetServerUpdateScheduleResult {
 }
 /**
  * Server update schedule datasource schema. Must have a `region` specified in the provider configuration.
- *
- * > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
  *
  * ## Example Usage
  */
