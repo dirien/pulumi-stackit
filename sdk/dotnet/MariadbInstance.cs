@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// MariaDB instance resource schema. Must have a `region` specified in the provider configuration.
+    /// MariaDB instance resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -45,6 +45,9 @@ namespace ediri.Stackit
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
 
+        /// <summary>
+        /// Configuration parameters. Please note that removing a previously configured field from your Terraform configuration won't replace its value in the API. To update a previously configured field, explicitly set a new value for it.
+        /// </summary>
         [Output("parameters")]
         public Output<Outputs.MariadbInstanceParameters> Parameters { get; private set; } = null!;
 
@@ -125,6 +128,9 @@ namespace ediri.Stackit
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Configuration parameters. Please note that removing a previously configured field from your Terraform configuration won't replace its value in the API. To update a previously configured field, explicitly set a new value for it.
+        /// </summary>
         [Input("parameters")]
         public Input<Inputs.MariadbInstanceParametersArgs>? Parameters { get; set; }
 
@@ -181,6 +187,9 @@ namespace ediri.Stackit
         [Input("name")]
         public Input<string>? Name { get; set; }
 
+        /// <summary>
+        /// Configuration parameters. Please note that removing a previously configured field from your Terraform configuration won't replace its value in the API. To update a previously configured field, explicitly set a new value for it.
+        /// </summary>
         [Input("parameters")]
         public Input<Inputs.MariadbInstanceParametersGetArgs>? Parameters { get; set; }
 

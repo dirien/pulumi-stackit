@@ -40,11 +40,18 @@ export interface GetObjectstorageBucketArgs {
  * A collection of values returned by getObjectstorageBucket.
  */
 export interface GetObjectstorageBucketResult {
+    /**
+     * Terraform's internal data source identifier. It is structured as "`projectId`,`region`,`name`".
+     */
     readonly id: string;
     /**
      * The bucket name. It must be DNS conform.
      */
     readonly name: string;
+    /**
+     * Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
+     */
+    readonly objectLock: boolean;
     /**
      * STACKIT Project ID to which the bucket is associated.
      */

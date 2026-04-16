@@ -26,6 +26,9 @@ func GetPublicIpRanges(ctx *pulumi.Context, opts ...pulumi.InvokeOption) (*GetPu
 
 // A collection of values returned by getPublicIpRanges.
 type GetPublicIpRangesResult struct {
+	// A list of IP range strings (CIDRs) extracted from the public*ip*ranges for easy consumption.
+	CidrLists []string `pulumi:"cidrLists"`
+	// Terraform's internal resource ID. It takes the values of "`public_ip_ranges.*.cidr`".
 	Id string `pulumi:"id"`
 	// A list of all public IP ranges.
 	PublicIpRanges []GetPublicIpRangesPublicIpRange `pulumi:"publicIpRanges"`
@@ -53,6 +56,12 @@ func (o GetPublicIpRangesResultOutput) ToGetPublicIpRangesResultOutputWithContex
 	return o
 }
 
+// A list of IP range strings (CIDRs) extracted from the public*ip*ranges for easy consumption.
+func (o GetPublicIpRangesResultOutput) CidrLists() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v GetPublicIpRangesResult) []string { return v.CidrLists }).(pulumi.StringArrayOutput)
+}
+
+// Terraform's internal resource ID. It takes the values of "`public_ip_ranges.*.cidr`".
 func (o GetPublicIpRangesResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v GetPublicIpRangesResult) string { return v.Id }).(pulumi.StringOutput)
 }

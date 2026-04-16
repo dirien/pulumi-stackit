@@ -15,6 +15,7 @@ export function getSecurityGroupRule(args: GetSecurityGroupRuleArgs, opts?: pulu
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("stackit:index/getSecurityGroupRule:getSecurityGroupRule", {
         "projectId": args.projectId,
+        "region": args.region,
         "securityGroupId": args.securityGroupId,
         "securityGroupRuleId": args.securityGroupRuleId,
     }, opts);
@@ -28,6 +29,10 @@ export interface GetSecurityGroupRuleArgs {
      * STACKIT project ID to which the security group rule is associated.
      */
     projectId: string;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: string;
     /**
      * The security group ID.
      */
@@ -47,7 +52,7 @@ export interface GetSecurityGroupRuleResult {
      */
     readonly description: string;
     /**
-     * The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+     * The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `ingress`, `egress`.
      */
     readonly direction: string;
     /**
@@ -58,6 +63,9 @@ export interface GetSecurityGroupRuleResult {
      * ICMP Parameters.
      */
     readonly icmpParameters: outputs.GetSecurityGroupRuleIcmpParameters;
+    /**
+     * Terraform's internal datasource ID. It is structured as "`projectId`,`region`,`securityGroupId`,`securityGroupRuleId`".
+     */
     readonly id: string;
     /**
      * The remote IP range which the rule should match.
@@ -75,6 +83,10 @@ export interface GetSecurityGroupRuleResult {
      * The internet protocol which the rule should match.
      */
     readonly protocol: outputs.GetSecurityGroupRuleProtocol;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    readonly region?: string;
     /**
      * The remote security group which the rule should match.
      */
@@ -97,6 +109,7 @@ export function getSecurityGroupRuleOutput(args: GetSecurityGroupRuleOutputArgs,
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invokeOutput("stackit:index/getSecurityGroupRule:getSecurityGroupRule", {
         "projectId": args.projectId,
+        "region": args.region,
         "securityGroupId": args.securityGroupId,
         "securityGroupRuleId": args.securityGroupRuleId,
     }, opts);
@@ -110,6 +123,10 @@ export interface GetSecurityGroupRuleOutputArgs {
      * STACKIT project ID to which the security group rule is associated.
      */
     projectId: pulumi.Input<string>;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: pulumi.Input<string>;
     /**
      * The security group ID.
      */

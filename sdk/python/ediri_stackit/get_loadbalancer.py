@@ -27,7 +27,10 @@ class GetLoadbalancerResult:
     """
     A collection of values returned by getLoadbalancer.
     """
-    def __init__(__self__, external_address=None, id=None, listeners=None, name=None, networks=None, options=None, plan_id=None, private_address=None, project_id=None, region=None, target_pools=None):
+    def __init__(__self__, disable_security_group_assignment=None, external_address=None, id=None, listeners=None, name=None, networks=None, options=None, plan_id=None, private_address=None, project_id=None, region=None, security_group_id=None, target_pools=None, version=None):
+        if disable_security_group_assignment and not isinstance(disable_security_group_assignment, bool):
+            raise TypeError("Expected argument 'disable_security_group_assignment' to be a bool")
+        pulumi.set(__self__, "disable_security_group_assignment", disable_security_group_assignment)
         if external_address and not isinstance(external_address, str):
             raise TypeError("Expected argument 'external_address' to be a str")
         pulumi.set(__self__, "external_address", external_address)
@@ -58,9 +61,23 @@ class GetLoadbalancerResult:
         if region and not isinstance(region, str):
             raise TypeError("Expected argument 'region' to be a str")
         pulumi.set(__self__, "region", region)
+        if security_group_id and not isinstance(security_group_id, str):
+            raise TypeError("Expected argument 'security_group_id' to be a str")
+        pulumi.set(__self__, "security_group_id", security_group_id)
         if target_pools and not isinstance(target_pools, list):
             raise TypeError("Expected argument 'target_pools' to be a list")
         pulumi.set(__self__, "target_pools", target_pools)
+        if version and not isinstance(version, str):
+            raise TypeError("Expected argument 'version' to be a str")
+        pulumi.set(__self__, "version", version)
+
+    @_builtins.property
+    @pulumi.getter(name="disableSecurityGroupAssignment")
+    def disable_security_group_assignment(self) -> _builtins.bool:
+        """
+        If set to true, this will disable the automatic assignment of a security group to the load balancer's targets. This option is primarily used to allow targets that are not within the load balancer's own network or SNA (STACKIT Network area). When this is enabled, you are fully responsible for ensuring network connectivity to the targets, including managing all routing and security group rules manually. This setting cannot be changed after the load balancer is created.
+        """
+        return pulumi.get(self, "disable_security_group_assignment")
 
     @_builtins.property
     @pulumi.getter(name="externalAddress")
@@ -73,6 +90,9 @@ class GetLoadbalancerResult:
     @_builtins.property
     @pulumi.getter
     def id(self) -> _builtins.str:
+        """
+        Terraform's internal resource ID. It is structured as "`project_id`","region","`name`".
+        """
         return pulumi.get(self, "id")
 
     @_builtins.property
@@ -140,12 +160,28 @@ class GetLoadbalancerResult:
         return pulumi.get(self, "region")
 
     @_builtins.property
+    @pulumi.getter(name="securityGroupId")
+    def security_group_id(self) -> _builtins.str:
+        """
+        The ID of the egress security group assigned to the Load Balancer's internal machines. This ID is essential for allowing traffic from the Load Balancer to targets in different networks or STACKIT Network areas (SNA). To enable this, create a security group rule for your target VMs and set the `remote_security_group_id` of that rule to this value. This is typically used when `disable_security_group_assignment` is set to `true`.
+        """
+        return pulumi.get(self, "security_group_id")
+
+    @_builtins.property
     @pulumi.getter(name="targetPools")
     def target_pools(self) -> Sequence['outputs.GetLoadbalancerTargetPoolResult']:
         """
         List of all target pools which will be used in the Load Balancer. Limited to 20.
         """
         return pulumi.get(self, "target_pools")
+
+    @_builtins.property
+    @pulumi.getter
+    def version(self) -> _builtins.str:
+        """
+        Load balancer resource version.
+        """
+        return pulumi.get(self, "version")
 
 
 class AwaitableGetLoadbalancerResult(GetLoadbalancerResult):
@@ -154,6 +190,7 @@ class AwaitableGetLoadbalancerResult(GetLoadbalancerResult):
         if False:
             yield self
         return GetLoadbalancerResult(
+            disable_security_group_assignment=self.disable_security_group_assignment,
             external_address=self.external_address,
             id=self.id,
             listeners=self.listeners,
@@ -164,7 +201,9 @@ class AwaitableGetLoadbalancerResult(GetLoadbalancerResult):
             private_address=self.private_address,
             project_id=self.project_id,
             region=self.region,
-            target_pools=self.target_pools)
+            security_group_id=self.security_group_id,
+            target_pools=self.target_pools,
+            version=self.version)
 
 
 def get_loadbalancer(name: Optional[_builtins.str] = None,
@@ -189,6 +228,7 @@ def get_loadbalancer(name: Optional[_builtins.str] = None,
     __ret__ = pulumi.runtime.invoke('stackit:index/getLoadbalancer:getLoadbalancer', __args__, opts=opts, typ=GetLoadbalancerResult).value
 
     return AwaitableGetLoadbalancerResult(
+        disable_security_group_assignment=pulumi.get(__ret__, 'disable_security_group_assignment'),
         external_address=pulumi.get(__ret__, 'external_address'),
         id=pulumi.get(__ret__, 'id'),
         listeners=pulumi.get(__ret__, 'listeners'),
@@ -199,7 +239,9 @@ def get_loadbalancer(name: Optional[_builtins.str] = None,
         private_address=pulumi.get(__ret__, 'private_address'),
         project_id=pulumi.get(__ret__, 'project_id'),
         region=pulumi.get(__ret__, 'region'),
-        target_pools=pulumi.get(__ret__, 'target_pools'))
+        security_group_id=pulumi.get(__ret__, 'security_group_id'),
+        target_pools=pulumi.get(__ret__, 'target_pools'),
+        version=pulumi.get(__ret__, 'version'))
 def get_loadbalancer_output(name: Optional[pulumi.Input[_builtins.str]] = None,
                             project_id: Optional[pulumi.Input[_builtins.str]] = None,
                             region: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
@@ -221,6 +263,7 @@ def get_loadbalancer_output(name: Optional[pulumi.Input[_builtins.str]] = None,
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke_output('stackit:index/getLoadbalancer:getLoadbalancer', __args__, opts=opts, typ=GetLoadbalancerResult)
     return __ret__.apply(lambda __response__: GetLoadbalancerResult(
+        disable_security_group_assignment=pulumi.get(__response__, 'disable_security_group_assignment'),
         external_address=pulumi.get(__response__, 'external_address'),
         id=pulumi.get(__response__, 'id'),
         listeners=pulumi.get(__response__, 'listeners'),
@@ -231,4 +274,6 @@ def get_loadbalancer_output(name: Optional[pulumi.Input[_builtins.str]] = None,
         private_address=pulumi.get(__response__, 'private_address'),
         project_id=pulumi.get(__response__, 'project_id'),
         region=pulumi.get(__response__, 'region'),
-        target_pools=pulumi.get(__response__, 'target_pools')))
+        security_group_id=pulumi.get(__response__, 'security_group_id'),
+        target_pools=pulumi.get(__response__, 'target_pools'),
+        version=pulumi.get(__response__, 'version')))

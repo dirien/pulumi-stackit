@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// ObjectStorage bucket resource schema. Must have a `region` specified in the provider configuration. If you are creating `credentialsgroup` and `bucket` resources simultaneously, please include the `depends_on` field so that they are created sequentially. This prevents errors from concurrent calls to the service enablement that is done in the background.
+    /// ObjectStorage bucket resource schema. Must have a `Region` specified in the provider configuration. If you are creating `Credentialsgroup` and `Bucket` resources simultaneously, please include the `DependsOn` field so that they are created sequentially. This prevents errors from concurrent calls to the service enablement that is done in the background.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -23,6 +23,12 @@ namespace ediri.Stackit
         /// </summary>
         [Output("name")]
         public Output<string> Name { get; private set; } = null!;
+
+        /// <summary>
+        /// Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
+        /// </summary>
+        [Output("objectLock")]
+        public Output<bool> ObjectLock { get; private set; } = null!;
 
         /// <summary>
         /// STACKIT Project ID to which the bucket is associated.
@@ -96,6 +102,12 @@ namespace ediri.Stackit
         public Input<string>? Name { get; set; }
 
         /// <summary>
+        /// Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
+        /// </summary>
+        [Input("objectLock")]
+        public Input<bool>? ObjectLock { get; set; }
+
+        /// <summary>
         /// STACKIT Project ID to which the bucket is associated.
         /// </summary>
         [Input("projectId", required: true)]
@@ -120,6 +132,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("name")]
         public Input<string>? Name { get; set; }
+
+        /// <summary>
+        /// Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
+        /// </summary>
+        [Input("objectLock")]
+        public Input<bool>? ObjectLock { get; set; }
 
         /// <summary>
         /// STACKIT Project ID to which the bucket is associated.

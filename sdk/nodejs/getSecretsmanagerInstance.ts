@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -39,11 +41,18 @@ export interface GetSecretsmanagerInstanceResult {
      * The access control list for this instance. Each entry is an IP or IP range that is permitted to access, in CIDR notation
      */
     readonly acls: string[];
+    /**
+     * Terraform's internal resource ID. It is structured as "`projectId`,`instanceId`".
+     */
     readonly id: string;
     /**
      * ID of the Secrets Manager instance.
      */
     readonly instanceId: string;
+    /**
+     * The STACKIT-KMS key for secret encryption and decryption.
+     */
+    readonly kmsKey: outputs.GetSecretsmanagerInstanceKmsKey;
     /**
      * Instance name.
      */

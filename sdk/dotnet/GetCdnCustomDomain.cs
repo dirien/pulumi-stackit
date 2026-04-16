@@ -71,6 +71,12 @@ namespace ediri.Stackit
     public sealed class GetCdnCustomDomainArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
+        /// The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+        /// </summary>
+        [Input("certificate")]
+        public Inputs.GetCdnCustomDomainCertificateArgs? Certificate { get; set; }
+
+        /// <summary>
         /// CDN distribution ID
         /// </summary>
         [Input("distributionId", required: true)]
@@ -93,6 +99,12 @@ namespace ediri.Stackit
 
     public sealed class GetCdnCustomDomainInvokeArgs : global::Pulumi.InvokeArgs
     {
+        /// <summary>
+        /// The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+        /// </summary>
+        [Input("certificate")]
+        public Input<Inputs.GetCdnCustomDomainCertificateInputArgs>? Certificate { get; set; }
+
         /// <summary>
         /// CDN distribution ID
         /// </summary>
@@ -119,6 +131,10 @@ namespace ediri.Stackit
     public sealed class GetCdnCustomDomainResult
     {
         /// <summary>
+        /// The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+        /// </summary>
+        public readonly Outputs.GetCdnCustomDomainCertificateResult? Certificate;
+        /// <summary>
         /// CDN distribution ID
         /// </summary>
         public readonly string DistributionId;
@@ -126,6 +142,9 @@ namespace ediri.Stackit
         /// List of distribution errors
         /// </summary>
         public readonly ImmutableArray<string> Errors;
+        /// <summary>
+        /// Terraform's internal resource identifier. It is structured as "`ProjectId`,`DistributionId`".
+        /// </summary>
         public readonly string Id;
         public readonly string Name;
         /// <summary>
@@ -139,6 +158,8 @@ namespace ediri.Stackit
 
         [OutputConstructor]
         private GetCdnCustomDomainResult(
+            Outputs.GetCdnCustomDomainCertificateResult? certificate,
+
             string distributionId,
 
             ImmutableArray<string> errors,
@@ -151,6 +172,7 @@ namespace ediri.Stackit
 
             string status)
         {
+            Certificate = certificate;
             DistributionId = distributionId;
             Errors = errors;
             Id = id;

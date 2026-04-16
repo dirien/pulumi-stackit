@@ -21,16 +21,21 @@ class ObjectstorageBucketArgs:
     def __init__(__self__, *,
                  project_id: pulumi.Input[_builtins.str],
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 object_lock: Optional[pulumi.Input[_builtins.bool]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a ObjectstorageBucket resource.
+
         :param pulumi.Input[_builtins.str] project_id: STACKIT Project ID to which the bucket is associated.
         :param pulumi.Input[_builtins.str] name: The bucket name. It must be DNS conform.
+        :param pulumi.Input[_builtins.bool] object_lock: Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         """
         pulumi.set(__self__, "project_id", project_id)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if object_lock is not None:
+            pulumi.set(__self__, "object_lock", object_lock)
         if region is not None:
             pulumi.set(__self__, "region", region)
 
@@ -59,6 +64,18 @@ class ObjectstorageBucketArgs:
         pulumi.set(self, "name", value)
 
     @_builtins.property
+    @pulumi.getter(name="objectLock")
+    def object_lock(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
+        """
+        return pulumi.get(self, "object_lock")
+
+    @object_lock.setter
+    def object_lock(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "object_lock", value)
+
+    @_builtins.property
     @pulumi.getter
     def region(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
@@ -75,18 +92,23 @@ class ObjectstorageBucketArgs:
 class _ObjectstorageBucketState:
     def __init__(__self__, *,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 object_lock: Optional[pulumi.Input[_builtins.bool]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
                  url_path_style: Optional[pulumi.Input[_builtins.str]] = None,
                  url_virtual_hosted_style: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering ObjectstorageBucket resources.
+
         :param pulumi.Input[_builtins.str] name: The bucket name. It must be DNS conform.
+        :param pulumi.Input[_builtins.bool] object_lock: Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
         :param pulumi.Input[_builtins.str] project_id: STACKIT Project ID to which the bucket is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         """
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if object_lock is not None:
+            pulumi.set(__self__, "object_lock", object_lock)
         if project_id is not None:
             pulumi.set(__self__, "project_id", project_id)
         if region is not None:
@@ -107,6 +129,18 @@ class _ObjectstorageBucketState:
     @name.setter
     def name(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "name", value)
+
+    @_builtins.property
+    @pulumi.getter(name="objectLock")
+    def object_lock(self) -> Optional[pulumi.Input[_builtins.bool]]:
+        """
+        Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
+        """
+        return pulumi.get(self, "object_lock")
+
+    @object_lock.setter
+    def object_lock(self, value: Optional[pulumi.Input[_builtins.bool]]):
+        pulumi.set(self, "object_lock", value)
 
     @_builtins.property
     @pulumi.getter(name="projectId")
@@ -158,6 +192,7 @@ class ObjectstorageBucket(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 object_lock: Optional[pulumi.Input[_builtins.bool]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
@@ -166,9 +201,11 @@ class ObjectstorageBucket(pulumi.CustomResource):
 
         ## Example Usage
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] name: The bucket name. It must be DNS conform.
+        :param pulumi.Input[_builtins.bool] object_lock: Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
         :param pulumi.Input[_builtins.str] project_id: STACKIT Project ID to which the bucket is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         """
@@ -182,6 +219,7 @@ class ObjectstorageBucket(pulumi.CustomResource):
         ObjectStorage bucket resource schema. Must have a `region` specified in the provider configuration. If you are creating `credentialsgroup` and `bucket` resources simultaneously, please include the `depends_on` field so that they are created sequentially. This prevents errors from concurrent calls to the service enablement that is done in the background.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param ObjectstorageBucketArgs args: The arguments to use to populate this resource's properties.
@@ -199,6 +237,7 @@ class ObjectstorageBucket(pulumi.CustomResource):
                  resource_name: str,
                  opts: Optional[pulumi.ResourceOptions] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 object_lock: Optional[pulumi.Input[_builtins.bool]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
                  region: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
@@ -211,6 +250,7 @@ class ObjectstorageBucket(pulumi.CustomResource):
             __props__ = ObjectstorageBucketArgs.__new__(ObjectstorageBucketArgs)
 
             __props__.__dict__["name"] = name
+            __props__.__dict__["object_lock"] = object_lock
             if project_id is None and not opts.urn:
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
@@ -228,6 +268,7 @@ class ObjectstorageBucket(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
+            object_lock: Optional[pulumi.Input[_builtins.bool]] = None,
             project_id: Optional[pulumi.Input[_builtins.str]] = None,
             region: Optional[pulumi.Input[_builtins.str]] = None,
             url_path_style: Optional[pulumi.Input[_builtins.str]] = None,
@@ -240,6 +281,7 @@ class ObjectstorageBucket(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[_builtins.str] name: The bucket name. It must be DNS conform.
+        :param pulumi.Input[_builtins.bool] object_lock: Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
         :param pulumi.Input[_builtins.str] project_id: STACKIT Project ID to which the bucket is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         """
@@ -248,6 +290,7 @@ class ObjectstorageBucket(pulumi.CustomResource):
         __props__ = _ObjectstorageBucketState.__new__(_ObjectstorageBucketState)
 
         __props__.__dict__["name"] = name
+        __props__.__dict__["object_lock"] = object_lock
         __props__.__dict__["project_id"] = project_id
         __props__.__dict__["region"] = region
         __props__.__dict__["url_path_style"] = url_path_style
@@ -261,6 +304,14 @@ class ObjectstorageBucket(pulumi.CustomResource):
         The bucket name. It must be DNS conform.
         """
         return pulumi.get(self, "name")
+
+    @_builtins.property
+    @pulumi.getter(name="objectLock")
+    def object_lock(self) -> pulumi.Output[_builtins.bool]:
+        """
+        Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
+        """
+        return pulumi.get(self, "object_lock")
 
     @_builtins.property
     @pulumi.getter(name="projectId")

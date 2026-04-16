@@ -129,6 +129,9 @@ namespace ediri.Stackit
         /// Instance flavor. If not provided, defaults to git-100. For a list of available flavors, refer to our API documentation: `https://docs.api.stackit.cloud/documentation/git/version/v1beta`
         /// </summary>
         public readonly string Flavor;
+        /// <summary>
+        /// Terraform's internal resource ID, structured as "`ProjectId`,`InstanceId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// ID linked to the git instance.

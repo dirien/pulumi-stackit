@@ -109,11 +109,17 @@ namespace ediri.Stackit.Inputs
             set => _tlsCiphers = value;
         }
 
-        /// <summary>
-        /// TLS protocol to use.
-        /// </summary>
         [Input("tlsProtocols")]
-        public Input<string>? TlsProtocols { get; set; }
+        private InputList<string>? _tlsProtocols;
+
+        /// <summary>
+        /// TLS protocol versions to use.
+        /// </summary>
+        public InputList<string> TlsProtocols
+        {
+            get => _tlsProtocols ?? (_tlsProtocols = new InputList<string>());
+            set => _tlsProtocols = value;
+        }
 
         public RabbitmqInstanceParametersGetArgs()
         {
