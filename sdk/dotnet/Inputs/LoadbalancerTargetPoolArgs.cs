@@ -23,7 +23,7 @@ namespace ediri.Stackit.Inputs
         public Input<string> Name { get; set; } = null!;
 
         /// <summary>
-        /// Here you can setup various session persistence options, so far only "`use_source_ip_address`" is supported.
+        /// Here you can setup various session persistence options, so far only "`UseSourceIpAddress`" is supported.
         /// </summary>
         [Input("sessionPersistence")]
         public Input<Inputs.LoadbalancerTargetPoolSessionPersistenceArgs>? SessionPersistence { get; set; }

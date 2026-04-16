@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -14,6 +16,7 @@ export function getDnsZone(args: GetDnsZoneArgs, opts?: pulumi.InvokeOptions): P
     return pulumi.runtime.invoke("stackit:index/getDnsZone:getDnsZone", {
         "dnsName": args.dnsName,
         "projectId": args.projectId,
+        "timeouts": args.timeouts,
         "zoneId": args.zoneId,
     }, opts);
 }
@@ -23,13 +26,14 @@ export function getDnsZone(args: GetDnsZoneArgs, opts?: pulumi.InvokeOptions): P
  */
 export interface GetDnsZoneArgs {
     /**
-     * The zone name. E.g. `example.com`
+     * The zone name. E.g. `example.com` (must not end with a trailing dot).
      */
     dnsName?: string;
     /**
      * STACKIT project ID to which the dns zone is associated.
      */
     projectId: string;
+    timeouts?: inputs.GetDnsZoneTimeouts;
     /**
      * The zone ID.
      */
@@ -58,13 +62,16 @@ export interface GetDnsZoneResult {
      */
     readonly description: string;
     /**
-     * The zone name. E.g. `example.com`
+     * The zone name. E.g. `example.com` (must not end with a trailing dot).
      */
     readonly dnsName?: string;
     /**
      * Expire time.
      */
     readonly expireTime: number;
+    /**
+     * Terraform's internal data source. ID. It is structured as "`projectId`,`zoneId`".
+     */
     readonly id: string;
     /**
      * Specifies, if the zone is a reverse zone or not.
@@ -110,6 +117,7 @@ export interface GetDnsZoneResult {
      * Zone state.
      */
     readonly state: string;
+    readonly timeouts?: outputs.GetDnsZoneTimeouts;
     /**
      * Zone type.
      */
@@ -133,6 +141,7 @@ export function getDnsZoneOutput(args: GetDnsZoneOutputArgs, opts?: pulumi.Invok
     return pulumi.runtime.invokeOutput("stackit:index/getDnsZone:getDnsZone", {
         "dnsName": args.dnsName,
         "projectId": args.projectId,
+        "timeouts": args.timeouts,
         "zoneId": args.zoneId,
     }, opts);
 }
@@ -142,13 +151,14 @@ export function getDnsZoneOutput(args: GetDnsZoneOutputArgs, opts?: pulumi.Invok
  */
 export interface GetDnsZoneOutputArgs {
     /**
-     * The zone name. E.g. `example.com`
+     * The zone name. E.g. `example.com` (must not end with a trailing dot).
      */
     dnsName?: pulumi.Input<string>;
     /**
      * STACKIT project ID to which the dns zone is associated.
      */
     projectId: pulumi.Input<string>;
+    timeouts?: pulumi.Input<inputs.GetDnsZoneTimeoutsArgs>;
     /**
      * The zone ID.
      */

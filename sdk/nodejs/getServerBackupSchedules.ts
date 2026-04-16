@@ -9,8 +9,6 @@ import * as utilities from "./utilities";
 /**
  * Server backup schedules datasource schema. Must have a `region` specified in the provider configuration.
  *
- * > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
- *
  * ## Example Usage
  */
 export function getServerBackupSchedules(args: GetServerBackupSchedulesArgs, opts?: pulumi.InvokeOptions): Promise<GetServerBackupSchedulesResult> {
@@ -44,6 +42,9 @@ export interface GetServerBackupSchedulesArgs {
  * A collection of values returned by getServerBackupSchedules.
  */
 export interface GetServerBackupSchedulesResult {
+    /**
+     * Terraform's internal data source identifier. It is structured as "`projectId`,`serverId`".
+     */
     readonly id: string;
     readonly items: outputs.GetServerBackupSchedulesItem[];
     /**
@@ -61,8 +62,6 @@ export interface GetServerBackupSchedulesResult {
 }
 /**
  * Server backup schedules datasource schema. Must have a `region` specified in the provider configuration.
- *
- * > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
  *
  * ## Example Usage
  */

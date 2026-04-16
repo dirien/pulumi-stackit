@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -14,6 +16,7 @@ import * as utilities from "./utilities";
 export function getCdnCustomDomain(args: GetCdnCustomDomainArgs, opts?: pulumi.InvokeOptions): Promise<GetCdnCustomDomainResult> {
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invoke("stackit:index/getCdnCustomDomain:getCdnCustomDomain", {
+        "certificate": args.certificate,
         "distributionId": args.distributionId,
         "name": args.name,
         "projectId": args.projectId,
@@ -24,6 +27,10 @@ export function getCdnCustomDomain(args: GetCdnCustomDomainArgs, opts?: pulumi.I
  * A collection of arguments for invoking getCdnCustomDomain.
  */
 export interface GetCdnCustomDomainArgs {
+    /**
+     * The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+     */
+    certificate?: inputs.GetCdnCustomDomainCertificate;
     /**
      * CDN distribution ID
      */
@@ -40,6 +47,10 @@ export interface GetCdnCustomDomainArgs {
  */
 export interface GetCdnCustomDomainResult {
     /**
+     * The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+     */
+    readonly certificate?: outputs.GetCdnCustomDomainCertificate;
+    /**
      * CDN distribution ID
      */
     readonly distributionId: string;
@@ -47,6 +58,9 @@ export interface GetCdnCustomDomainResult {
      * List of distribution errors
      */
     readonly errors: string[];
+    /**
+     * Terraform's internal resource identifier. It is structured as "`projectId`,`distributionId`".
+     */
     readonly id: string;
     readonly name: string;
     /**
@@ -68,6 +82,7 @@ export interface GetCdnCustomDomainResult {
 export function getCdnCustomDomainOutput(args: GetCdnCustomDomainOutputArgs, opts?: pulumi.InvokeOutputOptions): pulumi.Output<GetCdnCustomDomainResult> {
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts || {});
     return pulumi.runtime.invokeOutput("stackit:index/getCdnCustomDomain:getCdnCustomDomain", {
+        "certificate": args.certificate,
         "distributionId": args.distributionId,
         "name": args.name,
         "projectId": args.projectId,
@@ -78,6 +93,10 @@ export function getCdnCustomDomainOutput(args: GetCdnCustomDomainOutputArgs, opt
  * A collection of arguments for invoking getCdnCustomDomain.
  */
 export interface GetCdnCustomDomainOutputArgs {
+    /**
+     * The TLS certificate for the custom domain. If omitted, a managed certificate will be used. If the block is specified, a custom certificate is used.
+     */
+    certificate?: pulumi.Input<inputs.GetCdnCustomDomainCertificateArgs>;
     /**
      * CDN distribution ID
      */

@@ -27,12 +27,15 @@ type SkeKubeconfig struct {
 	// Timestamp when the kubeconfig expires
 	ExpiresAt pulumi.StringOutput `pulumi:"expiresAt"`
 	// Raw short-lived admin kubeconfig.
-	KubeConfig   pulumi.StringOutput `pulumi:"kubeConfig"`
+	KubeConfig pulumi.StringOutput `pulumi:"kubeConfig"`
+	// Internally generated UUID to identify a kubeconfig resource in Terraform, since the SKE API doesnt return a kubeconfig identifier
 	KubeConfigId pulumi.StringOutput `pulumi:"kubeConfigId"`
 	// STACKIT project ID to which the cluster is associated.
 	ProjectId pulumi.StringOutput `pulumi:"projectId"`
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh pulumi.BoolPtrOutput `pulumi:"refresh"`
+	// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+	RefreshBefore pulumi.IntPtrOutput `pulumi:"refreshBefore"`
 	// The resource region. If not defined, the provider region is used.
 	Region pulumi.StringOutput `pulumi:"region"`
 }
@@ -86,12 +89,15 @@ type skeKubeconfigState struct {
 	// Timestamp when the kubeconfig expires
 	ExpiresAt *string `pulumi:"expiresAt"`
 	// Raw short-lived admin kubeconfig.
-	KubeConfig   *string `pulumi:"kubeConfig"`
+	KubeConfig *string `pulumi:"kubeConfig"`
+	// Internally generated UUID to identify a kubeconfig resource in Terraform, since the SKE API doesnt return a kubeconfig identifier
 	KubeConfigId *string `pulumi:"kubeConfigId"`
 	// STACKIT project ID to which the cluster is associated.
 	ProjectId *string `pulumi:"projectId"`
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh *bool `pulumi:"refresh"`
+	// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+	RefreshBefore *int `pulumi:"refreshBefore"`
 	// The resource region. If not defined, the provider region is used.
 	Region *string `pulumi:"region"`
 }
@@ -106,12 +112,15 @@ type SkeKubeconfigState struct {
 	// Timestamp when the kubeconfig expires
 	ExpiresAt pulumi.StringPtrInput
 	// Raw short-lived admin kubeconfig.
-	KubeConfig   pulumi.StringPtrInput
+	KubeConfig pulumi.StringPtrInput
+	// Internally generated UUID to identify a kubeconfig resource in Terraform, since the SKE API doesnt return a kubeconfig identifier
 	KubeConfigId pulumi.StringPtrInput
 	// STACKIT project ID to which the cluster is associated.
 	ProjectId pulumi.StringPtrInput
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh pulumi.BoolPtrInput
+	// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+	RefreshBefore pulumi.IntPtrInput
 	// The resource region. If not defined, the provider region is used.
 	Region pulumi.StringPtrInput
 }
@@ -129,6 +138,8 @@ type skeKubeconfigArgs struct {
 	ProjectId string `pulumi:"projectId"`
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh *bool `pulumi:"refresh"`
+	// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+	RefreshBefore *int `pulumi:"refreshBefore"`
 	// The resource region. If not defined, the provider region is used.
 	Region *string `pulumi:"region"`
 }
@@ -143,6 +154,8 @@ type SkeKubeconfigArgs struct {
 	ProjectId pulumi.StringInput
 	// If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 	Refresh pulumi.BoolPtrInput
+	// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+	RefreshBefore pulumi.IntPtrInput
 	// The resource region. If not defined, the provider region is used.
 	Region pulumi.StringPtrInput
 }
@@ -259,6 +272,7 @@ func (o SkeKubeconfigOutput) KubeConfig() pulumi.StringOutput {
 	return o.ApplyT(func(v *SkeKubeconfig) pulumi.StringOutput { return v.KubeConfig }).(pulumi.StringOutput)
 }
 
+// Internally generated UUID to identify a kubeconfig resource in Terraform, since the SKE API doesnt return a kubeconfig identifier
 func (o SkeKubeconfigOutput) KubeConfigId() pulumi.StringOutput {
 	return o.ApplyT(func(v *SkeKubeconfig) pulumi.StringOutput { return v.KubeConfigId }).(pulumi.StringOutput)
 }
@@ -271,6 +285,11 @@ func (o SkeKubeconfigOutput) ProjectId() pulumi.StringOutput {
 // If set to true, the provider will check if the kubeconfig has expired and will generated a new valid one in-place
 func (o SkeKubeconfigOutput) Refresh() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *SkeKubeconfig) pulumi.BoolPtrOutput { return v.Refresh }).(pulumi.BoolPtrOutput)
+}
+
+// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+func (o SkeKubeconfigOutput) RefreshBefore() pulumi.IntPtrOutput {
+	return o.ApplyT(func(v *SkeKubeconfig) pulumi.IntPtrOutput { return v.RefreshBefore }).(pulumi.IntPtrOutput)
 }
 
 // The resource region. If not defined, the provider region is used.

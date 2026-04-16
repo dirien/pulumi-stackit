@@ -23,6 +23,7 @@ class ServiceAccountArgs:
                  name: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a ServiceAccount resource.
+
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the service account is associated.
         :param pulumi.Input[_builtins.str] name: Name of the service account.
         """
@@ -60,12 +61,15 @@ class _ServiceAccountState:
     def __init__(__self__, *,
                  email: Optional[pulumi.Input[_builtins.str]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
-                 project_id: Optional[pulumi.Input[_builtins.str]] = None):
+                 project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 service_account_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering ServiceAccount resources.
+
         :param pulumi.Input[_builtins.str] email: Email of the service account.
         :param pulumi.Input[_builtins.str] name: Name of the service account.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the service account is associated.
+        :param pulumi.Input[_builtins.str] service_account_id: The internal UUID of the service account.
         """
         if email is not None:
             pulumi.set(__self__, "email", email)
@@ -73,6 +77,8 @@ class _ServiceAccountState:
             pulumi.set(__self__, "name", name)
         if project_id is not None:
             pulumi.set(__self__, "project_id", project_id)
+        if service_account_id is not None:
+            pulumi.set(__self__, "service_account_id", service_account_id)
 
     @_builtins.property
     @pulumi.getter
@@ -110,6 +116,18 @@ class _ServiceAccountState:
     def project_id(self, value: Optional[pulumi.Input[_builtins.str]]):
         pulumi.set(self, "project_id", value)
 
+    @_builtins.property
+    @pulumi.getter(name="serviceAccountId")
+    def service_account_id(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The internal UUID of the service account.
+        """
+        return pulumi.get(self, "service_account_id")
+
+    @service_account_id.setter
+    def service_account_id(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "service_account_id", value)
+
 
 @pulumi.type_token("stackit:index/serviceAccount:ServiceAccount")
 class ServiceAccount(pulumi.CustomResource):
@@ -124,6 +142,7 @@ class ServiceAccount(pulumi.CustomResource):
         Service account resource schema.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -140,6 +159,7 @@ class ServiceAccount(pulumi.CustomResource):
         Service account resource schema.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param ServiceAccountArgs args: The arguments to use to populate this resource's properties.
@@ -172,6 +192,7 @@ class ServiceAccount(pulumi.CustomResource):
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
             __props__.__dict__["email"] = None
+            __props__.__dict__["service_account_id"] = None
         super(ServiceAccount, __self__).__init__(
             'stackit:index/serviceAccount:ServiceAccount',
             resource_name,
@@ -184,7 +205,8 @@ class ServiceAccount(pulumi.CustomResource):
             opts: Optional[pulumi.ResourceOptions] = None,
             email: Optional[pulumi.Input[_builtins.str]] = None,
             name: Optional[pulumi.Input[_builtins.str]] = None,
-            project_id: Optional[pulumi.Input[_builtins.str]] = None) -> 'ServiceAccount':
+            project_id: Optional[pulumi.Input[_builtins.str]] = None,
+            service_account_id: Optional[pulumi.Input[_builtins.str]] = None) -> 'ServiceAccount':
         """
         Get an existing ServiceAccount resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -195,6 +217,7 @@ class ServiceAccount(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] email: Email of the service account.
         :param pulumi.Input[_builtins.str] name: Name of the service account.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the service account is associated.
+        :param pulumi.Input[_builtins.str] service_account_id: The internal UUID of the service account.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -203,6 +226,7 @@ class ServiceAccount(pulumi.CustomResource):
         __props__.__dict__["email"] = email
         __props__.__dict__["name"] = name
         __props__.__dict__["project_id"] = project_id
+        __props__.__dict__["service_account_id"] = service_account_id
         return ServiceAccount(resource_name, opts=opts, __props__=__props__)
 
     @_builtins.property
@@ -228,4 +252,12 @@ class ServiceAccount(pulumi.CustomResource):
         STACKIT project ID to which the service account is associated.
         """
         return pulumi.get(self, "project_id")
+
+    @_builtins.property
+    @pulumi.getter(name="serviceAccountId")
+    def service_account_id(self) -> pulumi.Output[_builtins.str]:
+        """
+        The internal UUID of the service account.
+        """
+        return pulumi.get(self, "service_account_id")
 

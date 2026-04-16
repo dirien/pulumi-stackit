@@ -11,7 +11,10 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Network resource schema. Must have a `region` specified in the provider configuration.
+    /// Network resource schema. Must have a `Region` specified in the provider configuration.
+    /// &gt; Behavior of not configured `Ipv4Nameservers` has changed. When `Ipv4Nameservers` is not set, it will be set to the network area's `DefaultNameservers`.
+    /// To prevent any nameserver configuration, the `Ipv4Nameservers` attribute should be explicitly set to an empty list `[]`.
+    /// In cases where `Ipv4Nameservers` are defined within the resource, the existing behavior will remain unchanged.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -19,13 +22,19 @@ namespace ediri.Stackit
     public partial class Network : global::Pulumi.CustomResource
     {
         /// <summary>
+        /// If the network has DHCP enabled. Default value is `True`.
+        /// </summary>
+        [Output("dhcp")]
+        public Output<bool> Dhcp { get; private set; } = null!;
+
+        /// <summary>
         /// The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
         /// </summary>
         [Output("ipv4Gateway")]
         public Output<string> Ipv4Gateway { get; private set; } = null!;
 
         /// <summary>
-        /// The IPv4 nameservers of the network.
+        /// The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
         /// </summary>
         [Output("ipv4Nameservers")]
         public Output<ImmutableArray<string>> Ipv4Nameservers { get; private set; } = null!;
@@ -64,13 +73,13 @@ namespace ediri.Stackit
         /// The IPv6 prefix of the network (CIDR).
         /// </summary>
         [Output("ipv6Prefix")]
-        public Output<string?> Ipv6Prefix { get; private set; } = null!;
+        public Output<string> Ipv6Prefix { get; private set; } = null!;
 
         /// <summary>
         /// The IPv6 prefix length of the network.
         /// </summary>
         [Output("ipv6PrefixLength")]
-        public Output<int?> Ipv6PrefixLength { get; private set; } = null!;
+        public Output<int> Ipv6PrefixLength { get; private set; } = null!;
 
         /// <summary>
         /// The IPv6 prefixes of the network.
@@ -91,34 +100,22 @@ namespace ediri.Stackit
         public Output<string> Name { get; private set; } = null!;
 
         /// <summary>
-        /// The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4_nameservers` to configure the nameservers for IPv4.
-        /// </summary>
-        [Output("nameservers")]
-        public Output<ImmutableArray<string>> Nameservers { get; private set; } = null!;
-
-        /// <summary>
         /// The network ID.
         /// </summary>
         [Output("networkId")]
         public Output<string> NetworkId { get; private set; } = null!;
 
         /// <summary>
-        /// If set to `true`, the network doesn't have a gateway.
+        /// If set to `True`, the network doesn't have a gateway.
         /// </summary>
         [Output("noIpv4Gateway")]
         public Output<bool?> NoIpv4Gateway { get; private set; } = null!;
 
         /// <summary>
-        /// If set to `true`, the network doesn't have a gateway.
+        /// If set to `True`, the network doesn't have a gateway.
         /// </summary>
         [Output("noIpv6Gateway")]
         public Output<bool?> NoIpv6Gateway { get; private set; } = null!;
-
-        /// <summary>
-        /// The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4_prefixes` to read the prefixes of the IPv4 networks.
-        /// </summary>
-        [Output("prefixes")]
-        public Output<ImmutableArray<string>> Prefixes { get; private set; } = null!;
 
         /// <summary>
         /// STACKIT project ID to which the network is associated.
@@ -133,20 +130,18 @@ namespace ediri.Stackit
         public Output<string> PublicIp { get; private set; } = null!;
 
         /// <summary>
-        /// Can only be used when experimental "network" is set.
         /// The resource region. If not defined, the provider region is used.
         /// </summary>
         [Output("region")]
         public Output<string> Region { get; private set; } = null!;
 
         /// <summary>
-        /// If set to `true`, the network is routed and therefore accessible from other networks.
+        /// If set to `True`, the network is routed and therefore accessible from other networks.
         /// </summary>
         [Output("routed")]
         public Output<bool> Routed { get; private set; } = null!;
 
         /// <summary>
-        /// Can only be used when experimental "network" is set.
         /// The ID of the routing table associated with the network.
         /// </summary>
         [Output("routingTableId")]
@@ -200,6 +195,12 @@ namespace ediri.Stackit
     public sealed class NetworkArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// If the network has DHCP enabled. Default value is `True`.
+        /// </summary>
+        [Input("dhcp")]
+        public Input<bool>? Dhcp { get; set; }
+
+        /// <summary>
         /// The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
         /// </summary>
         [Input("ipv4Gateway")]
@@ -209,7 +210,7 @@ namespace ediri.Stackit
         private InputList<string>? _ipv4Nameservers;
 
         /// <summary>
-        /// The IPv4 nameservers of the network.
+        /// The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
         /// </summary>
         public InputList<string> Ipv4Nameservers
         {
@@ -277,27 +278,14 @@ namespace ediri.Stackit
         [Input("name")]
         public Input<string>? Name { get; set; }
 
-        [Input("nameservers")]
-        private InputList<string>? _nameservers;
-
         /// <summary>
-        /// The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4_nameservers` to configure the nameservers for IPv4.
-        /// </summary>
-        [Obsolete(@"Use `ipv4_nameservers` to configure the nameservers for IPv4.")]
-        public InputList<string> Nameservers
-        {
-            get => _nameservers ?? (_nameservers = new InputList<string>());
-            set => _nameservers = value;
-        }
-
-        /// <summary>
-        /// If set to `true`, the network doesn't have a gateway.
+        /// If set to `True`, the network doesn't have a gateway.
         /// </summary>
         [Input("noIpv4Gateway")]
         public Input<bool>? NoIpv4Gateway { get; set; }
 
         /// <summary>
-        /// If set to `true`, the network doesn't have a gateway.
+        /// If set to `True`, the network doesn't have a gateway.
         /// </summary>
         [Input("noIpv6Gateway")]
         public Input<bool>? NoIpv6Gateway { get; set; }
@@ -309,20 +297,18 @@ namespace ediri.Stackit
         public Input<string> ProjectId { get; set; } = null!;
 
         /// <summary>
-        /// Can only be used when experimental "network" is set.
         /// The resource region. If not defined, the provider region is used.
         /// </summary>
         [Input("region")]
         public Input<string>? Region { get; set; }
 
         /// <summary>
-        /// If set to `true`, the network is routed and therefore accessible from other networks.
+        /// If set to `True`, the network is routed and therefore accessible from other networks.
         /// </summary>
         [Input("routed")]
         public Input<bool>? Routed { get; set; }
 
         /// <summary>
-        /// Can only be used when experimental "network" is set.
         /// The ID of the routing table associated with the network.
         /// </summary>
         [Input("routingTableId")]
@@ -337,6 +323,12 @@ namespace ediri.Stackit
     public sealed class NetworkState : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// If the network has DHCP enabled. Default value is `True`.
+        /// </summary>
+        [Input("dhcp")]
+        public Input<bool>? Dhcp { get; set; }
+
+        /// <summary>
         /// The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
         /// </summary>
         [Input("ipv4Gateway")]
@@ -346,7 +338,7 @@ namespace ediri.Stackit
         private InputList<string>? _ipv4Nameservers;
 
         /// <summary>
-        /// The IPv4 nameservers of the network.
+        /// The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
         /// </summary>
         public InputList<string> Ipv4Nameservers
         {
@@ -438,19 +430,6 @@ namespace ediri.Stackit
         [Input("name")]
         public Input<string>? Name { get; set; }
 
-        [Input("nameservers")]
-        private InputList<string>? _nameservers;
-
-        /// <summary>
-        /// The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4_nameservers` to configure the nameservers for IPv4.
-        /// </summary>
-        [Obsolete(@"Use `ipv4_nameservers` to configure the nameservers for IPv4.")]
-        public InputList<string> Nameservers
-        {
-            get => _nameservers ?? (_nameservers = new InputList<string>());
-            set => _nameservers = value;
-        }
-
         /// <summary>
         /// The network ID.
         /// </summary>
@@ -458,29 +437,16 @@ namespace ediri.Stackit
         public Input<string>? NetworkId { get; set; }
 
         /// <summary>
-        /// If set to `true`, the network doesn't have a gateway.
+        /// If set to `True`, the network doesn't have a gateway.
         /// </summary>
         [Input("noIpv4Gateway")]
         public Input<bool>? NoIpv4Gateway { get; set; }
 
         /// <summary>
-        /// If set to `true`, the network doesn't have a gateway.
+        /// If set to `True`, the network doesn't have a gateway.
         /// </summary>
         [Input("noIpv6Gateway")]
         public Input<bool>? NoIpv6Gateway { get; set; }
-
-        [Input("prefixes")]
-        private InputList<string>? _prefixes;
-
-        /// <summary>
-        /// The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4_prefixes` to read the prefixes of the IPv4 networks.
-        /// </summary>
-        [Obsolete(@"Use `ipv4_prefixes` to read the prefixes of the IPv4 networks.")]
-        public InputList<string> Prefixes
-        {
-            get => _prefixes ?? (_prefixes = new InputList<string>());
-            set => _prefixes = value;
-        }
 
         /// <summary>
         /// STACKIT project ID to which the network is associated.
@@ -495,20 +461,18 @@ namespace ediri.Stackit
         public Input<string>? PublicIp { get; set; }
 
         /// <summary>
-        /// Can only be used when experimental "network" is set.
         /// The resource region. If not defined, the provider region is used.
         /// </summary>
         [Input("region")]
         public Input<string>? Region { get; set; }
 
         /// <summary>
-        /// If set to `true`, the network is routed and therefore accessible from other networks.
+        /// If set to `True`, the network is routed and therefore accessible from other networks.
         /// </summary>
         [Input("routed")]
         public Input<bool>? Routed { get; set; }
 
         /// <summary>
-        /// Can only be used when experimental "network" is set.
         /// The ID of the routing table associated with the network.
         /// </summary>
         [Input("routingTableId")]

@@ -30,6 +30,8 @@ type LookupImageArgs struct {
 	ImageId string `pulumi:"imageId"`
 	// STACKIT project ID to which the image is associated.
 	ProjectId string `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 }
 
 // A collection of values returned by getImage.
@@ -40,7 +42,8 @@ type LookupImageResult struct {
 	Config GetImageConfig `pulumi:"config"`
 	// The disk format of the image.
 	DiskFormat string `pulumi:"diskFormat"`
-	Id         string `pulumi:"id"`
+	// Terraform's internal resource ID. It is structured as "`projectId`,`region`,`imageId`".
+	Id string `pulumi:"id"`
 	// The image ID.
 	ImageId string `pulumi:"imageId"`
 	// Labels are key-value string pairs which can be attached to a resource container
@@ -55,6 +58,8 @@ type LookupImageResult struct {
 	ProjectId string `pulumi:"projectId"`
 	// Whether the image is protected.
 	Protected bool `pulumi:"protected"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The scope of the image.
 	Scope string `pulumi:"scope"`
 }
@@ -74,6 +79,8 @@ type LookupImageOutputArgs struct {
 	ImageId pulumi.StringInput `pulumi:"imageId"`
 	// STACKIT project ID to which the image is associated.
 	ProjectId pulumi.StringInput `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput `pulumi:"region"`
 }
 
 func (LookupImageOutputArgs) ElementType() reflect.Type {
@@ -110,6 +117,7 @@ func (o LookupImageResultOutput) DiskFormat() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupImageResult) string { return v.DiskFormat }).(pulumi.StringOutput)
 }
 
+// Terraform's internal resource ID. It is structured as "`projectId`,`region`,`imageId`".
 func (o LookupImageResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupImageResult) string { return v.Id }).(pulumi.StringOutput)
 }
@@ -147,6 +155,11 @@ func (o LookupImageResultOutput) ProjectId() pulumi.StringOutput {
 // Whether the image is protected.
 func (o LookupImageResultOutput) Protected() pulumi.BoolOutput {
 	return o.ApplyT(func(v LookupImageResult) bool { return v.Protected }).(pulumi.BoolOutput)
+}
+
+// The resource region. If not defined, the provider region is used.
+func (o LookupImageResultOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v LookupImageResult) *string { return v.Region }).(pulumi.StringPtrOutput)
 }
 
 // The scope of the image.
