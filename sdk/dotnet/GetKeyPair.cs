@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetKeyPair
     {
         /// <summary>
-        /// Key pair resource schema. Must have a `region` specified in the provider configuration.
+        /// Key pair resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -27,7 +27,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetKeyPairResult>("stackit:index/getKeyPair:getKeyPair", args ?? new GetKeyPairArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Key pair resource schema. Must have a `region` specified in the provider configuration.
+        /// Key pair resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -41,7 +41,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetKeyPairResult>("stackit:index/getKeyPair:getKeyPair", args ?? new GetKeyPairInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Key pair resource schema. Must have a `region` specified in the provider configuration.
+        /// Key pair resource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -92,6 +92,9 @@ namespace ediri.Stackit
         /// The fingerprint of the public SSH key.
         /// </summary>
         public readonly string Fingerprint;
+        /// <summary>
+        /// Terraform's internal resource ID. It takes the value of the key pair "`Name`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// Labels are key-value string pairs which can be attached to a resource container.

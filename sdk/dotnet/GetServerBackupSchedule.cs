@@ -13,9 +13,7 @@ namespace ediri.Stackit
     public static class GetServerBackupSchedule
     {
         /// <summary>
-        /// Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.
-        /// 
-        /// &gt; This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+        /// Server backup schedule datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -31,9 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetServerBackupScheduleResult>("stackit:index/getServerBackupSchedule:getServerBackupSchedule", args ?? new GetServerBackupScheduleArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.
-        /// 
-        /// &gt; This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+        /// Server backup schedule datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -49,9 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetServerBackupScheduleResult>("stackit:index/getServerBackupSchedule:getServerBackupSchedule", args ?? new GetServerBackupScheduleInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.
-        /// 
-        /// &gt; This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
+        /// Server backup schedule datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -148,6 +142,9 @@ namespace ediri.Stackit
         /// Is the backup schedule enabled or disabled.
         /// </summary>
         public readonly bool Enabled;
+        /// <summary>
+        /// Terraform's internal resource identifier. It is structured as "`ProjectId`,`ServerId`,`BackupScheduleId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// The schedule name.
@@ -162,7 +159,7 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string? Region;
         /// <summary>
-        /// Backup schedule described in `rrule` (recurrence rule) format.
+        /// An `Rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         /// </summary>
         public readonly string Rrule;
         /// <summary>

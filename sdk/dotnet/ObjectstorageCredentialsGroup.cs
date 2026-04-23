@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// ObjectStorage credentials group resource schema. Must have a `region` specified in the provider configuration. If you are creating `credentialsgroup` and `bucket` resources simultaneously, please include the `depends_on` field so that they are created sequentially. This prevents errors from concurrent calls to the service enablement that is done in the background.
+    /// ObjectStorage credentials group resource schema. Must have a `Region` specified in the provider configuration. If you are creating `Credentialsgroup` and `Bucket` resources simultaneously, please include the `DependsOn` field so that they are created sequentially. This prevents errors from concurrent calls to the service enablement that is done in the background.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -45,8 +45,8 @@ namespace ediri.Stackit
         /// <summary>
         /// Credentials group uniform resource name (URN)
         /// </summary>
-        [Output("urn")]
-        public Output<string> Urn { get; private set; } = null!;
+        [Output("stackitUrn")]
+        public Output<string> StackitUrn { get; private set; } = null!;
 
 
         /// <summary>
@@ -148,8 +148,8 @@ namespace ediri.Stackit
         /// <summary>
         /// Credentials group uniform resource name (URN)
         /// </summary>
-        [Input("urn")]
-        public Input<string>? Urn { get; set; }
+        [Input("stackitUrn")]
+        public Input<string>? StackitUrn { get; set; }
 
         public ObjectstorageCredentialsGroupState()
         {

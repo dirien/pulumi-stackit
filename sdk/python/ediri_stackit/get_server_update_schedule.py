@@ -66,13 +66,16 @@ class GetServerUpdateScheduleResult:
     @_builtins.property
     @pulumi.getter
     def id(self) -> _builtins.str:
+        """
+        Terraform's internal resource identifier. It is structured as "`project_id`,`region`,`server_id`,`update_schedule_id`".
+        """
         return pulumi.get(self, "id")
 
     @_builtins.property
     @pulumi.getter(name="maintenanceWindow")
     def maintenance_window(self) -> _builtins.int:
         """
-        Maintenance window [1..24].
+        Maintenance window [1..24]. Updates start within the defined hourly window. Depending on the updates, the process may exceed this timeframe and require an automatic restart.
         """
         return pulumi.get(self, "maintenance_window")
 
@@ -104,7 +107,7 @@ class GetServerUpdateScheduleResult:
     @pulumi.getter
     def rrule(self) -> _builtins.str:
         """
-        Update schedule described in `rrule` (recurrence rule) format.
+        An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
         """
         return pulumi.get(self, "rrule")
 
@@ -150,8 +153,6 @@ def get_server_update_schedule(project_id: Optional[_builtins.str] = None,
     """
     Server update schedule datasource schema. Must have a `region` specified in the provider configuration.
 
-    > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
-
     ## Example Usage
 
 
@@ -185,8 +186,6 @@ def get_server_update_schedule_output(project_id: Optional[pulumi.Input[_builtin
                                       opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetServerUpdateScheduleResult]:
     """
     Server update schedule datasource schema. Must have a `region` specified in the provider configuration.
-
-    > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
 
     ## Example Usage
 

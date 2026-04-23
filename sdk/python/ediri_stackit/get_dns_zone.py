@@ -13,6 +13,8 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
+from . import outputs
+from ._inputs import *
 
 __all__ = [
     'GetDnsZoneResult',
@@ -26,7 +28,7 @@ class GetDnsZoneResult:
     """
     A collection of values returned by getDnsZone.
     """
-    def __init__(__self__, acl=None, active=None, contact_email=None, default_ttl=None, description=None, dns_name=None, expire_time=None, id=None, is_reverse_zone=None, name=None, negative_cache=None, primaries=None, primary_name_server=None, project_id=None, record_count=None, refresh_time=None, retry_time=None, serial_number=None, state=None, type=None, visibility=None, zone_id=None):
+    def __init__(__self__, acl=None, active=None, contact_email=None, default_ttl=None, description=None, dns_name=None, expire_time=None, id=None, is_reverse_zone=None, name=None, negative_cache=None, primaries=None, primary_name_server=None, project_id=None, record_count=None, refresh_time=None, retry_time=None, serial_number=None, state=None, timeouts=None, type=None, visibility=None, zone_id=None):
         if acl and not isinstance(acl, str):
             raise TypeError("Expected argument 'acl' to be a str")
         pulumi.set(__self__, "acl", acl)
@@ -84,6 +86,9 @@ class GetDnsZoneResult:
         if state and not isinstance(state, str):
             raise TypeError("Expected argument 'state' to be a str")
         pulumi.set(__self__, "state", state)
+        if timeouts and not isinstance(timeouts, dict):
+            raise TypeError("Expected argument 'timeouts' to be a dict")
+        pulumi.set(__self__, "timeouts", timeouts)
         if type and not isinstance(type, str):
             raise TypeError("Expected argument 'type' to be a str")
         pulumi.set(__self__, "type", type)
@@ -135,7 +140,7 @@ class GetDnsZoneResult:
     @pulumi.getter(name="dnsName")
     def dns_name(self) -> Optional[_builtins.str]:
         """
-        The zone name. E.g. `example.com`
+        The zone name. E.g. `example.com` (must not end with a trailing dot).
         """
         return pulumi.get(self, "dns_name")
 
@@ -150,6 +155,9 @@ class GetDnsZoneResult:
     @_builtins.property
     @pulumi.getter
     def id(self) -> _builtins.str:
+        """
+        Terraform's internal data source. ID. It is structured as "`project_id`,`zone_id`".
+        """
         return pulumi.get(self, "id")
 
     @_builtins.property
@@ -242,6 +250,11 @@ class GetDnsZoneResult:
 
     @_builtins.property
     @pulumi.getter
+    def timeouts(self) -> Optional['outputs.GetDnsZoneTimeoutsResult']:
+        return pulumi.get(self, "timeouts")
+
+    @_builtins.property
+    @pulumi.getter
     def type(self) -> _builtins.str:
         """
         Zone type.
@@ -290,6 +303,7 @@ class AwaitableGetDnsZoneResult(GetDnsZoneResult):
             retry_time=self.retry_time,
             serial_number=self.serial_number,
             state=self.state,
+            timeouts=self.timeouts,
             type=self.type,
             visibility=self.visibility,
             zone_id=self.zone_id)
@@ -297,6 +311,7 @@ class AwaitableGetDnsZoneResult(GetDnsZoneResult):
 
 def get_dns_zone(dns_name: Optional[_builtins.str] = None,
                  project_id: Optional[_builtins.str] = None,
+                 timeouts: Optional[Union['GetDnsZoneTimeoutsArgs', 'GetDnsZoneTimeoutsArgsDict']] = None,
                  zone_id: Optional[_builtins.str] = None,
                  opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetDnsZoneResult:
     """
@@ -305,13 +320,14 @@ def get_dns_zone(dns_name: Optional[_builtins.str] = None,
     ## Example Usage
 
 
-    :param _builtins.str dns_name: The zone name. E.g. `example.com`
+    :param _builtins.str dns_name: The zone name. E.g. `example.com` (must not end with a trailing dot).
     :param _builtins.str project_id: STACKIT project ID to which the dns zone is associated.
     :param _builtins.str zone_id: The zone ID.
     """
     __args__ = dict()
     __args__['dnsName'] = dns_name
     __args__['projectId'] = project_id
+    __args__['timeouts'] = timeouts
     __args__['zoneId'] = zone_id
     opts = pulumi.InvokeOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke('stackit:index/getDnsZone:getDnsZone', __args__, opts=opts, typ=GetDnsZoneResult).value
@@ -336,11 +352,13 @@ def get_dns_zone(dns_name: Optional[_builtins.str] = None,
         retry_time=pulumi.get(__ret__, 'retry_time'),
         serial_number=pulumi.get(__ret__, 'serial_number'),
         state=pulumi.get(__ret__, 'state'),
+        timeouts=pulumi.get(__ret__, 'timeouts'),
         type=pulumi.get(__ret__, 'type'),
         visibility=pulumi.get(__ret__, 'visibility'),
         zone_id=pulumi.get(__ret__, 'zone_id'))
 def get_dns_zone_output(dns_name: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
                         project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                        timeouts: Optional[pulumi.Input[Optional[Union['GetDnsZoneTimeoutsArgs', 'GetDnsZoneTimeoutsArgsDict']]]] = None,
                         zone_id: Optional[pulumi.Input[Optional[_builtins.str]]] = None,
                         opts: Optional[Union[pulumi.InvokeOptions, pulumi.InvokeOutputOptions]] = None) -> pulumi.Output[GetDnsZoneResult]:
     """
@@ -349,13 +367,14 @@ def get_dns_zone_output(dns_name: Optional[pulumi.Input[Optional[_builtins.str]]
     ## Example Usage
 
 
-    :param _builtins.str dns_name: The zone name. E.g. `example.com`
+    :param _builtins.str dns_name: The zone name. E.g. `example.com` (must not end with a trailing dot).
     :param _builtins.str project_id: STACKIT project ID to which the dns zone is associated.
     :param _builtins.str zone_id: The zone ID.
     """
     __args__ = dict()
     __args__['dnsName'] = dns_name
     __args__['projectId'] = project_id
+    __args__['timeouts'] = timeouts
     __args__['zoneId'] = zone_id
     opts = pulumi.InvokeOutputOptions.merge(_utilities.get_invoke_opts_defaults(), opts)
     __ret__ = pulumi.runtime.invoke_output('stackit:index/getDnsZone:getDnsZone', __args__, opts=opts, typ=GetDnsZoneResult)
@@ -379,6 +398,7 @@ def get_dns_zone_output(dns_name: Optional[pulumi.Input[Optional[_builtins.str]]
         retry_time=pulumi.get(__response__, 'retry_time'),
         serial_number=pulumi.get(__response__, 'serial_number'),
         state=pulumi.get(__response__, 'state'),
+        timeouts=pulumi.get(__response__, 'timeouts'),
         type=pulumi.get(__response__, 'type'),
         visibility=pulumi.get(__response__, 'visibility'),
         zone_id=pulumi.get(__response__, 'zone_id')))

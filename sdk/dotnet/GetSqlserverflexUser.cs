@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetSqlserverflexUser
     {
         /// <summary>
-        /// SQLServer Flex user data source schema. Must have a `region` specified in the provider configuration.
+        /// SQLServer Flex user data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -29,7 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetSqlserverflexUserResult>("stackit:index/getSqlserverflexUser:getSqlserverflexUser", args ?? new GetSqlserverflexUserArgs(), options.WithDefaults());
 
         /// <summary>
-        /// SQLServer Flex user data source schema. Must have a `region` specified in the provider configuration.
+        /// SQLServer Flex user data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -45,7 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetSqlserverflexUserResult>("stackit:index/getSqlserverflexUser:getSqlserverflexUser", args ?? new GetSqlserverflexUserInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// SQLServer Flex user data source schema. Must have a `region` specified in the provider configuration.
+        /// SQLServer Flex user data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -131,6 +131,9 @@ namespace ediri.Stackit
     public sealed class GetSqlserverflexUserResult
     {
         public readonly string Host;
+        /// <summary>
+        /// Terraform's internal data source. ID. It is structured as "`ProjectId`,`Region`,`InstanceId`,`UserId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// ID of the SQLServer Flex instance.

@@ -25,16 +25,19 @@ class NetworkInterfaceArgs:
                  ipv4: Optional[pulumi.Input[_builtins.str]] = None,
                  labels: Optional[pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]]] = None,
                  name: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  security: Optional[pulumi.Input[_builtins.bool]] = None,
                  security_group_ids: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None):
         """
         The set of arguments for constructing a NetworkInterface resource.
+
         :param pulumi.Input[_builtins.str] network_id: The network ID to which the network interface is associated.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the network is associated.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] allowed_addresses: The list of CIDR (Classless Inter-Domain Routing) notations.
         :param pulumi.Input[_builtins.str] ipv4: The IPv4 address.
         :param pulumi.Input[Mapping[str, pulumi.Input[_builtins.str]]] labels: Labels are key-value string pairs which can be attached to a network interface.
         :param pulumi.Input[_builtins.str] name: The name of the network interface.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.bool] security: The Network Interface Security. If set to false, then no security groups will apply to this network interface.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_ids: The list of security group UUIDs. If security is set to false, setting this field will lead to an error.
         """
@@ -48,6 +51,8 @@ class NetworkInterfaceArgs:
             pulumi.set(__self__, "labels", labels)
         if name is not None:
             pulumi.set(__self__, "name", name)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
         if security is not None:
             pulumi.set(__self__, "security", security)
         if security_group_ids is not None:
@@ -127,6 +132,18 @@ class NetworkInterfaceArgs:
 
     @_builtins.property
     @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "region", value)
+
+    @_builtins.property
+    @pulumi.getter
     def security(self) -> Optional[pulumi.Input[_builtins.bool]]:
         """
         The Network Interface Security. If set to false, then no security groups will apply to this network interface.
@@ -162,11 +179,13 @@ class _NetworkInterfaceState:
                  network_id: Optional[pulumi.Input[_builtins.str]] = None,
                  network_interface_id: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  security: Optional[pulumi.Input[_builtins.bool]] = None,
                  security_group_ids: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  type: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering NetworkInterface resources.
+
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] allowed_addresses: The list of CIDR (Classless Inter-Domain Routing) notations.
         :param pulumi.Input[_builtins.str] device: The device UUID of the network interface.
         :param pulumi.Input[_builtins.str] ipv4: The IPv4 address.
@@ -176,9 +195,10 @@ class _NetworkInterfaceState:
         :param pulumi.Input[_builtins.str] network_id: The network ID to which the network interface is associated.
         :param pulumi.Input[_builtins.str] network_interface_id: The network interface ID.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the network is associated.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.bool] security: The Network Interface Security. If set to false, then no security groups will apply to this network interface.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_ids: The list of security group UUIDs. If security is set to false, setting this field will lead to an error.
-        :param pulumi.Input[_builtins.str] type: Type of network interface. Some of the possible values are: Supported values are: `server`, `metadata`, `gateway`.
+        :param pulumi.Input[_builtins.str] type: Type of network interface. Some of the possible values are: Possible values are: `server`, `metadata`, `gateway`.
         """
         if allowed_addresses is not None:
             pulumi.set(__self__, "allowed_addresses", allowed_addresses)
@@ -198,6 +218,8 @@ class _NetworkInterfaceState:
             pulumi.set(__self__, "network_interface_id", network_interface_id)
         if project_id is not None:
             pulumi.set(__self__, "project_id", project_id)
+        if region is not None:
+            pulumi.set(__self__, "region", region)
         if security is not None:
             pulumi.set(__self__, "security", security)
         if security_group_ids is not None:
@@ -315,6 +337,18 @@ class _NetworkInterfaceState:
 
     @_builtins.property
     @pulumi.getter
+    def region(self) -> Optional[pulumi.Input[_builtins.str]]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @region.setter
+    def region(self, value: Optional[pulumi.Input[_builtins.str]]):
+        pulumi.set(self, "region", value)
+
+    @_builtins.property
+    @pulumi.getter
     def security(self) -> Optional[pulumi.Input[_builtins.bool]]:
         """
         The Network Interface Security. If set to false, then no security groups will apply to this network interface.
@@ -341,7 +375,7 @@ class _NetworkInterfaceState:
     @pulumi.getter
     def type(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Type of network interface. Some of the possible values are: Supported values are: `server`, `metadata`, `gateway`.
+        Type of network interface. Some of the possible values are: Possible values are: `server`, `metadata`, `gateway`.
         """
         return pulumi.get(self, "type")
 
@@ -362,6 +396,7 @@ class NetworkInterface(pulumi.CustomResource):
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  network_id: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  security: Optional[pulumi.Input[_builtins.bool]] = None,
                  security_group_ids: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  __props__=None):
@@ -369,6 +404,7 @@ class NetworkInterface(pulumi.CustomResource):
         Network interface resource schema. Must have a `region` specified in the provider configuration.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -378,6 +414,7 @@ class NetworkInterface(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] name: The name of the network interface.
         :param pulumi.Input[_builtins.str] network_id: The network ID to which the network interface is associated.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the network is associated.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.bool] security: The Network Interface Security. If set to false, then no security groups will apply to this network interface.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_ids: The list of security group UUIDs. If security is set to false, setting this field will lead to an error.
         """
@@ -391,6 +428,7 @@ class NetworkInterface(pulumi.CustomResource):
         Network interface resource schema. Must have a `region` specified in the provider configuration.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param NetworkInterfaceArgs args: The arguments to use to populate this resource's properties.
@@ -413,6 +451,7 @@ class NetworkInterface(pulumi.CustomResource):
                  name: Optional[pulumi.Input[_builtins.str]] = None,
                  network_id: Optional[pulumi.Input[_builtins.str]] = None,
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
+                 region: Optional[pulumi.Input[_builtins.str]] = None,
                  security: Optional[pulumi.Input[_builtins.bool]] = None,
                  security_group_ids: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  __props__=None):
@@ -434,6 +473,7 @@ class NetworkInterface(pulumi.CustomResource):
             if project_id is None and not opts.urn:
                 raise TypeError("Missing required property 'project_id'")
             __props__.__dict__["project_id"] = project_id
+            __props__.__dict__["region"] = region
             __props__.__dict__["security"] = security
             __props__.__dict__["security_group_ids"] = security_group_ids
             __props__.__dict__["device"] = None
@@ -459,6 +499,7 @@ class NetworkInterface(pulumi.CustomResource):
             network_id: Optional[pulumi.Input[_builtins.str]] = None,
             network_interface_id: Optional[pulumi.Input[_builtins.str]] = None,
             project_id: Optional[pulumi.Input[_builtins.str]] = None,
+            region: Optional[pulumi.Input[_builtins.str]] = None,
             security: Optional[pulumi.Input[_builtins.bool]] = None,
             security_group_ids: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
             type: Optional[pulumi.Input[_builtins.str]] = None) -> 'NetworkInterface':
@@ -478,9 +519,10 @@ class NetworkInterface(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] network_id: The network ID to which the network interface is associated.
         :param pulumi.Input[_builtins.str] network_interface_id: The network interface ID.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the network is associated.
+        :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         :param pulumi.Input[_builtins.bool] security: The Network Interface Security. If set to false, then no security groups will apply to this network interface.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] security_group_ids: The list of security group UUIDs. If security is set to false, setting this field will lead to an error.
-        :param pulumi.Input[_builtins.str] type: Type of network interface. Some of the possible values are: Supported values are: `server`, `metadata`, `gateway`.
+        :param pulumi.Input[_builtins.str] type: Type of network interface. Some of the possible values are: Possible values are: `server`, `metadata`, `gateway`.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -495,6 +537,7 @@ class NetworkInterface(pulumi.CustomResource):
         __props__.__dict__["network_id"] = network_id
         __props__.__dict__["network_interface_id"] = network_interface_id
         __props__.__dict__["project_id"] = project_id
+        __props__.__dict__["region"] = region
         __props__.__dict__["security"] = security
         __props__.__dict__["security_group_ids"] = security_group_ids
         __props__.__dict__["type"] = type
@@ -574,6 +617,14 @@ class NetworkInterface(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
+    def region(self) -> pulumi.Output[_builtins.str]:
+        """
+        The resource region. If not defined, the provider region is used.
+        """
+        return pulumi.get(self, "region")
+
+    @_builtins.property
+    @pulumi.getter
     def security(self) -> pulumi.Output[_builtins.bool]:
         """
         The Network Interface Security. If set to false, then no security groups will apply to this network interface.
@@ -592,7 +643,7 @@ class NetworkInterface(pulumi.CustomResource):
     @pulumi.getter
     def type(self) -> pulumi.Output[_builtins.str]:
         """
-        Type of network interface. Some of the possible values are: Supported values are: `server`, `metadata`, `gateway`.
+        Type of network interface. Some of the possible values are: Possible values are: `server`, `metadata`, `gateway`.
         """
         return pulumi.get(self, "type")
 

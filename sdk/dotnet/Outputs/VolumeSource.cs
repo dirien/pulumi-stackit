@@ -19,7 +19,7 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly string Id;
         /// <summary>
-        /// The type of the source. Supported values are: `volume`, `image`, `snapshot`, `backup`.
+        /// The type of the source. Possible values are: `Volume`, `Image`, `Snapshot`, `Backup`.
         /// </summary>
         public readonly string Type;
 

@@ -52,8 +52,9 @@ type DnsZone struct {
 	// Serial number. E.g. `2022111400`.
 	SerialNumber pulumi.IntOutput `pulumi:"serialNumber"`
 	// Zone state. E.g. `CREATE_SUCCEEDED`.
-	State pulumi.StringOutput `pulumi:"state"`
-	// Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+	State    pulumi.StringOutput      `pulumi:"state"`
+	Timeouts DnsZoneTimeoutsPtrOutput `pulumi:"timeouts"`
+	// Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
 	Type pulumi.StringOutput `pulumi:"type"`
 	// Visibility of the zone. E.g. `public`.
 	Visibility pulumi.StringOutput `pulumi:"visibility"`
@@ -131,8 +132,9 @@ type dnsZoneState struct {
 	// Serial number. E.g. `2022111400`.
 	SerialNumber *int `pulumi:"serialNumber"`
 	// Zone state. E.g. `CREATE_SUCCEEDED`.
-	State *string `pulumi:"state"`
-	// Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+	State    *string          `pulumi:"state"`
+	Timeouts *DnsZoneTimeouts `pulumi:"timeouts"`
+	// Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
 	Type *string `pulumi:"type"`
 	// Visibility of the zone. E.g. `public`.
 	Visibility *string `pulumi:"visibility"`
@@ -175,8 +177,9 @@ type DnsZoneState struct {
 	// Serial number. E.g. `2022111400`.
 	SerialNumber pulumi.IntPtrInput
 	// Zone state. E.g. `CREATE_SUCCEEDED`.
-	State pulumi.StringPtrInput
-	// Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+	State    pulumi.StringPtrInput
+	Timeouts DnsZoneTimeoutsPtrInput
+	// Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
 	Type pulumi.StringPtrInput
 	// Visibility of the zone. E.g. `public`.
 	Visibility pulumi.StringPtrInput
@@ -215,8 +218,9 @@ type dnsZoneArgs struct {
 	// Refresh time. E.g. 3600
 	RefreshTime *int `pulumi:"refreshTime"`
 	// Retry time. E.g. 600
-	RetryTime *int `pulumi:"retryTime"`
-	// Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+	RetryTime *int             `pulumi:"retryTime"`
+	Timeouts  *DnsZoneTimeouts `pulumi:"timeouts"`
+	// Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
 	Type *string `pulumi:"type"`
 }
 
@@ -249,7 +253,8 @@ type DnsZoneArgs struct {
 	RefreshTime pulumi.IntPtrInput
 	// Retry time. E.g. 600
 	RetryTime pulumi.IntPtrInput
-	// Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+	Timeouts  DnsZoneTimeoutsPtrInput
+	// Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
 	Type pulumi.StringPtrInput
 }
 
@@ -429,7 +434,11 @@ func (o DnsZoneOutput) State() pulumi.StringOutput {
 	return o.ApplyT(func(v *DnsZone) pulumi.StringOutput { return v.State }).(pulumi.StringOutput)
 }
 
-// Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+func (o DnsZoneOutput) Timeouts() DnsZoneTimeoutsPtrOutput {
+	return o.ApplyT(func(v *DnsZone) DnsZoneTimeoutsPtrOutput { return v.Timeouts }).(DnsZoneTimeoutsPtrOutput)
+}
+
+// Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
 func (o DnsZoneOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v *DnsZone) pulumi.StringOutput { return v.Type }).(pulumi.StringOutput)
 }
