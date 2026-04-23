@@ -9,11 +9,113 @@
                     }
                 }
             },
+            "stackit_alb_certificate": {
+                "current": "stackit:index/albCertificate:AlbCertificate"
+            },
+            "stackit_application_load_balancer": {
+                "current": "stackit:index/applicationLoadBalancer:ApplicationLoadBalancer",
+                "fields": {
+                    "errors": {
+                        "maxItemsOne": false
+                    },
+                    "listeners": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "http": {
+                                    "fields": {
+                                        "hosts": {
+                                            "maxItemsOne": false,
+                                            "elem": {
+                                                "fields": {
+                                                    "rules": {
+                                                        "maxItemsOne": false,
+                                                        "elem": {
+                                                            "fields": {
+                                                                "headers": {
+                                                                    "maxItemsOne": false
+                                                                },
+                                                                "query_parameters": {
+                                                                    "maxItemsOne": false
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "https": {
+                                    "fields": {
+                                        "certificate_config": {
+                                            "fields": {
+                                                "certificate_ids": {
+                                                    "maxItemsOne": false
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "networks": {
+                        "maxItemsOne": false
+                    },
+                    "options": {
+                        "fields": {
+                            "access_control": {
+                                "fields": {
+                                    "allowed_source_ranges": {
+                                        "maxItemsOne": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "target_pools": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "active_health_check": {
+                                    "fields": {
+                                        "http_health_checks": {
+                                            "fields": {
+                                                "ok_status": {
+                                                    "maxItemsOne": false
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "targets": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "stackit_authorization_folder_role_assignment": {
+                "current": "stackit:index/authorizationFolderRoleAssignment:AuthorizationFolderRoleAssignment"
+            },
             "stackit_authorization_organization_role_assignment": {
                 "current": "stackit:index/authorizationOrganizationRoleAssignment:AuthorizationOrganizationRoleAssignment"
             },
+            "stackit_authorization_project_custom_role": {
+                "current": "stackit:index/authorizationProjectCustomRole:AuthorizationProjectCustomRole",
+                "fields": {
+                    "permissions": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
             "stackit_authorization_project_role_assignment": {
                 "current": "stackit:index/authorizationProjectRoleAssignment:AuthorizationProjectRoleAssignment"
+            },
+            "stackit_authorization_service_account_role_assignment": {
+                "current": "stackit:index/authorizationServiceAccountRoleAssignment:AuthorizationServiceAccountRoleAssignment"
             },
             "stackit_cdn_custom_domain": {
                 "current": "stackit:index/cdnCustomDomain:CdnCustomDomain",
@@ -28,6 +130,15 @@
                 "fields": {
                     "config": {
                         "fields": {
+                            "backend": {
+                                "fields": {
+                                    "geofencing": {
+                                        "elem": {
+                                            "maxItemsOne": false
+                                        }
+                                    }
+                                }
+                            },
                             "blocked_countries": {
                                 "maxItemsOne": false
                             },
@@ -67,6 +178,15 @@
                     }
                 }
             },
+            "stackit_edgecloud_instance": {
+                "current": "stackit:index/edgecloudInstance:EdgecloudInstance"
+            },
+            "stackit_edgecloud_kubeconfig": {
+                "current": "stackit:index/edgecloudKubeconfig:EdgecloudKubeconfig"
+            },
+            "stackit_edgecloud_token": {
+                "current": "stackit:index/edgecloudToken:EdgecloudToken"
+            },
             "stackit_git": {
                 "current": "stackit:index/git:Git",
                 "fields": {
@@ -80,6 +200,15 @@
             },
             "stackit_key_pair": {
                 "current": "stackit:index/keyPair:KeyPair"
+            },
+            "stackit_kms_key": {
+                "current": "stackit:index/kmsKey:KmsKey"
+            },
+            "stackit_kms_keyring": {
+                "current": "stackit:index/kmsKeyring:KmsKeyring"
+            },
+            "stackit_kms_wrapping_key": {
+                "current": "stackit:index/kmsWrappingKey:KmsWrappingKey"
             },
             "stackit_loadbalancer": {
                 "current": "stackit:index/loadbalancer:Loadbalancer",
@@ -140,6 +269,22 @@
                     }
                 }
             },
+            "stackit_logs_access_token": {
+                "current": "stackit:index/logsAccessToken:LogsAccessToken",
+                "fields": {
+                    "permissions": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "stackit_logs_instance": {
+                "current": "stackit:index/logsInstance:LogsInstance",
+                "fields": {
+                    "acl": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
             "stackit_mariadb_credential": {
                 "current": "stackit:index/mariadbCredential:MariadbCredential",
                 "fields": {
@@ -193,12 +338,6 @@
                     },
                     "ipv6_prefixes": {
                         "maxItemsOne": false
-                    },
-                    "nameservers": {
-                        "maxItemsOne": false
-                    },
-                    "prefixes": {
-                        "maxItemsOne": false
                     }
                 }
             },
@@ -210,6 +349,21 @@
                     },
                     "network_ranges": {
                         "maxItemsOne": false
+                    }
+                }
+            },
+            "stackit_network_area_region": {
+                "current": "stackit:index/networkAreaRegion:NetworkAreaRegion",
+                "fields": {
+                    "ipv4": {
+                        "fields": {
+                            "default_nameservers": {
+                                "maxItemsOne": false
+                            },
+                            "network_ranges": {
+                                "maxItemsOne": false
+                            }
+                        }
                     }
                 }
             },
@@ -229,6 +383,9 @@
             },
             "stackit_objectstorage_bucket": {
                 "current": "stackit:index/objectstorageBucket:ObjectstorageBucket"
+            },
+            "stackit_objectstorage_compliance_lock": {
+                "current": "stackit:index/objectstorageComplianceLock:ObjectstorageComplianceLock"
             },
             "stackit_objectstorage_credential": {
                 "current": "stackit:index/objectstorageCredential:ObjectstorageCredential"
@@ -281,6 +438,9 @@
                                         "elem": {
                                             "fields": {
                                                 "group_by": {
+                                                    "maxItemsOne": false
+                                                },
+                                                "matchers": {
                                                     "maxItemsOne": false
                                                 }
                                             }
@@ -399,6 +559,9 @@
                             },
                             "tls_ciphers": {
                                 "maxItemsOne": false
+                            },
+                            "tls_protocols": {
+                                "maxItemsOne": false
                             }
                         }
                     }
@@ -427,6 +590,9 @@
                     }
                 }
             },
+            "stackit_resourcemanager_folder": {
+                "current": "stackit:index/resourcemanagerFolder:ResourcemanagerFolder"
+            },
             "stackit_resourcemanager_project": {
                 "current": "stackit:index/resourcemanagerProject:ResourcemanagerProject"
             },
@@ -435,6 +601,12 @@
             },
             "stackit_routing_table_route": {
                 "current": "stackit:index/routingTableRoute:RoutingTableRoute"
+            },
+            "stackit_scf_organization": {
+                "current": "stackit:index/scfOrganization:ScfOrganization"
+            },
+            "stackit_scf_organization_manager": {
+                "current": "stackit:index/scfOrganizationManager:ScfOrganizationManager"
             },
             "stackit_secretsmanager_instance": {
                 "current": "stackit:index/secretsmanagerInstance:SecretsmanagerInstance",
@@ -461,6 +633,9 @@
                     }
                 }
             },
+            "stackit_server_backup_enable": {
+                "current": "stackit:index/serverBackupEnable:ServerBackupEnable"
+            },
             "stackit_server_backup_schedule": {
                 "current": "stackit:index/serverBackupSchedule:ServerBackupSchedule",
                 "fields": {
@@ -479,6 +654,9 @@
             "stackit_server_service_account_attach": {
                 "current": "stackit:index/serverServiceAccountAttach:ServerServiceAccountAttach"
             },
+            "stackit_server_update_enable": {
+                "current": "stackit:index/serverUpdateEnable:ServerUpdateEnable"
+            },
             "stackit_server_update_schedule": {
                 "current": "stackit:index/serverUpdateSchedule:ServerUpdateSchedule"
             },
@@ -488,11 +666,34 @@
             "stackit_service_account": {
                 "current": "stackit:index/serviceAccount:ServiceAccount"
             },
-            "stackit_service_account_access_token": {
-                "current": "stackit:index/serviceAccountAccessToken:ServiceAccountAccessToken"
-            },
             "stackit_service_account_key": {
                 "current": "stackit:index/serviceAccountKey:ServiceAccountKey"
+            },
+            "stackit_sfs_export_policy": {
+                "current": "stackit:index/sfsExportPolicy:SfsExportPolicy",
+                "fields": {
+                    "rules": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "ip_acl": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "stackit_sfs_resource_pool": {
+                "current": "stackit:index/sfsResourcePool:SfsResourcePool",
+                "fields": {
+                    "ip_acl": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "stackit_sfs_share": {
+                "current": "stackit:index/sfsShare:SfsShare"
             },
             "stackit_ske_cluster": {
                 "current": "stackit:index/skeCluster:SkeCluster",
@@ -571,6 +772,102 @@
                     }
                 }
             },
+            "stackit_alb_certificate": {
+                "current": "stackit:index/getAlbCertificate:getAlbCertificate"
+            },
+            "stackit_application_load_balancer": {
+                "current": "stackit:index/getApplicationLoadBalancer:getApplicationLoadBalancer",
+                "fields": {
+                    "errors": {
+                        "maxItemsOne": false
+                    },
+                    "listeners": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "http": {
+                                    "fields": {
+                                        "hosts": {
+                                            "maxItemsOne": false,
+                                            "elem": {
+                                                "fields": {
+                                                    "rules": {
+                                                        "maxItemsOne": false,
+                                                        "elem": {
+                                                            "fields": {
+                                                                "headers": {
+                                                                    "maxItemsOne": false
+                                                                },
+                                                                "query_parameters": {
+                                                                    "maxItemsOne": false
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "https": {
+                                    "fields": {
+                                        "certificate_config": {
+                                            "fields": {
+                                                "certificate_ids": {
+                                                    "maxItemsOne": false
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "networks": {
+                        "maxItemsOne": false
+                    },
+                    "options": {
+                        "fields": {
+                            "access_control": {
+                                "fields": {
+                                    "allowed_source_ranges": {
+                                        "maxItemsOne": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "target_pools": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "active_health_check": {
+                                    "fields": {
+                                        "http_health_checks": {
+                                            "fields": {
+                                                "ok_status": {
+                                                    "maxItemsOne": false
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "targets": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "stackit_authorization_project_custom_role": {
+                "current": "stackit:index/getAuthorizationProjectCustomRole:getAuthorizationProjectCustomRole",
+                "fields": {
+                    "permissions": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
             "stackit_cdn_custom_domain": {
                 "current": "stackit:index/getCdnCustomDomain:getCdnCustomDomain",
                 "fields": {
@@ -584,6 +881,15 @@
                 "fields": {
                     "config": {
                         "fields": {
+                            "backend": {
+                                "fields": {
+                                    "geofencing": {
+                                        "elem": {
+                                            "maxItemsOne": false
+                                        }
+                                    }
+                                }
+                            },
                             "blocked_countries": {
                                 "maxItemsOne": false
                             },
@@ -623,6 +929,22 @@
                     }
                 }
             },
+            "stackit_edgecloud_instances": {
+                "current": "stackit:index/getEdgecloudInstances:getEdgecloudInstances",
+                "fields": {
+                    "instances": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "stackit_edgecloud_plans": {
+                "current": "stackit:index/getEdgecloudPlans:getEdgecloudPlans",
+                "fields": {
+                    "plans": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
             "stackit_git": {
                 "current": "stackit:index/getGit:getGit",
                 "fields": {
@@ -637,8 +959,20 @@
             "stackit_image": {
                 "current": "stackit:index/getImage:getImage"
             },
+            "stackit_image_v2": {
+                "current": "stackit:index/getImageV2:getImageV2"
+            },
             "stackit_key_pair": {
                 "current": "stackit:index/getKeyPair:getKeyPair"
+            },
+            "stackit_kms_key": {
+                "current": "stackit:index/getKmsKey:getKmsKey"
+            },
+            "stackit_kms_keyring": {
+                "current": "stackit:index/getKmsKeyring:getKmsKeyring"
+            },
+            "stackit_kms_wrapping_key": {
+                "current": "stackit:index/getKmsWrappingKey:getKmsWrappingKey"
             },
             "stackit_loadbalancer": {
                 "current": "stackit:index/getLoadbalancer:getLoadbalancer",
@@ -696,6 +1030,25 @@
                     }
                 }
             },
+            "stackit_logs_access_token": {
+                "current": "stackit:index/getLogsAccessToken:getLogsAccessToken",
+                "fields": {
+                    "permissions": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "stackit_logs_instance": {
+                "current": "stackit:index/getLogsInstance:getLogsInstance",
+                "fields": {
+                    "acl": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "stackit_machine_type": {
+                "current": "stackit:index/getMachineType:getMachineType"
+            },
             "stackit_mariadb_credential": {
                 "current": "stackit:index/getMariadbCredential:getMariadbCredential",
                 "fields": {
@@ -746,12 +1099,6 @@
                     },
                     "ipv6_prefixes": {
                         "maxItemsOne": false
-                    },
-                    "nameservers": {
-                        "maxItemsOne": false
-                    },
-                    "prefixes": {
-                        "maxItemsOne": false
                     }
                 }
             },
@@ -763,6 +1110,21 @@
                     },
                     "network_ranges": {
                         "maxItemsOne": false
+                    }
+                }
+            },
+            "stackit_network_area_region": {
+                "current": "stackit:index/getNetworkAreaRegion:getNetworkAreaRegion",
+                "fields": {
+                    "ipv4": {
+                        "fields": {
+                            "default_nameservers": {
+                                "maxItemsOne": false
+                            },
+                            "network_ranges": {
+                                "maxItemsOne": false
+                            }
+                        }
                     }
                 }
             },
@@ -782,6 +1144,9 @@
             },
             "stackit_objectstorage_bucket": {
                 "current": "stackit:index/getObjectstorageBucket:getObjectstorageBucket"
+            },
+            "stackit_objectstorage_compliance_lock": {
+                "current": "stackit:index/getObjectstorageComplianceLock:getObjectstorageComplianceLock"
             },
             "stackit_objectstorage_credential": {
                 "current": "stackit:index/getObjectstorageCredential:getObjectstorageCredential"
@@ -831,6 +1196,9 @@
                                         "elem": {
                                             "fields": {
                                                 "group_by": {
+                                                    "maxItemsOne": false
+                                                },
+                                                "matchers": {
                                                     "maxItemsOne": false
                                                 }
                                             }
@@ -886,6 +1254,9 @@
                             },
                             "tls_ciphers": {
                                 "maxItemsOne": false
+                            },
+                            "tls_protocols": {
+                                "maxItemsOne": false
                             }
                         }
                     }
@@ -916,6 +1287,9 @@
             "stackit_public_ip_ranges": {
                 "current": "stackit:index/getPublicIpRanges:getPublicIpRanges",
                 "fields": {
+                    "cidr_list": {
+                        "maxItemsOne": false
+                    },
                     "public_ip_ranges": {
                         "maxItemsOne": false
                     }
@@ -951,6 +1325,9 @@
                             },
                             "tls_ciphers": {
                                 "maxItemsOne": false
+                            },
+                            "tls_protocols": {
+                                "maxItemsOne": false
                             }
                         }
                     }
@@ -979,6 +1356,9 @@
                     }
                 }
             },
+            "stackit_resourcemanager_folder": {
+                "current": "stackit:index/getResourcemanagerFolder:getResourcemanagerFolder"
+            },
             "stackit_resourcemanager_project": {
                 "current": "stackit:index/getResourcemanagerProject:getResourcemanagerProject"
             },
@@ -1004,6 +1384,15 @@
                     }
                 }
             },
+            "stackit_scf_organization": {
+                "current": "stackit:index/getScfOrganization:getScfOrganization"
+            },
+            "stackit_scf_organization_manager": {
+                "current": "stackit:index/getScfOrganizationManager:getScfOrganizationManager"
+            },
+            "stackit_scf_platform": {
+                "current": "stackit:index/getScfPlatform:getScfPlatform"
+            },
             "stackit_secretsmanager_instance": {
                 "current": "stackit:index/getSecretsmanagerInstance:getSecretsmanagerInstance",
                 "fields": {
@@ -1028,6 +1417,9 @@
                         "maxItemsOne": false
                     }
                 }
+            },
+            "stackit_server_backup_enable": {
+                "current": "stackit:index/getServerBackupEnable:getServerBackupEnable"
             },
             "stackit_server_backup_schedule": {
                 "current": "stackit:index/getServerBackupSchedule:getServerBackupSchedule",
@@ -1060,6 +1452,9 @@
                     }
                 }
             },
+            "stackit_server_update_enable": {
+                "current": "stackit:index/getServerUpdateEnable:getServerUpdateEnable"
+            },
             "stackit_server_update_schedule": {
                 "current": "stackit:index/getServerUpdateSchedule:getServerUpdateSchedule"
             },
@@ -1073,6 +1468,48 @@
             },
             "stackit_service_account": {
                 "current": "stackit:index/getServiceAccount:getServiceAccount"
+            },
+            "stackit_service_accounts": {
+                "current": "stackit:index/getServiceAccounts:getServiceAccounts",
+                "fields": {
+                    "items": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "stackit_sfs_export_policy": {
+                "current": "stackit:index/getSfsExportPolicy:getSfsExportPolicy",
+                "fields": {
+                    "rules": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "ip_acl": {
+                                    "maxItemsOne": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "stackit_sfs_resource_pool": {
+                "current": "stackit:index/getSfsResourcePool:getSfsResourcePool",
+                "fields": {
+                    "ip_acl": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "stackit_sfs_resource_pool_snapshot": {
+                "current": "stackit:index/getSfsResourcePoolSnapshot:getSfsResourcePoolSnapshot",
+                "fields": {
+                    "snapshots": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "stackit_sfs_share": {
+                "current": "stackit:index/getSfsShare:getSfsShare"
             },
             "stackit_ske_cluster": {
                 "current": "stackit:index/getSkeCluster:getSkeCluster",
@@ -1116,6 +1553,36 @@
                     },
                     "pod_address_ranges": {
                         "maxItemsOne": false
+                    }
+                }
+            },
+            "stackit_ske_kubernetes_versions": {
+                "current": "stackit:index/getSkeKubernetesVersions:getSkeKubernetesVersions",
+                "fields": {
+                    "kubernetes_versions": {
+                        "maxItemsOne": false
+                    }
+                }
+            },
+            "stackit_ske_machine_image_versions": {
+                "current": "stackit:index/getSkeMachineImageVersions:getSkeMachineImageVersions",
+                "fields": {
+                    "machine_images": {
+                        "maxItemsOne": false,
+                        "elem": {
+                            "fields": {
+                                "versions": {
+                                    "maxItemsOne": false,
+                                    "elem": {
+                                        "fields": {
+                                            "cri": {
+                                                "maxItemsOne": false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             },
