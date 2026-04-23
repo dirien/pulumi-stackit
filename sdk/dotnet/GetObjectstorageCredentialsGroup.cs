@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetObjectstorageCredentialsGroup
     {
         /// <summary>
-        /// ObjectStorage credentials group data source schema. Must have a `region` specified in the provider configuration.
+        /// ObjectStorage credentials group data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetObjectstorageCredentialsGroupResult>("stackit:index/getObjectstorageCredentialsGroup:getObjectstorageCredentialsGroup", args ?? new GetObjectstorageCredentialsGroupArgs(), options.WithDefaults());
 
         /// <summary>
-        /// ObjectStorage credentials group data source schema. Must have a `region` specified in the provider configuration.
+        /// ObjectStorage credentials group data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetObjectstorageCredentialsGroupResult>("stackit:index/getObjectstorageCredentialsGroup:getObjectstorageCredentialsGroup", args ?? new GetObjectstorageCredentialsGroupInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// ObjectStorage credentials group data source schema. Must have a `region` specified in the provider configuration.
+        /// ObjectStorage credentials group data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -119,6 +119,9 @@ namespace ediri.Stackit
         /// The credentials group ID.
         /// </summary>
         public readonly string CredentialsGroupId;
+        /// <summary>
+        /// Terraform's internal data source identifier. It is structured as "`ProjectId`,`Region`,`CredentialsGroupId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// The credentials group's display name.

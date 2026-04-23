@@ -62,7 +62,7 @@ namespace ediri.Stackit
     public sealed class GetDnsZoneArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
-        /// The zone name. E.g. `example.com`
+        /// The zone name. E.g. `example.com` (must not end with a trailing dot).
         /// </summary>
         [Input("dnsName")]
         public string? DnsName { get; set; }
@@ -72,6 +72,9 @@ namespace ediri.Stackit
         /// </summary>
         [Input("projectId", required: true)]
         public string ProjectId { get; set; } = null!;
+
+        [Input("timeouts")]
+        public Inputs.GetDnsZoneTimeoutsArgs? Timeouts { get; set; }
 
         /// <summary>
         /// The zone ID.
@@ -88,7 +91,7 @@ namespace ediri.Stackit
     public sealed class GetDnsZoneInvokeArgs : global::Pulumi.InvokeArgs
     {
         /// <summary>
-        /// The zone name. E.g. `example.com`
+        /// The zone name. E.g. `example.com` (must not end with a trailing dot).
         /// </summary>
         [Input("dnsName")]
         public Input<string>? DnsName { get; set; }
@@ -98,6 +101,9 @@ namespace ediri.Stackit
         /// </summary>
         [Input("projectId", required: true)]
         public Input<string> ProjectId { get; set; } = null!;
+
+        [Input("timeouts")]
+        public Input<Inputs.GetDnsZoneTimeoutsInputArgs>? Timeouts { get; set; }
 
         /// <summary>
         /// The zone ID.
@@ -133,13 +139,16 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string Description;
         /// <summary>
-        /// The zone name. E.g. `example.com`
+        /// The zone name. E.g. `example.com` (must not end with a trailing dot).
         /// </summary>
         public readonly string? DnsName;
         /// <summary>
         /// Expire time.
         /// </summary>
         public readonly int ExpireTime;
+        /// <summary>
+        /// Terraform's internal data source. ID. It is structured as "`ProjectId`,`ZoneId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// Specifies, if the zone is a reverse zone or not.
@@ -185,6 +194,7 @@ namespace ediri.Stackit
         /// Zone state.
         /// </summary>
         public readonly string State;
+        public readonly Outputs.GetDnsZoneTimeoutsResult? Timeouts;
         /// <summary>
         /// Zone type.
         /// </summary>
@@ -238,6 +248,8 @@ namespace ediri.Stackit
 
             string state,
 
+            Outputs.GetDnsZoneTimeoutsResult? timeouts,
+
             string type,
 
             string visibility,
@@ -263,6 +275,7 @@ namespace ediri.Stackit
             RetryTime = retryTime;
             SerialNumber = serialNumber;
             State = state;
+            Timeouts = timeouts;
             Type = type;
             Visibility = visibility;
             ZoneId = zoneId;

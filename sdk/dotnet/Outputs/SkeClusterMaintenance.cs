@@ -15,21 +15,21 @@ namespace ediri.Stackit.Outputs
     public sealed class SkeClusterMaintenance
     {
         /// <summary>
-        /// Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        /// Flag to enable/disable auto-updates of the Kubernetes version. Defaults to `True`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes &amp; OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         /// </summary>
         public readonly bool? EnableKubernetesVersionUpdates;
         /// <summary>
-        /// Flag to enable/disable auto-updates of the OS image version. Defaults to `true`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        /// Flag to enable/disable auto-updates of the OS image version. Defaults to `True`. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes &amp; OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         /// </summary>
         public readonly bool? EnableMachineImageVersionUpdates;
         /// <summary>
         /// Time for maintenance window end. E.g. `01:23:45Z`, `05:00:00+02:00`.
         /// </summary>
-        public readonly string End;
+        public readonly string? End;
         /// <summary>
         /// Time for maintenance window start. E.g. `01:23:45Z`, `05:00:00+02:00`.
         /// </summary>
-        public readonly string Start;
+        public readonly string? Start;
 
         [OutputConstructor]
         private SkeClusterMaintenance(
@@ -37,9 +37,9 @@ namespace ediri.Stackit.Outputs
 
             bool? enableMachineImageVersionUpdates,
 
-            string end,
+            string? end,
 
-            string start)
+            string? start)
         {
             EnableKubernetesVersionUpdates = enableKubernetesVersionUpdates;
             EnableMachineImageVersionUpdates = enableMachineImageVersionUpdates;

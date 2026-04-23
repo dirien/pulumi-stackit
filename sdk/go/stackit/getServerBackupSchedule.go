@@ -13,8 +13,6 @@ import (
 
 // Server backup schedule datasource schema. Must have a `region` specified in the provider configuration.
 //
-// > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
-//
 // ## Example Usage
 func LookupServerBackupSchedule(ctx *pulumi.Context, args *LookupServerBackupScheduleArgs, opts ...pulumi.InvokeOption) (*LookupServerBackupScheduleResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
@@ -45,15 +43,16 @@ type LookupServerBackupScheduleResult struct {
 	// Backup schedule ID.
 	BackupScheduleId int `pulumi:"backupScheduleId"`
 	// Is the backup schedule enabled or disabled.
-	Enabled bool   `pulumi:"enabled"`
-	Id      string `pulumi:"id"`
+	Enabled bool `pulumi:"enabled"`
+	// Terraform's internal resource identifier. It is structured as "`projectId`,`serverId`,`backupScheduleId`".
+	Id string `pulumi:"id"`
 	// The schedule name.
 	Name string `pulumi:"name"`
 	// STACKIT Project ID to which the server is associated.
 	ProjectId string `pulumi:"projectId"`
 	// The resource region. If not defined, the provider region is used.
 	Region *string `pulumi:"region"`
-	// Backup schedule described in `rrule` (recurrence rule) format.
+	// An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
 	Rrule string `pulumi:"rrule"`
 	// Server ID for the backup schedule.
 	ServerId string `pulumi:"serverId"`
@@ -116,6 +115,7 @@ func (o LookupServerBackupScheduleResultOutput) Enabled() pulumi.BoolOutput {
 	return o.ApplyT(func(v LookupServerBackupScheduleResult) bool { return v.Enabled }).(pulumi.BoolOutput)
 }
 
+// Terraform's internal resource identifier. It is structured as "`projectId`,`serverId`,`backupScheduleId`".
 func (o LookupServerBackupScheduleResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupServerBackupScheduleResult) string { return v.Id }).(pulumi.StringOutput)
 }
@@ -135,7 +135,7 @@ func (o LookupServerBackupScheduleResultOutput) Region() pulumi.StringPtrOutput 
 	return o.ApplyT(func(v LookupServerBackupScheduleResult) *string { return v.Region }).(pulumi.StringPtrOutput)
 }
 
-// Backup schedule described in `rrule` (recurrence rule) format.
+// An `rrule` (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates.
 func (o LookupServerBackupScheduleResultOutput) Rrule() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupServerBackupScheduleResult) string { return v.Rrule }).(pulumi.StringOutput)
 }

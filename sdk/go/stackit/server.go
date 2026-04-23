@@ -40,7 +40,7 @@ type Server struct {
 	BootVolume ServerBootVolumePtrOutput `pulumi:"bootVolume"`
 	// Date-time when the server was created
 	CreatedAt pulumi.StringOutput `pulumi:"createdAt"`
-	// The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+	// The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
 	DesiredStatus pulumi.StringPtrOutput `pulumi:"desiredStatus"`
 	// The image ID to be used for an ephemeral disk on the server.
 	ImageId pulumi.StringPtrOutput `pulumi:"imageId"`
@@ -50,14 +50,16 @@ type Server struct {
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// Date-time when the server was launched
 	LaunchedAt pulumi.StringOutput `pulumi:"launchedAt"`
-	// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+	// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
 	MachineType pulumi.StringOutput `pulumi:"machineType"`
 	// The name of the server.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+	// The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
 	NetworkInterfaces pulumi.StringArrayOutput `pulumi:"networkInterfaces"`
 	// STACKIT project ID to which the server is associated.
 	ProjectId pulumi.StringOutput `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringOutput `pulumi:"region"`
 	// The server ID.
 	ServerId pulumi.StringOutput `pulumi:"serverId"`
 	// Date-time when the server was updated
@@ -110,7 +112,7 @@ type serverState struct {
 	BootVolume *ServerBootVolume `pulumi:"bootVolume"`
 	// Date-time when the server was created
 	CreatedAt *string `pulumi:"createdAt"`
-	// The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+	// The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
 	DesiredStatus *string `pulumi:"desiredStatus"`
 	// The image ID to be used for an ephemeral disk on the server.
 	ImageId *string `pulumi:"imageId"`
@@ -120,14 +122,16 @@ type serverState struct {
 	Labels map[string]string `pulumi:"labels"`
 	// Date-time when the server was launched
 	LaunchedAt *string `pulumi:"launchedAt"`
-	// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+	// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
 	MachineType *string `pulumi:"machineType"`
 	// The name of the server.
 	Name *string `pulumi:"name"`
-	// The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+	// The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
 	NetworkInterfaces []string `pulumi:"networkInterfaces"`
 	// STACKIT project ID to which the server is associated.
 	ProjectId *string `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The server ID.
 	ServerId *string `pulumi:"serverId"`
 	// Date-time when the server was updated
@@ -145,7 +149,7 @@ type ServerState struct {
 	BootVolume ServerBootVolumePtrInput
 	// Date-time when the server was created
 	CreatedAt pulumi.StringPtrInput
-	// The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+	// The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
 	DesiredStatus pulumi.StringPtrInput
 	// The image ID to be used for an ephemeral disk on the server.
 	ImageId pulumi.StringPtrInput
@@ -155,14 +159,16 @@ type ServerState struct {
 	Labels pulumi.StringMapInput
 	// Date-time when the server was launched
 	LaunchedAt pulumi.StringPtrInput
-	// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+	// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
 	MachineType pulumi.StringPtrInput
 	// The name of the server.
 	Name pulumi.StringPtrInput
-	// The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+	// The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
 	NetworkInterfaces pulumi.StringArrayInput
 	// STACKIT project ID to which the server is associated.
 	ProjectId pulumi.StringPtrInput
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput
 	// The server ID.
 	ServerId pulumi.StringPtrInput
 	// Date-time when the server was updated
@@ -182,7 +188,7 @@ type serverArgs struct {
 	AvailabilityZone *string `pulumi:"availabilityZone"`
 	// The boot volume for the server
 	BootVolume *ServerBootVolume `pulumi:"bootVolume"`
-	// The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+	// The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
 	DesiredStatus *string `pulumi:"desiredStatus"`
 	// The image ID to be used for an ephemeral disk on the server.
 	ImageId *string `pulumi:"imageId"`
@@ -190,14 +196,16 @@ type serverArgs struct {
 	KeypairName *string `pulumi:"keypairName"`
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels map[string]string `pulumi:"labels"`
-	// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+	// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
 	MachineType string `pulumi:"machineType"`
 	// The name of the server.
 	Name *string `pulumi:"name"`
-	// The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+	// The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
 	NetworkInterfaces []string `pulumi:"networkInterfaces"`
 	// STACKIT project ID to which the server is associated.
 	ProjectId string `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// User data that is passed via cloud-init to the server.
 	UserData *string `pulumi:"userData"`
 }
@@ -210,7 +218,7 @@ type ServerArgs struct {
 	AvailabilityZone pulumi.StringPtrInput
 	// The boot volume for the server
 	BootVolume ServerBootVolumePtrInput
-	// The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+	// The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
 	DesiredStatus pulumi.StringPtrInput
 	// The image ID to be used for an ephemeral disk on the server.
 	ImageId pulumi.StringPtrInput
@@ -218,14 +226,16 @@ type ServerArgs struct {
 	KeypairName pulumi.StringPtrInput
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels pulumi.StringMapInput
-	// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+	// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
 	MachineType pulumi.StringInput
 	// The name of the server.
 	Name pulumi.StringPtrInput
-	// The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+	// The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
 	NetworkInterfaces pulumi.StringArrayInput
 	// STACKIT project ID to which the server is associated.
 	ProjectId pulumi.StringInput
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput
 	// User data that is passed via cloud-init to the server.
 	UserData pulumi.StringPtrInput
 }
@@ -337,7 +347,7 @@ func (o ServerOutput) CreatedAt() pulumi.StringOutput {
 	return o.ApplyT(func(v *Server) pulumi.StringOutput { return v.CreatedAt }).(pulumi.StringOutput)
 }
 
-// The desired status of the server resource. Supported values are: `active`, `inactive`, `deallocated`.
+// The desired status of the server resource. Possible values are: `active`, `inactive`, `deallocated`.
 func (o ServerOutput) DesiredStatus() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Server) pulumi.StringPtrOutput { return v.DesiredStatus }).(pulumi.StringPtrOutput)
 }
@@ -362,7 +372,7 @@ func (o ServerOutput) LaunchedAt() pulumi.StringOutput {
 	return o.ApplyT(func(v *Server) pulumi.StringOutput { return v.LaunchedAt }).(pulumi.StringOutput)
 }
 
-// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/stackit/en/virtual-machine-flavors-75137231.html)
+// Name of the type of the machine for the server. Possible values are documented in [Virtual machine flavors](https://docs.stackit.cloud/products/compute-engine/server/basics/machine-types/)
 func (o ServerOutput) MachineType() pulumi.StringOutput {
 	return o.ApplyT(func(v *Server) pulumi.StringOutput { return v.MachineType }).(pulumi.StringOutput)
 }
@@ -372,7 +382,7 @@ func (o ServerOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Server) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// The IDs of network interfaces which should be attached to the server. Updating it will recreate the server.
+// The IDs of network interfaces which should be attached to the server. Updating it will recreate the server. **Required when (re-)creating servers. Still marked as optional in the schema to not introduce breaking changes. There will be a migration path for this field soon.**
 func (o ServerOutput) NetworkInterfaces() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *Server) pulumi.StringArrayOutput { return v.NetworkInterfaces }).(pulumi.StringArrayOutput)
 }
@@ -380,6 +390,11 @@ func (o ServerOutput) NetworkInterfaces() pulumi.StringArrayOutput {
 // STACKIT project ID to which the server is associated.
 func (o ServerOutput) ProjectId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Server) pulumi.StringOutput { return v.ProjectId }).(pulumi.StringOutput)
+}
+
+// The resource region. If not defined, the provider region is used.
+func (o ServerOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v *Server) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }
 
 // The server ID.

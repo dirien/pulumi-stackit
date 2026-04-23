@@ -32,6 +32,8 @@ type LookupNetworkInterfaceArgs struct {
 	NetworkInterfaceId string `pulumi:"networkInterfaceId"`
 	// STACKIT project ID to which the network interface is associated.
 	ProjectId string `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 }
 
 // A collection of values returned by getNetworkInterface.
@@ -40,7 +42,8 @@ type LookupNetworkInterfaceResult struct {
 	AllowedAddresses []string `pulumi:"allowedAddresses"`
 	// The device UUID of the network interface.
 	Device string `pulumi:"device"`
-	Id     string `pulumi:"id"`
+	// Terraform's internal data source ID. It is structured as "`projectId`,`region`,`networkId`,`networkInterfaceId`".
+	Id string `pulumi:"id"`
 	// The IPv4 address.
 	Ipv4 string `pulumi:"ipv4"`
 	// Labels are key-value string pairs which can be attached to a network interface.
@@ -55,11 +58,13 @@ type LookupNetworkInterfaceResult struct {
 	NetworkInterfaceId string `pulumi:"networkInterfaceId"`
 	// STACKIT project ID to which the network interface is associated.
 	ProjectId string `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The Network Interface Security. If set to false, then no security groups will apply to this network interface.
 	Security bool `pulumi:"security"`
 	// The list of security group UUIDs. If security is set to false, setting this field will lead to an error.
 	SecurityGroupIds []string `pulumi:"securityGroupIds"`
-	// Type of network interface. Some of the possible values are: Supported values are: `server`, `metadata`, `gateway`.
+	// Type of network interface. Some of the possible values are: Possible values are: `server`, `metadata`, `gateway`.
 	Type string `pulumi:"type"`
 }
 
@@ -80,6 +85,8 @@ type LookupNetworkInterfaceOutputArgs struct {
 	NetworkInterfaceId pulumi.StringInput `pulumi:"networkInterfaceId"`
 	// STACKIT project ID to which the network interface is associated.
 	ProjectId pulumi.StringInput `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput `pulumi:"region"`
 }
 
 func (LookupNetworkInterfaceOutputArgs) ElementType() reflect.Type {
@@ -111,6 +118,7 @@ func (o LookupNetworkInterfaceResultOutput) Device() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupNetworkInterfaceResult) string { return v.Device }).(pulumi.StringOutput)
 }
 
+// Terraform's internal data source ID. It is structured as "`projectId`,`region`,`networkId`,`networkInterfaceId`".
 func (o LookupNetworkInterfaceResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupNetworkInterfaceResult) string { return v.Id }).(pulumi.StringOutput)
 }
@@ -150,6 +158,11 @@ func (o LookupNetworkInterfaceResultOutput) ProjectId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupNetworkInterfaceResult) string { return v.ProjectId }).(pulumi.StringOutput)
 }
 
+// The resource region. If not defined, the provider region is used.
+func (o LookupNetworkInterfaceResultOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v LookupNetworkInterfaceResult) *string { return v.Region }).(pulumi.StringPtrOutput)
+}
+
 // The Network Interface Security. If set to false, then no security groups will apply to this network interface.
 func (o LookupNetworkInterfaceResultOutput) Security() pulumi.BoolOutput {
 	return o.ApplyT(func(v LookupNetworkInterfaceResult) bool { return v.Security }).(pulumi.BoolOutput)
@@ -160,7 +173,7 @@ func (o LookupNetworkInterfaceResultOutput) SecurityGroupIds() pulumi.StringArra
 	return o.ApplyT(func(v LookupNetworkInterfaceResult) []string { return v.SecurityGroupIds }).(pulumi.StringArrayOutput)
 }
 
-// Type of network interface. Some of the possible values are: Supported values are: `server`, `metadata`, `gateway`.
+// Type of network interface. Some of the possible values are: Possible values are: `server`, `metadata`, `gateway`.
 func (o LookupNetworkInterfaceResultOutput) Type() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupNetworkInterfaceResult) string { return v.Type }).(pulumi.StringOutput)
 }

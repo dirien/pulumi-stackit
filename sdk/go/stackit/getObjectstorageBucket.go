@@ -36,9 +36,12 @@ type LookupObjectstorageBucketArgs struct {
 
 // A collection of values returned by getObjectstorageBucket.
 type LookupObjectstorageBucketResult struct {
+	// Terraform's internal data source identifier. It is structured as "`projectId`,`region`,`name`".
 	Id string `pulumi:"id"`
 	// The bucket name. It must be DNS conform.
 	Name string `pulumi:"name"`
+	// Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
+	ObjectLock bool `pulumi:"objectLock"`
 	// STACKIT Project ID to which the bucket is associated.
 	ProjectId string `pulumi:"projectId"`
 	// The resource region. If not defined, the provider region is used.
@@ -85,6 +88,7 @@ func (o LookupObjectstorageBucketResultOutput) ToLookupObjectstorageBucketResult
 	return o
 }
 
+// Terraform's internal data source identifier. It is structured as "`projectId`,`region`,`name`".
 func (o LookupObjectstorageBucketResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupObjectstorageBucketResult) string { return v.Id }).(pulumi.StringOutput)
 }
@@ -92,6 +96,11 @@ func (o LookupObjectstorageBucketResultOutput) Id() pulumi.StringOutput {
 // The bucket name. It must be DNS conform.
 func (o LookupObjectstorageBucketResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupObjectstorageBucketResult) string { return v.Name }).(pulumi.StringOutput)
+}
+
+// Enable Object Lock on this bucket. Can only be set at creation time. Requires an active project-level compliance lock.
+func (o LookupObjectstorageBucketResultOutput) ObjectLock() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupObjectstorageBucketResult) bool { return v.ObjectLock }).(pulumi.BoolOutput)
 }
 
 // STACKIT Project ID to which the bucket is associated.
