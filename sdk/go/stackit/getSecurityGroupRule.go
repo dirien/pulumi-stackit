@@ -28,6 +28,8 @@ func LookupSecurityGroupRule(ctx *pulumi.Context, args *LookupSecurityGroupRuleA
 type LookupSecurityGroupRuleArgs struct {
 	// STACKIT project ID to which the security group rule is associated.
 	ProjectId string `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The security group ID.
 	SecurityGroupId string `pulumi:"securityGroupId"`
 	// The security group rule ID.
@@ -38,13 +40,14 @@ type LookupSecurityGroupRuleArgs struct {
 type LookupSecurityGroupRuleResult struct {
 	// The description of the security group rule.
 	Description string `pulumi:"description"`
-	// The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+	// The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `ingress`, `egress`.
 	Direction string `pulumi:"direction"`
 	// The ethertype which the rule should match.
 	EtherType string `pulumi:"etherType"`
 	// ICMP Parameters.
 	IcmpParameters GetSecurityGroupRuleIcmpParameters `pulumi:"icmpParameters"`
-	Id             string                             `pulumi:"id"`
+	// Terraform's internal datasource ID. It is structured as "`projectId`,`region`,`securityGroupId`,`securityGroupRuleId`".
+	Id string `pulumi:"id"`
 	// The remote IP range which the rule should match.
 	IpRange string `pulumi:"ipRange"`
 	// The range of ports.
@@ -53,6 +56,8 @@ type LookupSecurityGroupRuleResult struct {
 	ProjectId string `pulumi:"projectId"`
 	// The internet protocol which the rule should match.
 	Protocol GetSecurityGroupRuleProtocol `pulumi:"protocol"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 	// The remote security group which the rule should match.
 	RemoteSecurityGroupId string `pulumi:"remoteSecurityGroupId"`
 	// The security group ID.
@@ -74,6 +79,8 @@ func LookupSecurityGroupRuleOutput(ctx *pulumi.Context, args LookupSecurityGroup
 type LookupSecurityGroupRuleOutputArgs struct {
 	// STACKIT project ID to which the security group rule is associated.
 	ProjectId pulumi.StringInput `pulumi:"projectId"`
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput `pulumi:"region"`
 	// The security group ID.
 	SecurityGroupId pulumi.StringInput `pulumi:"securityGroupId"`
 	// The security group rule ID.
@@ -104,7 +111,7 @@ func (o LookupSecurityGroupRuleResultOutput) Description() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSecurityGroupRuleResult) string { return v.Description }).(pulumi.StringOutput)
 }
 
-// The direction of the traffic which the rule should match. Some of the possible values are: Supported values are: `ingress`, `egress`.
+// The direction of the traffic which the rule should match. Some of the possible values are: Possible values are: `ingress`, `egress`.
 func (o LookupSecurityGroupRuleResultOutput) Direction() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSecurityGroupRuleResult) string { return v.Direction }).(pulumi.StringOutput)
 }
@@ -119,6 +126,7 @@ func (o LookupSecurityGroupRuleResultOutput) IcmpParameters() GetSecurityGroupRu
 	return o.ApplyT(func(v LookupSecurityGroupRuleResult) GetSecurityGroupRuleIcmpParameters { return v.IcmpParameters }).(GetSecurityGroupRuleIcmpParametersOutput)
 }
 
+// Terraform's internal datasource ID. It is structured as "`projectId`,`region`,`securityGroupId`,`securityGroupRuleId`".
 func (o LookupSecurityGroupRuleResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSecurityGroupRuleResult) string { return v.Id }).(pulumi.StringOutput)
 }
@@ -141,6 +149,11 @@ func (o LookupSecurityGroupRuleResultOutput) ProjectId() pulumi.StringOutput {
 // The internet protocol which the rule should match.
 func (o LookupSecurityGroupRuleResultOutput) Protocol() GetSecurityGroupRuleProtocolOutput {
 	return o.ApplyT(func(v LookupSecurityGroupRuleResult) GetSecurityGroupRuleProtocol { return v.Protocol }).(GetSecurityGroupRuleProtocolOutput)
+}
+
+// The resource region. If not defined, the provider region is used.
+func (o LookupSecurityGroupRuleResultOutput) Region() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v LookupSecurityGroupRuleResult) *string { return v.Region }).(pulumi.StringPtrOutput)
 }
 
 // The remote security group which the rule should match.

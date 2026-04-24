@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetObjectstorageCredential
     {
         /// <summary>
-        /// ObjectStorage credential data source schema. Must have a `region` specified in the provider configuration.
+        /// ObjectStorage credential data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -29,7 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetObjectstorageCredentialResult>("stackit:index/getObjectstorageCredential:getObjectstorageCredential", args ?? new GetObjectstorageCredentialArgs(), options.WithDefaults());
 
         /// <summary>
-        /// ObjectStorage credential data source schema. Must have a `region` specified in the provider configuration.
+        /// ObjectStorage credential data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -45,7 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetObjectstorageCredentialResult>("stackit:index/getObjectstorageCredential:getObjectstorageCredential", args ?? new GetObjectstorageCredentialInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// ObjectStorage credential data source schema. Must have a `region` specified in the provider configuration.
+        /// ObjectStorage credential data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -139,6 +139,9 @@ namespace ediri.Stackit
         /// </summary>
         public readonly string CredentialsGroupId;
         public readonly string ExpirationTimestamp;
+        /// <summary>
+        /// Terraform's internal resource identifier. It is structured as "`ProjectId`,`Region`,`CredentialsGroupId`,`CredentialId`".
+        /// </summary>
         public readonly string Id;
         public readonly string Name;
         /// <summary>

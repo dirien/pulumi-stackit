@@ -36,9 +36,12 @@ type LookupSecretsmanagerInstanceArgs struct {
 type LookupSecretsmanagerInstanceResult struct {
 	// The access control list for this instance. Each entry is an IP or IP range that is permitted to access, in CIDR notation
 	Acls []string `pulumi:"acls"`
-	Id   string   `pulumi:"id"`
+	// Terraform's internal resource ID. It is structured as "`projectId`,`instanceId`".
+	Id string `pulumi:"id"`
 	// ID of the Secrets Manager instance.
 	InstanceId string `pulumi:"instanceId"`
+	// The STACKIT-KMS key for secret encryption and decryption.
+	KmsKey GetSecretsmanagerInstanceKmsKey `pulumi:"kmsKey"`
 	// Instance name.
 	Name string `pulumi:"name"`
 	// STACKIT project ID to which the instance is associated.
@@ -86,6 +89,7 @@ func (o LookupSecretsmanagerInstanceResultOutput) Acls() pulumi.StringArrayOutpu
 	return o.ApplyT(func(v LookupSecretsmanagerInstanceResult) []string { return v.Acls }).(pulumi.StringArrayOutput)
 }
 
+// Terraform's internal resource ID. It is structured as "`projectId`,`instanceId`".
 func (o LookupSecretsmanagerInstanceResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSecretsmanagerInstanceResult) string { return v.Id }).(pulumi.StringOutput)
 }
@@ -93,6 +97,11 @@ func (o LookupSecretsmanagerInstanceResultOutput) Id() pulumi.StringOutput {
 // ID of the Secrets Manager instance.
 func (o LookupSecretsmanagerInstanceResultOutput) InstanceId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupSecretsmanagerInstanceResult) string { return v.InstanceId }).(pulumi.StringOutput)
+}
+
+// The STACKIT-KMS key for secret encryption and decryption.
+func (o LookupSecretsmanagerInstanceResultOutput) KmsKey() GetSecretsmanagerInstanceKmsKeyOutput {
+	return o.ApplyT(func(v LookupSecretsmanagerInstanceResult) GetSecretsmanagerInstanceKmsKey { return v.KmsKey }).(GetSecretsmanagerInstanceKmsKeyOutput)
 }
 
 // Instance name.

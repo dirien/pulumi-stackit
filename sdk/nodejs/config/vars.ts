@@ -8,6 +8,28 @@ declare var exports: any;
 const __config = new pulumi.Config("stackit");
 
 /**
+ * Custom endpoint for the Application Load Balancer TLS Certificate service
+ */
+export declare const albCertificatesCustomEndpoint: string | undefined;
+Object.defineProperty(exports, "albCertificatesCustomEndpoint", {
+    get() {
+        return __config.get("albCertificatesCustomEndpoint");
+    },
+    enumerable: true,
+});
+
+/**
+ * Custom endpoint for the Application Load Balancer service
+ */
+export declare const albCustomEndpoint: string | undefined;
+Object.defineProperty(exports, "albCustomEndpoint", {
+    get() {
+        return __config.get("albCustomEndpoint");
+    },
+    enumerable: true,
+});
+
+/**
  * Custom endpoint for the Membership service
  */
 export declare const authorizationCustomEndpoint: string | undefined;
@@ -30,8 +52,7 @@ Object.defineProperty(exports, "cdnCustomEndpoint", {
 });
 
 /**
- * Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default
- * value is `~/.stackit/credentials.json`.
+ * Path of JSON from where the credentials are read. Takes precedence over the env var `STACKIT_CREDENTIALS_PATH`. Default value is `~/.stackit/credentials.json`.
  */
 export declare const credentialsPath: string | undefined;
 Object.defineProperty(exports, "credentialsPath", {
@@ -64,6 +85,17 @@ Object.defineProperty(exports, "dnsCustomEndpoint", {
 });
 
 /**
+ * Custom endpoint for the Edge Cloud service
+ */
+export declare const edgecloudCustomEndpoint: string | undefined;
+Object.defineProperty(exports, "edgecloudCustomEndpoint", {
+    get() {
+        return __config.get("edgecloudCustomEndpoint");
+    },
+    enumerable: true,
+});
+
+/**
  * Enable beta resources. Default is false.
  */
 export declare const enableBetaResources: boolean | undefined;
@@ -75,8 +107,7 @@ Object.defineProperty(exports, "enableBetaResources", {
 });
 
 /**
- * Enables experiments. These are unstable features without official support. More information can be found in the README.
- * Available Experiments: iam, routing-tables, network
+ * Enables experiments. These are unstable features without official support. More information can be found in the README. Available Experiments: iam, routing-tables, network
  */
 export declare const experiments: string[] | undefined;
 Object.defineProperty(exports, "experiments", {
@@ -109,6 +140,17 @@ Object.defineProperty(exports, "iaasCustomEndpoint", {
 });
 
 /**
+ * Custom endpoint for the KMS service
+ */
+export declare const kmsCustomEndpoint: string | undefined;
+Object.defineProperty(exports, "kmsCustomEndpoint", {
+    get() {
+        return __config.get("kmsCustomEndpoint");
+    },
+    enumerable: true,
+});
+
+/**
  * Custom endpoint for the Load Balancer service
  */
 export declare const loadbalancerCustomEndpoint: string | undefined;
@@ -126,6 +168,17 @@ export declare const logmeCustomEndpoint: string | undefined;
 Object.defineProperty(exports, "logmeCustomEndpoint", {
     get() {
         return __config.get("logmeCustomEndpoint");
+    },
+    enumerable: true,
+});
+
+/**
+ * Custom endpoint for the Logs service
+ */
+export declare const logsCustomEndpoint: string | undefined;
+Object.defineProperty(exports, "logsCustomEndpoint", {
+    get() {
+        return __config.get("logsCustomEndpoint");
     },
     enumerable: true,
 });
@@ -186,6 +239,28 @@ Object.defineProperty(exports, "observabilityCustomEndpoint", {
 });
 
 /**
+ * The bearer token for the request to the OIDC provider. For use when authenticating as a Service Account using OpenID Connect.
+ */
+export declare const oidcRequestToken: string | undefined;
+Object.defineProperty(exports, "oidcRequestToken", {
+    get() {
+        return __config.get("oidcRequestToken");
+    },
+    enumerable: true,
+});
+
+/**
+ * The URL for the OIDC provider from which to request an ID token. For use when authenticating as a Service Account using OpenID Connect.
+ */
+export declare const oidcRequestUrl: string | undefined;
+Object.defineProperty(exports, "oidcRequestUrl", {
+    get() {
+        return __config.get("oidcRequestUrl");
+    },
+    enumerable: true,
+});
+
+/**
  * Custom endpoint for the OpenSearch service
  */
 export declare const opensearchCustomEndpoint: string | undefined;
@@ -208,8 +283,7 @@ Object.defineProperty(exports, "postgresflexCustomEndpoint", {
 });
 
 /**
- * Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is
- * included in the service account key.
+ * Private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
  */
 export declare const privateKey: string | undefined;
 Object.defineProperty(exports, "privateKey", {
@@ -220,8 +294,7 @@ Object.defineProperty(exports, "privateKey", {
 });
 
 /**
- * Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private
- * key that is included in the service account key.
+ * Path for the private RSA key used for authentication, relevant for the key flow. It takes precedence over the private key that is included in the service account key.
  */
 export declare const privateKeyPath: string | undefined;
 Object.defineProperty(exports, "privateKeyPath", {
@@ -276,6 +349,17 @@ Object.defineProperty(exports, "resourcemanagerCustomEndpoint", {
 });
 
 /**
+ * Custom endpoint for the Cloud Foundry (SCF) service
+ */
+export declare const scfCustomEndpoint: string | undefined;
+Object.defineProperty(exports, "scfCustomEndpoint", {
+    get() {
+        return __config.get("scfCustomEndpoint");
+    },
+    enumerable: true,
+});
+
+/**
  * Custom endpoint for the Secrets Manager service
  */
 export declare const secretsmanagerCustomEndpoint: string | undefined;
@@ -320,13 +404,34 @@ Object.defineProperty(exports, "serviceAccountCustomEndpoint", {
 });
 
 /**
- * Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required
- * if you want to use the resource manager project resource.
+ * Service account email. It can also be set using the environment variable STACKIT_SERVICE_ACCOUNT_EMAIL. It is required if you want to use the resource manager project resource. This value is required using OpenID Connect authentication.
  */
 export declare const serviceAccountEmail: string | undefined;
 Object.defineProperty(exports, "serviceAccountEmail", {
     get() {
         return __config.get("serviceAccountEmail");
+    },
+    enumerable: true,
+});
+
+/**
+ * The OIDC ID token for use when authenticating as a Service Account using OpenID Connect.
+ */
+export declare const serviceAccountFederatedToken: string | undefined;
+Object.defineProperty(exports, "serviceAccountFederatedToken", {
+    get() {
+        return __config.get("serviceAccountFederatedToken");
+    },
+    enumerable: true,
+});
+
+/**
+ * Path for workload identity assertion. It can also be set using the environment variable STACKIT_FEDERATED_TOKEN_FILE.
+ */
+export declare const serviceAccountFederatedTokenPath: string | undefined;
+Object.defineProperty(exports, "serviceAccountFederatedTokenPath", {
+    get() {
+        return __config.get("serviceAccountFederatedTokenPath");
     },
     enumerable: true,
 });
@@ -343,8 +448,7 @@ Object.defineProperty(exports, "serviceAccountKey", {
 });
 
 /**
- * Path for the service account key used for authentication. If set, the key flow will be used to authenticate all
- * operations.
+ * Path for the service account key used for authentication. If set, the key flow will be used to authenticate all operations.
  */
 export declare const serviceAccountKeyPath: string | undefined;
 Object.defineProperty(exports, "serviceAccountKeyPath", {
@@ -372,6 +476,17 @@ export declare const serviceEnablementCustomEndpoint: string | undefined;
 Object.defineProperty(exports, "serviceEnablementCustomEndpoint", {
     get() {
         return __config.get("serviceEnablementCustomEndpoint");
+    },
+    enumerable: true,
+});
+
+/**
+ * Custom endpoint for the Stackit Filestorage API
+ */
+export declare const sfsCustomEndpoint: string | undefined;
+Object.defineProperty(exports, "sfsCustomEndpoint", {
+    get() {
+        return __config.get("sfsCustomEndpoint");
     },
     enumerable: true,
 });
@@ -405,6 +520,17 @@ export declare const tokenCustomEndpoint: string | undefined;
 Object.defineProperty(exports, "tokenCustomEndpoint", {
     get() {
         return __config.get("tokenCustomEndpoint");
+    },
+    enumerable: true,
+});
+
+/**
+ * Enables OIDC for Authentication. This can also be sourced from the `STACKIT_USE_OIDC` Environment Variable. Defaults to `false`.
+ */
+export declare const useOidc: boolean | undefined;
+Object.defineProperty(exports, "useOidc", {
+    get() {
+        return __config.getObject<boolean>("useOidc");
     },
     enumerable: true,
 });

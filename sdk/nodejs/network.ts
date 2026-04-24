@@ -6,6 +6,9 @@ import * as utilities from "./utilities";
 
 /**
  * Network resource schema. Must have a `region` specified in the provider configuration.
+ * > Behavior of not configured `ipv4Nameservers` has changed. When `ipv4Nameservers` is not set, it will be set to the network area's `defaultNameservers`.
+ * To prevent any nameserver configuration, the `ipv4Nameservers` attribute should be explicitly set to an empty list `[]`.
+ * In cases where `ipv4Nameservers` are defined within the resource, the existing behavior will remain unchanged.
  *
  * ## Example Usage
  */
@@ -38,99 +41,89 @@ export class Network extends pulumi.CustomResource {
     }
 
     /**
+     * If the network has DHCP enabled. Default value is `true`.
+     */
+    declare public readonly dhcp: pulumi.Output<boolean>;
+    /**
      * The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
      */
-    public readonly ipv4Gateway!: pulumi.Output<string>;
+    declare public readonly ipv4Gateway: pulumi.Output<string>;
     /**
-     * The IPv4 nameservers of the network.
+     * The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
      */
-    public readonly ipv4Nameservers!: pulumi.Output<string[]>;
+    declare public readonly ipv4Nameservers: pulumi.Output<string[]>;
     /**
      * The IPv4 prefix of the network (CIDR).
      */
-    public readonly ipv4Prefix!: pulumi.Output<string>;
+    declare public readonly ipv4Prefix: pulumi.Output<string>;
     /**
      * The IPv4 prefix length of the network.
      */
-    public readonly ipv4PrefixLength!: pulumi.Output<number>;
+    declare public readonly ipv4PrefixLength: pulumi.Output<number>;
     /**
      * The IPv4 prefixes of the network.
      */
-    public /*out*/ readonly ipv4Prefixes!: pulumi.Output<string[]>;
+    declare public /*out*/ readonly ipv4Prefixes: pulumi.Output<string[]>;
     /**
      * The IPv6 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
      */
-    public readonly ipv6Gateway!: pulumi.Output<string>;
+    declare public readonly ipv6Gateway: pulumi.Output<string>;
     /**
      * The IPv6 nameservers of the network.
      */
-    public readonly ipv6Nameservers!: pulumi.Output<string[]>;
+    declare public readonly ipv6Nameservers: pulumi.Output<string[]>;
     /**
      * The IPv6 prefix of the network (CIDR).
      */
-    public readonly ipv6Prefix!: pulumi.Output<string | undefined>;
+    declare public readonly ipv6Prefix: pulumi.Output<string>;
     /**
      * The IPv6 prefix length of the network.
      */
-    public readonly ipv6PrefixLength!: pulumi.Output<number | undefined>;
+    declare public readonly ipv6PrefixLength: pulumi.Output<number>;
     /**
      * The IPv6 prefixes of the network.
      */
-    public /*out*/ readonly ipv6Prefixes!: pulumi.Output<string[]>;
+    declare public /*out*/ readonly ipv6Prefixes: pulumi.Output<string[]>;
     /**
      * Labels are key-value string pairs which can be attached to a resource container
      */
-    public readonly labels!: pulumi.Output<{[key: string]: string} | undefined>;
+    declare public readonly labels: pulumi.Output<{[key: string]: string} | undefined>;
     /**
      * The name of the network.
      */
-    public readonly name!: pulumi.Output<string>;
-    /**
-     * The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4Nameservers` to configure the nameservers for IPv4.
-     *
-     * @deprecated Use `ipv4Nameservers` to configure the nameservers for IPv4.
-     */
-    public readonly nameservers!: pulumi.Output<string[]>;
+    declare public readonly name: pulumi.Output<string>;
     /**
      * The network ID.
      */
-    public /*out*/ readonly networkId!: pulumi.Output<string>;
+    declare public /*out*/ readonly networkId: pulumi.Output<string>;
     /**
      * If set to `true`, the network doesn't have a gateway.
      */
-    public readonly noIpv4Gateway!: pulumi.Output<boolean | undefined>;
+    declare public readonly noIpv4Gateway: pulumi.Output<boolean | undefined>;
     /**
      * If set to `true`, the network doesn't have a gateway.
      */
-    public readonly noIpv6Gateway!: pulumi.Output<boolean | undefined>;
-    /**
-     * The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
-     *
-     * @deprecated Use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
-     */
-    public /*out*/ readonly prefixes!: pulumi.Output<string[]>;
+    declare public readonly noIpv6Gateway: pulumi.Output<boolean | undefined>;
     /**
      * STACKIT project ID to which the network is associated.
      */
-    public readonly projectId!: pulumi.Output<string>;
+    declare public readonly projectId: pulumi.Output<string>;
     /**
      * The public IP of the network.
      */
-    public /*out*/ readonly publicIp!: pulumi.Output<string>;
+    declare public /*out*/ readonly publicIp: pulumi.Output<string>;
     /**
-     * Can only be used when experimental "network" is set.
      * The resource region. If not defined, the provider region is used.
      */
-    public readonly region!: pulumi.Output<string>;
+    declare public readonly region: pulumi.Output<string>;
     /**
      * If set to `true`, the network is routed and therefore accessible from other networks.
      */
-    public readonly routed!: pulumi.Output<boolean>;
+    declare public readonly routed: pulumi.Output<boolean>;
     /**
-     * Can only be used when experimental "network" is set.
      * The ID of the routing table associated with the network.
      */
-    public readonly routingTableId!: pulumi.Output<string>;
+    declare public readonly routingTableId: pulumi.Output<string>;
 
     /**
      * Create a Network resource with the given unique name, arguments, and options.
@@ -145,54 +138,52 @@ export class Network extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as NetworkState | undefined;
-            resourceInputs["ipv4Gateway"] = state ? state.ipv4Gateway : undefined;
-            resourceInputs["ipv4Nameservers"] = state ? state.ipv4Nameservers : undefined;
-            resourceInputs["ipv4Prefix"] = state ? state.ipv4Prefix : undefined;
-            resourceInputs["ipv4PrefixLength"] = state ? state.ipv4PrefixLength : undefined;
-            resourceInputs["ipv4Prefixes"] = state ? state.ipv4Prefixes : undefined;
-            resourceInputs["ipv6Gateway"] = state ? state.ipv6Gateway : undefined;
-            resourceInputs["ipv6Nameservers"] = state ? state.ipv6Nameservers : undefined;
-            resourceInputs["ipv6Prefix"] = state ? state.ipv6Prefix : undefined;
-            resourceInputs["ipv6PrefixLength"] = state ? state.ipv6PrefixLength : undefined;
-            resourceInputs["ipv6Prefixes"] = state ? state.ipv6Prefixes : undefined;
-            resourceInputs["labels"] = state ? state.labels : undefined;
-            resourceInputs["name"] = state ? state.name : undefined;
-            resourceInputs["nameservers"] = state ? state.nameservers : undefined;
-            resourceInputs["networkId"] = state ? state.networkId : undefined;
-            resourceInputs["noIpv4Gateway"] = state ? state.noIpv4Gateway : undefined;
-            resourceInputs["noIpv6Gateway"] = state ? state.noIpv6Gateway : undefined;
-            resourceInputs["prefixes"] = state ? state.prefixes : undefined;
-            resourceInputs["projectId"] = state ? state.projectId : undefined;
-            resourceInputs["publicIp"] = state ? state.publicIp : undefined;
-            resourceInputs["region"] = state ? state.region : undefined;
-            resourceInputs["routed"] = state ? state.routed : undefined;
-            resourceInputs["routingTableId"] = state ? state.routingTableId : undefined;
+            resourceInputs["dhcp"] = state?.dhcp;
+            resourceInputs["ipv4Gateway"] = state?.ipv4Gateway;
+            resourceInputs["ipv4Nameservers"] = state?.ipv4Nameservers;
+            resourceInputs["ipv4Prefix"] = state?.ipv4Prefix;
+            resourceInputs["ipv4PrefixLength"] = state?.ipv4PrefixLength;
+            resourceInputs["ipv4Prefixes"] = state?.ipv4Prefixes;
+            resourceInputs["ipv6Gateway"] = state?.ipv6Gateway;
+            resourceInputs["ipv6Nameservers"] = state?.ipv6Nameservers;
+            resourceInputs["ipv6Prefix"] = state?.ipv6Prefix;
+            resourceInputs["ipv6PrefixLength"] = state?.ipv6PrefixLength;
+            resourceInputs["ipv6Prefixes"] = state?.ipv6Prefixes;
+            resourceInputs["labels"] = state?.labels;
+            resourceInputs["name"] = state?.name;
+            resourceInputs["networkId"] = state?.networkId;
+            resourceInputs["noIpv4Gateway"] = state?.noIpv4Gateway;
+            resourceInputs["noIpv6Gateway"] = state?.noIpv6Gateway;
+            resourceInputs["projectId"] = state?.projectId;
+            resourceInputs["publicIp"] = state?.publicIp;
+            resourceInputs["region"] = state?.region;
+            resourceInputs["routed"] = state?.routed;
+            resourceInputs["routingTableId"] = state?.routingTableId;
         } else {
             const args = argsOrState as NetworkArgs | undefined;
-            if ((!args || args.projectId === undefined) && !opts.urn) {
+            if (args?.projectId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'projectId'");
             }
-            resourceInputs["ipv4Gateway"] = args ? args.ipv4Gateway : undefined;
-            resourceInputs["ipv4Nameservers"] = args ? args.ipv4Nameservers : undefined;
-            resourceInputs["ipv4Prefix"] = args ? args.ipv4Prefix : undefined;
-            resourceInputs["ipv4PrefixLength"] = args ? args.ipv4PrefixLength : undefined;
-            resourceInputs["ipv6Gateway"] = args ? args.ipv6Gateway : undefined;
-            resourceInputs["ipv6Nameservers"] = args ? args.ipv6Nameservers : undefined;
-            resourceInputs["ipv6Prefix"] = args ? args.ipv6Prefix : undefined;
-            resourceInputs["ipv6PrefixLength"] = args ? args.ipv6PrefixLength : undefined;
-            resourceInputs["labels"] = args ? args.labels : undefined;
-            resourceInputs["name"] = args ? args.name : undefined;
-            resourceInputs["nameservers"] = args ? args.nameservers : undefined;
-            resourceInputs["noIpv4Gateway"] = args ? args.noIpv4Gateway : undefined;
-            resourceInputs["noIpv6Gateway"] = args ? args.noIpv6Gateway : undefined;
-            resourceInputs["projectId"] = args ? args.projectId : undefined;
-            resourceInputs["region"] = args ? args.region : undefined;
-            resourceInputs["routed"] = args ? args.routed : undefined;
-            resourceInputs["routingTableId"] = args ? args.routingTableId : undefined;
+            resourceInputs["dhcp"] = args?.dhcp;
+            resourceInputs["ipv4Gateway"] = args?.ipv4Gateway;
+            resourceInputs["ipv4Nameservers"] = args?.ipv4Nameservers;
+            resourceInputs["ipv4Prefix"] = args?.ipv4Prefix;
+            resourceInputs["ipv4PrefixLength"] = args?.ipv4PrefixLength;
+            resourceInputs["ipv6Gateway"] = args?.ipv6Gateway;
+            resourceInputs["ipv6Nameservers"] = args?.ipv6Nameservers;
+            resourceInputs["ipv6Prefix"] = args?.ipv6Prefix;
+            resourceInputs["ipv6PrefixLength"] = args?.ipv6PrefixLength;
+            resourceInputs["labels"] = args?.labels;
+            resourceInputs["name"] = args?.name;
+            resourceInputs["noIpv4Gateway"] = args?.noIpv4Gateway;
+            resourceInputs["noIpv6Gateway"] = args?.noIpv6Gateway;
+            resourceInputs["projectId"] = args?.projectId;
+            resourceInputs["region"] = args?.region;
+            resourceInputs["routed"] = args?.routed;
+            resourceInputs["routingTableId"] = args?.routingTableId;
             resourceInputs["ipv4Prefixes"] = undefined /*out*/;
             resourceInputs["ipv6Prefixes"] = undefined /*out*/;
             resourceInputs["networkId"] = undefined /*out*/;
-            resourceInputs["prefixes"] = undefined /*out*/;
             resourceInputs["publicIp"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -205,11 +196,15 @@ export class Network extends pulumi.CustomResource {
  */
 export interface NetworkState {
     /**
+     * If the network has DHCP enabled. Default value is `true`.
+     */
+    dhcp?: pulumi.Input<boolean>;
+    /**
      * The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
      */
     ipv4Gateway?: pulumi.Input<string>;
     /**
-     * The IPv4 nameservers of the network.
+     * The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
      */
     ipv4Nameservers?: pulumi.Input<pulumi.Input<string>[]>;
     /**
@@ -253,12 +248,6 @@ export interface NetworkState {
      */
     name?: pulumi.Input<string>;
     /**
-     * The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4Nameservers` to configure the nameservers for IPv4.
-     *
-     * @deprecated Use `ipv4Nameservers` to configure the nameservers for IPv4.
-     */
-    nameservers?: pulumi.Input<pulumi.Input<string>[]>;
-    /**
      * The network ID.
      */
     networkId?: pulumi.Input<string>;
@@ -271,12 +260,6 @@ export interface NetworkState {
      */
     noIpv6Gateway?: pulumi.Input<boolean>;
     /**
-     * The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
-     *
-     * @deprecated Use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
-     */
-    prefixes?: pulumi.Input<pulumi.Input<string>[]>;
-    /**
      * STACKIT project ID to which the network is associated.
      */
     projectId?: pulumi.Input<string>;
@@ -285,7 +268,6 @@ export interface NetworkState {
      */
     publicIp?: pulumi.Input<string>;
     /**
-     * Can only be used when experimental "network" is set.
      * The resource region. If not defined, the provider region is used.
      */
     region?: pulumi.Input<string>;
@@ -294,7 +276,6 @@ export interface NetworkState {
      */
     routed?: pulumi.Input<boolean>;
     /**
-     * Can only be used when experimental "network" is set.
      * The ID of the routing table associated with the network.
      */
     routingTableId?: pulumi.Input<string>;
@@ -305,11 +286,15 @@ export interface NetworkState {
  */
 export interface NetworkArgs {
     /**
+     * If the network has DHCP enabled. Default value is `true`.
+     */
+    dhcp?: pulumi.Input<boolean>;
+    /**
      * The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
      */
     ipv4Gateway?: pulumi.Input<string>;
     /**
-     * The IPv4 nameservers of the network.
+     * The IPv4 nameservers of the network. If not specified on creation, it will be set with the default nameservers from the network area. If not specified on update, it will remain unchanged.
      */
     ipv4Nameservers?: pulumi.Input<pulumi.Input<string>[]>;
     /**
@@ -345,12 +330,6 @@ export interface NetworkArgs {
      */
     name?: pulumi.Input<string>;
     /**
-     * The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4Nameservers` to configure the nameservers for IPv4.
-     *
-     * @deprecated Use `ipv4Nameservers` to configure the nameservers for IPv4.
-     */
-    nameservers?: pulumi.Input<pulumi.Input<string>[]>;
-    /**
      * If set to `true`, the network doesn't have a gateway.
      */
     noIpv4Gateway?: pulumi.Input<boolean>;
@@ -363,7 +342,6 @@ export interface NetworkArgs {
      */
     projectId: pulumi.Input<string>;
     /**
-     * Can only be used when experimental "network" is set.
      * The resource region. If not defined, the provider region is used.
      */
     region?: pulumi.Input<string>;
@@ -372,7 +350,6 @@ export interface NetworkArgs {
      */
     routed?: pulumi.Input<boolean>;
     /**
-     * Can only be used when experimental "network" is set.
      * The ID of the routing table associated with the network.
      */
     routingTableId?: pulumi.Input<string>;

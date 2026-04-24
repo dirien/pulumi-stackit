@@ -11,11 +11,21 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
+    /// ## Setting up supporting infrastructure
+    /// 
+    /// The example below creates the supporting infrastructure using the STACKIT Terraform provider, including the network, network interface, a public IP address and server resources.
+    /// 
     /// ## Example Usage
     /// </summary>
     [StackitResourceType("stackit:index/loadbalancer:Loadbalancer")]
     public partial class Loadbalancer : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// If set to true, this will disable the automatic assignment of a security group to the load balancer's targets. This option is primarily used to allow targets that are not within the load balancer's own network or SNA (STACKIT network area). When this is enabled, you are fully responsible for ensuring network connectivity to the targets, including managing all routing and security group rules manually. This setting cannot be changed after the load balancer is created.
+        /// </summary>
+        [Output("disableSecurityGroupAssignment")]
+        public Output<bool> DisableSecurityGroupAssignment { get; private set; } = null!;
+
         /// <summary>
         /// External Load Balancer IP address where this Load Balancer is exposed.
         /// </summary>
@@ -47,7 +57,7 @@ namespace ediri.Stackit
         public Output<Outputs.LoadbalancerOptions> Options { get; private set; } = null!;
 
         /// <summary>
-        /// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+        /// The service plan ID. If not defined, the default service plan is `P10`. Possible values are: `P10`, `P50`, `P250`, `P750`.
         /// </summary>
         [Output("planId")]
         public Output<string> PlanId { get; private set; } = null!;
@@ -71,10 +81,22 @@ namespace ediri.Stackit
         public Output<string> Region { get; private set; } = null!;
 
         /// <summary>
+        /// The ID of the egress security group assigned to the Load Balancer's internal machines. This ID is essential for allowing traffic from the Load Balancer to targets in different networks or STACKIT network areas (SNA). To enable this, create a security group rule for your target VMs and set the `RemoteSecurityGroupId` of that rule to this value. This is typically used when `DisableSecurityGroupAssignment` is set to `True`.
+        /// </summary>
+        [Output("securityGroupId")]
+        public Output<string> SecurityGroupId { get; private set; } = null!;
+
+        /// <summary>
         /// List of all target pools which will be used in the Load Balancer. Limited to 20.
         /// </summary>
         [Output("targetPools")]
         public Output<ImmutableArray<Outputs.LoadbalancerTargetPool>> TargetPools { get; private set; } = null!;
+
+        /// <summary>
+        /// Load balancer resource version. This is needed to have concurrency safe updates.
+        /// </summary>
+        [Output("version")]
+        public Output<string> Version { get; private set; } = null!;
 
 
         /// <summary>
@@ -124,6 +146,12 @@ namespace ediri.Stackit
     public sealed class LoadbalancerArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// If set to true, this will disable the automatic assignment of a security group to the load balancer's targets. This option is primarily used to allow targets that are not within the load balancer's own network or SNA (STACKIT network area). When this is enabled, you are fully responsible for ensuring network connectivity to the targets, including managing all routing and security group rules manually. This setting cannot be changed after the load balancer is created.
+        /// </summary>
+        [Input("disableSecurityGroupAssignment")]
+        public Input<bool>? DisableSecurityGroupAssignment { get; set; }
+
+        /// <summary>
         /// External Load Balancer IP address where this Load Balancer is exposed.
         /// </summary>
         [Input("externalAddress")]
@@ -166,7 +194,7 @@ namespace ediri.Stackit
         public Input<Inputs.LoadbalancerOptionsArgs>? Options { get; set; }
 
         /// <summary>
-        /// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+        /// The service plan ID. If not defined, the default service plan is `P10`. Possible values are: `P10`, `P50`, `P250`, `P750`.
         /// </summary>
         [Input("planId")]
         public Input<string>? PlanId { get; set; }
@@ -203,6 +231,12 @@ namespace ediri.Stackit
 
     public sealed class LoadbalancerState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// If set to true, this will disable the automatic assignment of a security group to the load balancer's targets. This option is primarily used to allow targets that are not within the load balancer's own network or SNA (STACKIT network area). When this is enabled, you are fully responsible for ensuring network connectivity to the targets, including managing all routing and security group rules manually. This setting cannot be changed after the load balancer is created.
+        /// </summary>
+        [Input("disableSecurityGroupAssignment")]
+        public Input<bool>? DisableSecurityGroupAssignment { get; set; }
+
         /// <summary>
         /// External Load Balancer IP address where this Load Balancer is exposed.
         /// </summary>
@@ -246,7 +280,7 @@ namespace ediri.Stackit
         public Input<Inputs.LoadbalancerOptionsGetArgs>? Options { get; set; }
 
         /// <summary>
-        /// The service plan ID. If not defined, the default service plan is `p10`. Possible values are: `p10`, `p50`, `p250`, `p750`.
+        /// The service plan ID. If not defined, the default service plan is `P10`. Possible values are: `P10`, `P50`, `P250`, `P750`.
         /// </summary>
         [Input("planId")]
         public Input<string>? PlanId { get; set; }
@@ -269,6 +303,12 @@ namespace ediri.Stackit
         [Input("region")]
         public Input<string>? Region { get; set; }
 
+        /// <summary>
+        /// The ID of the egress security group assigned to the Load Balancer's internal machines. This ID is essential for allowing traffic from the Load Balancer to targets in different networks or STACKIT network areas (SNA). To enable this, create a security group rule for your target VMs and set the `RemoteSecurityGroupId` of that rule to this value. This is typically used when `DisableSecurityGroupAssignment` is set to `True`.
+        /// </summary>
+        [Input("securityGroupId")]
+        public Input<string>? SecurityGroupId { get; set; }
+
         [Input("targetPools")]
         private InputList<Inputs.LoadbalancerTargetPoolGetArgs>? _targetPools;
 
@@ -280,6 +320,12 @@ namespace ediri.Stackit
             get => _targetPools ?? (_targetPools = new InputList<Inputs.LoadbalancerTargetPoolGetArgs>());
             set => _targetPools = value;
         }
+
+        /// <summary>
+        /// Load balancer resource version. This is needed to have concurrency safe updates.
+        /// </summary>
+        [Input("version")]
+        public Input<string>? Version { get; set; }
 
         public LoadbalancerState()
         {

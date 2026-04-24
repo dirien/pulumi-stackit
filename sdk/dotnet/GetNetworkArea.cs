@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetNetworkArea
     {
         /// <summary>
-        /// Network area datasource schema. Must have a `region` specified in the provider configuration.
+        /// Network area datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -28,7 +28,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetNetworkAreaResult>("stackit:index/getNetworkArea:getNetworkArea", args ?? new GetNetworkAreaArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Network area datasource schema. Must have a `region` specified in the provider configuration.
+        /// Network area datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -43,7 +43,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetNetworkAreaResult>("stackit:index/getNetworkArea:getNetworkArea", args ?? new GetNetworkAreaInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Network area datasource schema. Must have a `region` specified in the provider configuration.
+        /// Network area datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -111,6 +111,9 @@ namespace ediri.Stackit
         /// The default prefix length for networks in the network area.
         /// </summary>
         public readonly int DefaultPrefixLength;
+        /// <summary>
+        /// Terraform's internal resource ID. It is structured as "`OrganizationId`,`NetworkAreaId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// Labels are key-value string pairs which can be attached to a resource container

@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Observability instance resource schema. Must have a `region` specified in the provider configuration.
+    /// Observability instance resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -41,6 +41,12 @@ namespace ediri.Stackit
         /// </summary>
         [Output("dashboardUrl")]
         public Output<string> DashboardUrl { get; private set; } = null!;
+
+        /// <summary>
+        /// If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+        /// </summary>
+        [Output("grafanaAdminEnabled")]
+        public Output<bool> GrafanaAdminEnabled { get; private set; } = null!;
 
         /// <summary>
         /// Specifies an initial Grafana admin password.
@@ -91,6 +97,12 @@ namespace ediri.Stackit
         public Output<string> LogsPushUrl { get; private set; } = null!;
 
         /// <summary>
+        /// Specifies for how many days the logs are kept. Default is set to `7`.
+        /// </summary>
+        [Output("logsRetentionDays")]
+        public Output<int> LogsRetentionDays { get; private set; } = null!;
+
+        /// <summary>
         /// Specifies Logs URL.
         /// </summary>
         [Output("logsUrl")]
@@ -103,19 +115,19 @@ namespace ediri.Stackit
         public Output<string> MetricsPushUrl { get; private set; } = null!;
 
         /// <summary>
-        /// Specifies for how many days the raw metrics are kept.
+        /// Specifies for how many days the raw metrics are kept. Default is set to `90`.
         /// </summary>
         [Output("metricsRetentionDays")]
         public Output<int> MetricsRetentionDays { get; private set; } = null!;
 
         /// <summary>
-        /// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+        /// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
         /// </summary>
         [Output("metricsRetentionDays1hDownsampling")]
         public Output<int> MetricsRetentionDays1hDownsampling { get; private set; } = null!;
 
         /// <summary>
-        /// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        /// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         /// </summary>
         [Output("metricsRetentionDays5mDownsampling")]
         public Output<int> MetricsRetentionDays5mDownsampling { get; private set; } = null!;
@@ -164,6 +176,12 @@ namespace ediri.Stackit
         /// </summary>
         [Output("targetsUrl")]
         public Output<string> TargetsUrl { get; private set; } = null!;
+
+        /// <summary>
+        /// Specifies for how many days the traces are kept. Default is set to `7`.
+        /// </summary>
+        [Output("tracesRetentionDays")]
+        public Output<int> TracesRetentionDays { get; private set; } = null!;
 
         [Output("zipkinSpansUrl")]
         public Output<string> ZipkinSpansUrl { get; private set; } = null!;
@@ -238,19 +256,31 @@ namespace ediri.Stackit
         public Input<Inputs.ObservabilityInstanceAlertConfigArgs>? AlertConfig { get; set; }
 
         /// <summary>
-        /// Specifies for how many days the raw metrics are kept.
+        /// If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+        /// </summary>
+        [Input("grafanaAdminEnabled")]
+        public Input<bool>? GrafanaAdminEnabled { get; set; }
+
+        /// <summary>
+        /// Specifies for how many days the logs are kept. Default is set to `7`.
+        /// </summary>
+        [Input("logsRetentionDays")]
+        public Input<int>? LogsRetentionDays { get; set; }
+
+        /// <summary>
+        /// Specifies for how many days the raw metrics are kept. Default is set to `90`.
         /// </summary>
         [Input("metricsRetentionDays")]
         public Input<int>? MetricsRetentionDays { get; set; }
 
         /// <summary>
-        /// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+        /// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
         /// </summary>
         [Input("metricsRetentionDays1hDownsampling")]
         public Input<int>? MetricsRetentionDays1hDownsampling { get; set; }
 
         /// <summary>
-        /// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        /// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         /// </summary>
         [Input("metricsRetentionDays5mDownsampling")]
         public Input<int>? MetricsRetentionDays5mDownsampling { get; set; }
@@ -284,6 +314,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("projectId", required: true)]
         public Input<string> ProjectId { get; set; } = null!;
+
+        /// <summary>
+        /// Specifies for how many days the traces are kept. Default is set to `7`.
+        /// </summary>
+        [Input("tracesRetentionDays")]
+        public Input<int>? TracesRetentionDays { get; set; }
 
         public ObservabilityInstanceArgs()
         {
@@ -323,12 +359,19 @@ namespace ediri.Stackit
         [Input("dashboardUrl")]
         public Input<string>? DashboardUrl { get; set; }
 
+        /// <summary>
+        /// If true, a default Grafana server admin user is created. It's recommended to set this to false and use STACKIT SSO (Owner or Observability Grafana Server Admin role) instead. It is still possible to manually create a new Grafana admin user via the Grafana UI later.
+        /// </summary>
+        [Input("grafanaAdminEnabled")]
+        public Input<bool>? GrafanaAdminEnabled { get; set; }
+
         [Input("grafanaInitialAdminPassword")]
         private Input<string>? _grafanaInitialAdminPassword;
 
         /// <summary>
         /// Specifies an initial Grafana admin password.
         /// </summary>
+        [Obsolete(@"This attribute is deprecated and will be removed on July 5, 2026. Use `GrafanaAdminEnabled` instead.")]
         public Input<string>? GrafanaInitialAdminPassword
         {
             get => _grafanaInitialAdminPassword;
@@ -382,6 +425,12 @@ namespace ediri.Stackit
         public Input<string>? LogsPushUrl { get; set; }
 
         /// <summary>
+        /// Specifies for how many days the logs are kept. Default is set to `7`.
+        /// </summary>
+        [Input("logsRetentionDays")]
+        public Input<int>? LogsRetentionDays { get; set; }
+
+        /// <summary>
         /// Specifies Logs URL.
         /// </summary>
         [Input("logsUrl")]
@@ -394,19 +443,19 @@ namespace ediri.Stackit
         public Input<string>? MetricsPushUrl { get; set; }
 
         /// <summary>
-        /// Specifies for how many days the raw metrics are kept.
+        /// Specifies for how many days the raw metrics are kept. Default is set to `90`.
         /// </summary>
         [Input("metricsRetentionDays")]
         public Input<int>? MetricsRetentionDays { get; set; }
 
         /// <summary>
-        /// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+        /// Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
         /// </summary>
         [Input("metricsRetentionDays1hDownsampling")]
         public Input<int>? MetricsRetentionDays1hDownsampling { get; set; }
 
         /// <summary>
-        /// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+        /// Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
         /// </summary>
         [Input("metricsRetentionDays5mDownsampling")]
         public Input<int>? MetricsRetentionDays5mDownsampling { get; set; }
@@ -461,6 +510,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("targetsUrl")]
         public Input<string>? TargetsUrl { get; set; }
+
+        /// <summary>
+        /// Specifies for how many days the traces are kept. Default is set to `7`.
+        /// </summary>
+        [Input("tracesRetentionDays")]
+        public Input<int>? TracesRetentionDays { get; set; }
 
         [Input("zipkinSpansUrl")]
         public Input<string>? ZipkinSpansUrl { get; set; }

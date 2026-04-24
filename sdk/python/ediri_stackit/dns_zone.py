@@ -13,6 +13,8 @@ if sys.version_info >= (3, 11):
 else:
     from typing_extensions import NotRequired, TypedDict, TypeAlias
 from . import _utilities
+from . import outputs
+from ._inputs import *
 
 __all__ = ['DnsZoneArgs', 'DnsZone']
 
@@ -33,9 +35,11 @@ class DnsZoneArgs:
                  primaries: Optional[pulumi.Input[Sequence[pulumi.Input[_builtins.str]]]] = None,
                  refresh_time: Optional[pulumi.Input[_builtins.int]] = None,
                  retry_time: Optional[pulumi.Input[_builtins.int]] = None,
+                 timeouts: Optional[pulumi.Input['DnsZoneTimeoutsArgs']] = None,
                  type: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a DnsZone resource.
+
         :param pulumi.Input[_builtins.str] dns_name: The zone name. E.g. `example.com`
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the dns zone is associated.
         :param pulumi.Input[_builtins.str] acl: The access control list. E.g. `0.0.0.0/0,::/0`
@@ -49,7 +53,7 @@ class DnsZoneArgs:
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] primaries: Primary name server for secondary zone. E.g. ["1.2.3.4"]
         :param pulumi.Input[_builtins.int] refresh_time: Refresh time. E.g. 3600
         :param pulumi.Input[_builtins.int] retry_time: Retry time. E.g. 600
-        :param pulumi.Input[_builtins.str] type: Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+        :param pulumi.Input[_builtins.str] type: Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
         """
         pulumi.set(__self__, "dns_name", dns_name)
         pulumi.set(__self__, "project_id", project_id)
@@ -77,6 +81,8 @@ class DnsZoneArgs:
             pulumi.set(__self__, "refresh_time", refresh_time)
         if retry_time is not None:
             pulumi.set(__self__, "retry_time", retry_time)
+        if timeouts is not None:
+            pulumi.set(__self__, "timeouts", timeouts)
         if type is not None:
             pulumi.set(__self__, "type", type)
 
@@ -247,9 +253,18 @@ class DnsZoneArgs:
 
     @_builtins.property
     @pulumi.getter
+    def timeouts(self) -> Optional[pulumi.Input['DnsZoneTimeoutsArgs']]:
+        return pulumi.get(self, "timeouts")
+
+    @timeouts.setter
+    def timeouts(self, value: Optional[pulumi.Input['DnsZoneTimeoutsArgs']]):
+        pulumi.set(self, "timeouts", value)
+
+    @_builtins.property
+    @pulumi.getter
     def type(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+        Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
         """
         return pulumi.get(self, "type")
 
@@ -279,11 +294,13 @@ class _DnsZoneState:
                  retry_time: Optional[pulumi.Input[_builtins.int]] = None,
                  serial_number: Optional[pulumi.Input[_builtins.int]] = None,
                  state: Optional[pulumi.Input[_builtins.str]] = None,
+                 timeouts: Optional[pulumi.Input['DnsZoneTimeoutsArgs']] = None,
                  type: Optional[pulumi.Input[_builtins.str]] = None,
                  visibility: Optional[pulumi.Input[_builtins.str]] = None,
                  zone_id: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering DnsZone resources.
+
         :param pulumi.Input[_builtins.str] acl: The access control list. E.g. `0.0.0.0/0,::/0`
         :param pulumi.Input[_builtins.str] contact_email: A contact e-mail for the zone.
         :param pulumi.Input[_builtins.int] default_ttl: Default time to live. E.g. 3600.
@@ -301,7 +318,7 @@ class _DnsZoneState:
         :param pulumi.Input[_builtins.int] retry_time: Retry time. E.g. 600
         :param pulumi.Input[_builtins.int] serial_number: Serial number. E.g. `2022111400`.
         :param pulumi.Input[_builtins.str] state: Zone state. E.g. `CREATE_SUCCEEDED`.
-        :param pulumi.Input[_builtins.str] type: Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+        :param pulumi.Input[_builtins.str] type: Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
         :param pulumi.Input[_builtins.str] visibility: Visibility of the zone. E.g. `public`.
         :param pulumi.Input[_builtins.str] zone_id: The zone ID.
         """
@@ -341,6 +358,8 @@ class _DnsZoneState:
             pulumi.set(__self__, "serial_number", serial_number)
         if state is not None:
             pulumi.set(__self__, "state", state)
+        if timeouts is not None:
+            pulumi.set(__self__, "timeouts", timeouts)
         if type is not None:
             pulumi.set(__self__, "type", type)
         if visibility is not None:
@@ -563,9 +582,18 @@ class _DnsZoneState:
 
     @_builtins.property
     @pulumi.getter
+    def timeouts(self) -> Optional[pulumi.Input['DnsZoneTimeoutsArgs']]:
+        return pulumi.get(self, "timeouts")
+
+    @timeouts.setter
+    def timeouts(self, value: Optional[pulumi.Input['DnsZoneTimeoutsArgs']]):
+        pulumi.set(self, "timeouts", value)
+
+    @_builtins.property
+    @pulumi.getter
     def type(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+        Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
         """
         return pulumi.get(self, "type")
 
@@ -618,12 +646,14 @@ class DnsZone(pulumi.CustomResource):
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
                  refresh_time: Optional[pulumi.Input[_builtins.int]] = None,
                  retry_time: Optional[pulumi.Input[_builtins.int]] = None,
+                 timeouts: Optional[pulumi.Input[Union['DnsZoneTimeoutsArgs', 'DnsZoneTimeoutsArgsDict']]] = None,
                  type: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
         """
         DNS Zone resource schema.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
@@ -640,7 +670,7 @@ class DnsZone(pulumi.CustomResource):
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the dns zone is associated.
         :param pulumi.Input[_builtins.int] refresh_time: Refresh time. E.g. 3600
         :param pulumi.Input[_builtins.int] retry_time: Retry time. E.g. 600
-        :param pulumi.Input[_builtins.str] type: Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+        :param pulumi.Input[_builtins.str] type: Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
         """
         ...
     @overload
@@ -652,6 +682,7 @@ class DnsZone(pulumi.CustomResource):
         DNS Zone resource schema.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param DnsZoneArgs args: The arguments to use to populate this resource's properties.
@@ -682,6 +713,7 @@ class DnsZone(pulumi.CustomResource):
                  project_id: Optional[pulumi.Input[_builtins.str]] = None,
                  refresh_time: Optional[pulumi.Input[_builtins.int]] = None,
                  retry_time: Optional[pulumi.Input[_builtins.int]] = None,
+                 timeouts: Optional[pulumi.Input[Union['DnsZoneTimeoutsArgs', 'DnsZoneTimeoutsArgsDict']]] = None,
                  type: Optional[pulumi.Input[_builtins.str]] = None,
                  __props__=None):
         opts = pulumi.ResourceOptions.merge(_utilities.get_resource_opts_defaults(), opts)
@@ -710,6 +742,7 @@ class DnsZone(pulumi.CustomResource):
             __props__.__dict__["project_id"] = project_id
             __props__.__dict__["refresh_time"] = refresh_time
             __props__.__dict__["retry_time"] = retry_time
+            __props__.__dict__["timeouts"] = timeouts
             __props__.__dict__["type"] = type
             __props__.__dict__["primary_name_server"] = None
             __props__.__dict__["record_count"] = None
@@ -745,6 +778,7 @@ class DnsZone(pulumi.CustomResource):
             retry_time: Optional[pulumi.Input[_builtins.int]] = None,
             serial_number: Optional[pulumi.Input[_builtins.int]] = None,
             state: Optional[pulumi.Input[_builtins.str]] = None,
+            timeouts: Optional[pulumi.Input[Union['DnsZoneTimeoutsArgs', 'DnsZoneTimeoutsArgsDict']]] = None,
             type: Optional[pulumi.Input[_builtins.str]] = None,
             visibility: Optional[pulumi.Input[_builtins.str]] = None,
             zone_id: Optional[pulumi.Input[_builtins.str]] = None) -> 'DnsZone':
@@ -772,7 +806,7 @@ class DnsZone(pulumi.CustomResource):
         :param pulumi.Input[_builtins.int] retry_time: Retry time. E.g. 600
         :param pulumi.Input[_builtins.int] serial_number: Serial number. E.g. `2022111400`.
         :param pulumi.Input[_builtins.str] state: Zone state. E.g. `CREATE_SUCCEEDED`.
-        :param pulumi.Input[_builtins.str] type: Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+        :param pulumi.Input[_builtins.str] type: Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
         :param pulumi.Input[_builtins.str] visibility: Visibility of the zone. E.g. `public`.
         :param pulumi.Input[_builtins.str] zone_id: The zone ID.
         """
@@ -798,6 +832,7 @@ class DnsZone(pulumi.CustomResource):
         __props__.__dict__["retry_time"] = retry_time
         __props__.__dict__["serial_number"] = serial_number
         __props__.__dict__["state"] = state
+        __props__.__dict__["timeouts"] = timeouts
         __props__.__dict__["type"] = type
         __props__.__dict__["visibility"] = visibility
         __props__.__dict__["zone_id"] = zone_id
@@ -946,9 +981,14 @@ class DnsZone(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
+    def timeouts(self) -> pulumi.Output[Optional['outputs.DnsZoneTimeouts']]:
+        return pulumi.get(self, "timeouts")
+
+    @_builtins.property
+    @pulumi.getter
     def type(self) -> pulumi.Output[_builtins.str]:
         """
-        Zone type. Defaults to `primary`. Supported values are: `primary`, `secondary`.
+        Zone type. Defaults to `primary`. Possible values are: `primary`, `secondary`.
         """
         return pulumi.get(self, "type")
 

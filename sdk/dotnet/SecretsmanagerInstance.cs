@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Secrets Manager instance resource schema. Must have a `region` specified in the provider configuration.
+    /// Secrets Manager instance resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -29,6 +29,12 @@ namespace ediri.Stackit
         /// </summary>
         [Output("instanceId")]
         public Output<string> InstanceId { get; private set; } = null!;
+
+        /// <summary>
+        /// The STACKIT-KMS key for secret encryption and decryption.
+        /// </summary>
+        [Output("kmsKey")]
+        public Output<Outputs.SecretsmanagerInstanceKmsKey?> KmsKey { get; private set; } = null!;
 
         /// <summary>
         /// Instance name.
@@ -102,6 +108,12 @@ namespace ediri.Stackit
         }
 
         /// <summary>
+        /// The STACKIT-KMS key for secret encryption and decryption.
+        /// </summary>
+        [Input("kmsKey")]
+        public Input<Inputs.SecretsmanagerInstanceKmsKeyArgs>? KmsKey { get; set; }
+
+        /// <summary>
         /// Instance name.
         /// </summary>
         [Input("name")]
@@ -138,6 +150,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("instanceId")]
         public Input<string>? InstanceId { get; set; }
+
+        /// <summary>
+        /// The STACKIT-KMS key for secret encryption and decryption.
+        /// </summary>
+        [Input("kmsKey")]
+        public Input<Inputs.SecretsmanagerInstanceKmsKeyGetArgs>? KmsKey { get; set; }
 
         /// <summary>
         /// Instance name.
