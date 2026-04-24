@@ -13,8 +13,6 @@ import (
 
 // Server backup schedules datasource schema. Must have a `region` specified in the provider configuration.
 //
-// > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
-//
 // ## Example Usage
 func GetServerBackupSchedules(ctx *pulumi.Context, args *GetServerBackupSchedulesArgs, opts ...pulumi.InvokeOption) (*GetServerBackupSchedulesResult, error) {
 	opts = internal.PkgInvokeDefaultOpts(opts)
@@ -38,6 +36,7 @@ type GetServerBackupSchedulesArgs struct {
 
 // A collection of values returned by getServerBackupSchedules.
 type GetServerBackupSchedulesResult struct {
+	// Terraform's internal data source identifier. It is structured as "`projectId`,`serverId`".
 	Id    string                         `pulumi:"id"`
 	Items []GetServerBackupSchedulesItem `pulumi:"items"`
 	// STACKIT Project ID (UUID) to which the server is associated.
@@ -86,6 +85,7 @@ func (o GetServerBackupSchedulesResultOutput) ToGetServerBackupSchedulesResultOu
 	return o
 }
 
+// Terraform's internal data source identifier. It is structured as "`projectId`,`serverId`".
 func (o GetServerBackupSchedulesResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v GetServerBackupSchedulesResult) string { return v.Id }).(pulumi.StringOutput)
 }

@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Postgres Flex user resource schema. Must have a `region` specified in the provider configuration.
+    /// Postgres Flex user resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -46,7 +46,7 @@ namespace ediri.Stackit
         public Output<string> Region { get; private set; } = null!;
 
         /// <summary>
-        /// Database access levels for the user. Supported values are: `login`, `createdb`.
+        /// Database access levels for the user.
         /// </summary>
         [Output("roles")]
         public Output<ImmutableArray<string>> Roles { get; private set; } = null!;
@@ -137,7 +137,7 @@ namespace ediri.Stackit
         private InputList<string>? _roles;
 
         /// <summary>
-        /// Database access levels for the user. Supported values are: `login`, `createdb`.
+        /// Database access levels for the user.
         /// </summary>
         public InputList<string> Roles
         {
@@ -196,7 +196,7 @@ namespace ediri.Stackit
         private InputList<string>? _roles;
 
         /// <summary>
-        /// Database access levels for the user. Supported values are: `login`, `createdb`.
+        /// Database access levels for the user.
         /// </summary>
         public InputList<string> Roles
         {

@@ -14,6 +14,7 @@ export function getPublicIp(args: GetPublicIpArgs, opts?: pulumi.InvokeOptions):
     return pulumi.runtime.invoke("stackit:index/getPublicIp:getPublicIp", {
         "projectId": args.projectId,
         "publicIpId": args.publicIpId,
+        "region": args.region,
     }, opts);
 }
 
@@ -29,12 +30,19 @@ export interface GetPublicIpArgs {
      * The public IP ID.
      */
     publicIpId: string;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: string;
 }
 
 /**
  * A collection of values returned by getPublicIp.
  */
 export interface GetPublicIpResult {
+    /**
+     * Terraform's internal datasource ID. It is structured as "`projectId`,`region`,`publicIpId`".
+     */
     readonly id: string;
     /**
      * The IP address.
@@ -56,6 +64,10 @@ export interface GetPublicIpResult {
      * The public IP ID.
      */
     readonly publicIpId: string;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    readonly region?: string;
 }
 /**
  * Public IP resource schema. Must have a `region` specified in the provider configuration.
@@ -67,6 +79,7 @@ export function getPublicIpOutput(args: GetPublicIpOutputArgs, opts?: pulumi.Inv
     return pulumi.runtime.invokeOutput("stackit:index/getPublicIp:getPublicIp", {
         "projectId": args.projectId,
         "publicIpId": args.publicIpId,
+        "region": args.region,
     }, opts);
 }
 
@@ -82,4 +95,8 @@ export interface GetPublicIpOutputArgs {
      * The public IP ID.
      */
     publicIpId: pulumi.Input<string>;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: pulumi.Input<string>;
 }

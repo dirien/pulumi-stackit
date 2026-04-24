@@ -39,6 +39,9 @@ export interface GetServiceAccountResult {
      * Email of the service account.
      */
     readonly email: string;
+    /**
+     * Terraform's internal resource ID, structured as "`projectId`,`email`".
+     */
     readonly id: string;
     /**
      * Name of the service account.
@@ -48,6 +51,10 @@ export interface GetServiceAccountResult {
      * STACKIT project ID to which the service account is associated.
      */
     readonly projectId: string;
+    /**
+     * The internal UUID of the service account.
+     */
+    readonly serviceAccountId: string;
 }
 /**
  * Service account data source schema.

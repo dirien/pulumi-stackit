@@ -13,11 +13,35 @@ namespace ediri.Stackit.Inputs
 
     public sealed class CdnDistributionConfigBackendArgs : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// The URL of the bucket (e.g. https://s3.example.com). Required if type is 'bucket'.
+        /// </summary>
+        [Input("bucketUrl")]
+        public Input<string>? BucketUrl { get; set; }
+
+        /// <summary>
+        /// The credentials for the bucket. Required if type is 'bucket'.
+        /// </summary>
+        [Input("credentials")]
+        public Input<Inputs.CdnDistributionConfigBackendCredentialsArgs>? Credentials { get; set; }
+
+        [Input("geofencing")]
+        private InputMap<ImmutableArray<string>>? _geofencing;
+
+        /// <summary>
+        /// The configured type http to configure countries where content is allowed. A map of URLs to a list of countries
+        /// </summary>
+        public InputMap<ImmutableArray<string>> Geofencing
+        {
+            get => _geofencing ?? (_geofencing = new InputMap<ImmutableArray<string>>());
+            set => _geofencing = value;
+        }
+
         [Input("originRequestHeaders")]
         private InputMap<string>? _originRequestHeaders;
 
         /// <summary>
-        /// The configured origin request headers for the backend
+        /// The configured type http origin request headers for the backend
         /// </summary>
         public InputMap<string> OriginRequestHeaders
         {
@@ -26,13 +50,19 @@ namespace ediri.Stackit.Inputs
         }
 
         /// <summary>
-        /// The configured backend type for the distribution
+        /// The configured backend type http for the distribution
         /// </summary>
-        [Input("originUrl", required: true)]
-        public Input<string> OriginUrl { get; set; } = null!;
+        [Input("originUrl")]
+        public Input<string>? OriginUrl { get; set; }
 
         /// <summary>
-        /// The configured backend type. Supported values are: `http`.
+        /// The region where the bucket is hosted. Required if type is 'bucket'.
+        /// </summary>
+        [Input("region")]
+        public Input<string>? Region { get; set; }
+
+        /// <summary>
+        /// The configured backend type. Possible values are: `Http`, `Bucket`.
         /// </summary>
         [Input("type", required: true)]
         public Input<string> Type { get; set; } = null!;

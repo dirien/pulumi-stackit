@@ -19,7 +19,7 @@ namespace ediri.Stackit
     public partial class DnsRecordSet : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// Specifies if the record set is active or not. Defaults to `true`
+        /// Specifies if the record set is active or not. Defaults to `True`
         /// </summary>
         [Output("active")]
         public Output<bool> Active { get; private set; } = null!;
@@ -71,6 +71,9 @@ namespace ediri.Stackit
         /// </summary>
         [Output("state")]
         public Output<string> State { get; private set; } = null!;
+
+        [Output("timeouts")]
+        public Output<Outputs.DnsRecordSetTimeouts?> Timeouts { get; private set; } = null!;
 
         /// <summary>
         /// Time to live. E.g. 3600
@@ -138,7 +141,7 @@ namespace ediri.Stackit
     public sealed class DnsRecordSetArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Specifies if the record set is active or not. Defaults to `true`
+        /// Specifies if the record set is active or not. Defaults to `True`
         /// </summary>
         [Input("active")]
         public Input<bool>? Active { get; set; }
@@ -173,6 +176,9 @@ namespace ediri.Stackit
             set => _records = value;
         }
 
+        [Input("timeouts")]
+        public Input<Inputs.DnsRecordSetTimeoutsArgs>? Timeouts { get; set; }
+
         /// <summary>
         /// Time to live. E.g. 3600
         /// </summary>
@@ -200,7 +206,7 @@ namespace ediri.Stackit
     public sealed class DnsRecordSetState : global::Pulumi.ResourceArgs
     {
         /// <summary>
-        /// Specifies if the record set is active or not. Defaults to `true`
+        /// Specifies if the record set is active or not. Defaults to `True`
         /// </summary>
         [Input("active")]
         public Input<bool>? Active { get; set; }
@@ -258,6 +264,9 @@ namespace ediri.Stackit
         /// </summary>
         [Input("state")]
         public Input<string>? State { get; set; }
+
+        [Input("timeouts")]
+        public Input<Inputs.DnsRecordSetTimeoutsGetArgs>? Timeouts { get; set; }
 
         /// <summary>
         /// Time to live. E.g. 3600

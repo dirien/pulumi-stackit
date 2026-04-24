@@ -30,13 +30,15 @@ type LookupNetworkArgs struct {
 	NetworkId string `pulumi:"networkId"`
 	// STACKIT project ID to which the network is associated.
 	ProjectId string `pulumi:"projectId"`
-	// Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
 	// The resource region. If not defined, the provider region is used.
 	Region *string `pulumi:"region"`
 }
 
 // A collection of values returned by getNetwork.
 type LookupNetworkResult struct {
+	// Shows if DHCP is enabled for the network.
+	Dhcp bool `pulumi:"dhcp"`
+	// Terraform's internal resource ID. It is structured as "`projectId`,`networkId`".
 	Id string `pulumi:"id"`
 	// The IPv4 gateway of a network. If not specified, the first IP of the network will be assigned as the gateway.
 	Ipv4Gateway string `pulumi:"ipv4Gateway"`
@@ -66,26 +68,16 @@ type LookupNetworkResult struct {
 	Labels map[string]string `pulumi:"labels"`
 	// The name of the network.
 	Name string `pulumi:"name"`
-	// The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4Nameservers` to configure the nameservers for IPv4.
-	//
-	// Deprecated: Use `ipv4Nameservers` to configure the nameservers for IPv4.
-	Nameservers []string `pulumi:"nameservers"`
 	// The network ID.
 	NetworkId string `pulumi:"networkId"`
-	// The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
-	//
-	// Deprecated: Use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
-	Prefixes []string `pulumi:"prefixes"`
 	// STACKIT project ID to which the network is associated.
 	ProjectId string `pulumi:"projectId"`
 	// The public IP of the network.
 	PublicIp string `pulumi:"publicIp"`
-	// Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
 	// The resource region. If not defined, the provider region is used.
 	Region *string `pulumi:"region"`
 	// Shows if the network is routed and therefore accessible from other networks.
 	Routed bool `pulumi:"routed"`
-	// Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.
 	// The ID of the routing table associated with the network.
 	RoutingTableId string `pulumi:"routingTableId"`
 }
@@ -105,7 +97,6 @@ type LookupNetworkOutputArgs struct {
 	NetworkId pulumi.StringInput `pulumi:"networkId"`
 	// STACKIT project ID to which the network is associated.
 	ProjectId pulumi.StringInput `pulumi:"projectId"`
-	// Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
 	// The resource region. If not defined, the provider region is used.
 	Region pulumi.StringPtrInput `pulumi:"region"`
 }
@@ -129,6 +120,12 @@ func (o LookupNetworkResultOutput) ToLookupNetworkResultOutputWithContext(ctx co
 	return o
 }
 
+// Shows if DHCP is enabled for the network.
+func (o LookupNetworkResultOutput) Dhcp() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupNetworkResult) bool { return v.Dhcp }).(pulumi.BoolOutput)
+}
+
+// Terraform's internal resource ID. It is structured as "`projectId`,`networkId`".
 func (o LookupNetworkResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupNetworkResult) string { return v.Id }).(pulumi.StringOutput)
 }
@@ -197,23 +194,9 @@ func (o LookupNetworkResultOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupNetworkResult) string { return v.Name }).(pulumi.StringOutput)
 }
 
-// The nameservers of the network. This field is deprecated and will be removed soon, use `ipv4Nameservers` to configure the nameservers for IPv4.
-//
-// Deprecated: Use `ipv4Nameservers` to configure the nameservers for IPv4.
-func (o LookupNetworkResultOutput) Nameservers() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupNetworkResult) []string { return v.Nameservers }).(pulumi.StringArrayOutput)
-}
-
 // The network ID.
 func (o LookupNetworkResultOutput) NetworkId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupNetworkResult) string { return v.NetworkId }).(pulumi.StringOutput)
-}
-
-// The prefixes of the network. This field is deprecated and will be removed soon, use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
-//
-// Deprecated: Use `ipv4Prefixes` to read the prefixes of the IPv4 networks.
-func (o LookupNetworkResultOutput) Prefixes() pulumi.StringArrayOutput {
-	return o.ApplyT(func(v LookupNetworkResult) []string { return v.Prefixes }).(pulumi.StringArrayOutput)
 }
 
 // STACKIT project ID to which the network is associated.
@@ -226,7 +209,6 @@ func (o LookupNetworkResultOutput) PublicIp() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupNetworkResult) string { return v.PublicIp }).(pulumi.StringOutput)
 }
 
-// Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future.
 // The resource region. If not defined, the provider region is used.
 func (o LookupNetworkResultOutput) Region() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupNetworkResult) *string { return v.Region }).(pulumi.StringPtrOutput)
@@ -237,7 +219,6 @@ func (o LookupNetworkResultOutput) Routed() pulumi.BoolOutput {
 	return o.ApplyT(func(v LookupNetworkResult) bool { return v.Routed }).(pulumi.BoolOutput)
 }
 
-// Can only be used when experimental "network" is set. This is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.
 // The ID of the routing table associated with the network.
 func (o LookupNetworkResultOutput) RoutingTableId() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupNetworkResult) string { return v.RoutingTableId }).(pulumi.StringOutput)

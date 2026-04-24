@@ -43,9 +43,16 @@ export interface GetLoadbalancerArgs {
  */
 export interface GetLoadbalancerResult {
     /**
+     * If set to true, this will disable the automatic assignment of a security group to the load balancer's targets. This option is primarily used to allow targets that are not within the load balancer's own network or SNA (STACKIT Network area). When this is enabled, you are fully responsible for ensuring network connectivity to the targets, including managing all routing and security group rules manually. This setting cannot be changed after the load balancer is created.
+     */
+    readonly disableSecurityGroupAssignment: boolean;
+    /**
      * External Load Balancer IP address where this Load Balancer is exposed.
      */
     readonly externalAddress: string;
+    /**
+     * Terraform's internal resource ID. It is structured as "`projectId`","region","`name`".
+     */
     readonly id: string;
     /**
      * List of all listeners which will accept traffic. Limited to 20.
@@ -80,9 +87,17 @@ export interface GetLoadbalancerResult {
      */
     readonly region?: string;
     /**
+     * The ID of the egress security group assigned to the Load Balancer's internal machines. This ID is essential for allowing traffic from the Load Balancer to targets in different networks or STACKIT Network areas (SNA). To enable this, create a security group rule for your target VMs and set the `remoteSecurityGroupId` of that rule to this value. This is typically used when `disableSecurityGroupAssignment` is set to `true`.
+     */
+    readonly securityGroupId: string;
+    /**
      * List of all target pools which will be used in the Load Balancer. Limited to 20.
      */
     readonly targetPools: outputs.GetLoadbalancerTargetPool[];
+    /**
+     * Load balancer resource version.
+     */
+    readonly version: string;
 }
 /**
  * Load Balancer data source schema. Must have a `region` specified in the provider configuration.
