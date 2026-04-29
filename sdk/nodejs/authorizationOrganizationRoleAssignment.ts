@@ -5,7 +5,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
 /**
- * organization Role Assignment resource schema.
+ * Organization Role Assignment resource schema.
  *
  * > This resource is part of the iam experiment and is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.
  *
@@ -40,17 +40,17 @@ export class AuthorizationOrganizationRoleAssignment extends pulumi.CustomResour
     }
 
     /**
-     * organization Resource to assign the role to.
+     * Organization Resource to assign the role to.
      */
-    public readonly resourceId!: pulumi.Output<string>;
+    declare public readonly resourceId: pulumi.Output<string>;
     /**
-     * Role to be assigned
+     * Role to be assigned. Available roles can be queried using stackit-cli: `stackit curl https://authorization.api.stackit.cloud/v2/permissions`
      */
-    public readonly role!: pulumi.Output<string>;
+    declare public readonly role: pulumi.Output<string>;
     /**
-     * Identifier of user, service account or client. Usually email address or name in case of clients
+     * Identifier of user, service account or client. Usually email address or name in case of clients. All letters must be lowercased.
      */
-    public readonly subject!: pulumi.Output<string>;
+    declare public readonly subject: pulumi.Output<string>;
 
     /**
      * Create a AuthorizationOrganizationRoleAssignment resource with the given unique name, arguments, and options.
@@ -65,23 +65,23 @@ export class AuthorizationOrganizationRoleAssignment extends pulumi.CustomResour
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as AuthorizationOrganizationRoleAssignmentState | undefined;
-            resourceInputs["resourceId"] = state ? state.resourceId : undefined;
-            resourceInputs["role"] = state ? state.role : undefined;
-            resourceInputs["subject"] = state ? state.subject : undefined;
+            resourceInputs["resourceId"] = state?.resourceId;
+            resourceInputs["role"] = state?.role;
+            resourceInputs["subject"] = state?.subject;
         } else {
             const args = argsOrState as AuthorizationOrganizationRoleAssignmentArgs | undefined;
-            if ((!args || args.resourceId === undefined) && !opts.urn) {
+            if (args?.resourceId === undefined && !opts.urn) {
                 throw new Error("Missing required property 'resourceId'");
             }
-            if ((!args || args.role === undefined) && !opts.urn) {
+            if (args?.role === undefined && !opts.urn) {
                 throw new Error("Missing required property 'role'");
             }
-            if ((!args || args.subject === undefined) && !opts.urn) {
+            if (args?.subject === undefined && !opts.urn) {
                 throw new Error("Missing required property 'subject'");
             }
-            resourceInputs["resourceId"] = args ? args.resourceId : undefined;
-            resourceInputs["role"] = args ? args.role : undefined;
-            resourceInputs["subject"] = args ? args.subject : undefined;
+            resourceInputs["resourceId"] = args?.resourceId;
+            resourceInputs["role"] = args?.role;
+            resourceInputs["subject"] = args?.subject;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(AuthorizationOrganizationRoleAssignment.__pulumiType, name, resourceInputs, opts);
@@ -93,15 +93,15 @@ export class AuthorizationOrganizationRoleAssignment extends pulumi.CustomResour
  */
 export interface AuthorizationOrganizationRoleAssignmentState {
     /**
-     * organization Resource to assign the role to.
+     * Organization Resource to assign the role to.
      */
     resourceId?: pulumi.Input<string>;
     /**
-     * Role to be assigned
+     * Role to be assigned. Available roles can be queried using stackit-cli: `stackit curl https://authorization.api.stackit.cloud/v2/permissions`
      */
     role?: pulumi.Input<string>;
     /**
-     * Identifier of user, service account or client. Usually email address or name in case of clients
+     * Identifier of user, service account or client. Usually email address or name in case of clients. All letters must be lowercased.
      */
     subject?: pulumi.Input<string>;
 }
@@ -111,15 +111,15 @@ export interface AuthorizationOrganizationRoleAssignmentState {
  */
 export interface AuthorizationOrganizationRoleAssignmentArgs {
     /**
-     * organization Resource to assign the role to.
+     * Organization Resource to assign the role to.
      */
     resourceId: pulumi.Input<string>;
     /**
-     * Role to be assigned
+     * Role to be assigned. Available roles can be queried using stackit-cli: `stackit curl https://authorization.api.stackit.cloud/v2/permissions`
      */
     role: pulumi.Input<string>;
     /**
-     * Identifier of user, service account or client. Usually email address or name in case of clients
+     * Identifier of user, service account or client. Usually email address or name in case of clients. All letters must be lowercased.
      */
     subject: pulumi.Input<string>;
 }

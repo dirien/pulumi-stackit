@@ -54,11 +54,19 @@ export interface GetObservabilityInstanceResult {
      */
     readonly dashboardUrl: string;
     /**
+     * If true, a default Grafana server admin user was created.
+     */
+    readonly grafanaAdminEnabled: boolean;
+    /**
      * Specifies an initial Grafana admin password.
+     *
+     * @deprecated This attribute is deprecated and will be removed on July 5, 2026. Use `grafanaAdminEnabled` instead.
      */
     readonly grafanaInitialAdminPassword: string;
     /**
      * Specifies an initial Grafana admin username.
+     *
+     * @deprecated This attribute is deprecated and will be removed on July 5, 2026. Use `grafanaAdminEnabled` instead.
      */
     readonly grafanaInitialAdminUser: string;
     /**
@@ -69,6 +77,9 @@ export interface GetObservabilityInstanceResult {
      * Specifies Grafana URL.
      */
     readonly grafanaUrl: string;
+    /**
+     * Terraform's internal data source. ID. It is structured as "`projectId`,`instanceId`".
+     */
     readonly id: string;
     /**
      * The Observability instance ID.
@@ -85,6 +96,10 @@ export interface GetObservabilityInstanceResult {
      */
     readonly logsPushUrl: string;
     /**
+     * Specifies for how many days the logs are kept. Default is set to `7`.
+     */
+    readonly logsRetentionDays: number;
+    /**
      * Specifies Logs URL.
      */
     readonly logsUrl: string;
@@ -93,15 +108,15 @@ export interface GetObservabilityInstanceResult {
      */
     readonly metricsPushUrl: string;
     /**
-     * Specifies for how many days the raw metrics are kept.
+     * Specifies for how many days the raw metrics are kept. Default is set to `90`.
      */
     readonly metricsRetentionDays: number;
     /**
-     * Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `0` (disabled).
+     * Specifies for how many days the 1h downsampled metrics are kept. must be less than the value of the 5m downsampling retention. Default is set to `90`.
      */
     readonly metricsRetentionDays1hDownsampling: number;
     /**
-     * Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `0` (disabled).
+     * Specifies for how many days the 5m downsampled metrics are kept. must be less than the value of the general retention. Default is set to `90`.
      */
     readonly metricsRetentionDays5mDownsampling: number;
     /**
@@ -133,6 +148,10 @@ export interface GetObservabilityInstanceResult {
      * Specifies Targets URL.
      */
     readonly targetsUrl: string;
+    /**
+     * Specifies for how many days the traces are kept. Default is set to `7`.
+     */
+    readonly tracesRetentionDays: number;
     readonly zipkinSpansUrl: string;
 }
 /**

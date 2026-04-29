@@ -27,6 +27,10 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly Outputs.GetCdnDistributionConfigOptimizerResult Optimizer;
         /// <summary>
+        /// A wrapper for a list of redirect rules that allows for redirect settings on a distribution
+        /// </summary>
+        public readonly Outputs.GetCdnDistributionConfigRedirectsResult Redirects;
+        /// <summary>
         /// The configured regions where content will be hosted
         /// </summary>
         public readonly ImmutableArray<string> Regions;
@@ -39,11 +43,14 @@ namespace ediri.Stackit.Outputs
 
             Outputs.GetCdnDistributionConfigOptimizerResult optimizer,
 
+            Outputs.GetCdnDistributionConfigRedirectsResult redirects,
+
             ImmutableArray<string> regions)
         {
             Backend = backend;
             BlockedCountries = blockedCountries;
             Optimizer = optimizer;
+            Redirects = redirects;
             Regions = regions;
         }
     }

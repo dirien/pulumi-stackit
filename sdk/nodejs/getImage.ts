@@ -16,6 +16,7 @@ export function getImage(args: GetImageArgs, opts?: pulumi.InvokeOptions): Promi
     return pulumi.runtime.invoke("stackit:index/getImage:getImage", {
         "imageId": args.imageId,
         "projectId": args.projectId,
+        "region": args.region,
     }, opts);
 }
 
@@ -31,6 +32,10 @@ export interface GetImageArgs {
      * STACKIT project ID to which the image is associated.
      */
     projectId: string;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: string;
 }
 
 /**
@@ -49,6 +54,9 @@ export interface GetImageResult {
      * The disk format of the image.
      */
     readonly diskFormat: string;
+    /**
+     * Terraform's internal resource ID. It is structured as "`projectId`,`region`,`imageId`".
+     */
     readonly id: string;
     /**
      * The image ID.
@@ -79,6 +87,10 @@ export interface GetImageResult {
      */
     readonly protected: boolean;
     /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    readonly region?: string;
+    /**
      * The scope of the image.
      */
     readonly scope: string;
@@ -93,6 +105,7 @@ export function getImageOutput(args: GetImageOutputArgs, opts?: pulumi.InvokeOut
     return pulumi.runtime.invokeOutput("stackit:index/getImage:getImage", {
         "imageId": args.imageId,
         "projectId": args.projectId,
+        "region": args.region,
     }, opts);
 }
 
@@ -108,4 +121,8 @@ export interface GetImageOutputArgs {
      * STACKIT project ID to which the image is associated.
      */
     projectId: pulumi.Input<string>;
+    /**
+     * The resource region. If not defined, the provider region is used.
+     */
+    region?: pulumi.Input<string>;
 }

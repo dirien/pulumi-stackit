@@ -38,6 +38,9 @@ export interface GetIaasProjectResult {
      * Date-time when the project was created.
      */
     readonly createdAt: string;
+    /**
+     * Terraform's internal resource ID. It is structured as "`projectId`".
+     */
     readonly id: string;
     /**
      * Specifies if the project has internet_access
@@ -48,9 +51,15 @@ export interface GetIaasProjectResult {
      */
     readonly projectId: string;
     /**
-     * Specifies the state of the project.
+     * Specifies the status of the project.
+     *
+     * @deprecated Deprecated: Will be removed in May 2026. Use the `status` field instead.
      */
     readonly state: string;
+    /**
+     * Specifies the status of the project.
+     */
+    readonly status: string;
     /**
      * Date-time when the project was last updated.
      */

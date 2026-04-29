@@ -20,9 +20,9 @@ namespace ediri.Stackit.Outputs
         /// </summary>
         public readonly string Name;
         /// <summary>
-        /// Here you can setup various session persistence options, so far only "`use_source_ip_address`" is supported.
+        /// Here you can setup various session persistence options, so far only "`UseSourceIpAddress`" is supported.
         /// </summary>
-        public readonly Outputs.GetLoadbalancerTargetPoolSessionPersistenceResult? SessionPersistence;
+        public readonly Outputs.GetLoadbalancerTargetPoolSessionPersistenceResult SessionPersistence;
         /// <summary>
         /// Identical port number where each target listens for traffic.
         /// </summary>
@@ -38,7 +38,7 @@ namespace ediri.Stackit.Outputs
 
             string name,
 
-            Outputs.GetLoadbalancerTargetPoolSessionPersistenceResult? sessionPersistence,
+            Outputs.GetLoadbalancerTargetPoolSessionPersistenceResult sessionPersistence,
 
             int targetPort,
 
