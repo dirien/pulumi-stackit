@@ -11,7 +11,7 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// SKE kubeconfig resource schema. Must have a `region` specified in the provider configuration.
+    /// SKE kubeconfig resource schema. Must have a `Region` specified in the provider configuration.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -48,6 +48,9 @@ namespace ediri.Stackit
         [Output("kubeConfig")]
         public Output<string> KubeConfig { get; private set; } = null!;
 
+        /// <summary>
+        /// Internally generated UUID to identify a kubeconfig resource in Terraform, since the SKE API doesnt return a kubeconfig identifier
+        /// </summary>
         [Output("kubeConfigId")]
         public Output<string> KubeConfigId { get; private set; } = null!;
 
@@ -62,6 +65,12 @@ namespace ediri.Stackit
         /// </summary>
         [Output("refresh")]
         public Output<bool?> Refresh { get; private set; } = null!;
+
+        /// <summary>
+        /// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+        /// </summary>
+        [Output("refreshBefore")]
+        public Output<int?> RefreshBefore { get; private set; } = null!;
 
         /// <summary>
         /// The resource region. If not defined, the provider region is used.
@@ -145,6 +154,12 @@ namespace ediri.Stackit
         public Input<bool>? Refresh { get; set; }
 
         /// <summary>
+        /// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+        /// </summary>
+        [Input("refreshBefore")]
+        public Input<int>? RefreshBefore { get; set; }
+
+        /// <summary>
         /// The resource region. If not defined, the provider region is used.
         /// </summary>
         [Input("region")]
@@ -198,6 +213,9 @@ namespace ediri.Stackit
             }
         }
 
+        /// <summary>
+        /// Internally generated UUID to identify a kubeconfig resource in Terraform, since the SKE API doesnt return a kubeconfig identifier
+        /// </summary>
         [Input("kubeConfigId")]
         public Input<string>? KubeConfigId { get; set; }
 
@@ -212,6 +230,12 @@ namespace ediri.Stackit
         /// </summary>
         [Input("refresh")]
         public Input<bool>? Refresh { get; set; }
+
+        /// <summary>
+        /// Number of seconds before expiration to trigger refresh of the kubeconfig at. Only used if refresh is set to true.
+        /// </summary>
+        [Input("refreshBefore")]
+        public Input<int>? RefreshBefore { get; set; }
 
         /// <summary>
         /// The resource region. If not defined, the provider region is used.

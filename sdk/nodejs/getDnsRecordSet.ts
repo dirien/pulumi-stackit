@@ -2,6 +2,8 @@
 // *** Do not edit by hand unless you're certain you know what you are doing! ***
 
 import * as pulumi from "@pulumi/pulumi";
+import * as inputs from "./types/input";
+import * as outputs from "./types/output";
 import * as utilities from "./utilities";
 
 /**
@@ -14,6 +16,7 @@ export function getDnsRecordSet(args: GetDnsRecordSetArgs, opts?: pulumi.InvokeO
     return pulumi.runtime.invoke("stackit:index/getDnsRecordSet:getDnsRecordSet", {
         "projectId": args.projectId,
         "recordSetId": args.recordSetId,
+        "timeouts": args.timeouts,
         "zoneId": args.zoneId,
     }, opts);
 }
@@ -30,6 +33,7 @@ export interface GetDnsRecordSetArgs {
      * The rr set id.
      */
     recordSetId: string;
+    timeouts?: inputs.GetDnsRecordSetTimeouts;
     /**
      * The zone ID to which is dns record set is associated.
      */
@@ -56,6 +60,9 @@ export interface GetDnsRecordSetResult {
      * Fully qualified domain name (FQDN) of the record set.
      */
     readonly fqdn: string;
+    /**
+     * Terraform's internal data source. ID. It is structured as "`projectId`,`zoneId`,`recordSetId`".
+     */
     readonly id: string;
     /**
      * Name of the record which should be a valid domain according to rfc1035 Section 2.3.4. E.g. `example.com`
@@ -77,6 +84,7 @@ export interface GetDnsRecordSetResult {
      * Record set state.
      */
     readonly state: string;
+    readonly timeouts?: outputs.GetDnsRecordSetTimeouts;
     /**
      * Time to live. E.g. 3600
      */
@@ -100,6 +108,7 @@ export function getDnsRecordSetOutput(args: GetDnsRecordSetOutputArgs, opts?: pu
     return pulumi.runtime.invokeOutput("stackit:index/getDnsRecordSet:getDnsRecordSet", {
         "projectId": args.projectId,
         "recordSetId": args.recordSetId,
+        "timeouts": args.timeouts,
         "zoneId": args.zoneId,
     }, opts);
 }
@@ -116,6 +125,7 @@ export interface GetDnsRecordSetOutputArgs {
      * The rr set id.
      */
     recordSetId: pulumi.Input<string>;
+    timeouts?: pulumi.Input<inputs.GetDnsRecordSetTimeoutsArgs>;
     /**
      * The zone ID to which is dns record set is associated.
      */

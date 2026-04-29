@@ -9,8 +9,6 @@ import * as utilities from "./utilities";
 /**
  * Server update schedules datasource schema. Must have a `region` specified in the provider configuration.
  *
- * > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
- *
  * ## Example Usage
  */
 export function getServerUpdateSchedules(args: GetServerUpdateSchedulesArgs, opts?: pulumi.InvokeOptions): Promise<GetServerUpdateSchedulesResult> {
@@ -44,6 +42,9 @@ export interface GetServerUpdateSchedulesArgs {
  * A collection of values returned by getServerUpdateSchedules.
  */
 export interface GetServerUpdateSchedulesResult {
+    /**
+     * Terraform's internal data source identifier. It is structured as "`projectId`,`region`,`serverId`".
+     */
     readonly id: string;
     readonly items: outputs.GetServerUpdateSchedulesItem[];
     /**
@@ -61,8 +62,6 @@ export interface GetServerUpdateSchedulesResult {
 }
 /**
  * Server update schedules datasource schema. Must have a `region` specified in the provider configuration.
- *
- * > This datasource is in beta and may be subject to breaking changes in the future. Use with caution. See our guide for how to opt-in to use beta resources.
  *
  * ## Example Usage
  */

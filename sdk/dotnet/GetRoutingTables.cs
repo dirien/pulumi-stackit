@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetRoutingTables
     {
         /// <summary>
-        /// Routing table datasource schema. Must have a `region` specified in the provider configuration.
+        /// Routing table datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// &gt; This datasource is part of the routing-tables experiment and is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.
         /// 
@@ -30,7 +30,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetRoutingTablesResult>("stackit:index/getRoutingTables:getRoutingTables", args ?? new GetRoutingTablesArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Routing table datasource schema. Must have a `region` specified in the provider configuration.
+        /// Routing table datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// &gt; This datasource is part of the routing-tables experiment and is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.
         /// 
@@ -47,7 +47,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetRoutingTablesResult>("stackit:index/getRoutingTables:getRoutingTables", args ?? new GetRoutingTablesInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// Routing table datasource schema. Must have a `region` specified in the provider configuration.
+        /// Routing table datasource schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// &gt; This datasource is part of the routing-tables experiment and is likely going to undergo significant changes or be removed in the future. Use it at your own discretion.
         /// 
@@ -121,6 +121,9 @@ namespace ediri.Stackit
     [OutputType]
     public sealed class GetRoutingTablesResult
     {
+        /// <summary>
+        /// Terraform's internal datasource ID. It is structured as "`OrganizationId`,`Region`,`NetworkAreaId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// List of routing tables.

@@ -36,9 +36,12 @@ type LookupLoadbalancerArgs struct {
 
 // A collection of values returned by getLoadbalancer.
 type LookupLoadbalancerResult struct {
+	// If set to true, this will disable the automatic assignment of a security group to the load balancer's targets. This option is primarily used to allow targets that are not within the load balancer's own network or SNA (STACKIT Network area). When this is enabled, you are fully responsible for ensuring network connectivity to the targets, including managing all routing and security group rules manually. This setting cannot be changed after the load balancer is created.
+	DisableSecurityGroupAssignment bool `pulumi:"disableSecurityGroupAssignment"`
 	// External Load Balancer IP address where this Load Balancer is exposed.
 	ExternalAddress string `pulumi:"externalAddress"`
-	Id              string `pulumi:"id"`
+	// Terraform's internal resource ID. It is structured as "`projectId`","region","`name`".
+	Id string `pulumi:"id"`
 	// List of all listeners which will accept traffic. Limited to 20.
 	Listeners []GetLoadbalancerListener `pulumi:"listeners"`
 	// Load balancer name.
@@ -55,8 +58,12 @@ type LookupLoadbalancerResult struct {
 	ProjectId string `pulumi:"projectId"`
 	// The resource region. If not defined, the provider region is used.
 	Region *string `pulumi:"region"`
+	// The ID of the egress security group assigned to the Load Balancer's internal machines. This ID is essential for allowing traffic from the Load Balancer to targets in different networks or STACKIT Network areas (SNA). To enable this, create a security group rule for your target VMs and set the `remoteSecurityGroupId` of that rule to this value. This is typically used when `disableSecurityGroupAssignment` is set to `true`.
+	SecurityGroupId string `pulumi:"securityGroupId"`
 	// List of all target pools which will be used in the Load Balancer. Limited to 20.
 	TargetPools []GetLoadbalancerTargetPool `pulumi:"targetPools"`
+	// Load balancer resource version.
+	Version string `pulumi:"version"`
 }
 
 func LookupLoadbalancerOutput(ctx *pulumi.Context, args LookupLoadbalancerOutputArgs, opts ...pulumi.InvokeOption) LookupLoadbalancerResultOutput {
@@ -97,11 +104,17 @@ func (o LookupLoadbalancerResultOutput) ToLookupLoadbalancerResultOutputWithCont
 	return o
 }
 
+// If set to true, this will disable the automatic assignment of a security group to the load balancer's targets. This option is primarily used to allow targets that are not within the load balancer's own network or SNA (STACKIT Network area). When this is enabled, you are fully responsible for ensuring network connectivity to the targets, including managing all routing and security group rules manually. This setting cannot be changed after the load balancer is created.
+func (o LookupLoadbalancerResultOutput) DisableSecurityGroupAssignment() pulumi.BoolOutput {
+	return o.ApplyT(func(v LookupLoadbalancerResult) bool { return v.DisableSecurityGroupAssignment }).(pulumi.BoolOutput)
+}
+
 // External Load Balancer IP address where this Load Balancer is exposed.
 func (o LookupLoadbalancerResultOutput) ExternalAddress() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupLoadbalancerResult) string { return v.ExternalAddress }).(pulumi.StringOutput)
 }
 
+// Terraform's internal resource ID. It is structured as "`projectId`","region","`name`".
 func (o LookupLoadbalancerResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v LookupLoadbalancerResult) string { return v.Id }).(pulumi.StringOutput)
 }
@@ -146,9 +159,19 @@ func (o LookupLoadbalancerResultOutput) Region() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v LookupLoadbalancerResult) *string { return v.Region }).(pulumi.StringPtrOutput)
 }
 
+// The ID of the egress security group assigned to the Load Balancer's internal machines. This ID is essential for allowing traffic from the Load Balancer to targets in different networks or STACKIT Network areas (SNA). To enable this, create a security group rule for your target VMs and set the `remoteSecurityGroupId` of that rule to this value. This is typically used when `disableSecurityGroupAssignment` is set to `true`.
+func (o LookupLoadbalancerResultOutput) SecurityGroupId() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupLoadbalancerResult) string { return v.SecurityGroupId }).(pulumi.StringOutput)
+}
+
 // List of all target pools which will be used in the Load Balancer. Limited to 20.
 func (o LookupLoadbalancerResultOutput) TargetPools() GetLoadbalancerTargetPoolArrayOutput {
 	return o.ApplyT(func(v LookupLoadbalancerResult) []GetLoadbalancerTargetPool { return v.TargetPools }).(GetLoadbalancerTargetPoolArrayOutput)
+}
+
+// Load balancer resource version.
+func (o LookupLoadbalancerResultOutput) Version() pulumi.StringOutput {
+	return o.ApplyT(func(v LookupLoadbalancerResult) string { return v.Version }).(pulumi.StringOutput)
 }
 
 func init() {

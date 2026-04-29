@@ -32,11 +32,13 @@ class SkeClusterArgs:
                  region: Optional[pulumi.Input[_builtins.str]] = None):
         """
         The set of arguments for constructing a SkeCluster resource.
+
         :param pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolArgs']]] node_pools: One or more `node_pool` block as defined below.
+               To keep your Terraform plans clean and readable, always append new node pools to the end of the list.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the cluster is associated.
         :param pulumi.Input['SkeClusterExtensionsArgs'] extensions: A single extensions block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input['SkeClusterHibernationArgs']]] hibernations: One or more hibernation block as defined below.
-        :param pulumi.Input[_builtins.str] kubernetes_version_min: The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
+        :param pulumi.Input[_builtins.str] kubernetes_version_min: The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
         :param pulumi.Input['SkeClusterMaintenanceArgs'] maintenance: A single maintenance block as defined below.
         :param pulumi.Input[_builtins.str] name: The cluster name.
         :param pulumi.Input['SkeClusterNetworkArgs'] network: Network block as defined below.
@@ -64,6 +66,7 @@ class SkeClusterArgs:
     def node_pools(self) -> pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolArgs']]]:
         """
         One or more `node_pool` block as defined below.
+        To keep your Terraform plans clean and readable, always append new node pools to the end of the list.
         """
         return pulumi.get(self, "node_pools")
 
@@ -111,7 +114,7 @@ class SkeClusterArgs:
     @pulumi.getter(name="kubernetesVersionMin")
     def kubernetes_version_min(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
+        The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
         """
         return pulumi.get(self, "kubernetes_version_min")
 
@@ -185,15 +188,17 @@ class _SkeClusterState:
                  region: Optional[pulumi.Input[_builtins.str]] = None):
         """
         Input properties used for looking up and filtering SkeCluster resources.
+
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] egress_address_ranges: The outgoing network ranges (in CIDR notation) of traffic originating from workload on the cluster.
         :param pulumi.Input['SkeClusterExtensionsArgs'] extensions: A single extensions block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input['SkeClusterHibernationArgs']]] hibernations: One or more hibernation block as defined below.
-        :param pulumi.Input[_builtins.str] kubernetes_version_min: The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
-        :param pulumi.Input[_builtins.str] kubernetes_version_used: Full Kubernetes version used. For example, if 1.22 was set in `kubernetes_version_min`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        :param pulumi.Input[_builtins.str] kubernetes_version_min: The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
+        :param pulumi.Input[_builtins.str] kubernetes_version_used: Full Kubernetes version used. For example, if 1.22 was set in `kubernetes_version_min`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         :param pulumi.Input['SkeClusterMaintenanceArgs'] maintenance: A single maintenance block as defined below.
         :param pulumi.Input[_builtins.str] name: The cluster name.
         :param pulumi.Input['SkeClusterNetworkArgs'] network: Network block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolArgs']]] node_pools: One or more `node_pool` block as defined below.
+               To keep your Terraform plans clean and readable, always append new node pools to the end of the list.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] pod_address_ranges: The network ranges (in CIDR notation) used by pods of the cluster.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the cluster is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
@@ -263,7 +268,7 @@ class _SkeClusterState:
     @pulumi.getter(name="kubernetesVersionMin")
     def kubernetes_version_min(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
+        The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
         """
         return pulumi.get(self, "kubernetes_version_min")
 
@@ -275,7 +280,7 @@ class _SkeClusterState:
     @pulumi.getter(name="kubernetesVersionUsed")
     def kubernetes_version_used(self) -> Optional[pulumi.Input[_builtins.str]]:
         """
-        Full Kubernetes version used. For example, if 1.22 was set in `kubernetes_version_min`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        Full Kubernetes version used. For example, if 1.22 was set in `kubernetes_version_min`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
         return pulumi.get(self, "kubernetes_version_used")
 
@@ -324,6 +329,7 @@ class _SkeClusterState:
     def node_pools(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['SkeClusterNodePoolArgs']]]]:
         """
         One or more `node_pool` block as defined below.
+        To keep your Terraform plans clean and readable, always append new node pools to the end of the list.
         """
         return pulumi.get(self, "node_pools")
 
@@ -391,15 +397,17 @@ class SkeCluster(pulumi.CustomResource):
 
         ## Example Usage
 
+
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[Union['SkeClusterExtensionsArgs', 'SkeClusterExtensionsArgsDict']] extensions: A single extensions block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input[Union['SkeClusterHibernationArgs', 'SkeClusterHibernationArgsDict']]]] hibernations: One or more hibernation block as defined below.
-        :param pulumi.Input[_builtins.str] kubernetes_version_min: The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
+        :param pulumi.Input[_builtins.str] kubernetes_version_min: The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
         :param pulumi.Input[Union['SkeClusterMaintenanceArgs', 'SkeClusterMaintenanceArgsDict']] maintenance: A single maintenance block as defined below.
         :param pulumi.Input[_builtins.str] name: The cluster name.
         :param pulumi.Input[Union['SkeClusterNetworkArgs', 'SkeClusterNetworkArgsDict']] network: Network block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input[Union['SkeClusterNodePoolArgs', 'SkeClusterNodePoolArgsDict']]]] node_pools: One or more `node_pool` block as defined below.
+               To keep your Terraform plans clean and readable, always append new node pools to the end of the list.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the cluster is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
         """
@@ -415,6 +423,7 @@ class SkeCluster(pulumi.CustomResource):
         > When updating `node_pools` of a `SkeCluster`, the pulumi preview might appear incorrect as it matches the node pools by index rather than by name. However, the SKE API correctly identifies node pools by name and applies the intended changes. Please review your changes carefully to ensure the correct configuration will be applied.
 
         ## Example Usage
+
 
         :param str resource_name: The name of the resource.
         :param SkeClusterArgs args: The arguments to use to populate this resource's properties.
@@ -497,12 +506,13 @@ class SkeCluster(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] egress_address_ranges: The outgoing network ranges (in CIDR notation) of traffic originating from workload on the cluster.
         :param pulumi.Input[Union['SkeClusterExtensionsArgs', 'SkeClusterExtensionsArgsDict']] extensions: A single extensions block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input[Union['SkeClusterHibernationArgs', 'SkeClusterHibernationArgsDict']]]] hibernations: One or more hibernation block as defined below.
-        :param pulumi.Input[_builtins.str] kubernetes_version_min: The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
-        :param pulumi.Input[_builtins.str] kubernetes_version_used: Full Kubernetes version used. For example, if 1.22 was set in `kubernetes_version_min`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        :param pulumi.Input[_builtins.str] kubernetes_version_min: The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
+        :param pulumi.Input[_builtins.str] kubernetes_version_used: Full Kubernetes version used. For example, if 1.22 was set in `kubernetes_version_min`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         :param pulumi.Input[Union['SkeClusterMaintenanceArgs', 'SkeClusterMaintenanceArgsDict']] maintenance: A single maintenance block as defined below.
         :param pulumi.Input[_builtins.str] name: The cluster name.
         :param pulumi.Input[Union['SkeClusterNetworkArgs', 'SkeClusterNetworkArgsDict']] network: Network block as defined below.
         :param pulumi.Input[Sequence[pulumi.Input[Union['SkeClusterNodePoolArgs', 'SkeClusterNodePoolArgsDict']]]] node_pools: One or more `node_pool` block as defined below.
+               To keep your Terraform plans clean and readable, always append new node pools to the end of the list.
         :param pulumi.Input[Sequence[pulumi.Input[_builtins.str]]] pod_address_ranges: The network ranges (in CIDR notation) used by pods of the cluster.
         :param pulumi.Input[_builtins.str] project_id: STACKIT project ID to which the cluster is associated.
         :param pulumi.Input[_builtins.str] region: The resource region. If not defined, the provider region is used.
@@ -553,7 +563,7 @@ class SkeCluster(pulumi.CustomResource):
     @pulumi.getter(name="kubernetesVersionMin")
     def kubernetes_version_min(self) -> pulumi.Output[Optional[_builtins.str]]:
         """
-        The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
+        The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
         """
         return pulumi.get(self, "kubernetes_version_min")
 
@@ -561,7 +571,7 @@ class SkeCluster(pulumi.CustomResource):
     @pulumi.getter(name="kubernetesVersionUsed")
     def kubernetes_version_used(self) -> pulumi.Output[_builtins.str]:
         """
-        Full Kubernetes version used. For example, if 1.22 was set in `kubernetes_version_min`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        Full Kubernetes version used. For example, if 1.22 was set in `kubernetes_version_min`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes & OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         """
         return pulumi.get(self, "kubernetes_version_used")
 
@@ -583,7 +593,7 @@ class SkeCluster(pulumi.CustomResource):
 
     @_builtins.property
     @pulumi.getter
-    def network(self) -> pulumi.Output[Optional['outputs.SkeClusterNetwork']]:
+    def network(self) -> pulumi.Output['outputs.SkeClusterNetwork']:
         """
         Network block as defined below.
         """
@@ -594,6 +604,7 @@ class SkeCluster(pulumi.CustomResource):
     def node_pools(self) -> pulumi.Output[Sequence['outputs.SkeClusterNodePool']]:
         """
         One or more `node_pool` block as defined below.
+        To keep your Terraform plans clean and readable, always append new node pools to the end of the list.
         """
         return pulumi.get(self, "node_pools")
 

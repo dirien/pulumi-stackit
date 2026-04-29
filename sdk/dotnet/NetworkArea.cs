@@ -11,21 +11,44 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// Network area resource schema. Must have a `region` specified in the provider configuration.
+    /// Network area resource schema.
     /// 
     /// ## Example Usage
+    /// 
+    /// ## Migration of IaaS resources from versions &lt;= v0.78.1
+    /// 
+    /// The release of the STACKIT IaaS API v2 provides a lot of new features, but also includes some breaking changes
+    /// (when coming from v1 of the STACKIT IaaS API) which must be somehow represented on Terraform side. The
+    /// `stackit.NetworkArea` resource deprecated some fields. See the example below how to migrate your resources.
+    /// 
+    /// ### Migration: Network area resource (stackit_network_area)
+    /// 
+    /// **Configuration for &lt;= v0.78.1**
+    /// 
+    /// The previous configuration has some deprecated fields.
+    /// 
+    /// **Configuration for &gt; v0.78.1**
+    /// 
+    /// To migrate from a previous state, you need to modify your configuration like this:
+    /// 
+    /// After modifying the configuration, run `$ pulumi preview` to check what terraform will do.
+    /// The changes should trigger an update in-place for the existing "stackit.NetworkArea" where the deprecated fields will be removed and the resource "stackit.NetworkAreaRegion" should be imported.
+    /// It shouldn't trigger any recreation. If terraform wants to recreate any of the resources, verify that you are using the provider version &gt; v0.78.1 and have everything defined correctly.
+    /// 
+    /// When everything looks good, run `$ pulumi up` to apply these changes.
+    /// When the run is completed, you can remove the import-block. Run `$ pulumi preview` to verify that the infrastructure matches the configuration.
     /// </summary>
     [StackitResourceType("stackit:index/networkArea:NetworkArea")]
     public partial class NetworkArea : global::Pulumi.CustomResource
     {
         /// <summary>
-        /// List of DNS Servers/Nameservers.
+        /// List of DNS Servers/Nameservers for configuration of network area for region `Eu01`.
         /// </summary>
         [Output("defaultNameservers")]
         public Output<ImmutableArray<string>> DefaultNameservers { get; private set; } = null!;
 
         /// <summary>
-        /// The default prefix length for networks in the network area.
+        /// The default prefix length for networks in the network area for region `Eu01`.
         /// </summary>
         [Output("defaultPrefixLength")]
         public Output<int> DefaultPrefixLength { get; private set; } = null!;
@@ -37,13 +60,13 @@ namespace ediri.Stackit
         public Output<ImmutableDictionary<string, string>?> Labels { get; private set; } = null!;
 
         /// <summary>
-        /// The maximal prefix length for networks in the network area.
+        /// The maximal prefix length for networks in the network area for region `Eu01`.
         /// </summary>
         [Output("maxPrefixLength")]
         public Output<int> MaxPrefixLength { get; private set; } = null!;
 
         /// <summary>
-        /// The minimal prefix length for networks in the network area.
+        /// The minimal prefix length for networks in the network area for region `Eu01`.
         /// </summary>
         [Output("minPrefixLength")]
         public Output<int> MinPrefixLength { get; private set; } = null!;
@@ -61,7 +84,7 @@ namespace ediri.Stackit
         public Output<string> NetworkAreaId { get; private set; } = null!;
 
         /// <summary>
-        /// List of Network ranges.
+        /// List of Network ranges for configuration of network area for region `Eu01`.
         /// </summary>
         [Output("networkRanges")]
         public Output<ImmutableArray<Outputs.NetworkAreaNetworkRange>> NetworkRanges { get; private set; } = null!;
@@ -79,10 +102,10 @@ namespace ediri.Stackit
         public Output<int> ProjectCount { get; private set; } = null!;
 
         /// <summary>
-        /// Classless Inter-Domain Routing (CIDR).
+        /// Classless Inter-Domain Routing (CIDR) for configuration of network area for region `Eu01`.
         /// </summary>
         [Output("transferNetwork")]
-        public Output<string> TransferNetwork { get; private set; } = null!;
+        public Output<string?> TransferNetwork { get; private set; } = null!;
 
 
         /// <summary>
@@ -135,8 +158,9 @@ namespace ediri.Stackit
         private InputList<string>? _defaultNameservers;
 
         /// <summary>
-        /// List of DNS Servers/Nameservers.
+        /// List of DNS Servers/Nameservers for configuration of network area for region `Eu01`.
         /// </summary>
+        [Obsolete(@"Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `stackit.NetworkAreaRegion` resource instead.")]
         public InputList<string> DefaultNameservers
         {
             get => _defaultNameservers ?? (_defaultNameservers = new InputList<string>());
@@ -144,7 +168,7 @@ namespace ediri.Stackit
         }
 
         /// <summary>
-        /// The default prefix length for networks in the network area.
+        /// The default prefix length for networks in the network area for region `Eu01`.
         /// </summary>
         [Input("defaultPrefixLength")]
         public Input<int>? DefaultPrefixLength { get; set; }
@@ -162,13 +186,13 @@ namespace ediri.Stackit
         }
 
         /// <summary>
-        /// The maximal prefix length for networks in the network area.
+        /// The maximal prefix length for networks in the network area for region `Eu01`.
         /// </summary>
         [Input("maxPrefixLength")]
         public Input<int>? MaxPrefixLength { get; set; }
 
         /// <summary>
-        /// The minimal prefix length for networks in the network area.
+        /// The minimal prefix length for networks in the network area for region `Eu01`.
         /// </summary>
         [Input("minPrefixLength")]
         public Input<int>? MinPrefixLength { get; set; }
@@ -179,12 +203,13 @@ namespace ediri.Stackit
         [Input("name")]
         public Input<string>? Name { get; set; }
 
-        [Input("networkRanges", required: true)]
+        [Input("networkRanges")]
         private InputList<Inputs.NetworkAreaNetworkRangeArgs>? _networkRanges;
 
         /// <summary>
-        /// List of Network ranges.
+        /// List of Network ranges for configuration of network area for region `Eu01`.
         /// </summary>
+        [Obsolete(@"Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `stackit.NetworkAreaRegion` resource instead.")]
         public InputList<Inputs.NetworkAreaNetworkRangeArgs> NetworkRanges
         {
             get => _networkRanges ?? (_networkRanges = new InputList<Inputs.NetworkAreaNetworkRangeArgs>());
@@ -198,10 +223,10 @@ namespace ediri.Stackit
         public Input<string> OrganizationId { get; set; } = null!;
 
         /// <summary>
-        /// Classless Inter-Domain Routing (CIDR).
+        /// Classless Inter-Domain Routing (CIDR) for configuration of network area for region `Eu01`.
         /// </summary>
-        [Input("transferNetwork", required: true)]
-        public Input<string> TransferNetwork { get; set; } = null!;
+        [Input("transferNetwork")]
+        public Input<string>? TransferNetwork { get; set; }
 
         public NetworkAreaArgs()
         {
@@ -215,8 +240,9 @@ namespace ediri.Stackit
         private InputList<string>? _defaultNameservers;
 
         /// <summary>
-        /// List of DNS Servers/Nameservers.
+        /// List of DNS Servers/Nameservers for configuration of network area for region `Eu01`.
         /// </summary>
+        [Obsolete(@"Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `stackit.NetworkAreaRegion` resource instead.")]
         public InputList<string> DefaultNameservers
         {
             get => _defaultNameservers ?? (_defaultNameservers = new InputList<string>());
@@ -224,7 +250,7 @@ namespace ediri.Stackit
         }
 
         /// <summary>
-        /// The default prefix length for networks in the network area.
+        /// The default prefix length for networks in the network area for region `Eu01`.
         /// </summary>
         [Input("defaultPrefixLength")]
         public Input<int>? DefaultPrefixLength { get; set; }
@@ -242,13 +268,13 @@ namespace ediri.Stackit
         }
 
         /// <summary>
-        /// The maximal prefix length for networks in the network area.
+        /// The maximal prefix length for networks in the network area for region `Eu01`.
         /// </summary>
         [Input("maxPrefixLength")]
         public Input<int>? MaxPrefixLength { get; set; }
 
         /// <summary>
-        /// The minimal prefix length for networks in the network area.
+        /// The minimal prefix length for networks in the network area for region `Eu01`.
         /// </summary>
         [Input("minPrefixLength")]
         public Input<int>? MinPrefixLength { get; set; }
@@ -269,8 +295,9 @@ namespace ediri.Stackit
         private InputList<Inputs.NetworkAreaNetworkRangeGetArgs>? _networkRanges;
 
         /// <summary>
-        /// List of Network ranges.
+        /// List of Network ranges for configuration of network area for region `Eu01`.
         /// </summary>
+        [Obsolete(@"Deprecated because of the IaaS API v1 -> v2 migration. Will be removed in May 2026. Use the new `stackit.NetworkAreaRegion` resource instead.")]
         public InputList<Inputs.NetworkAreaNetworkRangeGetArgs> NetworkRanges
         {
             get => _networkRanges ?? (_networkRanges = new InputList<Inputs.NetworkAreaNetworkRangeGetArgs>());
@@ -290,7 +317,7 @@ namespace ediri.Stackit
         public Input<int>? ProjectCount { get; set; }
 
         /// <summary>
-        /// Classless Inter-Domain Routing (CIDR).
+        /// Classless Inter-Domain Routing (CIDR) for configuration of network area for region `Eu01`.
         /// </summary>
         [Input("transferNetwork")]
         public Input<string>? TransferNetwork { get; set; }

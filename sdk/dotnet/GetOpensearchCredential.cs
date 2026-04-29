@@ -13,7 +13,7 @@ namespace ediri.Stackit
     public static class GetOpensearchCredential
     {
         /// <summary>
-        /// OpenSearch credential data source schema. Must have a `region` specified in the provider configuration.
+        /// OpenSearch credential data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -29,7 +29,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.InvokeAsync<GetOpensearchCredentialResult>("stackit:index/getOpensearchCredential:getOpensearchCredential", args ?? new GetOpensearchCredentialArgs(), options.WithDefaults());
 
         /// <summary>
-        /// OpenSearch credential data source schema. Must have a `region` specified in the provider configuration.
+        /// OpenSearch credential data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -45,7 +45,7 @@ namespace ediri.Stackit
             => global::Pulumi.Deployment.Instance.Invoke<GetOpensearchCredentialResult>("stackit:index/getOpensearchCredential:getOpensearchCredential", args ?? new GetOpensearchCredentialInvokeArgs(), options.WithDefaults());
 
         /// <summary>
-        /// OpenSearch credential data source schema. Must have a `region` specified in the provider configuration.
+        /// OpenSearch credential data source schema. Must have a `Region` specified in the provider configuration.
         /// 
         /// ## Example Usage
         /// 
@@ -124,6 +124,9 @@ namespace ediri.Stackit
         public readonly string CredentialId;
         public readonly string Host;
         public readonly ImmutableArray<string> Hosts;
+        /// <summary>
+        /// Terraform's internal data source. identifier. It is structured as "`ProjectId`,`InstanceId`,`CredentialId`".
+        /// </summary>
         public readonly string Id;
         /// <summary>
         /// ID of the OpenSearch instance.

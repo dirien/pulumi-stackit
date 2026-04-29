@@ -15,21 +15,35 @@ import (
 // Network area route resource schema. Must have a `region` specified in the provider configuration.
 //
 // ## Example Usage
+//
+// ## Migration of IaaS resources from versions <= v0.74.0
+//
+// The release of the STACKIT IaaS API v2 provides a lot of new features, but also includes some breaking changes
+// (when coming from v1 of the STACKIT IaaS API) which must be somehow represented on Terraform side. The
+// `NetworkAreaRoute` resource did undergo some changes. See the example below how to migrate your resources.
+//
+// ### Breaking change: Network area route resource (stackit_network_area_route)
+//
+// **Configuration for <= v0.74.0**
+//
+// **Configuration for > v0.74.0**
 type NetworkAreaRoute struct {
 	pulumi.CustomResourceState
 
+	// Destination of the route.
+	Destination NetworkAreaRouteDestinationOutput `pulumi:"destination"`
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels pulumi.StringMapOutput `pulumi:"labels"`
 	// The network area ID to which the network area route is associated.
 	NetworkAreaId pulumi.StringOutput `pulumi:"networkAreaId"`
 	// The network area route ID.
 	NetworkAreaRouteId pulumi.StringOutput `pulumi:"networkAreaRouteId"`
-	// The IP address of the routing system, that will route the prefix configured. Should be a valid IPv4 address.
-	NextHop pulumi.StringOutput `pulumi:"nextHop"`
+	// Next hop destination.
+	NextHop NetworkAreaRouteNextHopOutput `pulumi:"nextHop"`
 	// STACKIT organization ID to which the network area is associated.
 	OrganizationId pulumi.StringOutput `pulumi:"organizationId"`
-	// The network, that is reachable though the Next Hop. Should use CIDR notation.
-	Prefix pulumi.StringOutput `pulumi:"prefix"`
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringOutput `pulumi:"region"`
 }
 
 // NewNetworkAreaRoute registers a new resource with the given unique name, arguments, and options.
@@ -39,6 +53,9 @@ func NewNetworkAreaRoute(ctx *pulumi.Context,
 		return nil, errors.New("missing one or more required arguments")
 	}
 
+	if args.Destination == nil {
+		return nil, errors.New("invalid value for required argument 'Destination'")
+	}
 	if args.NetworkAreaId == nil {
 		return nil, errors.New("invalid value for required argument 'NetworkAreaId'")
 	}
@@ -47,9 +64,6 @@ func NewNetworkAreaRoute(ctx *pulumi.Context,
 	}
 	if args.OrganizationId == nil {
 		return nil, errors.New("invalid value for required argument 'OrganizationId'")
-	}
-	if args.Prefix == nil {
-		return nil, errors.New("invalid value for required argument 'Prefix'")
 	}
 	opts = internal.PkgResourceDefaultOpts(opts)
 	var resource NetworkAreaRoute
@@ -74,33 +88,37 @@ func GetNetworkAreaRoute(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering NetworkAreaRoute resources.
 type networkAreaRouteState struct {
+	// Destination of the route.
+	Destination *NetworkAreaRouteDestination `pulumi:"destination"`
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels map[string]string `pulumi:"labels"`
 	// The network area ID to which the network area route is associated.
 	NetworkAreaId *string `pulumi:"networkAreaId"`
 	// The network area route ID.
 	NetworkAreaRouteId *string `pulumi:"networkAreaRouteId"`
-	// The IP address of the routing system, that will route the prefix configured. Should be a valid IPv4 address.
-	NextHop *string `pulumi:"nextHop"`
+	// Next hop destination.
+	NextHop *NetworkAreaRouteNextHop `pulumi:"nextHop"`
 	// STACKIT organization ID to which the network area is associated.
 	OrganizationId *string `pulumi:"organizationId"`
-	// The network, that is reachable though the Next Hop. Should use CIDR notation.
-	Prefix *string `pulumi:"prefix"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 }
 
 type NetworkAreaRouteState struct {
+	// Destination of the route.
+	Destination NetworkAreaRouteDestinationPtrInput
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels pulumi.StringMapInput
 	// The network area ID to which the network area route is associated.
 	NetworkAreaId pulumi.StringPtrInput
 	// The network area route ID.
 	NetworkAreaRouteId pulumi.StringPtrInput
-	// The IP address of the routing system, that will route the prefix configured. Should be a valid IPv4 address.
-	NextHop pulumi.StringPtrInput
+	// Next hop destination.
+	NextHop NetworkAreaRouteNextHopPtrInput
 	// STACKIT organization ID to which the network area is associated.
 	OrganizationId pulumi.StringPtrInput
-	// The network, that is reachable though the Next Hop. Should use CIDR notation.
-	Prefix pulumi.StringPtrInput
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput
 }
 
 func (NetworkAreaRouteState) ElementType() reflect.Type {
@@ -108,30 +126,34 @@ func (NetworkAreaRouteState) ElementType() reflect.Type {
 }
 
 type networkAreaRouteArgs struct {
+	// Destination of the route.
+	Destination NetworkAreaRouteDestination `pulumi:"destination"`
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels map[string]string `pulumi:"labels"`
 	// The network area ID to which the network area route is associated.
 	NetworkAreaId string `pulumi:"networkAreaId"`
-	// The IP address of the routing system, that will route the prefix configured. Should be a valid IPv4 address.
-	NextHop string `pulumi:"nextHop"`
+	// Next hop destination.
+	NextHop NetworkAreaRouteNextHop `pulumi:"nextHop"`
 	// STACKIT organization ID to which the network area is associated.
 	OrganizationId string `pulumi:"organizationId"`
-	// The network, that is reachable though the Next Hop. Should use CIDR notation.
-	Prefix string `pulumi:"prefix"`
+	// The resource region. If not defined, the provider region is used.
+	Region *string `pulumi:"region"`
 }
 
 // The set of arguments for constructing a NetworkAreaRoute resource.
 type NetworkAreaRouteArgs struct {
+	// Destination of the route.
+	Destination NetworkAreaRouteDestinationInput
 	// Labels are key-value string pairs which can be attached to a resource container
 	Labels pulumi.StringMapInput
 	// The network area ID to which the network area route is associated.
 	NetworkAreaId pulumi.StringInput
-	// The IP address of the routing system, that will route the prefix configured. Should be a valid IPv4 address.
-	NextHop pulumi.StringInput
+	// Next hop destination.
+	NextHop NetworkAreaRouteNextHopInput
 	// STACKIT organization ID to which the network area is associated.
 	OrganizationId pulumi.StringInput
-	// The network, that is reachable though the Next Hop. Should use CIDR notation.
-	Prefix pulumi.StringInput
+	// The resource region. If not defined, the provider region is used.
+	Region pulumi.StringPtrInput
 }
 
 func (NetworkAreaRouteArgs) ElementType() reflect.Type {
@@ -221,6 +243,11 @@ func (o NetworkAreaRouteOutput) ToNetworkAreaRouteOutputWithContext(ctx context.
 	return o
 }
 
+// Destination of the route.
+func (o NetworkAreaRouteOutput) Destination() NetworkAreaRouteDestinationOutput {
+	return o.ApplyT(func(v *NetworkAreaRoute) NetworkAreaRouteDestinationOutput { return v.Destination }).(NetworkAreaRouteDestinationOutput)
+}
+
 // Labels are key-value string pairs which can be attached to a resource container
 func (o NetworkAreaRouteOutput) Labels() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *NetworkAreaRoute) pulumi.StringMapOutput { return v.Labels }).(pulumi.StringMapOutput)
@@ -236,9 +263,9 @@ func (o NetworkAreaRouteOutput) NetworkAreaRouteId() pulumi.StringOutput {
 	return o.ApplyT(func(v *NetworkAreaRoute) pulumi.StringOutput { return v.NetworkAreaRouteId }).(pulumi.StringOutput)
 }
 
-// The IP address of the routing system, that will route the prefix configured. Should be a valid IPv4 address.
-func (o NetworkAreaRouteOutput) NextHop() pulumi.StringOutput {
-	return o.ApplyT(func(v *NetworkAreaRoute) pulumi.StringOutput { return v.NextHop }).(pulumi.StringOutput)
+// Next hop destination.
+func (o NetworkAreaRouteOutput) NextHop() NetworkAreaRouteNextHopOutput {
+	return o.ApplyT(func(v *NetworkAreaRoute) NetworkAreaRouteNextHopOutput { return v.NextHop }).(NetworkAreaRouteNextHopOutput)
 }
 
 // STACKIT organization ID to which the network area is associated.
@@ -246,9 +273,9 @@ func (o NetworkAreaRouteOutput) OrganizationId() pulumi.StringOutput {
 	return o.ApplyT(func(v *NetworkAreaRoute) pulumi.StringOutput { return v.OrganizationId }).(pulumi.StringOutput)
 }
 
-// The network, that is reachable though the Next Hop. Should use CIDR notation.
-func (o NetworkAreaRouteOutput) Prefix() pulumi.StringOutput {
-	return o.ApplyT(func(v *NetworkAreaRoute) pulumi.StringOutput { return v.Prefix }).(pulumi.StringOutput)
+// The resource region. If not defined, the provider region is used.
+func (o NetworkAreaRouteOutput) Region() pulumi.StringOutput {
+	return o.ApplyT(func(v *NetworkAreaRoute) pulumi.StringOutput { return v.Region }).(pulumi.StringOutput)
 }
 
 type NetworkAreaRouteArrayOutput struct{ *pulumi.OutputState }

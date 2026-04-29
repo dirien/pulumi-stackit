@@ -11,9 +11,9 @@ using Pulumi;
 namespace ediri.Stackit
 {
     /// <summary>
-    /// SKE Cluster Resource schema. Must have a `region` specified in the provider configuration.
+    /// SKE Cluster Resource schema. Must have a `Region` specified in the provider configuration.
     /// 
-    /// &gt; When updating `node_pools` of a `stackit.SkeCluster`, the pulumi preview might appear incorrect as it matches the node pools by index rather than by name. However, the SKE API correctly identifies node pools by name and applies the intended changes. Please review your changes carefully to ensure the correct configuration will be applied.
+    /// &gt; When updating `NodePools` of a `stackit.SkeCluster`, the pulumi preview might appear incorrect as it matches the node pools by index rather than by name. However, the SKE API correctly identifies node pools by name and applies the intended changes. Please review your changes carefully to ensure the correct configuration will be applied.
     /// 
     /// ## Example Usage
     /// </summary>
@@ -39,13 +39,13 @@ namespace ediri.Stackit
         public Output<ImmutableArray<Outputs.SkeClusterHibernation>> Hibernations { get; private set; } = null!;
 
         /// <summary>
-        /// The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
+        /// The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes &amp; OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current kubernetes version being used for your cluster, use the read-only `KubernetesVersionUsed` field.
         /// </summary>
         [Output("kubernetesVersionMin")]
         public Output<string?> KubernetesVersionMin { get; private set; } = null!;
 
         /// <summary>
-        /// Full Kubernetes version used. For example, if 1.22 was set in `kubernetes_version_min`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        /// Full Kubernetes version used. For example, if 1.22 was set in `KubernetesVersionMin`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes &amp; OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         /// </summary>
         [Output("kubernetesVersionUsed")]
         public Output<string> KubernetesVersionUsed { get; private set; } = null!;
@@ -66,10 +66,11 @@ namespace ediri.Stackit
         /// Network block as defined below.
         /// </summary>
         [Output("network")]
-        public Output<Outputs.SkeClusterNetwork?> Network { get; private set; } = null!;
+        public Output<Outputs.SkeClusterNetwork> Network { get; private set; } = null!;
 
         /// <summary>
-        /// One or more `node_pool` block as defined below.
+        /// One or more `NodePool` block as defined below.
+        /// To keep your Terraform plans clean and readable, always append new node pools to the end of the list.
         /// </summary>
         [Output("nodePools")]
         public Output<ImmutableArray<Outputs.SkeClusterNodePool>> NodePools { get; private set; } = null!;
@@ -158,7 +159,7 @@ namespace ediri.Stackit
         }
 
         /// <summary>
-        /// The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
+        /// The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes &amp; OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current kubernetes version being used for your cluster, use the read-only `KubernetesVersionUsed` field.
         /// </summary>
         [Input("kubernetesVersionMin")]
         public Input<string>? KubernetesVersionMin { get; set; }
@@ -185,7 +186,8 @@ namespace ediri.Stackit
         private InputList<Inputs.SkeClusterNodePoolArgs>? _nodePools;
 
         /// <summary>
-        /// One or more `node_pool` block as defined below.
+        /// One or more `NodePool` block as defined below.
+        /// To keep your Terraform plans clean and readable, always append new node pools to the end of the list.
         /// </summary>
         public InputList<Inputs.SkeClusterNodePoolArgs> NodePools
         {
@@ -244,13 +246,13 @@ namespace ediri.Stackit
         }
 
         /// <summary>
-        /// The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html). To get the current kubernetes version being used for your cluster, use the read-only `kubernetes_version_used` field.
+        /// The minimum Kubernetes version. This field will be used to set the minimum kubernetes version on creation/update of the cluster. If unset, the latest supported Kubernetes version will be used. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes &amp; OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/). To get the current kubernetes version being used for your cluster, use the read-only `KubernetesVersionUsed` field.
         /// </summary>
         [Input("kubernetesVersionMin")]
         public Input<string>? KubernetesVersionMin { get; set; }
 
         /// <summary>
-        /// Full Kubernetes version used. For example, if 1.22 was set in `kubernetes_version_min`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [Updates for Kubernetes versions and Operating System versions in SKE](https://docs.stackit.cloud/stackit/en/version-updates-in-ske-10125631.html).
+        /// Full Kubernetes version used. For example, if 1.22 was set in `KubernetesVersionMin`, this value may result to 1.22.15. SKE automatically updates the cluster Kubernetes version if you have set `maintenance.enable_kubernetes_version_updates` to true or if there is a mandatory update, as described in [General information for Kubernetes &amp; OS updates](https://docs.stackit.cloud/products/runtime/kubernetes-engine/basics/version-updates/).
         /// </summary>
         [Input("kubernetesVersionUsed")]
         public Input<string>? KubernetesVersionUsed { get; set; }
@@ -277,7 +279,8 @@ namespace ediri.Stackit
         private InputList<Inputs.SkeClusterNodePoolGetArgs>? _nodePools;
 
         /// <summary>
-        /// One or more `node_pool` block as defined below.
+        /// One or more `NodePool` block as defined below.
+        /// To keep your Terraform plans clean and readable, always append new node pools to the end of the list.
         /// </summary>
         public InputList<Inputs.SkeClusterNodePoolGetArgs> NodePools
         {
